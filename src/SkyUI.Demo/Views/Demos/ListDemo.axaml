@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SkyUI.Demo.Views.Demos.ListDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <StackPanel Spacing="16">
+            <TextBlock Text="List" FontWeight="SemiBold" FontSize="18"
+                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <ListBox Classes="spotify" Height="160" Width="320" HorizontalAlignment="Left" SelectedIndex="0">
+                <ListBoxItem Content="List item one" />
+                <ListBoxItem Content="List item two" />
+                <ListBoxItem Content="List item three" />
+            </ListBox>
+        </StackPanel>
+    </Border>
+</UserControl>

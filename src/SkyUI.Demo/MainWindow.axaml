@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:SkyUI.Demo.Models"
+        mc:Ignorable="d" d:DesignWidth="960" d:DesignHeight="640"
+        x:Class="SkyUI.Demo.MainWindow"
+        Title="SkyUI demo"
+        Width="980" Height="680"
+        MinWidth="640" MinHeight="480"
+        Background="{DynamicResource SpotifyBackgroundBrush}">
+    <Grid ColumnDefinitions="240,*">
+        <Border Grid.Column="0"
+                Background="{DynamicResource SpotifySurfaceBrush}"
+                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderThickness="0,0,1,0">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Components"
+                           FontSize="13"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                           Margin="16,16,16,8" />
+                <ListBox x:Name="NavList"
+                         Classes="spotify"
+                         Margin="8,0,8,12"
+                         BorderThickness="0"
+                         Background="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:DemoItem">
+                            <TextBlock Text="{Binding Title}" Padding="4,2" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+        <ScrollViewer Grid.Column="1"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <ContentControl x:Name="DetailHost"
+                            Padding="28,24"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Top" />
+        </ScrollViewer>
+    </Grid>
+</Window>

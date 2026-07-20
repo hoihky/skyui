@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SkyUI.Demo.Views.Demos.ButtonsDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <StackPanel Spacing="16">
+            <TextBlock Text="Buttons" FontWeight="SemiBold" FontSize="18"
+                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                       Text="Use Classes=&quot;spotify&quot;, plus spotify-outlined or spotify-subtle for variants." />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button Classes="spotify" Content="Contained" />
+                <Button Classes="spotify spotify-outlined" Content="Outlined" />
+                <Button Classes="spotify spotify-subtle" Content="Text" />
+                <Button Classes="spotify" Content="Disabled" IsEnabled="False" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

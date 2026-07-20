@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="using:SkyUI.Demo.Models"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.CheckedListBoxDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="14">
+            <StackPanel Grid.Row="0" Spacing="8">
+                <TextBlock Text="CheckedListBox" FontWeight="SemiBold" FontSize="18"
+                           Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+                <TextBlock TextWrapping="Wrap" MaxWidth="720"
+                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                           Text="Hierarchical checkboxes with expand/collapse, tri-state parents, sibling sorting, row selection (Single / Multiple with Ctrl), custom ItemTemplate, and VirtualizingStackPanel. Use the expand chevron (›) to show children. Events append to the log below." />
+            </StackPanel>
+
+            <Border Grid.Row="1" Classes="spotify-card" Padding="12">
+                <StackPanel Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Selection" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource SpotifyTextSecondaryBrush}" />
+                            <ComboBox x:Name="SelectionModeCombo" Classes="spotify" Width="160" MinHeight="40" />
+                        </StackPanel>
+                        <ToggleSwitch x:Name="CascadeToggle" Classes="spotify" Content="Cascade to children" IsChecked="True" />
+                        <ToggleSwitch x:Name="ThreeStateToggle" Classes="spotify" Content="Tri-state parents" IsChecked="True" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <ToggleSwitch x:Name="SortToggle" Classes="spotify" Content="Sort siblings (A–Z)" IsChecked="True" />
+                        <Button x:Name="AddRootButton" Classes="spotify spotify-outlined" Content="Add root node" />
+                        <Button x:Name="ClearLogButton" Classes="spotify spotify-subtle" Content="Clear log" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,320" ColumnSpacing="16">
+                <sky:CheckedListBox x:Name="TreeList"
+                                    Grid.Column="0"
+                                    MinHeight="280"
+                                    MaxHeight="360"
+                                    SelectionMode="Multiple"
+                                    Indent="20"
+                                    CascadeToChildren="True"
+                                    UseThreeStateForParents="True">
+                    <sky:CheckedListBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:DemoCheckedListNode">
+                            <TextBlock Text="{Binding Title}"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+                        </DataTemplate>
+                    </sky:CheckedListBox.ItemTemplate>
+                </sky:CheckedListBox>
+                <Border Grid.Column="1" Classes="spotify-card" Padding="10" MinHeight="120">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="EventLog"
+                                   TextWrapping="Wrap"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource SpotifyTextSecondaryBrush}" />
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <TextBlock Grid.Row="3"
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                       Opacity="0.9"
+                       Text="Tip: expand “Europe” or “Asia” to see sorted city lists. Ctrl+click rows for multi-select. Checking a region cascades to cities when cascade is on." />
+        </Grid>
+    </Border>
+</UserControl>

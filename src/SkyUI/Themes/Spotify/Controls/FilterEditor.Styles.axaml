@@ -1,0 +1,66 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:filter="using:SkyUI.FilterEditor">
+  <!-- Companion to FilterEditor.axaml: ControlTheme cannot contain these descendant /template/ styles. -->
+  <Style Selector="filter|FilterEditor /template/ StackPanel.filter-editor-toolbar Button">
+    <Setter Property="MinHeight" Value="34" />
+    <Setter Property="Padding" Value="12,6" />
+    <Setter Property="FontSize" Value="13" />
+  </Style>
+
+  <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree TreeViewItem">
+    <Setter Property="Padding" Value="0,1" />
+    <Setter Property="MinHeight" Value="30" />
+  </Style>
+
+  <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree TreeViewItem ContentPresenter">
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+  </Style>
+
+  <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree ComboBox">
+    <Setter Property="MinHeight" Value="28" />
+    <Setter Property="Height" Value="28" />
+    <Setter Property="Padding" Value="8,2" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SpotifyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+
+  <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree TextBox">
+    <Setter Property="MinHeight" Value="28" />
+    <Setter Property="Height" Value="28" />
+    <Setter Property="Padding" Value="8,2" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SpotifyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CaretBrush" Value="{DynamicResource SpotifyAccentGreenBrush}" />
+  </Style>
+
+  <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree Button.filter-editor-row-remove">
+    <Setter Property="MinWidth" Value="26" />
+    <Setter Property="MinHeight" Value="26" />
+    <Setter Property="Width" Value="26" />
+    <Setter Property="Height" Value="26" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Margin" Value="4,0,0,0" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextSecondaryBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree Button.filter-editor-row-remove:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SpotifyListHoverBrush}" />
+    <Setter Property="CornerRadius" Value="4" />
+  </Style>
+</Styles>

@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SkyUI/SkyUI.csproj" />
+    <Project Path="src/SkyUI.Demo/SkyUI.Demo.csproj" />
+  </Folder>
+</Solution>

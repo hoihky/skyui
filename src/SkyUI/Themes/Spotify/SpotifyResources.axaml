@@ -1,0 +1,58 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Spotify-inspired palette (see DESIGN.md) -->
+  <Color x:Key="SpotifyBackground">#121212</Color>
+  <Color x:Key="SpotifySurface">#181818</Color>
+  <Color x:Key="SpotifySurfaceElevated">#1f1f1f</Color>
+  <Color x:Key="SpotifyCard">#252525</Color>
+  <Color x:Key="SpotifyCardMid">#272727</Color>
+  <Color x:Key="SpotifyTextPrimary">#ffffff</Color>
+  <Color x:Key="SpotifyTextSecondary">#b3b3b3</Color>
+  <Color x:Key="SpotifyTextSecondaryBright">#cbcbcb</Color>
+  <Color x:Key="SpotifyTextLight">#fdfdfd</Color>
+  <Color x:Key="SpotifyAccentGreen">#1ed760</Color>
+  <Color x:Key="SpotifyAccentGreenDark">#1db954</Color>
+  <Color x:Key="SpotifyOnAccent">#000000</Color>
+  <Color x:Key="SpotifyNegative">#f3727f</Color>
+  <Color x:Key="SpotifyWarning">#ffa42b</Color>
+  <Color x:Key="SpotifyAnnouncement">#539df5</Color>
+  <Color x:Key="SpotifyBorder">#4d4d4d</Color>
+  <Color x:Key="SpotifyBorderLight">#7c7c7c</Color>
+  <Color x:Key="SpotifySeparator">#b3b3b3</Color>
+  <Color x:Key="SpotifyLightPill">#eeeeee</Color>
+  <Color x:Key="SpotifyLightPillText">#181818</Color>
+  <Color x:Key="SpotifyHoverTint">#14FFFFFF</Color>
+  <Color x:Key="SpotifyListHover">#1AFFFFFF</Color>
+  <Color x:Key="SpotifySelectedTint">#331ED760</Color>
+  <Color x:Key="SpotifyAvatarFallback">#3e3e3e</Color>
+  <Color x:Key="SpotifyBadgeNeutral">#2a2a2a</Color>
+
+  <SolidColorBrush x:Key="SpotifyBackgroundBrush" Color="{StaticResource SpotifyBackground}" />
+  <SolidColorBrush x:Key="SpotifySurfaceBrush" Color="{StaticResource SpotifySurface}" />
+  <SolidColorBrush x:Key="SpotifySurfaceElevatedBrush" Color="{StaticResource SpotifySurfaceElevated}" />
+  <SolidColorBrush x:Key="SpotifyCardBrush" Color="{StaticResource SpotifyCard}" />
+  <SolidColorBrush x:Key="SpotifyCardMidBrush" Color="{StaticResource SpotifyCardMid}" />
+  <SolidColorBrush x:Key="SpotifyTextPrimaryBrush" Color="{StaticResource SpotifyTextPrimary}" />
+  <SolidColorBrush x:Key="SpotifyTextSecondaryBrush" Color="{StaticResource SpotifyTextSecondary}" />
+  <SolidColorBrush x:Key="SpotifyTextSecondaryBrightBrush" Color="{StaticResource SpotifyTextSecondaryBright}" />
+  <SolidColorBrush x:Key="SpotifyTextLightBrush" Color="{StaticResource SpotifyTextLight}" />
+  <SolidColorBrush x:Key="SpotifyAccentGreenBrush" Color="{StaticResource SpotifyAccentGreen}" />
+  <SolidColorBrush x:Key="SpotifyAccentGreenDarkBrush" Color="{StaticResource SpotifyAccentGreenDark}" />
+  <SolidColorBrush x:Key="SpotifyOnAccentBrush" Color="{StaticResource SpotifyOnAccent}" />
+  <SolidColorBrush x:Key="SpotifyNegativeBrush" Color="{StaticResource SpotifyNegative}" />
+  <SolidColorBrush x:Key="SpotifyWarningBrush" Color="{StaticResource SpotifyWarning}" />
+  <SolidColorBrush x:Key="SpotifyAnnouncementBrush" Color="{StaticResource SpotifyAnnouncement}" />
+  <SolidColorBrush x:Key="SpotifyBorderBrush" Color="{StaticResource SpotifyBorder}" />
+  <SolidColorBrush x:Key="SpotifyBorderLightBrush" Color="{StaticResource SpotifyBorderLight}" />
+  <SolidColorBrush x:Key="SpotifySeparatorBrush" Color="{StaticResource SpotifySeparator}" />
+  <SolidColorBrush x:Key="SpotifyLightPillBrush" Color="{StaticResource SpotifyLightPill}" />
+  <SolidColorBrush x:Key="SpotifyLightPillTextBrush" Color="{StaticResource SpotifyLightPillText}" />
+  <SolidColorBrush x:Key="SpotifyHoverTintBrush" Color="{StaticResource SpotifyHoverTint}" />
+  <SolidColorBrush x:Key="SpotifyListHoverBrush" Color="{StaticResource SpotifyListHover}" />
+  <SolidColorBrush x:Key="SpotifySelectedTintBrush" Color="{StaticResource SpotifySelectedTint}" />
+  <SolidColorBrush x:Key="SpotifyAvatarFallbackBrush" Color="{StaticResource SpotifyAvatarFallback}" />
+  <SolidColorBrush x:Key="SpotifyBadgeNeutralBrush" Color="{StaticResource SpotifyBadgeNeutral}" />
+
+  <FontFamily x:Key="SpotifyFontUi">Segoe UI, Helvetica Neue, Helvetica, Arial, ui-sans-serif, sans-serif</FontFamily>
+  <FontFamily x:Key="SpotifyFontTitle">Segoe UI, Helvetica Neue, Helvetica, Arial, ui-sans-serif, sans-serif</FontFamily>
+</ResourceDictionary>

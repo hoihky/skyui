@@ -1,0 +1,81 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls">
+  <ControlTheme x:Key="{x:Type controls:SkyAccordion}" TargetType="controls:SkyAccordion">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <StackPanel Orientation="Vertical" Spacing="0" />
+      </ItemsPanelTemplate>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}">
+          <ItemsPresenter Name="PART_ItemsPresenter"
+                            Margin="{TemplateBinding Padding}" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyAccordionItem}" TargetType="controls:SkyAccordionItem">
+    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SpotifyFontUi}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{DynamicResource SpotifySurfaceBrush}"
+                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Margin="0,0,0,8">
+          <StackPanel>
+            <ToggleButton Name="PART_HeaderToggle"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Background="{DynamicResource SpotifySurfaceElevatedBrush}"
+                          BorderThickness="0"
+                          Padding="12,10"
+                          Foreground="{TemplateBinding Foreground}"
+                          FontFamily="{TemplateBinding FontFamily}"
+                          FontSize="{TemplateBinding FontSize}">
+              <Grid ColumnDefinitions="Auto,*"
+                    HorizontalAlignment="Stretch">
+                <TextBlock Name="PART_Chevron"
+                           Text="▶"
+                           FontSize="10"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"
+                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                           RenderTransformOrigin="0.5,0.5">
+                  <TextBlock.RenderTransform>
+                    <RotateTransform Angle="0" />
+                  </TextBlock.RenderTransform>
+                </TextBlock>
+                <ContentPresenter Grid.Column="1"
+                                  Content="{TemplateBinding Header}"
+                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                  VerticalAlignment="Center"
+                                  HorizontalContentAlignment="Stretch" />
+              </Grid>
+            </ToggleButton>
+            <Border IsVisible="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                    BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                    BorderThickness="0,1,0,0"
+                    Background="{DynamicResource SpotifySurfaceBrush}"
+                    Padding="12,10,12,14">
+              <ContentPresenter Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+            </Border>
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

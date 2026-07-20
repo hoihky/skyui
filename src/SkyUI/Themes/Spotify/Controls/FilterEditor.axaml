@@ -1,0 +1,151 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:filter="using:SkyUI.FilterEditor">
+  <ControlTheme x:Key="{x:Type filter:FilterEditor}" TargetType="filter:FilterEditor">
+    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceBrush}" />
+    <Setter Property="Padding" Value="12" />
+    <Setter Property="MinHeight" Value="200" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border x:CompileBindings="False"
+                Background="{TemplateBinding Background}"
+                Padding="{TemplateBinding Padding}"
+                CornerRadius="8"
+                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderThickness="1">
+          <DockPanel>
+            <StackPanel x:Name="PART_Toolbar"
+                        DockPanel.Dock="Top"
+                        Classes="filter-editor-toolbar"
+                        Orientation="Horizontal"
+                        Spacing="6"
+                        Margin="0,0,0,8">
+              <Button Classes="spotify spotify-outlined"
+                      Content="+ AND group"
+                      Command="{Binding AddAndGroupCommand}" />
+              <Button Classes="spotify spotify-outlined"
+                      Content="+ OR group"
+                      Command="{Binding AddOrGroupCommand}" />
+              <Button Classes="spotify spotify-primary"
+                      Content="+ Condition"
+                      Command="{Binding AddConditionCommand}" />
+              <Button Classes="spotify spotify-outlined"
+                      Content="Remove selected"
+                      Command="{Binding RemoveSelectedCommand}" />
+            </StackPanel>
+
+            <Border DockPanel.Dock="Bottom"
+                    IsVisible="{TemplateBinding ShowSqlPreview}"
+                    Margin="0,8,0,0"
+                    Padding="10"
+                    Background="{DynamicResource SpotifySurfaceElevatedBrush}"
+                    CornerRadius="6"
+                    BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                    BorderThickness="1">
+              <DockPanel>
+                <TextBlock DockPanel.Dock="Top"
+                           Text="SQL preview"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,6"
+                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}" />
+                <TextBox Classes="spotify"
+                         MinHeight="72"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         IsReadOnly="True"
+                         Text="{Binding SqlPreview}" />
+              </DockPanel>
+            </Border>
+
+            <TreeView x:Name="PART_FilterTree"
+                      MinHeight="160"
+                      ItemsSource="{Binding Document.Root.Children}"
+                      SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
+              <TreeView.DataTemplates>
+                <TreeDataTemplate DataType="{x:Type filter:FilterGroupNode}"
+                                  ItemsSource="{Binding Children}">
+                  <Grid ColumnDefinitions="Auto,*,Auto"
+                        MinHeight="30"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
+                    <ComboBox Grid.Column="0"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              ItemsSource="{x:Static filter:FilterEditorThemeLists.LogicalKinds}"
+                              SelectedItem="{Binding LogicalKind}">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock VerticalAlignment="Center"
+                                     FontSize="12"
+                                     Text="{Binding}" />
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Panel Grid.Column="1" />
+                    <Button Grid.Column="2"
+                            Classes="filter-editor-row-remove"
+                            Content="×"
+                            ToolTip.Tip="Remove group"
+                            Command="{Binding #PART_FilterTree.DataContext.RemoveNodeCommand}"
+                            CommandParameter="{Binding}" />
+                  </Grid>
+                </TreeDataTemplate>
+                <DataTemplate DataType="{x:Type filter:FilterConditionNode}">
+                  <Grid ColumnDefinitions="*,Auto,*,Auto"
+                        MinHeight="30"
+                        ColumnSpacing="6"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
+                    <ComboBox Grid.Column="0"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Stretch"
+                              MinWidth="96"
+                              MaxWidth="200"
+                              ItemsSource="{Binding #PART_FilterTree.DataContext.Document.Fields}"
+                              SelectedValue="{Binding FieldPath}"
+                              SelectedValueBinding="{Binding PropertyPath}">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="filter:FilterFieldDescriptor">
+                          <TextBlock VerticalAlignment="Center"
+                                     FontSize="12"
+                                     Text="{Binding DisplayName}" />
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox Grid.Column="1"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              MinWidth="96"
+                              MaxWidth="120"
+                              ItemsSource="{x:Static filter:FilterEditorThemeLists.CompareOperators}"
+                              SelectedItem="{Binding Operator}">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock VerticalAlignment="Center"
+                                     FontSize="11"
+                                     Text="{Binding}" />
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBox Grid.Column="2"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"
+                             MinWidth="72"
+                             Watermark="Value"
+                             Text="{Binding ValueText}" />
+                    <Button Grid.Column="3"
+                            Classes="filter-editor-row-remove"
+                            Content="×"
+                            ToolTip.Tip="Remove condition"
+                            Command="{Binding #PART_FilterTree.DataContext.RemoveNodeCommand}"
+                            CommandParameter="{Binding}" />
+                  </Grid>
+                </DataTemplate>
+              </TreeView.DataTemplates>
+            </TreeView>
+          </DockPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

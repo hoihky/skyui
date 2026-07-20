@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SkyUI.Demo.Views.Demos.OverviewDemo">
+    <StackPanel Spacing="12" MaxWidth="560">
+        <TextBlock Text="SkyUI / Spotify theme" FontSize="28" FontWeight="SemiBold"
+                   Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SpotifyTextSecondaryBrush}" LineHeight="22"
+                   Text="This demo app uses a master-detail layout. Pick a control on the left to see its samples. Styles follow DESIGN.md (Spotify-inspired dark UI); add Classes=&quot;spotify&quot; to standard controls where noted." />
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                   Text="See src/SkyUI/DESIGN.md in the library project." />
+    </StackPanel>
+</UserControl>

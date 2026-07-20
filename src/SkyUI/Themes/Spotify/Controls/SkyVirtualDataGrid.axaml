@@ -1,0 +1,52 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dg="using:SkyUI.DataGrid">
+  <ControlTheme x:Key="{x:Type dg:SkyVirtualDataGrid}" TargetType="dg:SkyVirtualDataGrid">
+    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceBrush}" />
+    <Setter Property="MinHeight" Value="160" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="6"
+                Padding="0">
+          <Grid RowDefinitions="Auto,*">
+            <Grid HorizontalAlignment="Stretch">
+              <Grid x:Name="PART_HeaderGrid"
+                    HorizontalAlignment="Stretch" />
+              <Border x:Name="PART_ColumnDragIndicator"
+                      Width="3"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Stretch"
+                      Background="{DynamicResource SpotifyAccentGreenBrush}"
+                      Opacity="0.85"
+                      IsHitTestVisible="False"
+                      IsVisible="False"
+                      ZIndex="100" />
+            </Grid>
+            <ScrollViewer x:Name="PART_Scroll"
+                          Grid.Row="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          IsDeferredScrollingEnabled="False">
+              <dg:SkyVirtualDataGridScrollRoot x:Name="PART_ScrollRoot"
+                                               MinWidth="200">
+                <dg:SkyVirtualDataGridScrollHost x:Name="PART_VirtualExtent"
+                                                 ClipToBounds="True"
+                                                 HorizontalAlignment="Stretch">
+                  <Border x:Name="PART_BodySpacer"
+                          IsHitTestVisible="False"
+                          Opacity="0" />
+                  <ItemsControl x:Name="PART_Rows"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left" />
+                </dg:SkyVirtualDataGridScrollHost>
+              </dg:SkyVirtualDataGridScrollRoot>
+            </ScrollViewer>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

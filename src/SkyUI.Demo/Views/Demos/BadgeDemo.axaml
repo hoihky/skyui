@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.BadgeDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <StackPanel Spacing="16">
+            <TextBlock Text="Badge" FontWeight="SemiBold" FontSize="18"
+                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal" Spacing="24">
+                <sky:Badge BadgeContent="4">
+                    <Button Classes="spotify" Content="Mail" />
+                </sky:Badge>
+                <sky:Badge BadgeContent="99" BadgeBackground="{DynamicResource SpotifyTextSecondaryBrush}">
+                    <Border Width="40" Height="40" Background="#E0E0E0" CornerRadius="20" />
+                </sky:Badge>
+                <sky:Badge IsDot="True">
+                    <Button Classes="spotify spotify-outlined" Content="Alerts" />
+                </sky:Badge>
+                <sky:Badge BadgeContent="7" Placement="BottomLeft">
+                    <Border Width="40" Height="40" Background="#E3F2FD" CornerRadius="4" />
+                </sky:Badge>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

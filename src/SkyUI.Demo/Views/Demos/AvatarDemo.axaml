@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.AvatarDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <StackPanel Spacing="16">
+            <TextBlock Text="Avatar" FontWeight="SemiBold" FontSize="18"
+                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                <sky:Avatar DisplayName="Jane Doe" />
+                <sky:Avatar Size="48" Initials="AB" Background="{DynamicResource SpotifyAccentGreenBrush}" />
+                <sky:Avatar Size="56" DisplayName="Sky UI" Background="{DynamicResource SpotifyTextSecondaryBrush}" />
+                <sky:Avatar Size="40" IsCircular="False" CornerRadius="8" DisplayName="Rounded" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

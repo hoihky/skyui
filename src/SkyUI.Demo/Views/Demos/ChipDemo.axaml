@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.ChipDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <StackPanel Spacing="16">
+            <TextBlock Text="Chip" FontWeight="SemiBold" FontSize="18"
+                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12">
+                <sky:Chip Label="Default" />
+                <sky:Chip Label="Outlined" Variant="Outlined" />
+                <sky:Chip Label="Deletable" IsDeletable="True" />
+                <sky:Chip Label="Alice" IsClickable="True">
+                    <sky:Chip.AvatarContent>
+                        <sky:Avatar DisplayName="Alice" Size="24" />
+                    </sky:Chip.AvatarContent>
+                </sky:Chip>
+                <sky:Chip Label="Team" Variant="Outlined" Size="Small" IsDeletable="True">
+                    <sky:Chip.AvatarContent>
+                        <sky:Avatar Initials="T" Size="22" Background="{DynamicResource SpotifyAccentGreenBrush}" />
+                    </sky:Chip.AvatarContent>
+                </sky:Chip>
+            </WrapPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

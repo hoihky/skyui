@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sky="using:SkyUI.Controls"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="700"
+             x:Class="SkyUI.Demo.Views.Demos.VideoTimelineDemo">
+  <StackPanel Spacing="16">
+    <TextBlock Classes="spotify-section-title" Text="Video timeline" />
+    <TextBlock Classes="spotify-body-secondary"
+               TextWrapping="Wrap"
+               Text="Scroll the ruler and track area; Ctrl+wheel zooms. Click a track lane or label to highlight it. Drag the left/right edges of a clip (narrow strips) to trim length; drag the clip body to move in time or change track. Double-tap a lane for a marker (scroll position is preserved). Shift+click clips for multi-select. Delete removes selected clips or the selected track. Ctrl+C / Ctrl+X / Ctrl+V." />
+
+    <WrapPanel Orientation="Horizontal">
+      <Button Classes="spotify spotify-primary" Content="Play" Click="OnPlayClick" Margin="0,0,8,8" />
+      <Button Classes="spotify" Content="Stop" Click="OnStopClick" Margin="0,0,8,8" />
+      <Button Classes="spotify" Content="Add track" Click="OnAddTrackClick" Margin="0,0,8,8" />
+      <Button Classes="spotify" Content="Add clip at playhead" Click="OnAddClipClick" Margin="0,0,8,8" />
+      <Button Classes="spotify" Content="Remove selected clip" Click="OnRemoveClipClick" Margin="0,0,8,8" />
+      <Button Classes="spotify" Content="Remove selected track" Click="OnRemoveTrackClick" Margin="0,0,8,8" />
+    </WrapPanel>
+
+    <Border Classes="spotify-card" Padding="12">
+      <sky:VideoTimeline x:Name="Timeline"
+                         Height="320"
+                         Duration="90"
+                         PixelsPerSecond="48" />
+    </Border>
+
+    <TextBlock Classes="spotify-feature-heading" Text="Event log" />
+    <ListBox x:Name="Log"
+             Classes="spotify"
+             MinHeight="120"
+             MaxHeight="200" />
+  </StackPanel>
+</UserControl>

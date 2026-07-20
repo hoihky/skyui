@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.VirtualDataGridDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+            <StackPanel Spacing="6">
+                <TextBlock Text="SkyVirtualDataGrid" FontWeight="SemiBold" FontSize="18"
+                           Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+                <TextBlock TextWrapping="Wrap" MaxWidth="900"
+                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                           Text="Demo uses row virtualization (default) with 50,000 rows — scroll to verify tail rows. Set EnableRowVirtualization=false to materialize every row (heavy for large n). Sort / drag / edit / export as before." />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
+                <Button x:Name="ExportCsvButton" Classes="spotify spotify-outlined" Content="Export first 10k CSV" />
+                <Button x:Name="BumpButton" Classes="spotify spotify-outlined" Content="Bump row 0 (background)" />
+                <TextBlock x:Name="StatusText" VerticalAlignment="Center"
+                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}" />
+            </StackPanel>
+            <sky:SkyVirtualDataGrid x:Name="Grid"
+                                    Grid.Row="2"
+                                    MinHeight="320"
+                                    EnableRowVirtualization="True" />
+        </Grid>
+    </Border>
+</UserControl>

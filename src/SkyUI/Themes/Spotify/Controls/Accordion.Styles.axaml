@@ -1,0 +1,12 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <Style Selector="controls|SkyAccordionItem:expanded /template/ TextBlock#PART_Chevron">
+    <Setter Property="RenderTransform">
+      <RotateTransform Angle="90" />
+    </Setter>
+  </Style>
+  <Style Selector="controls|SkyAccordionItem:pointerover /template/ ToggleButton#PART_HeaderToggle">
+    <Setter Property="Background" Value="{DynamicResource SpotifyListHoverBrush}" />
+  </Style>
+</Styles>

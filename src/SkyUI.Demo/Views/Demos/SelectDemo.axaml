@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SkyUI.Demo.Views.Demos.SelectDemo">
+    <Border Background="{DynamicResource SpotifySurfaceBrush}"
+            BorderBrush="{DynamicResource SpotifyBorderBrush}"
+            BorderThickness="1" CornerRadius="8" Padding="20">
+        <StackPanel Spacing="16">
+            <TextBlock Text="Select (dropdown)" FontWeight="SemiBold" FontSize="18"
+                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <ComboBox Classes="spotify" Width="320" HorizontalAlignment="Left" SelectedIndex="0">
+                <ComboBoxItem Content="Option one" />
+                <ComboBoxItem Content="Option two" />
+                <ComboBoxItem Content="Option three" />
+            </ComboBox>
+        </StackPanel>
+    </Border>
+</UserControl>
