@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>SkyUI</RootNamespace>
-    <AssemblyName>SkyUI</AssemblyName>
-    <Description>SkyUI essentials controls and default theme integration hooks.</Description>
+    <RootNamespace>SkyUI.Diagram</RootNamespace>
+    <AssemblyName>SkyUI.Diagram</AssemblyName>
+    <Description>SkyUI interactive diagram surface and edge routers.</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SkyUI.Core\SkyUI.Core.csproj" />
-    <ProjectReference Include="..\SkyUI.Icons\SkyUI.Icons.csproj" />
+    <ProjectReference Include="..\SkyUI\SkyUI.csproj" />
   </ItemGroup>
 
 </Project>

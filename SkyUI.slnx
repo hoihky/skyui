@@ -1,6 +1,15 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/SkyUI/SkyUI.csproj" />
+    <Project Path="src/SkyUI.Core/SkyUI.Core.csproj" />
+    <Project Path="src/SkyUI.Data/SkyUI.Data.csproj" />
     <Project Path="src/SkyUI.Demo/SkyUI.Demo.csproj" />
+    <Project Path="src/SkyUI.Diagram/SkyUI.Diagram.csproj" />
+    <Project Path="src/SkyUI.Icons/SkyUI.Icons.csproj" />
+    <Project Path="src/SkyUI.Themes.Sky/SkyUI.Themes.Sky.csproj" />
+    <Project Path="src/SkyUI/SkyUI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SkyUI.HeadlessTests/SkyUI.HeadlessTests.csproj" />
+    <Project Path="tests/SkyUI.UnitTests/SkyUI.UnitTests.csproj" />
   </Folder>
 </Solution>

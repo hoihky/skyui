@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SkyUI.Icons</RootNamespace>
+    <AssemblyName>SkyUI.Icons</AssemblyName>
+    <Description>SkyUI icon identifiers and embedded icon assets.</Description>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SkyUI.Core</RootNamespace>
+    <AssemblyName>SkyUI.Core</AssemblyName>
+    <Description>SkyUI design tokens, shared contracts, and theme attached properties.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+
+</Project>

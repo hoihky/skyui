@@ -5,6 +5,7 @@
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://SkyUI/Themes/Spotify/SpotifyTheme.axaml" />
+        <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyTheme.axaml" />
+        <StyleInclude Source="avares://SkyUI.Data/Themes/SkyDataTheme.axaml" />
     </Application.Styles>
 </Application>

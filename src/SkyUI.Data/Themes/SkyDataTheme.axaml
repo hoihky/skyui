@@ -1,0 +1,14 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://SkyUI.Data/Themes/Controls/FilterEditor.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Data/Themes/Controls/SkyVirtualDataGrid.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <StyleInclude Source="avares://SkyUI.Data/Themes/Controls/FilterEditor.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Data/Themes/Controls/SkyVirtualDataGrid.Styles.axaml" />
+</Styles>

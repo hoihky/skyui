@@ -3,22 +3,18 @@
   <Styles.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/SpotifyResources.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/Badge.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/Avatar.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/Chip.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/CheckedListBox.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/FilterEditor.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/SkyVirtualDataGrid.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/Accordion.axaml" />
-        <ResourceInclude Source="avares://SkyUI/Themes/Spotify/Controls/VideoTimeline.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyResources.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Badge.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Avatar.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Chip.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/CheckedListBox.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Accordion.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/VideoTimeline.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Styles.Resources>
 
-  <StyleInclude Source="avares://SkyUI/Themes/Spotify/Controls/Accordion.Styles.axaml" />
-  <StyleInclude Source="avares://SkyUI/Themes/Spotify/Controls/FilterEditor.Styles.axaml" />
-  <StyleInclude Source="avares://SkyUI/Themes/Spotify/Controls/SkyVirtualDataGrid.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Accordion.Styles.axaml" />
 
   <!-- Dark pill (secondary) -->
   <Style Selector="Button.spotify">

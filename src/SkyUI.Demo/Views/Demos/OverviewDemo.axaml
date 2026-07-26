@@ -7,6 +7,6 @@
         <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SpotifyTextSecondaryBrush}" LineHeight="22"
                    Text="This demo app uses a master-detail layout. Pick a control on the left to see its samples. Styles follow DESIGN.md (Spotify-inspired dark UI); add Classes=&quot;spotify&quot; to standard controls where noted." />
         <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
-                   Text="See src/SkyUI/DESIGN.md in the library project." />
+                   Text="See src/SkyUI.Themes.Sky/DESIGN.md for the Sky dark preset visual specification." />
     </StackPanel>
 </UserControl>
