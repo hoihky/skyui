@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=netstandard"
+                    xmlns:fonts="using:SkyUI.Fonts">
+  <!-- Overrides SkyTokens typography slots when merged after SkyTokens.axaml -->
+  <FontFamily x:Key="SkyFontFamilyUi">{x:Static fonts:SkyFontFamilies.Ui}</FontFamily>
+  <FontFamily x:Key="SkyFontFamilyTitle">{x:Static fonts:SkyFontFamilies.Title}</FontFamily>
+
+  <!-- Absolute line heights (px) ≥ DESIGN.md ratios; extra room for CJK metrics. -->
+  <sys:Double x:Key="SkyLineHeightSectionTitle">32</sys:Double>
+  <sys:Double x:Key="SkyLineHeightTight">24</sys:Double>
+  <sys:Double x:Key="SkyLineHeightNormal">26</sys:Double>
+  <sys:Double x:Key="SkyLineHeightCaption">21</sys:Double>
+  <sys:Double x:Key="SkyLineHeightSmall">18</sys:Double>
+  <sys:Double x:Key="SkyLineHeightBadge">14</sys:Double>
+  <sys:Double x:Key="SkyLineHeightButton">20</sys:Double>
+  <sys:Double x:Key="SkyLineHeightMicro">14</sys:Double>
+
+  <sys:Double x:Key="SkyLetterSpacingButton">0.14</sys:Double>
+  <sys:Double x:Key="SkyLetterSpacingButtonUpper">1.4</sys:Double>
+</ResourceDictionary>

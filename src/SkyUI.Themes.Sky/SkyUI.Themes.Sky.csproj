@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SkyUI.Core\SkyUI.Core.csproj" />
+    <ProjectReference Include="..\SkyUI.Fonts\SkyUI.Fonts.csproj" />
+    <ProjectReference Include="..\SkyUI.Icons\SkyUI.Icons.csproj" />
     <ProjectReference Include="..\SkyUI\SkyUI.csproj" />
   </ItemGroup>
 

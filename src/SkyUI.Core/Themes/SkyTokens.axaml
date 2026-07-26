@@ -1,0 +1,98 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=netstandard">
+  <!--
+    Semantic design tokens. Requires a palette dictionary merged first (see SkyPalette.Dark.axaml).
+    Palette slot keys: SkyPaletteKeys in SkyUI.Core.Theming.
+  -->
+
+  <!-- region: semantic color brushes -->
+  <SolidColorBrush x:Key="SkyBackgroundBrush" Color="{StaticResource SkyPaletteBackground}" />
+  <SolidColorBrush x:Key="SkySurfaceBrush" Color="{StaticResource SkyPaletteSurface}" />
+  <SolidColorBrush x:Key="SkySurfaceElevatedBrush" Color="{StaticResource SkyPaletteSurfaceElevated}" />
+  <SolidColorBrush x:Key="SkyCardBrush" Color="{StaticResource SkyPaletteCard}" />
+  <SolidColorBrush x:Key="SkyCardMidBrush" Color="{StaticResource SkyPaletteCardMid}" />
+  <SolidColorBrush x:Key="SkyTextPrimaryBrush" Color="{StaticResource SkyPaletteTextPrimary}" />
+  <SolidColorBrush x:Key="SkyTextSecondaryBrush" Color="{StaticResource SkyPaletteTextSecondary}" />
+  <SolidColorBrush x:Key="SkyTextSecondaryBrightBrush" Color="{StaticResource SkyPaletteTextSecondaryBright}" />
+  <SolidColorBrush x:Key="SkyTextLightBrush" Color="{StaticResource SkyPaletteTextLight}" />
+  <SolidColorBrush x:Key="SkyAccentBrush" Color="{StaticResource SkyPaletteAccent}" />
+  <SolidColorBrush x:Key="SkyAccentPressedBrush" Color="{StaticResource SkyPaletteAccentPressed}" />
+  <SolidColorBrush x:Key="SkyOnAccentBrush" Color="{StaticResource SkyPaletteOnAccent}" />
+  <SolidColorBrush x:Key="SkyDangerBrush" Color="{StaticResource SkyPaletteDanger}" />
+  <SolidColorBrush x:Key="SkyWarningBrush" Color="{StaticResource SkyPaletteWarning}" />
+  <SolidColorBrush x:Key="SkyInfoBrush" Color="{StaticResource SkyPaletteInfo}" />
+  <SolidColorBrush x:Key="SkyBorderBrush" Color="{StaticResource SkyPaletteBorder}" />
+  <SolidColorBrush x:Key="SkyBorderStrongBrush" Color="{StaticResource SkyPaletteBorderStrong}" />
+  <SolidColorBrush x:Key="SkySeparatorBrush" Color="{StaticResource SkyPaletteSeparator}" />
+  <SolidColorBrush x:Key="SkyHoverTintBrush" Color="{StaticResource SkyPaletteHoverTint}" />
+  <SolidColorBrush x:Key="SkyListHoverBrush" Color="{StaticResource SkyPaletteListHover}" />
+  <SolidColorBrush x:Key="SkySelectedTintBrush" Color="{StaticResource SkyPaletteSelectedTint}" />
+  <SolidColorBrush x:Key="SkyAvatarFallbackBrush" Color="{StaticResource SkyPaletteAvatarFallback}" />
+  <SolidColorBrush x:Key="SkyBadgeNeutralBrush" Color="{StaticResource SkyPaletteBadgeNeutral}" />
+  <SolidColorBrush x:Key="SkyLightPillBrush" Color="{StaticResource SkyPaletteLightPill}" />
+  <SolidColorBrush x:Key="SkyLightPillTextBrush" Color="{StaticResource SkyPaletteLightPillText}" />
+  <SolidColorBrush x:Key="SkyFocusRingBrush" Color="{StaticResource SkyPaletteFocusRing}" />
+  <Thickness x:Key="SkyFocusRingThickness">2</Thickness>
+  <sys:Double x:Key="SkyIconSizeSmall">16</sys:Double>
+  <sys:Double x:Key="SkyIconSizeMedium">20</sys:Double>
+  <sys:Double x:Key="SkyIconSizeLarge">24</sys:Double>
+  <!-- endregion -->
+
+  <!-- region: spacing (8px base unit) -->
+  <sys:Double x:Key="SkySpaceUnit">8</sys:Double>
+  <sys:Double x:Key="SkySpace0">0</sys:Double>
+  <sys:Double x:Key="SkySpace1Px">1</sys:Double>
+  <sys:Double x:Key="SkySpace2Px">2</sys:Double>
+  <sys:Double x:Key="SkySpace3Px">3</sys:Double>
+  <sys:Double x:Key="SkySpace4Px">4</sys:Double>
+  <sys:Double x:Key="SkySpace5Px">5</sys:Double>
+  <sys:Double x:Key="SkySpace6Px">6</sys:Double>
+  <sys:Double x:Key="SkySpace8Px">8</sys:Double>
+  <sys:Double x:Key="SkySpace10Px">10</sys:Double>
+  <sys:Double x:Key="SkySpace12Px">12</sys:Double>
+  <sys:Double x:Key="SkySpace14Px">14</sys:Double>
+  <sys:Double x:Key="SkySpace15Px">15</sys:Double>
+  <sys:Double x:Key="SkySpace16Px">16</sys:Double>
+  <sys:Double x:Key="SkySpace20Px">20</sys:Double>
+  <sys:Double x:Key="SkySpaceHalf">4</sys:Double>
+  <sys:Double x:Key="SkySpace1">8</sys:Double>
+  <sys:Double x:Key="SkySpace2">16</sys:Double>
+  <sys:Double x:Key="SkySpace3">24</sys:Double>
+  <!-- endregion -->
+
+  <!-- region: corner radius (CornerRadius for control properties; uniform radius per token) -->
+  <CornerRadius x:Key="SkyRadiusMinimal">2</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusSubtle">4</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusStandard">6</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusComfortable">8</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusMedium">10</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusLarge">100</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusPill">500</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusFull">9999</CornerRadius>
+  <CornerRadius x:Key="SkyRadiusCircle">9999</CornerRadius>
+  <!-- endregion -->
+
+  <!-- region: elevation (BoxShadows for Border.BoxShadow) -->
+  <BoxShadows x:Key="SkyElevation0">0 0 0 0 #00000000</BoxShadows>
+  <BoxShadows x:Key="SkyElevation1">0 8 8 0 #4D000000</BoxShadows>
+  <BoxShadows x:Key="SkyElevation2">0 8 24 0 #80000000</BoxShadows>
+  <BoxShadows x:Key="SkyElevationInsetBorder">0 1 0 0 #121212, inset 0 0 0 1 #7c7c7c</BoxShadows>
+  <!-- endregion -->
+
+  <!-- region: typography (roles; font families may be overridden by theme preset) -->
+  <FontFamily x:Key="SkyFontFamilyUi">Segoe UI, Helvetica Neue, Helvetica, Arial, ui-sans-serif, sans-serif</FontFamily>
+  <FontFamily x:Key="SkyFontFamilyTitle">Segoe UI, Helvetica Neue, Helvetica, Arial, ui-sans-serif, sans-serif</FontFamily>
+  <sys:Double x:Key="SkyFontSizeSectionTitle">24</sys:Double>
+  <sys:Double x:Key="SkyFontSizeFeatureHeading">18</sys:Double>
+  <sys:Double x:Key="SkyFontSizeBody">16</sys:Double>
+  <sys:Double x:Key="SkyFontSizeButton">14</sys:Double>
+  <sys:Double x:Key="SkyFontSizeCaption">14</sys:Double>
+  <sys:Double x:Key="SkyFontSizeSmall">12</sys:Double>
+  <sys:Double x:Key="SkyFontSizeBadge">10.5</sys:Double>
+  <sys:Double x:Key="SkyFontSizeMicro">10</sys:Double>
+  <FontWeight x:Key="SkyFontWeightRegular">Regular</FontWeight>
+  <FontWeight x:Key="SkyFontWeightSemiBold">SemiBold</FontWeight>
+  <FontWeight x:Key="SkyFontWeightBold">Bold</FontWeight>
+  <!-- endregion -->
+</ResourceDictionary>

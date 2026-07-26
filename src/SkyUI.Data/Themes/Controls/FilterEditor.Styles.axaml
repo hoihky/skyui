@@ -23,9 +23,9 @@
     <Setter Property="Padding" Value="8,2" />
     <Setter Property="FontSize" Value="12" />
     <Setter Property="CornerRadius" Value="4" />
-    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceElevatedBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SpotifyBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
   </Style>
 
@@ -35,11 +35,11 @@
     <Setter Property="Padding" Value="8,2" />
     <Setter Property="FontSize" Value="12" />
     <Setter Property="CornerRadius" Value="4" />
-    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceElevatedBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SpotifyBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="CaretBrush" Value="{DynamicResource SpotifyAccentGreenBrush}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource SkyAccentBrush}" />
   </Style>
 
   <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree Button.filter-editor-row-remove">
@@ -51,7 +51,7 @@
     <Setter Property="Margin" Value="4,0,0,0" />
     <Setter Property="FontSize" Value="15" />
     <Setter Property="FontWeight" Value="SemiBold" />
-    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextSecondaryBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="VerticalAlignment" Value="Center" />
@@ -59,8 +59,8 @@
     <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
   <Style Selector="filter|FilterEditor /template/ TreeView#PART_FilterTree Button.filter-editor-row-remove:pointerover">
-    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
-    <Setter Property="Background" Value="{DynamicResource SpotifyListHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
     <Setter Property="CornerRadius" Value="4" />
   </Style>
 </Styles>

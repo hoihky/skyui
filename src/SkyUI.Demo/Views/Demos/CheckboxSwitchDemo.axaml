@@ -1,17 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="SkyUI.Demo.Views.Demos.CheckboxSwitchDemo">
-    <Border Background="{DynamicResource SpotifySurfaceBrush}"
-            BorderBrush="{DynamicResource SpotifyBorderBrush}"
-            BorderThickness="1" CornerRadius="8" Padding="20">
+    <Border Classes="sky-demo-panel">
         <StackPanel Spacing="16">
-            <TextBlock Text="Checkbox &amp; switch" FontWeight="SemiBold" FontSize="18"
-                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <TextBlock Classes="sky-feature-heading" Text="Checkbox &amp; switch" />
             <StackPanel Spacing="12">
-                <CheckBox Classes="spotify" Content="Remember me" IsChecked="True" />
-                <CheckBox Classes="spotify" Content="Subscribe to updates" />
-                <ToggleSwitch Classes="spotify" IsChecked="True" />
-                <ToggleSwitch Classes="spotify" IsChecked="False" />
+                <CheckBox Classes="sky" Content="Remember me" IsChecked="True" />
+                <CheckBox Classes="sky" Content="Subscribe to updates" />
+                <ToggleSwitch Classes="sky" OnContent="On" OffContent="Off" IsChecked="True" />
+                <ToggleSwitch Classes="sky" OnContent="On" OffContent="Off" IsChecked="False" />
             </StackPanel>
         </StackPanel>
     </Border>

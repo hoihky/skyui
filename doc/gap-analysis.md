@@ -98,7 +98,7 @@ Many primitives are **styled Avalonia controls** in the Spotify theme but lack a
 | Runtime branding | No documented accent override or theme builder API |
 | Icons | No shared icon font or SVG set in the package |
 | Motion | No shared transition/animation guidelines in code |
-| Density | No compact/comfortable modes |
+| Density | Comfortable / compact via `SkyDensity` and `SkyDensityTokens.axaml` |
 | Legal / brand | Spotify-inspired DESIGN.md and naming may limit commercial positioning; need Sky-native design language |
 
 **Impact:** Enterprise buyers expect white-label theming and accessibility modes.

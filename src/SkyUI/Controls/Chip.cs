@@ -6,6 +6,8 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 
+using SkyUI.Core.Theming;
+
 namespace SkyUI.Controls;
 
 public class Chip : TemplatedControl
@@ -197,18 +199,21 @@ public class Chip : TemplatedControl
         switch (Variant)
         {
             case ChipVariant.Filled:
-                Background = FindBrush("SpotifySurfaceElevatedBrush", new SolidColorBrush(Color.Parse("#1f1f1f")));
+                Background = FindBrush(SkyTokenKeys.Brush.SurfaceElevated,
+                    FindBrush("SpotifySurfaceElevatedBrush", new SolidColorBrush(Color.Parse("#1f1f1f"))));
                 BorderBrush = Brushes.Transparent;
                 BorderThickness = new Thickness(0);
                 break;
             case ChipVariant.Outlined:
                 Background = Brushes.Transparent;
-                BorderBrush = FindBrush("SpotifyBorderLightBrush", new SolidColorBrush(Color.Parse("#7c7c7c")));
+                BorderBrush = FindBrush(SkyTokenKeys.Brush.BorderStrong,
+                    FindBrush("SpotifyBorderLightBrush", new SolidColorBrush(Color.Parse("#7c7c7c"))));
                 BorderThickness = new Thickness(1);
                 break;
         }
 
-        Foreground = FindBrush("SpotifyTextPrimaryBrush", Brushes.White);
+        Foreground = FindBrush(SkyTokenKeys.Brush.TextPrimary,
+            FindBrush("SpotifyTextPrimaryBrush", Brushes.White));
     }
 
     private void ApplySize()
@@ -230,6 +235,10 @@ public class Chip : TemplatedControl
 
     private void ApplyClickableCursor()
     {
+        if (IsClickable)
+            Classes.Add("sky-clickable");
+        else
+            Classes.Remove("sky-clickable");
         Cursor = IsClickable ? new Cursor(StandardCursorType.Hand) : Cursor.Default;
     }
 

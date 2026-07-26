@@ -1,0 +1,30 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- High-contrast palette (WCAG AAA-style; system HC variant). -->
+  <Color x:Key="SkyPaletteBackground">#000000</Color>
+  <Color x:Key="SkyPaletteSurface">#000000</Color>
+  <Color x:Key="SkyPaletteSurfaceElevated">#000000</Color>
+  <Color x:Key="SkyPaletteCard">#000000</Color>
+  <Color x:Key="SkyPaletteCardMid">#000000</Color>
+  <Color x:Key="SkyPaletteTextPrimary">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteTextSecondary">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteTextSecondaryBright">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteTextLight">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteAccent">#FFFF00</Color>
+  <Color x:Key="SkyPaletteAccentPressed">#FFFF00</Color>
+  <Color x:Key="SkyPaletteOnAccent">#000000</Color>
+  <Color x:Key="SkyPaletteDanger">#FF6B6B</Color>
+  <Color x:Key="SkyPaletteWarning">#FFB347</Color>
+  <Color x:Key="SkyPaletteInfo">#6EC1FF</Color>
+  <Color x:Key="SkyPaletteBorder">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteBorderStrong">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteSeparator">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteLightPill">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteLightPillText">#000000</Color>
+  <Color x:Key="SkyPaletteHoverTint">#33FFFFFF</Color>
+  <Color x:Key="SkyPaletteListHover">#33FFFFFF</Color>
+  <Color x:Key="SkyPaletteSelectedTint">#66FFFF00</Color>
+  <Color x:Key="SkyPaletteAvatarFallback">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteBadgeNeutral">#000000</Color>
+  <Color x:Key="SkyPaletteFocusRing">#FFFF00</Color>
+</ResourceDictionary>

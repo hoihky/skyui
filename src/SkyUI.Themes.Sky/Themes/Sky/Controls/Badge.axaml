@@ -5,8 +5,8 @@
     <Setter Property="ClipToBounds" Value="False" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="BadgeBackground" Value="{DynamicResource SpotifyBadgeNeutralBrush}" />
-    <Setter Property="BadgeForeground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
+    <Setter Property="BadgeBackground" Value="{DynamicResource SkyBadgeNeutralBrush}" />
+    <Setter Property="BadgeForeground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="Template">
       <ControlTemplate>
         <Panel ClipToBounds="False">

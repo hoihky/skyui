@@ -2,12 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:dg="using:SkyUI.DataGrid">
   <ControlTheme x:Key="{x:Type dg:SkyVirtualDataGrid}" TargetType="dg:SkyVirtualDataGrid">
-    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
     <Setter Property="MinHeight" Value="160" />
     <Setter Property="Template">
       <ControlTemplate>
         <Border Background="{TemplateBinding Background}"
-                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderBrush="{DynamicResource SkyBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="6"
                 Padding="0">
@@ -19,7 +19,7 @@
                       Width="3"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Stretch"
-                      Background="{DynamicResource SpotifyAccentGreenBrush}"
+                      Background="{DynamicResource SkyAccentBrush}"
                       Opacity="0.85"
                       IsHitTestVisible="False"
                       IsVisible="False"

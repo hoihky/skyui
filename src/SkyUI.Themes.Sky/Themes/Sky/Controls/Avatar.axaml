@@ -2,12 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="using:SkyUI.Controls">
   <ControlTheme x:Key="{x:Type controls:Avatar}" TargetType="controls:Avatar">
-    <Setter Property="Background" Value="{DynamicResource SpotifyAvatarFallbackBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyAvatarFallbackBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="CornerRadius" Value="4" />
     <Setter Property="ClipToBounds" Value="True" />
-    <Setter Property="FontFamily" Value="{DynamicResource SpotifyFontUi}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
     <Setter Property="Template">
       <ControlTemplate>
         <Border Name="PART_Root"

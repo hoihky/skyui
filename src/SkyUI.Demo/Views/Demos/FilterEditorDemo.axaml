@@ -2,15 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sky="https://skyui.dev"
              x:Class="SkyUI.Demo.Views.Demos.FilterEditorDemo">
-    <Border Background="{DynamicResource SpotifySurfaceBrush}"
-            BorderBrush="{DynamicResource SpotifyBorderBrush}"
-            BorderThickness="1" CornerRadius="8" Padding="20">
+    <Border Classes="sky-demo-panel">
         <Grid RowDefinitions="Auto,*" RowSpacing="14">
             <StackPanel Spacing="8">
-                <TextBlock Text="FilterEditor" FontWeight="SemiBold" FontSize="18"
-                           Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+                <TextBlock Classes="sky-feature-heading" Text="FilterEditor" />
                 <TextBlock TextWrapping="Wrap" MaxWidth="820"
-                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                           Foreground="{DynamicResource SkyTextSecondaryBrush}"
                            Text="Tree of AND/OR groups and field conditions with a live SQL preview. Field paths should match entries in the document’s field catalog. Use the toolbar to add groups or conditions and Remove on a selected row." />
             </StackPanel>
             <sky:FilterEditor x:Name="Editor" Grid.Row="1" MinHeight="320" />

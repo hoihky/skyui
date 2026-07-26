@@ -24,9 +24,9 @@ skyui/
   Directory.Build.props
   src/
     SkyUI.Core/           Tokens, theme attached properties
-    SkyUI.Icons/          Icon identifiers (assets to follow)
+    SkyUI.Fonts/          Inter + Noto Sans SC, typography role styles
     SkyUI/                Essentials controls + SkyThemeUris hooks
-    SkyUI.Themes.Sky/     Default dark theme (Sky preset) + primitive styles
+    SkyUI.Themes.Sky/     Sky preset (Dark / Light / HighContrast) + primitive styles
     SkyUI.Data/           Virtual grid + filter editor + SkyDataTheme.axaml
     SkyUI.Diagram/        Diagram surface and routers
     SkyUI.Demo/           Control gallery
@@ -40,9 +40,10 @@ skyui/
 
 ```text
 SkyUI.Core
+SkyUI.Fonts
 SkyUI.Icons
 SkyUI          → Core, Icons
-SkyUI.Themes.Sky → Core, SkyUI (templates target essentials controls)
+SkyUI.Themes.Sky → Core, Fonts, SkyUI
 SkyUI.Data     → Core, SkyUI
 SkyUI.Diagram  → Core, SkyUI
 ```

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SkyUI.Fonts</RootNamespace>
+    <AssemblyName>SkyUI.Fonts</AssemblyName>
+    <Description>SkyUI typography: Inter + Noto Sans SC (CJK) and DESIGN.md text roles.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Fonts\**\*" />
+    <AvaloniaResource Include="Themes\**\*.axaml" />
+  </ItemGroup>
+
+</Project>

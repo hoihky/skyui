@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sky="using:SkyUI.Themes.Sky">
+  <ResourceDictionary.ThemeDictionaries>
+  <ResourceDictionary x:Key="Default">
+    <ResourceDictionary.MergedDictionaries>
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Dark.axaml" />
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyResources.Variant.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+  </ResourceDictionary>
+  <ResourceDictionary x:Key="Dark">
+    <ResourceDictionary.MergedDictionaries>
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Dark.axaml" />
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyResources.Variant.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+  </ResourceDictionary>
+  <ResourceDictionary x:Key="Light">
+    <ResourceDictionary.MergedDictionaries>
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Light.axaml" />
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyResources.Variant.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+  </ResourceDictionary>
+  <ResourceDictionary x:Key="{x:Static sky:SkyThemeVariants.HighContrast}">
+    <ResourceDictionary.MergedDictionaries>
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.HighContrast.axaml" />
+      <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyResources.Variant.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Thickness x:Key="SkyFocusRingThickness">3</Thickness>
+  </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

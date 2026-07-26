@@ -1,0 +1,123 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- DESIGN.md typography hierarchy (legacy spotify-* aliases included). -->
+
+  <Style Selector="TextBlock.sky-section-title, TextBlock.spotify-section-title">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyTitle}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeSectionTitle}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightBold}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightSectionTitle}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-feature-heading, TextBlock.spotify-feature-heading">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeFeatureHeading}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightSemiBold}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightTight}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-body, TextBlock.spotify-body">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeBody}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightRegular}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightNormal}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-body-bold, TextBlock.spotify-body-bold">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeBody}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightBold}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightNormal}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-body-secondary, TextBlock.spotify-body-secondary">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeCaption}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightRegular}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightCaption}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-button-label, TextBlock.spotify-button-label">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightBold}" />
+    <Setter Property="LetterSpacing" Value="{DynamicResource SkyLetterSpacingButton}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightButton}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-button-label-upper, TextBlock.spotify-button-label-upper">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightSemiBold}" />
+    <Setter Property="LetterSpacing" Value="{DynamicResource SkyLetterSpacingButtonUpper}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightButton}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-nav-link, TextBlock.spotify-nav-link">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightRegular}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightButton}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-nav-link-bold, TextBlock.spotify-nav-link-bold">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightBold}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightButton}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-caption, TextBlock.spotify-caption">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeCaption}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightRegular}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightCaption}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-caption-bold, TextBlock.spotify-caption-bold">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeCaption}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightBold}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightCaption}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-small, TextBlock.spotify-small">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeSmall}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightRegular}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightSmall}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-small-bold, TextBlock.spotify-small-bold">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeSmall}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightBold}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightSmall}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-badge-text, TextBlock.spotify-badge-text">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeBadge}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightSemiBold}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightBadge}" />
+  </Style>
+
+  <Style Selector="TextBlock.sky-micro, TextBlock.spotify-micro">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeMicro}" />
+    <Setter Property="FontWeight" Value="{DynamicResource SkyFontWeightRegular}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="LineHeight" Value="{DynamicResource SkyLineHeightMicro}" />
+  </Style>
+</Styles>

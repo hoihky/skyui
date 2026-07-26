@@ -4,6 +4,7 @@
     <Project Path="src/SkyUI.Data/SkyUI.Data.csproj" />
     <Project Path="src/SkyUI.Demo/SkyUI.Demo.csproj" />
     <Project Path="src/SkyUI.Diagram/SkyUI.Diagram.csproj" />
+    <Project Path="src/SkyUI.Fonts/SkyUI.Fonts.csproj" />
     <Project Path="src/SkyUI.Icons/SkyUI.Icons.csproj" />
     <Project Path="src/SkyUI.Themes.Sky/SkyUI.Themes.Sky.csproj" />
     <Project Path="src/SkyUI/SkyUI.csproj" />

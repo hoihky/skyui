@@ -8,13 +8,13 @@
     <Setter Property="Background" Value="Transparent" />
   </Style>
   <Style Selector="dg|SkyVirtualDataGrid Grid.sky-grid-row:pointerover">
-    <Setter Property="Background" Value="#1AFFFFFF" />
+    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
   </Style>
   <Style Selector="dg|SkyVirtualDataGrid Grid.sky-grid-row.sky-grid-row-selected">
-    <Setter Property="Background" Value="#33441163" />
+    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
   </Style>
   <Style Selector="dg|SkyVirtualDataGrid Grid.sky-grid-row.sky-grid-row-selected:pointerover">
-    <Setter Property="Background" Value="#40441163" />
+    <Setter Property="Background" Value="{DynamicResource SkyHoverTintBrush}" />
   </Style>
   <Style Selector="dg|SkyVirtualDataGrid Grid.sky-grid-milestone">
     <Setter Property="Background" Value="#402040" />

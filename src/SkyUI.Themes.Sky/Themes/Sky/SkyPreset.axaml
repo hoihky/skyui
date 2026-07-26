@@ -1,0 +1,24 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Sky preset: Dark / Light / HighContrast via Application.RequestedThemeVariant. -->
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyResources.Themed.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Badge.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Avatar.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Chip.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/CheckedListBox.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Accordion.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/VideoTimeline.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Accordion.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Controls/Chip.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Presets/Shared/SkyPreset.Primitives.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/Presets/Shared/SkyPreset.Focus.axaml" />
+  <StyleInclude Source="avares://SkyUI.Icons/Themes/SkyIconStyles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Fonts/Themes/SkyTypographyStyles.axaml" />
+</Styles>

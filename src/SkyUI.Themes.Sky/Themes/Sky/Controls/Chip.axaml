@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="using:SkyUI.Controls">
   <ControlTheme x:Key="{x:Type controls:Chip}" TargetType="controls:Chip">
-    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
-    <Setter Property="FontFamily" Value="{DynamicResource SpotifyFontUi}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
     <Setter Property="Cursor" Value="Arrow" />
     <Setter Property="Template">
       <ControlTemplate>

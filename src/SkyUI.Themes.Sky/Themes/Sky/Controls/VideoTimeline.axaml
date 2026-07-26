@@ -2,28 +2,28 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="using:SkyUI.Controls">
   <ControlTheme x:Key="{x:Type controls:VideoTimeline}" TargetType="controls:VideoTimeline">
-    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceBrush}" />
-    <Setter Property="ClipLaneBrush" Value="{DynamicResource SpotifySurfaceElevatedBrush}" />
-    <Setter Property="ClipBrush" Value="{DynamicResource SpotifyCardMidBrush}" />
-    <Setter Property="ClipSelectedBrush" Value="{DynamicResource SpotifySelectedTintBrush}" />
-    <Setter Property="PlayheadBrush" Value="{DynamicResource SpotifyAccentGreenBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="ClipLaneBrush" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="ClipBrush" Value="{DynamicResource SkyCardMidBrush}" />
+    <Setter Property="ClipSelectedBrush" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="PlayheadBrush" Value="{DynamicResource SkyAccentBrush}" />
     <Setter Property="SelectionBrush" Value="#6600FF88" />
-    <Setter Property="RulerTickBrush" Value="{DynamicResource SpotifyBorderLightBrush}" />
-    <Setter Property="TrackSelectionBrush" Value="{DynamicResource SpotifyAccentGreenBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource SpotifyTextPrimaryBrush}" />
+    <Setter Property="RulerTickBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
+    <Setter Property="TrackSelectionBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="Template">
       <ControlTemplate>
         <Border Background="{TemplateBinding Background}"
                 Padding="{TemplateBinding Padding}"
                 CornerRadius="8"
-                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderBrush="{DynamicResource SkyBorderBrush}"
                 BorderThickness="1">
           <Grid ColumnDefinitions="120,*" RowDefinitions="36,*">
             <Border Grid.Row="0"
                     Grid.Column="0"
-                    Background="{DynamicResource SpotifyBackgroundBrush}"
-                    BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                    Background="{DynamicResource SkyBackgroundBrush}"
+                    BorderBrush="{DynamicResource SkyBorderBrush}"
                     BorderThickness="0,0,1,1" />
             <ScrollViewer x:Name="PART_RulerScroll"
                           Grid.Row="0"

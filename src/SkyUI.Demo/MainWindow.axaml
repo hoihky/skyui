@@ -2,33 +2,133 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:models="using:SkyUI.Demo.Models"
+             xmlns:models="using:SkyUI.Demo.Models"
+             xmlns:icons="using:SkyUI.Icons"
         mc:Ignorable="d" d:DesignWidth="960" d:DesignHeight="640"
         x:Class="SkyUI.Demo.MainWindow"
         Title="SkyUI demo"
         Width="980" Height="680"
         MinWidth="640" MinHeight="480"
-        Background="{DynamicResource SpotifyBackgroundBrush}">
+        Background="{DynamicResource SkyBackgroundBrush}"
+        FontFamily="{DynamicResource SkyFontFamilyUi}">
     <Grid ColumnDefinitions="240,*">
         <Border Grid.Column="0"
-                Background="{DynamicResource SpotifySurfaceBrush}"
-                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                Background="{DynamicResource SkySurfaceBrush}"
+                BorderBrush="{DynamicResource SkyBorderBrush}"
                 BorderThickness="0,0,1,0">
             <DockPanel>
                 <TextBlock DockPanel.Dock="Top"
                            Text="Components"
                            FontSize="13"
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                           Foreground="{DynamicResource SkyTextSecondaryBrush}"
                            Margin="16,16,16,8" />
+                <StackPanel DockPanel.Dock="Top" Margin="12,0,12,12" Spacing="6">
+                    <TextBlock Text="Theme"
+                               FontSize="12"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                    <ComboBox x:Name="ThemeCombo"
+                              Classes="sky"
+                              HorizontalAlignment="Stretch"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="Dark" Tag="Dark" />
+                        <ComboBoxItem Content="Light" Tag="Light" />
+                        <ComboBoxItem Content="High contrast" Tag="HighContrast" />
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="12,0,12,12" Spacing="6">
+                    <TextBlock Text="Density"
+                               FontSize="12"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                    <ComboBox x:Name="DensityCombo"
+                              Classes="sky"
+                              HorizontalAlignment="Stretch"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="Comfortable" Tag="Comfortable" />
+                        <ComboBoxItem Content="Compact" Tag="Compact" />
+                    </ComboBox>
+                    <TextBlock TextWrapping="Wrap"
+                               FontSize="11"
+                               LineHeight="16"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                               Text="sky:SkyThemeProperties.Density on Application, or SkyTheme.Apply with Density = Compact." />
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="12,0,12,12" Spacing="8">
+                    <TextBlock Text="Accent"
+                               FontSize="12"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                    <Border x:Name="AccentPreview"
+                            Height="10"
+                            CornerRadius="5"
+                            Background="{DynamicResource SkyAccentBrush}" />
+                    <TextBox x:Name="AccentHexBox"
+                             Classes="sky"
+                             Watermark="#RRGGBB"
+                             Text="#1ED760" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="sky sky-subtle"
+                                Width="28" Height="28" Padding="0" Margin="0,0,6,6"
+                                ToolTip.Tip="Sky green"
+                                Tag="#1ED760"
+                                Click="OnAccentSwatchClick">
+                            <Border Width="18" Height="18" CornerRadius="9" Background="#1ED760" />
+                        </Button>
+                        <Button Classes="sky sky-subtle"
+                                Width="28" Height="28" Padding="0" Margin="0,0,6,6"
+                                ToolTip.Tip="Blue"
+                                Tag="#0B57D0"
+                                Click="OnAccentSwatchClick">
+                            <Border Width="18" Height="18" CornerRadius="9" Background="#0B57D0" />
+                        </Button>
+                        <Button Classes="sky sky-subtle"
+                                Width="28" Height="28" Padding="0" Margin="0,0,6,6"
+                                ToolTip.Tip="Violet"
+                                Tag="#7C3AED"
+                                Click="OnAccentSwatchClick">
+                            <Border Width="18" Height="18" CornerRadius="9" Background="#7C3AED" />
+                        </Button>
+                        <Button Classes="sky sky-subtle"
+                                Width="28" Height="28" Padding="0" Margin="0,0,6,6"
+                                ToolTip.Tip="Rose"
+                                Tag="#E11D48"
+                                Click="OnAccentSwatchClick">
+                            <Border Width="18" Height="18" CornerRadius="9" Background="#E11D48" />
+                        </Button>
+                        <Button Classes="sky sky-subtle"
+                                Width="28" Height="28" Padding="0" Margin="0,0,6,6"
+                                ToolTip.Tip="Amber"
+                                Tag="#F59E0B"
+                                Click="OnAccentSwatchClick">
+                            <Border Width="18" Height="18" CornerRadius="9" Background="#F59E0B" />
+                        </Button>
+                    </WrapPanel>
+                    <Button Classes="sky sky-subtle"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Content="Use theme default accent"
+                            Click="OnAccentResetClick" />
+                    <TextBlock TextWrapping="Wrap"
+                               FontSize="11"
+                               LineHeight="16"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                               Text="Set sky:SkyThemeProperties.AccentOverride on Application, or call SkyTheme.Apply with AccentColor. Any #RRGGBB works." />
+                </StackPanel>
                 <ListBox x:Name="NavList"
-                         Classes="spotify"
+                         Classes="sky sky-nav"
                          Margin="8,0,8,12"
                          BorderThickness="0"
                          Background="Transparent">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="models:DemoItem">
-                            <TextBlock Text="{Binding Title}" Padding="4,2" />
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <icons:SkyIcon Kind="{Binding Icon}"
+                                               Size="Medium"
+                                               VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Title}"
+                                           Classes="sky-nav-link"
+                                           Padding="0,2"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -36,7 +136,8 @@
         </Border>
         <ScrollViewer Grid.Column="1"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Auto"
+                      Background="{DynamicResource SkyBackgroundBrush}">
             <ContentControl x:Name="DetailHost"
                             Padding="28,24"
                             HorizontalContentAlignment="Stretch"

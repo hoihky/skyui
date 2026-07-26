@@ -12,6 +12,7 @@ using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Threading;
+using SkyUI.Core.Theming;
 
 namespace SkyUI.Controls;
 
@@ -182,7 +183,7 @@ public class CheckedListBox : TemplatedControl
         void SyncSelection()
         {
             border.Background = m.IsSelected
-                ? new SolidColorBrush(Color.Parse("#331ED760"))
+                ? owner.FindBrush(SkyTokenKeys.Brush.SelectedTint, new SolidColorBrush(Color.Parse("#331ED760")))
                 : Brushes.Transparent;
         }
 
@@ -216,10 +217,13 @@ public class CheckedListBox : TemplatedControl
             IsVisible = m.HasChildren,
             Command = m.ToggleExpandCommand,
         };
+        expand.Classes.Add("sky");
+        expand.Classes.Add("sky-subtle");
         Grid.SetColumn(expand, 1);
         grid.Children.Add(expand);
 
         var cb = new CheckBox { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
+        cb.Classes.Add("sky");
         cb.Bind(CheckBox.IsCheckedProperty, new Binding(nameof(CheckedListRowModel.IsChecked))
         {
             Source = m,
@@ -362,6 +366,9 @@ public class CheckedListBox : TemplatedControl
 
         _itemHandlers.Clear();
     }
+
+    private IBrush FindBrush(string key, IBrush fallback) =>
+        TryGetResource(key, ActualThemeVariant, out var o) && o is IBrush b ? b : fallback;
 }
 
 public sealed class CheckedListBoxCheckedChangedEventArgs : EventArgs

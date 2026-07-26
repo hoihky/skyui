@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:icons="using:SkyUI.Icons"
+             x:Class="SkyUI.Demo.Views.Demos.IconsDemo">
+    <Border Classes="sky-demo-panel">
+        <StackPanel Spacing="16" MaxWidth="640">
+            <TextBlock Classes="sky-feature-heading" Text="Icons" />
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                       Text="SkyUI.Icons ships vector SkyIcon glyphs at 16px (buttons), 20px (nav and lists), and 24px (hero actions). Use SkyIconProperties.Icon on buttons or compose SkyIcon in templates." />
+            <TextBlock Text="Sizes" FontWeight="SemiBold" Foreground="{DynamicResource SkyTextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal" Spacing="24" VerticalAlignment="Center">
+                <StackPanel Spacing="4" HorizontalAlignment="Center">
+                    <icons:SkyIcon Kind="Search" Size="Small" />
+                    <TextBlock Text="16" FontSize="11" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                </StackPanel>
+                <StackPanel Spacing="4" HorizontalAlignment="Center">
+                    <icons:SkyIcon Kind="Search" Size="Medium" />
+                    <TextBlock Text="20" FontSize="11" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                </StackPanel>
+                <StackPanel Spacing="4" HorizontalAlignment="Center">
+                    <icons:SkyIcon Kind="Search" Size="Large" />
+                    <TextBlock Text="24" FontSize="11" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Text="Catalog" FontWeight="SemiBold" Foreground="{DynamicResource SkyTextPrimaryBrush}" />
+            <WrapPanel Orientation="Horizontal">
+                <StackPanel Width="72" Margin="0,0,12,12" Spacing="6" HorizontalAlignment="Center">
+                    <icons:SkyIcon Kind="Play" Size="Medium" HorizontalAlignment="Center" />
+                    <TextBlock Text="Play" FontSize="11" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                </StackPanel>
+                <StackPanel Width="72" Margin="0,0,12,12" Spacing="6" HorizontalAlignment="Center">
+                    <icons:SkyIcon Kind="Search" Size="Medium" HorizontalAlignment="Center" />
+                    <TextBlock Text="Search" FontSize="11" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                </StackPanel>
+                <StackPanel Width="72" Margin="0,0,12,12" Spacing="6" HorizontalAlignment="Center">
+                    <icons:SkyIcon Kind="Settings" Size="Medium" HorizontalAlignment="Center" />
+                    <TextBlock Text="Settings" FontSize="11" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                </StackPanel>
+                <StackPanel Width="72" Margin="0,0,12,12" Spacing="6" HorizontalAlignment="Center">
+                    <icons:SkyIcon Kind="Filter" Size="Medium" HorizontalAlignment="Center" />
+                    <TextBlock Text="Filter" FontSize="11" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                </StackPanel>
+            </WrapPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

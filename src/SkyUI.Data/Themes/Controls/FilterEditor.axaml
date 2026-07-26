@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:filter="using:SkyUI.FilterEditor">
   <ControlTheme x:Key="{x:Type filter:FilterEditor}" TargetType="filter:FilterEditor">
-    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
     <Setter Property="Padding" Value="12" />
     <Setter Property="MinHeight" Value="200" />
     <Setter Property="Template">
@@ -11,7 +11,7 @@
                 Background="{TemplateBinding Background}"
                 Padding="{TemplateBinding Padding}"
                 CornerRadius="8"
-                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderBrush="{DynamicResource SkyBorderBrush}"
                 BorderThickness="1">
           <DockPanel>
             <StackPanel x:Name="PART_Toolbar"
@@ -20,16 +20,16 @@
                         Orientation="Horizontal"
                         Spacing="6"
                         Margin="0,0,0,8">
-              <Button Classes="spotify spotify-outlined"
+              <Button Classes="sky sky-outlined"
                       Content="+ AND group"
                       Command="{Binding AddAndGroupCommand}" />
-              <Button Classes="spotify spotify-outlined"
+              <Button Classes="sky sky-outlined"
                       Content="+ OR group"
                       Command="{Binding AddOrGroupCommand}" />
-              <Button Classes="spotify spotify-primary"
+              <Button Classes="sky sky-primary"
                       Content="+ Condition"
                       Command="{Binding AddConditionCommand}" />
-              <Button Classes="spotify spotify-outlined"
+              <Button Classes="sky sky-outlined"
                       Content="Remove selected"
                       Command="{Binding RemoveSelectedCommand}" />
             </StackPanel>
@@ -38,17 +38,17 @@
                     IsVisible="{TemplateBinding ShowSqlPreview}"
                     Margin="0,8,0,0"
                     Padding="10"
-                    Background="{DynamicResource SpotifySurfaceElevatedBrush}"
+                    Background="{DynamicResource SkySurfaceElevatedBrush}"
                     CornerRadius="6"
-                    BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                    BorderBrush="{DynamicResource SkyBorderBrush}"
                     BorderThickness="1">
               <DockPanel>
                 <TextBlock DockPanel.Dock="Top"
                            Text="SQL preview"
                            FontWeight="SemiBold"
                            Margin="0,0,0,6"
-                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}" />
-                <TextBox Classes="spotify"
+                           Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                <TextBox Classes="sky"
                          MinHeight="72"
                          AcceptsReturn="True"
                          TextWrapping="Wrap"

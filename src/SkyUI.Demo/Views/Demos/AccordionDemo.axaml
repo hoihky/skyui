@@ -2,34 +2,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sky="https://skyui.dev"
              x:Class="SkyUI.Demo.Views.Demos.AccordionDemo">
-    <Border Background="{DynamicResource SpotifySurfaceBrush}"
-            BorderBrush="{DynamicResource SpotifyBorderBrush}"
-            BorderThickness="1" CornerRadius="8" Padding="20">
+    <Border Classes="sky-demo-panel">
         <StackPanel Spacing="16" MaxWidth="560">
-            <TextBlock Text="Accordion" FontWeight="SemiBold" FontSize="18"
-                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
+            <TextBlock Classes="sky-feature-heading" Text="Accordion" />
             <TextBlock TextWrapping="Wrap"
-                       Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                       Foreground="{DynamicResource SkyTextSecondaryBrush}"
                        Text="SkyAccordion stacks SkyAccordionItem panels. Single mode keeps one section open; Multiple allows any set." />
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <TextBlock Text="Selection mode" VerticalAlignment="Center"
-                           Foreground="{DynamicResource SpotifyTextSecondaryBrush}" />
-                <ComboBox x:Name="ModeCombo" Width="220" Classes="spotify" />
+                           Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+                <ComboBox x:Name="ModeCombo" Width="220" Classes="sky" />
             </StackPanel>
             <sky:SkyAccordion x:Name="Accordion" SelectionMode="Multiple">
                 <sky:SkyAccordionItem Header="Playback" IsExpanded="True">
                     <TextBlock TextWrapping="Wrap"
-                               Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}"
                                Text="Crossfade, gapless, and output device settings would live here." />
                 </sky:SkyAccordionItem>
                 <sky:SkyAccordionItem Header="Library">
                     <TextBlock TextWrapping="Wrap"
-                               Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}"
                                Text="Show unavailable downloads, offline quality, and storage." />
                 </sky:SkyAccordionItem>
                 <sky:SkyAccordionItem Header="Display">
                     <TextBlock TextWrapping="Wrap"
-                               Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+                               Foreground="{DynamicResource SkyTextSecondaryBrush}"
                                Text="Theme, compact density, and canvas options." />
                 </sky:SkyAccordionItem>
             </sky:SkyAccordion>

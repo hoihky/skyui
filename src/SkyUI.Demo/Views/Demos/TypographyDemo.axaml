@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SkyUI.Demo.Views.Demos.TypographyDemo">
+    <Border Classes="sky-demo-panel">
+        <StackPanel Spacing="10" MaxWidth="640">
+            <TextBlock Classes="sky-section-title" Text="Typography" />
+            <TextBlock Classes="sky-body-secondary" TextWrapping="Wrap"
+                       Text="SkyUI.Fonts ships Inter (Latin) and Noto Sans SC (CJK). Call SkyFonts.Configure() on AppBuilder. Roles match DESIGN.md — use Classes=&quot;sky-body&quot;, sky-feature-heading, etc." />
+            <TextBlock Classes="sky-feature-heading" Text="Hierarchy" />
+            <TextBlock Classes="sky-body" Text="Body 16px — The quick brown fox jumps. 天地玄黄，宇宙洪荒。" />
+            <TextBlock Classes="sky-body-bold" Text="Body bold — Emphasized playlist title. 强调正文。" />
+            <TextBlock Classes="sky-caption" Text="Caption 14px — Metadata and timestamps. 元数据说明。" />
+            <TextBlock Classes="sky-small" Text="Small 12px — Tags and fine print. 标签与注释。" />
+            <TextBlock Classes="sky-micro" Text="Micro 10px — Smallest labels." />
+            <TextBlock Classes="sky-button-label-upper" Text="UPPERCASE BUTTON" />
+            <TextBlock Classes="sky-nav-link" Text="Nav link (inactive)" />
+            <TextBlock Classes="sky-nav-link-bold" Text="Nav link (active)" />
+        </StackPanel>
+    </Border>
+</UserControl>

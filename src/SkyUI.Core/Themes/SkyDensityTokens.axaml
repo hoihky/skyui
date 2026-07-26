@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=netstandard">
+  <!-- Comfortable density (default). Compact overrides via SkyThemeProperties.Density on Application. -->
+  <Thickness x:Key="SkyDensityButtonPadding">16,8</Thickness>
+  <sys:Double x:Key="SkyDensityButtonMinHeight">40</sys:Double>
+  <Thickness x:Key="SkyDensityNavPillPadding">32,12</Thickness>
+  <sys:Double x:Key="SkyDensityNavPillMinHeight">48</sys:Double>
+  <Thickness x:Key="SkyDensityFieldPadding">16,12</Thickness>
+  <sys:Double x:Key="SkyDensityFieldMinHeight">44</sys:Double>
+  <Thickness x:Key="SkyDensityComboPadding">16,10</Thickness>
+  <sys:Double x:Key="SkyDensityComboMinHeight">44</sys:Double>
+  <Thickness x:Key="SkyDensityListItemPadding">12,10</Thickness>
+  <sys:Double x:Key="SkyDensityListItemMinHeight">36</sys:Double>
+  <Thickness x:Key="SkyDensityNavItemPadding">12,10</Thickness>
+  <Thickness x:Key="SkyDensityListBoxPadding">4</Thickness>
+  <sys:Double x:Key="SkyDensityToggleMinHeight">38</sys:Double>
+  <sys:Double x:Key="SkyDensityPlaySize">56</sys:Double>
+  <Thickness x:Key="SkyDensityPlayPadding">12</Thickness>
+</ResourceDictionary>

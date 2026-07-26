@@ -2,15 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sky="https://skyui.dev"
              x:Class="SkyUI.Demo.Views.Demos.PlaceholderDemo">
-    <Border BorderBrush="{DynamicResource SpotifyBorderBrush}"
-            BorderThickness="1" CornerRadius="8" Padding="20">
+    <Border Classes="sky-demo-panel">
         <StackPanel Spacing="12">
-            <TextBlock Text="SkyPlaceholderControl" FontWeight="SemiBold" FontSize="18"
-                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
-            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+            <TextBlock Classes="sky-feature-heading" Text="SkyPlaceholderControl" />
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SkyTextSecondaryBrush}"
                        Text="Sample control from the SkyUI library (not MUI-themed)." />
             <sky:SkyPlaceholderControl Width="280" Height="96"
-                Background="{DynamicResource SpotifyAccentGreenBrush}" />
+                Background="{DynamicResource SkyAccentBrush}" />
         </StackPanel>
     </Border>
 </UserControl>

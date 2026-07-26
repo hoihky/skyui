@@ -1,21 +1,24 @@
 namespace SkyUI.Core;
 
-/// <summary>Semantic and preset resource dictionary keys shared across SkyUI packages.</summary>
+using SkyUI.Core.Theming;
+
+/// <summary>
+/// Obsolete convenience aliases; prefer <see cref="SkyTokenKeys"/> for new code.
+/// </summary>
 public static class SkyResourceKeys
 {
-    public const string Background = "SkyBackgroundBrush";
-    public const string Surface = "SkySurfaceBrush";
-    public const string SurfaceElevated = "SkySurfaceElevatedBrush";
-    public const string TextPrimary = "SkyTextPrimaryBrush";
-    public const string TextSecondary = "SkyTextSecondaryBrush";
-    public const string Accent = "SkyAccentBrush";
-    public const string OnAccent = "SkyOnAccentBrush";
-    public const string Border = "SkyBorderBrush";
-    public const string Negative = "SkyNegativeBrush";
-    public const string Warning = "SkyWarningBrush";
-    public const string Announcement = "SkyAnnouncementBrush";
+    public const string Background = SkyTokenKeys.Brush.Background;
+    public const string Surface = SkyTokenKeys.Brush.Surface;
+    public const string SurfaceElevated = SkyTokenKeys.Brush.SurfaceElevated;
+    public const string TextPrimary = SkyTokenKeys.Brush.TextPrimary;
+    public const string TextSecondary = SkyTokenKeys.Brush.TextSecondary;
+    public const string Accent = SkyTokenKeys.Brush.Accent;
+    public const string OnAccent = SkyTokenKeys.Brush.OnAccent;
+    public const string Border = SkyTokenKeys.Brush.Border;
+    public const string Negative = SkyTokenKeys.Brush.Danger;
+    public const string Warning = SkyTokenKeys.Brush.Warning;
+    public const string Announcement = SkyTokenKeys.Brush.Info;
 
-    /// <summary>Legacy Spotify preset keys (see SkyUI.Themes.Sky).</summary>
     public const string SpotifyTextPrimary = "SpotifyTextPrimaryBrush";
     public const string SpotifyAccentGreen = "SpotifyAccentGreenBrush";
 }

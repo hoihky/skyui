@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using SkyUI.Fonts;
 using System;
 
 namespace SkyUI.Demo;
@@ -16,6 +17,6 @@ class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
-            .WithInterFont()
+            .ConfigureSkyFonts()
             .LogToTrace();
 }

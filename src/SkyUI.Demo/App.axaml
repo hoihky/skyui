@@ -1,11 +1,12 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
              x:Class="SkyUI.Demo.App"
-             RequestedThemeVariant="Dark">
+             RequestedThemeVariant="Dark"
+             sky:SkyThemeProperties.AccentOverride="#1ED760">
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyTheme.axaml" />
-        <StyleInclude Source="avares://SkyUI.Data/Themes/SkyDataTheme.axaml" />
+        <StyleInclude Source="avares://SkyUI.Data/Themes/SkyTheme.WithData.axaml" />
     </Application.Styles>
 </Application>

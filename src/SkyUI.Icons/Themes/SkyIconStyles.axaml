@@ -1,0 +1,24 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:icons="using:SkyUI.Icons">
+  <Style Selector="icons|SkyIcon">
+    <Setter Property="Size" Value="{x:Static icons:SkyIconSize.Medium}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+  </Style>
+  <Style Selector="icons|SkyIcon.sky-icon-16">
+    <Setter Property="Size" Value="{x:Static icons:SkyIconSize.Small}" />
+  </Style>
+  <Style Selector="icons|SkyIcon.sky-icon-20">
+    <Setter Property="Size" Value="{x:Static icons:SkyIconSize.Medium}" />
+  </Style>
+  <Style Selector="icons|SkyIcon.sky-icon-24">
+    <Setter Property="Size" Value="{x:Static icons:SkyIconSize.Large}" />
+  </Style>
+
+  <Style Selector="Button.sky-has-icon icons|SkyIcon">
+    <Setter Property="Size" Value="{x:Static icons:SkyIconSize.Small}" />
+  </Style>
+  <Style Selector="ListBoxItem.sky-has-icon icons|SkyIcon">
+    <Setter Property="Size" Value="{x:Static icons:SkyIconSize.Medium}" />
+  </Style>
+</Styles>

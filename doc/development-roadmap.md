@@ -70,7 +70,7 @@ Dependency direction: `Core` → `SkyUI` → (`Data`, `Diagram`); `Themes` and `
 | **Light + high contrast** | Full brush sets; focus rings; target WCAG AA contrast for text and controls |
 | **Icons** | `SkyUI.Icons` or embedded font; sizes 16/20/24 used in buttons, nav, list items |
 | **Typography** | Ship open fonts (e.g. Inter + Noto CJK) aligned with `DESIGN.md` hierarchy |
-| **Density** | Optional compact mode (reduced padding/min heights) |
+| **Density** | Comfortable (default) and compact modes via `SkyDensityTokens` + `SkyThemeProperties.Density` |
 
 ### Exit criteria
 

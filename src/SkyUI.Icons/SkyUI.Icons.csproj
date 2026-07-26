@@ -3,7 +3,15 @@
   <PropertyGroup>
     <RootNamespace>SkyUI.Icons</RootNamespace>
     <AssemblyName>SkyUI.Icons</AssemblyName>
-    <Description>SkyUI icon identifiers and embedded icon assets.</Description>
+    <Description>SkyUI icon glyphs, sizes (16/20/24), and optional symbol font helpers.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Themes\**\*.axaml" />
+  </ItemGroup>
 
 </Project>

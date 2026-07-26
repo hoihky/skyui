@@ -10,4 +10,12 @@
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="SkyUI.UnitTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Themes\SkyDensityTokens.axaml" />
+  </ItemGroup>
+
 </Project>

@@ -2,17 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:diag="https://skyui.dev"
              x:Class="SkyUI.Demo.Views.Demos.DiagramDemo">
-    <Border Background="{DynamicResource SpotifySurfaceBrush}"
-            BorderBrush="{DynamicResource SpotifyBorderBrush}"
-            BorderThickness="1" CornerRadius="8" Padding="16">
+    <Border Classes="sky-demo-panel" Padding="16">
         <StackPanel Spacing="12">
-            <TextBlock Text="Diagram surface" FontWeight="SemiBold" FontSize="18"
-                       Foreground="{DynamicResource SpotifyTextPrimaryBrush}" />
-            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SpotifyTextSecondaryBrush}"
+            <TextBlock Classes="sky-feature-heading" Text="Diagram surface" />
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SkyTextSecondaryBrush}"
                        Text="Drag nodes by the top strip. Drag a green port to another port to connect. If a port has exactly one link, dragging that port reconnects it. Select an edge to highlight it—drag a green endpoint to reconnect. Ctrl+C / Ctrl+V copies selected nodes (and edges between them). Delete or Backspace removes the selection (not while editing a node label). Resize with white handles when a node is selected. Add custom node types via IDiagramNodePresenterFactory." />
             <StackPanel Orientation="Horizontal" Spacing="8">
-                <Button Classes="spotify spotify-primary" Content="Add node" Click="OnAddNode" />
-                <Button Classes="spotify spotify-outlined" Content="Clear" Click="OnClear" />
+                <Button Classes="sky sky-primary" Content="Add node" Click="OnAddNode" />
+                <Button Classes="sky sky-outlined" Content="Clear" Click="OnClear" />
             </StackPanel>
             <diag:DiagramSurface x:Name="Diagram" MinHeight="420" HorizontalAlignment="Stretch" />
         </StackPanel>

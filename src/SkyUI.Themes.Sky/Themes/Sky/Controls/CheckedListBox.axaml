@@ -2,14 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="using:SkyUI.Controls">
   <ControlTheme x:Key="{x:Type controls:CheckedListBox}" TargetType="controls:CheckedListBox">
-    <Setter Property="Background" Value="{DynamicResource SpotifySurfaceBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="Template">
       <ControlTemplate>
         <Border Background="{TemplateBinding Background}"
                 Padding="{TemplateBinding Padding}"
                 CornerRadius="8"
-                BorderBrush="{DynamicResource SpotifyBorderBrush}"
+                BorderBrush="{DynamicResource SkyBorderBrush}"
                 BorderThickness="1">
           <ScrollViewer x:Name="PART_ScrollViewer"
                         HorizontalScrollBarVisibility="Disabled"

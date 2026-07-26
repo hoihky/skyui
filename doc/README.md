@@ -7,6 +7,7 @@ Product and engineering documentation for evolving SkyUI into a commercial-grade
 | [Current state](./current-state.md) | Inventory of the repository as of the initial review (stack, controls, theme, gaps at a glance). |
 | [Gap analysis](./gap-analysis.md) | Comparison against commercial toolkit expectations and prioritized gaps. |
 | [Development roadmap](./development-roadmap.md) | Phased plan with features, exit criteria, and package architecture. |
+| [Design tokens](./design-tokens.md) | Sky token layer: palette, semantic resources, and legacy aliases. |
 
 ## Vision (summary)
 

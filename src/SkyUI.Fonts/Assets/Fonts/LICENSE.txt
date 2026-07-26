@@ -1,0 +1,5 @@
+Noto Sans SC (embedded WOFF subsets) — SIL Open Font License 1.1.
+See https://fonts.google.com/noto/specimen/Noto+Sans+SC
+
+Inter — via Avalonia.Fonts.Inter (SIL OFL).
+See https://github.com/rsms/inter

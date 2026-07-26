@@ -53,9 +53,8 @@ What distinguishes Spotify is its pill-and-circle geometry. Primary buttons use 
 
 ## 3. Typography Rules
 
-### Font Families
-- **Title**: `SpotifyMixUITitle`, fallbacks: `CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Sans, Hiragino Kaku Gothic ProN, Meiryo, MS Gothic`
-- **UI / Body**: `SpotifyMixUI`, same fallback stack
+### Font Families (Sky open fonts)
+- **Title / UI**: Inter (`Avalonia.Fonts.Inter`) + **Noto Sans SC** (embedded subset) with system CJK fallbacks per the legacy Spotify stack in §3.
 
 ### Hierarchy
 

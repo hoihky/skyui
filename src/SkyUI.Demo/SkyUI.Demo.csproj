@@ -11,7 +11,6 @@
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
@@ -20,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SkyUI.Core\SkyUI.Core.csproj" />
+    <ProjectReference Include="..\SkyUI.Fonts\SkyUI.Fonts.csproj" />
     <ProjectReference Include="..\SkyUI.Icons\SkyUI.Icons.csproj" />
     <ProjectReference Include="..\SkyUI\SkyUI.csproj" />
     <ProjectReference Include="..\SkyUI.Themes.Sky\SkyUI.Themes.Sky.csproj" />
