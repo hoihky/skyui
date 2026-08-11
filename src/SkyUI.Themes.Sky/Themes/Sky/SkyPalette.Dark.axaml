@@ -1,31 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <!-- Sky Dark preset: palette (content-first dark) → semantic tokens → legacy Spotify brush aliases. -->
-  <Color x:Key="SkyPaletteBackground">#121212</Color>
-  <Color x:Key="SkyPaletteSurface">#181818</Color>
-  <Color x:Key="SkyPaletteSurfaceElevated">#1f1f1f</Color>
-  <Color x:Key="SkyPaletteCard">#252525</Color>
-  <Color x:Key="SkyPaletteCardMid">#272727</Color>
-  <Color x:Key="SkyPaletteTextPrimary">#ffffff</Color>
-  <Color x:Key="SkyPaletteTextSecondary">#b3b3b3</Color>
-  <Color x:Key="SkyPaletteTextSecondaryBright">#cbcbcb</Color>
-  <Color x:Key="SkyPaletteTextLight">#fdfdfd</Color>
-  <Color x:Key="SkyPaletteAccent">#1ed760</Color>
-  <Color x:Key="SkyPaletteAccentPressed">#1db954</Color>
-  <Color x:Key="SkyPaletteOnAccent">#000000</Color>
-  <Color x:Key="SkyPaletteDanger">#f3727f</Color>
-  <Color x:Key="SkyPaletteWarning">#ffa42b</Color>
-  <Color x:Key="SkyPaletteInfo">#539df5</Color>
-  <Color x:Key="SkyPaletteBorder">#767676</Color>
-  <Color x:Key="SkyPaletteBorderStrong">#7c7c7c</Color>
-  <Color x:Key="SkyPaletteSeparator">#b3b3b3</Color>
-  <Color x:Key="SkyPaletteLightPill">#eeeeee</Color>
-  <Color x:Key="SkyPaletteLightPillText">#181818</Color>
-  <Color x:Key="SkyPaletteHoverTint">#14FFFFFF</Color>
-  <Color x:Key="SkyPaletteListHover">#1AFFFFFF</Color>
-  <Color x:Key="SkyPaletteSelectedTint">#331ED760</Color>
-  <Color x:Key="SkyPaletteAvatarFallback">#3e3e3e</Color>
-  <Color x:Key="SkyPaletteBadgeNeutral">#2a2a2a</Color>
-  <!-- Focus ring: accent green meets ≥3:1 on dark surfaces -->
-  <Color x:Key="SkyPaletteFocusRing">#1ED760</Color>
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/SkyPalette.Dark.axaml" />
+  </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

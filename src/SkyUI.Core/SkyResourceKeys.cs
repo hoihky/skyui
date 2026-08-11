@@ -19,6 +19,9 @@ public static class SkyResourceKeys
     public const string Warning = SkyTokenKeys.Brush.Warning;
     public const string Announcement = SkyTokenKeys.Brush.Info;
 
+    /// <summary>Obsolete; use <see cref="TextPrimary"/> or <c>SkyTextPrimaryBrush</c>.</summary>
     public const string SpotifyTextPrimary = "SpotifyTextPrimaryBrush";
+
+    /// <summary>Obsolete; use <see cref="Accent"/> or <c>SkyAccentBrush</c>.</summary>
     public const string SpotifyAccentGreen = "SpotifyAccentGreenBrush";
 }

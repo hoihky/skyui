@@ -46,6 +46,8 @@ public partial class MainWindow : Window
             new("Avatar", () => new AvatarDemo(), SkyIconKind.Image),
             new("Chip", () => new ChipDemo(), SkyIconKind.Sliders),
             new("Badge", () => new BadgeDemo(), SkyIconKind.Check),
+            new("Feedback", () => new FeedbackDemo(), SkyIconKind.Layers),
+            new("Navigation", () => new NavigationDemo(), SkyIconKind.LayoutGrid),
             new("Text field", () => new TextFieldDemo(), SkyIconKind.Search),
             new("Checkbox & Switch", () => new CheckboxSwitchDemo(), SkyIconKind.Check),
             new("Select", () => new SelectDemo(), SkyIconKind.ChevronDown),

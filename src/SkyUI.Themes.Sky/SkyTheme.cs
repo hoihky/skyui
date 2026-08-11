@@ -8,7 +8,7 @@ namespace SkyUI.Themes.Sky;
 /// <summary>Sky theme preset API: include URI and optional <see cref="SkyThemeOptions"/> application.</summary>
 public static class SkyTheme
 {
-  /// <summary>Single XAML include for the default Sky Dark preset.</summary>
+  /// <summary>Single XAML include for the default Sky theme (<see cref="SkyPresetIds.ContentFirstDark"/> preset).</summary>
   public const string IncludeUri = "avares://SkyUI.Themes.Sky/Themes/SkyTheme.axaml";
 
   /// <summary>

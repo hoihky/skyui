@@ -4,7 +4,7 @@
     <StackPanel Spacing="12" MaxWidth="560">
         <TextBlock Classes="sky-section-title" Text="SkyUI theme preset" />
         <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SkyTextSecondaryBrush}" LineHeight="22"
-                   Text="This demo app uses a master-detail layout. Pick a control on the left to see its samples. Use Theme, Density, and Accent above the component list: switch Dark, Light, or High contrast; choose Comfortable or Compact density; or type any accent hex (e.g. #7C3AED) to drive buttons, links, and selection via sky:SkyThemeProperties.AccentOverride. Use Classes=&quot;sky&quot; on standard controls (legacy &quot;spotify&quot; classes still work)." />
+                   Text="This demo app uses a master-detail layout. Pick a control on the left to see its samples. Use Theme, Density, and Accent above the component list: switch Dark, Light, or High contrast; choose Comfortable or Compact density; or type any accent hex (e.g. #7C3AED) to drive buttons, links, and selection via sky:SkyThemeProperties.AccentOverride. Use Classes=&quot;sky&quot; on standard controls (legacy &quot;spotify&quot; classes still work via ContentFirstDark preset)." />
         <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SkyTextSecondaryBrush}"
                    Text="See src/SkyUI.Themes.Sky/DESIGN.md for the Sky dark preset visual specification." />
     </StackPanel>

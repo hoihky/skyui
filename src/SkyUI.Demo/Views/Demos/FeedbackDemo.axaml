@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.FeedbackDemo">
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <Border Classes="sky-demo-panel" Margin="0,0,0,80">
+                <StackPanel Spacing="20">
+                    <TextBlock Classes="sky-feature-heading" Text="Feedback" />
+                    <TextBlock Classes="sky-body-secondary"
+                               TextWrapping="Wrap"
+                               Text="Sky* templated controls: alert, banner, skeleton, progress ring, snackbar host, and dialog host." />
+
+                    <sky:SkyBanner x:Name="DemoBanner"
+                                     Title="Scheduled maintenance"
+                                     Message="Exports will be unavailable tonight from 2:00–3:00 AM."
+                                     Variant="Warning" />
+
+                    <StackPanel Spacing="10">
+                        <sky:SkyAlert Title="Update available"
+                                      Message="SkyUI 0.2 adds feedback controls and tighter density tokens."
+                                      Variant="Info"
+                                      IsCloseable="True" />
+                        <sky:SkyAlert Message="All changes synced successfully."
+                                      Variant="Success" />
+                        <sky:SkyAlert Title="Connection unstable"
+                                      Message="Some features may be slow until the network recovers."
+                                      Variant="Warning" />
+                        <sky:SkyAlert Title="Export failed"
+                                      Message="Could not write to the selected folder. Check permissions."
+                                      Variant="Danger"
+                                      IsCloseable="True" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="24">
+                        <sky:SkyProgressRing IsIndeterminate="True" Width="44" Height="44" />
+                        <sky:SkyProgressRing Value="65" Width="44" Height="44" />
+                        <StackPanel Spacing="8" Width="220">
+                            <sky:SkySkeleton Height="14" Width="180" />
+                            <sky:SkySkeleton Height="14" Width="140" />
+                            <sky:SkySkeleton Height="80" Width="220" CornerRadius="8" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Button Classes="sky sky-primary" Content="Show snackbar" Click="OnShowSnackbarClick" />
+                        <Button Classes="sky sky-outlined" Content="Show dialog" Click="OnShowDialogClick" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+
+        <sky:SkySnackbarHost x:Name="SnackbarHost" VerticalAlignment="Bottom" />
+        <sky:SkyDialogHost x:Name="DialogHost"
+                           Title="Confirm export"
+                           PrimaryButtonText="Export"
+                           SecondaryButtonText="Cancel"
+                           DialogContent="Export 128 rows to CSV? This may take a few seconds." />
+    </Grid>
+</UserControl>

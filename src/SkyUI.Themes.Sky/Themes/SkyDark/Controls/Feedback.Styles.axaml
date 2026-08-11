@@ -1,0 +1,33 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <!-- Variant tones -->
+  <Style Selector="controls|SkyAlert.sky-feedback-info, controls|SkyBanner.sky-feedback-info, controls|SkySnackbarBar.sky-feedback-info">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyInfoBrush}" />
+  </Style>
+  <Style Selector="controls|SkyAlert.sky-feedback-success, controls|SkyBanner.sky-feedback-success, controls|SkySnackbarBar.sky-feedback-success">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
+  </Style>
+  <Style Selector="controls|SkyAlert.sky-feedback-warning, controls|SkyBanner.sky-feedback-warning, controls|SkySnackbarBar.sky-feedback-warning">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyWarningBrush}" />
+  </Style>
+  <Style Selector="controls|SkyAlert.sky-feedback-danger, controls|SkyBanner.sky-feedback-danger, controls|SkySnackbarBar.sky-feedback-danger">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkySkeleton[IsActive=True] /template/ Border#PART_Root">
+    <Style.Animations>
+      <Animation Duration="0:0:1.2" IterationCount="Infinite">
+        <KeyFrame Cue="0%">
+          <Setter Property="Opacity" Value="0.35" />
+        </KeyFrame>
+        <KeyFrame Cue="50%">
+          <Setter Property="Opacity" Value="0.75" />
+        </KeyFrame>
+        <KeyFrame Cue="100%">
+          <Setter Property="Opacity" Value="0.35" />
+        </KeyFrame>
+      </Animation>
+    </Style.Animations>
+  </Style>
+</Styles>

@@ -1,0 +1,62 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls">
+  <ControlTheme x:Key="{x:Type controls:VideoTimeline}" TargetType="controls:VideoTimeline">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="ClipLaneBrush" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="ClipBrush" Value="{DynamicResource SkyCardMidBrush}" />
+    <Setter Property="ClipSelectedBrush" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="PlayheadBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="SelectionBrush" Value="#6600FF88" />
+    <Setter Property="RulerTickBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
+    <Setter Property="TrackSelectionBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                Padding="{TemplateBinding Padding}"
+                CornerRadius="8"
+                BorderBrush="{DynamicResource SkyBorderBrush}"
+                BorderThickness="1">
+          <Grid ColumnDefinitions="120,*" RowDefinitions="36,*">
+            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    Background="{DynamicResource SkyBackgroundBrush}"
+                    BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="0,0,1,1" />
+            <ScrollViewer x:Name="PART_RulerScroll"
+                          Grid.Row="0"
+                          Grid.Column="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled"
+                          HorizontalSnapPointsType="None">
+              <Canvas x:Name="PART_RulerCanvas"
+                      Height="36"
+                      VerticalAlignment="Top" />
+            </ScrollViewer>
+            <!-- One vertical scroller for labels + tracks so row heights always match (no dual-viewport drift). -->
+            <ScrollViewer x:Name="PART_VerticalTrackScroll"
+                          Grid.Row="1"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+              <Grid ColumnDefinitions="120,*">
+                <StackPanel x:Name="PART_HeaderStack"
+                            Grid.Column="0"
+                            VerticalAlignment="Top" />
+                <ScrollViewer x:Name="PART_MainScroll"
+                              Grid.Column="1"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Disabled">
+                  <Canvas x:Name="PART_MainCanvas" />
+                </ScrollViewer>
+              </Grid>
+            </ScrollViewer>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

@@ -1,0 +1,232 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls">
+  <ControlTheme x:Key="{x:Type controls:SkyAlert}" TargetType="controls:SkyAlert">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="Padding" Value="14,12" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="{TemplateBinding Padding}">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="4">
+              <TextBlock Name="PART_Title"
+                         Text="{TemplateBinding Title}"
+                         FontWeight="Bold"
+                         FontSize="14"
+                         Foreground="{TemplateBinding Foreground}"
+                         IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+              <TextBlock Name="PART_Message"
+                         Text="{TemplateBinding Message}"
+                         FontSize="14"
+                         TextWrapping="Wrap"
+                         Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+            </StackPanel>
+            <Button Name="PART_CloseButton"
+                    Grid.Column="1"
+                    Classes="sky sky-subtle"
+                    Width="28"
+                    Height="28"
+                    Padding="0"
+                    Margin="8,0,0,0"
+                    VerticalAlignment="Top"
+                    Content="×"
+                    FontSize="18"
+                    IsVisible="{TemplateBinding IsCloseable}" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyBanner}" TargetType="controls:SkyBanner">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="Padding" Value="16,12" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Padding="{TemplateBinding Padding}"
+                IsVisible="{TemplateBinding IsOpen}">
+          <Grid ColumnDefinitions="*,Auto,Auto">
+            <StackPanel Spacing="4">
+              <TextBlock Text="{TemplateBinding Title}"
+                         FontWeight="Bold"
+                         FontSize="14"
+                         Foreground="{TemplateBinding Foreground}"
+                         IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+              <TextBlock Text="{TemplateBinding Message}"
+                         FontSize="14"
+                         TextWrapping="Wrap"
+                         Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+            </StackPanel>
+            <ContentPresenter Name="PART_ActionHost"
+                              Grid.Column="1"
+                              Content="{TemplateBinding ActionContent}"
+                              Margin="12,0,0,0"
+                              VerticalAlignment="Center" />
+            <Button Name="PART_CloseButton"
+                    Grid.Column="2"
+                    Classes="sky sky-subtle"
+                    Width="28"
+                    Height="28"
+                    Padding="0"
+                    Margin="8,0,0,0"
+                    VerticalAlignment="Center"
+                    Content="×"
+                    FontSize="18"
+                    IsVisible="{TemplateBinding IsCloseable}" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkySkeleton}" TargetType="controls:SkySkeleton">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="ClipToBounds" Value="True" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Root"
+                Background="{TemplateBinding Background}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Width="{TemplateBinding Width}"
+                Height="{TemplateBinding Height}"
+                MinHeight="{TemplateBinding MinHeight}"
+                Opacity="0.55" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyProgressRing}" TargetType="controls:SkyProgressRing">
+    <Setter Property="Foreground" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Width="{TemplateBinding Width}"
+               Height="{TemplateBinding Height}"
+               MinWidth="{TemplateBinding MinWidth}"
+               MinHeight="{TemplateBinding MinHeight}" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkySnackbarBar}" TargetType="controls:SkySnackbarBar">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="Margin" Value="0,0,0,8" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="{TemplateBinding Padding}"
+                Margin="{TemplateBinding Margin}"
+                BoxShadow="{DynamicResource SkyElevation2}">
+          <TextBlock Text="{TemplateBinding Message}"
+                     FontSize="14"
+                     TextWrapping="Wrap"
+                     Foreground="{TemplateBinding Foreground}" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkySnackbarHost}" TargetType="controls:SkySnackbarHost">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ItemsControl Name="PART_ItemsHost"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom"
+                      Margin="16,0,16,16"
+                      MaxWidth="480">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Spacing="0" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="controls:SkySnackbarMessage">
+              <controls:SkySnackbarBar Message="{Binding Message}" Variant="{Binding Variant}" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDialogHost}" TargetType="controls:SkyDialogHost">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Panel Name="PART_Overlay"
+                 Background="#99000000"
+                 IsVisible="{TemplateBinding IsOpen}"
+                 IsHitTestVisible="{TemplateBinding IsOpen}">
+            <Border HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    MinWidth="320"
+                    MaxWidth="480"
+                    Margin="24"
+                    Padding="20"
+                    Background="{DynamicResource SkySurfaceBrush}"
+                    BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    BoxShadow="{DynamicResource SkyElevation2}">
+              <StackPanel Spacing="16">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Text="{TemplateBinding Title}"
+                             Classes="sky-feature-heading"
+                             IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                  <Button Name="PART_CloseButton"
+                          Grid.Column="1"
+                          Classes="sky sky-subtle"
+                          Width="28"
+                          Height="28"
+                          Padding="0"
+                          Content="×"
+                          FontSize="18" />
+                </Grid>
+                <ContentPresenter Content="{TemplateBinding DialogContent}" />
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="8">
+                  <Button Name="PART_SecondaryButton"
+                          Classes="sky sky-outlined"
+                          Content="{TemplateBinding SecondaryButtonText}"
+                          IsVisible="{Binding SecondaryButtonText, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                  <Button Name="PART_PrimaryButton"
+                          Classes="sky sky-primary"
+                          Content="{TemplateBinding PrimaryButtonText}"
+                          IsVisible="{Binding PrimaryButtonText, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                </StackPanel>
+              </StackPanel>
+            </Border>
+          </Panel>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

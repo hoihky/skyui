@@ -7,9 +7,9 @@ public class SkyPaletteContrastTests
 {
     public static IEnumerable<object[]> PaletteFiles =>
     [
-        ["src/SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Dark.axaml"],
-        ["src/SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Light.axaml"],
-        ["src/SkyUI.Themes.Sky/Themes/Sky/SkyPalette.HighContrast.axaml"],
+        ["src/SkyUI.Themes.Sky/Themes/SkyDark/SkyPalette.Dark.axaml"],
+        ["src/SkyUI.Themes.Sky/Themes/SkyDark/SkyPalette.Light.axaml"],
+        ["src/SkyUI.Themes.Sky/Themes/SkyDark/SkyPalette.HighContrast.axaml"],
     ];
 
     [Theory]

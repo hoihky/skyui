@@ -1,4 +1,5 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Legacy path; use Themes/SkyTheme.axaml or SkyPresetUris.Theme. -->
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyTheme.axaml" />
 </Styles>

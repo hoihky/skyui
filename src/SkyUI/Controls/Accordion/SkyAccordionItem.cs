@@ -77,7 +77,7 @@ public class SkyAccordionItem : ContentControl
         {
             _headerToggleBinding = _headerToggle.Bind(
                 ToggleButton.IsCheckedProperty,
-                new Binding(nameof(IsExpanded), BindingMode.TwoWay) { Source = this });
+                new Binding(nameof(IsExpanded)) { Source = this, Mode = BindingMode.TwoWay });
         }
     }
 

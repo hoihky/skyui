@@ -1,38 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="using:SkyUI.Controls">
-  <ControlTheme x:Key="{x:Type controls:Avatar}" TargetType="controls:Avatar">
-    <Setter Property="Background" Value="{DynamicResource SkyAvatarFallbackBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
-    <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="CornerRadius" Value="4" />
-    <Setter Property="ClipToBounds" Value="True" />
-    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Border Name="PART_Root"
-                Width="{TemplateBinding Width}"
-                Height="{TemplateBinding Height}"
-                Background="{TemplateBinding Background}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                ClipToBounds="True"
-                UseLayoutRounding="True">
-          <Grid>
-            <Image Name="PART_Image"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Stretch="UniformToFill"
-                   IsVisible="False" />
-            <TextBlock Name="PART_Initials"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Foreground="{TemplateBinding Foreground}"
-                       FontWeight="Bold"
-                       TextAlignment="Center" />
-          </Grid>
-        </Border>
-      </ControlTemplate>
-    </Setter>
-  </ControlTheme>
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Avatar.axaml" />
+  </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

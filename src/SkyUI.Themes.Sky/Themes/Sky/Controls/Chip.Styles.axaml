@@ -1,12 +1,4 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:SkyUI.Controls">
-  <Style Selector="controls|Chip.sky-clickable:pointerover /template/ Border#PART_Root">
-    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
-  </Style>
-  <Style Selector="controls|Chip /template/ Button#PART_Delete:pointerover">
-    <Setter Property="Opacity" Value="1" />
-    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
-    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusFull}" />
-  </Style>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Chip.Styles.axaml" />
 </Styles>

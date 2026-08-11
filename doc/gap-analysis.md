@@ -126,7 +126,7 @@ Many primitives are **styled Avalonia controls** in the Spotify theme but lack a
 | Topic | Notes |
 |-------|--------|
 | License | MIT on project code is compatible with commercial use of **your** code. |
-| Trade dress | Spotify-like visual spec and naming are useful internally; a **commercial product** should ship **Sky-branded** tokens and optional presets (e.g. “content-first dark”) rather than implying affiliation. |
+| Legal / brand | Sky-branded public API (`sky`, `Sky*`); ContentFirstDark preset; legacy Spotify paths aliased — see [rename-strategy.md](./rename-strategy.md) |
 | Third-party fonts | Use bundled open fonts (e.g. Inter, Noto) for shipping products. |
 
 ---

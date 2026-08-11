@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>SkyUI.Themes.Sky</RootNamespace>
     <AssemblyName>SkyUI.Themes.Sky</AssemblyName>
-    <Description>Default Sky dark theme (Spotify-inspired preset) for SkyUI essentials and primitives.</Description>
+    <Description>Sky design system theme package: semantic tokens, ContentFirstDark preset, SkyDark palettes.</Description>
   </PropertyGroup>
 
   <ItemGroup>

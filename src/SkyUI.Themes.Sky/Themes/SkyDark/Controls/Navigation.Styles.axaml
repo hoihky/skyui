@@ -1,0 +1,54 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <!-- Compact sidebar: icon-only -->
+  <Style Selector="controls|SkyNavigationView:compact ListBox.sky-nav ListBoxItem TextBlock.sky-nav-link">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+
+  <!-- Bottom navigation bar -->
+  <Style Selector="ListBox.sky-bottom-nav">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <StackPanel Orientation="Horizontal" Spacing="0" />
+      </ItemsPanelTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="ListBox.sky-bottom-nav ListBoxItem">
+    <Setter Property="MinWidth" Value="72" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="Padding" Value="8,6" />
+  </Style>
+
+  <!-- Breadcrumb: hide separator before first segment -->
+  <Style Selector="controls|SkyBreadcrumb > ContentPresenter:first-child TextBlock.sky-breadcrumb-sep">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+
+  <!-- Pill tab strip -->
+  <Style Selector="controls|SkyTabView">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="controls|SkyTabView TabItem">
+    <Setter Property="Padding" Value="12,8" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+  <Style Selector="controls|SkyTabView TabItem:pointerover:not(:selected)">
+    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+  </Style>
+  <Style Selector="controls|SkyTabView TabItem:selected">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+</Styles>

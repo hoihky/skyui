@@ -108,6 +108,12 @@ public static class SkyIconProperties
                 Foreground = foreground,
             });
         }
+        else if (label is TextBlock textBlock)
+        {
+            row.Children.Add(textBlock);
+            if (foreground is not null && textBlock.Foreground is null)
+                textBlock.Foreground = foreground;
+        }
         else if (label is Control child)
             row.Children.Add(child);
         else if (label is not null)

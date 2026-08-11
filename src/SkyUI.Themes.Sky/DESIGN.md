@@ -1,4 +1,6 @@
-# Design System Inspired by Spotify
+# Sky ContentFirstDark — visual specification (internal)
+
+> **Public brand:** Sky (`sky` classes, `Sky*` tokens). This document describes the default **ContentFirstDark** preset (content-first dark UI). Historical notes reference a well-known music-app dark pattern used as an internal benchmark—not product affiliation.
 
 ## 1. Visual Theme & Atmosphere
 

@@ -1,0 +1,36 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fonts="using:SkyUI.Fonts">
+  <!--
+    Legacy brush aliases (pre-Sky rebrand). Prefer Sky* semantic tokens in new code.
+    Keys remain for apps that still reference Spotify* resource names.
+  -->
+  <SolidColorBrush x:Key="SpotifyBackgroundBrush" Color="{StaticResource SkyPaletteBackground}" />
+  <SolidColorBrush x:Key="SpotifySurfaceBrush" Color="{StaticResource SkyPaletteSurface}" />
+  <SolidColorBrush x:Key="SpotifySurfaceElevatedBrush" Color="{StaticResource SkyPaletteSurfaceElevated}" />
+  <SolidColorBrush x:Key="SpotifyCardBrush" Color="{StaticResource SkyPaletteCard}" />
+  <SolidColorBrush x:Key="SpotifyCardMidBrush" Color="{StaticResource SkyPaletteCardMid}" />
+  <SolidColorBrush x:Key="SpotifyTextPrimaryBrush" Color="{StaticResource SkyPaletteTextPrimary}" />
+  <SolidColorBrush x:Key="SpotifyTextSecondaryBrush" Color="{StaticResource SkyPaletteTextSecondary}" />
+  <SolidColorBrush x:Key="SpotifyTextSecondaryBrightBrush" Color="{StaticResource SkyPaletteTextSecondaryBright}" />
+  <SolidColorBrush x:Key="SpotifyTextLightBrush" Color="{StaticResource SkyPaletteTextLight}" />
+  <SolidColorBrush x:Key="SpotifyAccentGreenBrush" Color="{StaticResource SkyPaletteAccent}" />
+  <SolidColorBrush x:Key="SpotifyAccentGreenDarkBrush" Color="{StaticResource SkyPaletteAccentPressed}" />
+  <SolidColorBrush x:Key="SpotifyOnAccentBrush" Color="{StaticResource SkyPaletteOnAccent}" />
+  <SolidColorBrush x:Key="SpotifyNegativeBrush" Color="{StaticResource SkyPaletteDanger}" />
+  <SolidColorBrush x:Key="SpotifyWarningBrush" Color="{StaticResource SkyPaletteWarning}" />
+  <SolidColorBrush x:Key="SpotifyAnnouncementBrush" Color="{StaticResource SkyPaletteInfo}" />
+  <SolidColorBrush x:Key="SpotifyBorderBrush" Color="{StaticResource SkyPaletteBorder}" />
+  <SolidColorBrush x:Key="SpotifyBorderLightBrush" Color="{StaticResource SkyPaletteBorderStrong}" />
+  <SolidColorBrush x:Key="SpotifySeparatorBrush" Color="{StaticResource SkyPaletteSeparator}" />
+  <SolidColorBrush x:Key="SpotifyLightPillBrush" Color="{StaticResource SkyPaletteLightPill}" />
+  <SolidColorBrush x:Key="SpotifyLightPillTextBrush" Color="{StaticResource SkyPaletteLightPillText}" />
+  <SolidColorBrush x:Key="SpotifyHoverTintBrush" Color="{StaticResource SkyPaletteHoverTint}" />
+  <SolidColorBrush x:Key="SpotifyListHoverBrush" Color="{StaticResource SkyPaletteListHover}" />
+  <SolidColorBrush x:Key="SpotifySelectedTintBrush" Color="{StaticResource SkyPaletteSelectedTint}" />
+  <SolidColorBrush x:Key="SpotifyAvatarFallbackBrush" Color="{StaticResource SkyPaletteAvatarFallback}" />
+  <SolidColorBrush x:Key="SpotifyBadgeNeutralBrush" Color="{StaticResource SkyPaletteBadgeNeutral}" />
+
+  <FontFamily x:Key="SpotifyFontUi">{x:Static fonts:SkyFontFamilies.Ui}</FontFamily>
+  <FontFamily x:Key="SpotifyFontTitle">{x:Static fonts:SkyFontFamilies.Title}</FontFamily>
+</ResourceDictionary>

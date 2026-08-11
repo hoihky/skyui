@@ -7,7 +7,7 @@ Snapshot of the SkyUI codebase used as the baseline for [gap analysis](./gap-ana
 | Area | Status |
 |------|--------|
 | Solution | `SkyUI.slnx` at repository root |
-| UI framework | Avalonia 11.3.12 (`Directory.Build.props` pins `AvaloniaVersion`) |
+| UI framework | Avalonia **12.1.1** (`Directory.Build.props` → `AvaloniaVersion`) |
 | Target framework | .NET 10 (`net10.0`) |
 | Packages | See [repository layout](#repository-layout) below |
 | Demo app | `src/SkyUI.Demo` — desktop gallery referencing all packages |
@@ -50,12 +50,12 @@ SkyUI.Diagram  → Core, SkyUI
 
 Apps typically reference `SkyUI`, `SkyUI.Themes.Sky`, and optionally `SkyUI.Data` / `SkyUI.Diagram`. Include styles:
 
-- `avares://SkyUI.Themes.Sky/Themes/Sky/SkyTheme.axaml` (or `SkyUI.Theme.SkyThemeUris.Sky`)
-- `avares://SkyUI.Data/Themes/SkyDataTheme.axaml` when using data controls
+- `avares://SkyUI.Themes.Sky/Themes/SkyTheme.axaml` (or `SkyUI.Theme.SkyThemeUris.Theme`)
+- `avares://SkyUI.Data/Themes/SkyTheme.WithData.axaml` when using data controls
 
 ## Design system
 
-- **Theme package**: `src/SkyUI.Themes.Sky/Themes/Sky/` — `SkyResources.axaml`, `SkyTheme.axaml`, control templates for essentials.
+- **Theme package**: `src/SkyUI.Themes.Sky/Themes/SkyDark/` (palettes, resources) + `Presets/ContentFirstDark/` (default primitives). Legacy `Themes/Sky/` shims redirect old URIs.
 - **Data theme**: `src/SkyUI.Data/Themes/SkyDataTheme.axaml` — grid and filter templates (optional split for smaller browser bundles).
 
 ## Custom controls (library)

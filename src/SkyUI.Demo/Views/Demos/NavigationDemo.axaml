@@ -1,0 +1,87 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.NavigationDemo">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="24">
+                <TextBlock Classes="sky-feature-heading" Text="Navigation" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="SkyNavigationView adapts between expanded sidebar, compact icon rail, and bottom bar. SkyTabView provides pill tabs; SkyBreadcrumb shows an interactive trail." />
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Breadcrumb" />
+                    <sky:SkyBreadcrumb Separator="/">
+                        <sky:SkyBreadcrumbItem Title="Home" />
+                        <sky:SkyBreadcrumbItem Title="Library" />
+                        <sky:SkyBreadcrumbItem Title="Now playing" IsCurrent="True" />
+                    </sky:SkyBreadcrumb>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Tabs" />
+                    <sky:SkyTabView>
+                        <TabItem Header="Overview">
+                            <TextBlock Classes="sky-body" Text="Summary metrics and quick actions for the current view." />
+                        </TabItem>
+                        <TabItem Header="Details">
+                            <TextBlock Classes="sky-body" Text="Extended metadata, tags, and related items." />
+                        </TabItem>
+                        <TabItem Header="Activity">
+                            <TextBlock Classes="sky-body" Text="Recent edits, comments, and audit events." />
+                        </TabItem>
+                    </sky:SkyTabView>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Navigation view" />
+                    <TextBlock Classes="sky-body-secondary"
+                               Text="Drag the slider to change width. Auto mode switches layout at tablet and desktop breakpoints." />
+                    <Slider x:Name="PreviewWidthSlider"
+                            Minimum="360"
+                            Maximum="1280"
+                            Value="960"
+                            TickFrequency="80"
+                            IsSnapToTickEnabled="True" />
+                    <Border x:Name="PreviewHost"
+                            HorizontalAlignment="Left"
+                            ClipToBounds="True"
+                            BorderBrush="{DynamicResource SkyBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                        <sky:SkyNavigationView DisplayMode="Auto"
+                                               Height="360"
+                                               Header="SkyUI">
+                            <sky:SkyNavigationViewItem Label="Home" IconKind="Home">
+                                <StackPanel Spacing="8" Margin="0,8,0,0">
+                                    <TextBlock Classes="sky-feature-heading" Text="Home" />
+                                    <TextBlock Classes="sky-body-secondary"
+                                               Text="Welcome back. Pick a section from the navigation rail." />
+                                </StackPanel>
+                            </sky:SkyNavigationViewItem>
+                            <sky:SkyNavigationViewItem Label="Library" IconKind="List">
+                                <StackPanel Spacing="8" Margin="0,8,0,0">
+                                    <TextBlock Classes="sky-feature-heading" Text="Library" />
+                                    <TextBlock Classes="sky-body-secondary" Text="Albums, playlists, and saved collections." />
+                                </StackPanel>
+                            </sky:SkyNavigationViewItem>
+                            <sky:SkyNavigationViewItem Label="Search" IconKind="Search">
+                                <StackPanel Spacing="8" Margin="0,8,0,0">
+                                    <TextBlock Classes="sky-feature-heading" Text="Search" />
+                                    <TextBlock Classes="sky-body-secondary" Text="Find tracks, artists, and podcasts." />
+                                </StackPanel>
+                            </sky:SkyNavigationViewItem>
+                            <sky:SkyNavigationViewItem Label="Settings" IconKind="Sliders">
+                                <StackPanel Spacing="8" Margin="0,8,0,0">
+                                    <TextBlock Classes="sky-feature-heading" Text="Settings" />
+                                    <TextBlock Classes="sky-body-secondary" Text="Theme, density, and account preferences." />
+                                </StackPanel>
+                            </sky:SkyNavigationViewItem>
+                        </sky:SkyNavigationView>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

@@ -65,7 +65,7 @@ Dependency direction: `Core` → `SkyUI` → (`Data`, `Diagram`); `Themes` and `
 | Feature | Description |
 |---------|-------------|
 | **Sky token layer** | `SkyTokens.axaml`: semantic colors (`Background`, `Surface`, `Accent`, `Danger`, …), 8px spacing scale, radius and elevation scales, typography roles |
-| **Theme mapping** | Map existing Spotify palette to tokens; rename public theme to Sky-branded preset (keep legacy resource aliases if needed) |
+| **Theme mapping** | Sky-branded preset (`ContentFirstDark`); palettes under `Themes/SkyDark/`; legacy `Spotify*` / `Themes/Sky/` shims retained |
 | **Theme API** | Single `SkyTheme` include; accent override (attached property or `SkyThemeOptions`) |
 | **Light + high contrast** | Full brush sets; focus rings; target WCAG AA contrast for text and controls |
 | **Icons** | `SkyUI.Icons` or embedded font; sizes 16/20/24 used in buttons, nav, list items |
@@ -92,8 +92,8 @@ Dependency direction: `Core` → `SkyUI` → (`Data`, `Diagram`); `Themes` and `
 
 | Sprint | Controls and behaviors |
 |--------|-------------------------|
-| Feedback | Modal/dialog host, snackbar queue, banner, progress ring, skeleton placeholder |
-| Navigation | Navigation view (sidebar / compact / bottom on narrow width), styled tab control, breadcrumb |
+| Feedback | Modal/dialog host, snackbar queue, banner, progress ring, skeleton placeholder — **SkyAlert, SkyBanner, SkySnackbarHost, SkyDialogHost, SkyProgressRing, SkySkeleton** |
+| Navigation | Navigation view (sidebar / compact / bottom on narrow width), styled tab control, breadcrumb — **SkyNavigationView, SkyTabView, SkyBreadcrumb** |
 | Forms | Form field wrapper (label, hint, validation, error state), radio group, slider, password and search variants |
 | Menus | Context menu and menubar styles; keyboard accelerators documented |
 | Pickers | Date picker, calendar month view, time picker; culture-aware formatting |

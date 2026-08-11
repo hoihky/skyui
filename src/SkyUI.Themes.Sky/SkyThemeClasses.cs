@@ -1,6 +1,9 @@
 namespace SkyUI.Themes.Sky;
 
-/// <summary>Stable style class names for the Sky Dark preset (<see cref="SkyPresetUris.Dark"/>).</summary>
+/// <summary>
+/// Stable style class names for the default <see cref="SkyPresetIds.ContentFirstDark"/> preset.
+/// Public brand: <c>sky</c> (not third-party names).
+/// </summary>
 public static class SkyThemeClasses
 {
     public const string Root = "sky";
@@ -19,7 +22,7 @@ public static class SkyThemeClasses
     public const string FeatureHeading = "sky-feature-heading";
     public const string BodySecondary = "sky-body-secondary";
 
-    /// <summary>Deprecated: use <see cref="Root"/> and modifier classes. Still styled via preset aliases.</summary>
+    /// <summary>Deprecated style classes; still styled via preset aliases in primitives.</summary>
     public static class LegacySpotify
     {
         public const string Root = "spotify";

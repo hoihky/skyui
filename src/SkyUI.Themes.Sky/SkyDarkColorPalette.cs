@@ -3,7 +3,7 @@ namespace SkyUI.Themes.Sky;
 using Avalonia.Styling;
 using SkyUI.Core.Theming;
 
-/// <summary>Dark color palette for the default <see cref="SkyPresetUris.Dark"/> theme preset.</summary>
+/// <summary>Dark color palette for the default <see cref="SkyPresetUris.ContentFirstDark"/> preset.</summary>
 public sealed class SkyDarkColorPalette : ISkyColorPalette
 {
     public static SkyDarkColorPalette Instance { get; } = new();
@@ -27,10 +27,13 @@ public sealed class SkyHighContrastColorPalette : ISkyColorPalette
     public string ResourceUri => SkyPaletteUris.HighContrast;
 }
 
-/// <summary>Resource URIs for Sky theme palettes (merged before semantic tokens).</summary>
+/// <summary>Resource URIs for Sky theme palettes under <c>Themes/SkyDark/</c>.</summary>
 public static class SkyPaletteUris
 {
-    public const string Dark = "avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Dark.axaml";
-    public const string Light = "avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Light.axaml";
-    public const string HighContrast = "avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.HighContrast.axaml";
+    public const string Dark = "avares://SkyUI.Themes.Sky/Themes/SkyDark/SkyPalette.Dark.axaml";
+    public const string Light = "avares://SkyUI.Themes.Sky/Themes/SkyDark/SkyPalette.Light.axaml";
+    public const string HighContrast = "avares://SkyUI.Themes.Sky/Themes/SkyDark/SkyPalette.HighContrast.axaml";
+
+    /// <summary>Obsolete path; redirects to <see cref="Dark"/>.</summary>
+    public const string LegacyDark = "avares://SkyUI.Themes.Sky/Themes/Sky/SkyPalette.Dark.axaml";
 }

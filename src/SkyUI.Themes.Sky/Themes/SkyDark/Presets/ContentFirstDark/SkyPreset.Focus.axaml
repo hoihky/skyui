@@ -1,0 +1,41 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Keyboard focus rings (WCAG 2.4.7); uses SkyFocusRingBrush / SkyFocusRingThickness tokens. -->
+
+  <Style Selector="Button.sky:focus-visible, Button.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="TextBox.sky:focus-visible, TextBox.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="ComboBox.sky:focus-visible, ComboBox.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="CheckBox.sky:focus-visible, CheckBox.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusSubtle}" />
+  </Style>
+
+  <Style Selector="ToggleSwitch.sky:focus-visible, ToggleSwitch.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusMedium}" />
+  </Style>
+
+  <Style Selector="ListBox.sky:focus-visible, ListBox.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="ListBox.sky ListBoxItem:focus-visible, ListBox.spotify ListBoxItem:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+</Styles>

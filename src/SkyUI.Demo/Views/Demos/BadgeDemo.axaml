@@ -10,13 +10,17 @@
                     <Button Classes="sky" Content="Mail" />
                 </sky:Badge>
                 <sky:Badge BadgeContent="99" BadgeBackground="{DynamicResource SkyTextSecondaryBrush}">
-                    <Border Width="40" Height="40" Background="#E0E0E0" CornerRadius="20" />
+                    <Border Width="40" Height="40"
+                            Background="{DynamicResource SkySurfaceElevatedBrush}"
+                            CornerRadius="20" />
                 </sky:Badge>
                 <sky:Badge IsDot="True">
                     <Button Classes="sky sky-outlined" Content="Alerts" />
                 </sky:Badge>
                 <sky:Badge BadgeContent="7" Placement="BottomLeft">
-                    <Border Width="40" Height="40" Background="#E3F2FD" CornerRadius="4" />
+                    <Border Width="40" Height="40"
+                            Background="{DynamicResource SkyCardBrush}"
+                            CornerRadius="4" />
                 </sky:Badge>
             </StackPanel>
         </StackPanel>

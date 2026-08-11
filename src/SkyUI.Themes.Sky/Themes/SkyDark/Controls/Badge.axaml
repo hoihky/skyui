@@ -1,0 +1,42 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls">
+  <ControlTheme x:Key="{x:Type controls:Badge}" TargetType="controls:Badge">
+    <Setter Property="ClipToBounds" Value="False" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="BadgeBackground" Value="{DynamicResource SkyBadgeNeutralBrush}" />
+    <Setter Property="BadgeForeground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel ClipToBounds="False">
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+          <Border Name="PART_BadgeContainer"
+                  ClipToBounds="False"
+                  ZIndex="1"
+                  Padding="4,2"
+                  MinHeight="18"
+                  MinWidth="18"
+                  CornerRadius="9999"
+                  Background="{TemplateBinding BadgeBackground}"
+                  BorderThickness="0"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top"
+                  UseLayoutRounding="True">
+            <ContentPresenter Name="PART_BadgeContent"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Foreground="{TemplateBinding BadgeForeground}"
+                              FontSize="10.5"
+                              FontWeight="SemiBold"
+                              Content="{TemplateBinding BadgeContent}" />
+          </Border>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

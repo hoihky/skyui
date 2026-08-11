@@ -1,4 +1,5 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/Sky/SkyPreset.axaml" />
+  <!-- Public Sky theme entry (default preset: ContentFirstDark). -->
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/ContentFirstDark.axaml" />
 </Styles>

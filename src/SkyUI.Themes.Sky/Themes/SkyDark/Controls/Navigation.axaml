@@ -1,0 +1,112 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls"
+                    xmlns:icons="using:SkyUI.Icons">
+  <DataTemplate x:Key="SkyNavigationViewItemTemplate" x:DataType="controls:SkyNavigationViewItem">
+    <StackPanel Orientation="Horizontal" Spacing="10">
+      <icons:SkyIcon Kind="{Binding IconKind}"
+                     Size="Medium"
+                     VerticalAlignment="Center"
+                     IsVisible="{Binding IconKind, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      <TextBlock Text="{Binding Label}"
+                 Classes="sky-nav-link"
+                 VerticalAlignment="Center" />
+    </StackPanel>
+  </DataTemplate>
+
+  <DataTemplate x:Key="SkyBottomNavigationViewItemTemplate" x:DataType="controls:SkyNavigationViewItem">
+    <StackPanel Spacing="4" HorizontalAlignment="Center">
+      <icons:SkyIcon Kind="{Binding IconKind}"
+                     Size="Medium"
+                     HorizontalAlignment="Center"
+                     IsVisible="{Binding IconKind, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      <TextBlock Text="{Binding Label}"
+                 Classes="sky-nav-link"
+                 FontSize="11"
+                 HorizontalAlignment="Center"
+                 TextAlignment="Center" />
+    </StackPanel>
+  </DataTemplate>
+
+  <ControlTheme x:Key="{x:Type controls:SkyNavigationView}" TargetType="controls:SkyNavigationView">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid Name="PART_Root"
+              ColumnDefinitions="Auto,*"
+              RowDefinitions="*,Auto">
+          <Border Name="PART_SideNavHost"
+                  Grid.Column="0"
+                  Grid.Row="0"
+                  Background="{DynamicResource SkySurfaceBrush}"
+                  BorderBrush="{DynamicResource SkyBorderBrush}"
+                  BorderThickness="0,0,1,0">
+            <DockPanel LastChildFill="True">
+              <ContentPresenter Name="PART_Header"
+                                DockPanel.Dock="Top"
+                                Content="{TemplateBinding Header}"
+                                Margin="12,12,12,8" />
+              <ListBox Name="PART_SideNavList"
+                       Classes="sky sky-nav"
+                       ItemTemplate="{StaticResource SkyNavigationViewItemTemplate}"
+                       BorderThickness="0"
+                       Background="Transparent" />
+            </DockPanel>
+          </Border>
+          <ContentPresenter Name="PART_Content"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Content="{TemplateBinding Content}"
+                            Margin="16" />
+          <Border Name="PART_BottomNavHost"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  IsVisible="False"
+                  Background="{DynamicResource SkySurfaceBrush}"
+                  BorderBrush="{DynamicResource SkyBorderBrush}"
+                  BorderThickness="0,1,0,0"
+                  Padding="0,4">
+            <ListBox Name="PART_BottomNavList"
+                     Classes="sky sky-nav sky-bottom-nav"
+                     ItemTemplate="{StaticResource SkyBottomNavigationViewItemTemplate}"
+                     BorderThickness="0"
+                     Background="Transparent" />
+          </Border>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyTabView}"
+                TargetType="controls:SkyTabView"
+                BasedOn="{StaticResource {x:Type TabControl}}" />
+
+  <ControlTheme x:Key="{x:Type controls:SkyBreadcrumb}" TargetType="controls:SkyBreadcrumb">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <StackPanel Orientation="Horizontal" Spacing="4" />
+      </ItemsPanelTemplate>
+    </Setter>
+    <Setter Property="ItemTemplate">
+      <DataTemplate x:DataType="controls:SkyBreadcrumbItem">
+        <StackPanel Orientation="Horizontal" Spacing="6">
+          <TextBlock Classes="sky-breadcrumb-sep"
+                     Text="{Binding $parent[controls:SkyBreadcrumb].Separator}"
+                     Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                     VerticalAlignment="Center" />
+          <Button Classes="sky sky-subtle"
+                  Content="{Binding Title}"
+                  Command="{Binding Command}"
+                  Padding="4,2"
+                  IsVisible="{Binding !IsCurrent}" />
+          <TextBlock Classes="sky-nav-link-bold"
+                     Text="{Binding Title}"
+                     VerticalAlignment="Center"
+                     IsVisible="{Binding IsCurrent}" />
+        </StackPanel>
+      </DataTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

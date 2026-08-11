@@ -1,0 +1,28 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Content-first dark preset (public Sky brand). Dark / Light / HighContrast via RequestedThemeVariant. -->
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/SkyResources.Themed.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Badge.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Avatar.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Chip.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/CheckedListBox.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Accordion.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/VideoTimeline.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Feedback.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Navigation.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Accordion.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Chip.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Feedback.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Navigation.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Primitives.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Focus.axaml" />
+  <StyleInclude Source="avares://SkyUI.Icons/Themes/SkyIconStyles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Fonts/Themes/SkyTypographyStyles.axaml" />
+</Styles>
