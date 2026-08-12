@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.FormsDemo"
+             x:DataType="vm:FormsDemoViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="24" MaxWidth="520">
+                <TextBlock Classes="sky-feature-heading" Text="Forms" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="SkyFormField wraps inputs with label, hint, and validation. SkyRadioGroup, SkySlider, SkySearchBox, and SkyPasswordBox are MVVM-friendly." />
+
+                <sky:SkyFormField Label="Email"
+                                  Hint="Used for account recovery"
+                                  IsRequired="True"
+                                  ErrorMessage="{Binding EmailError}"
+                                  Validator="{Binding EmailValidator}">
+                    <TextBox Classes="sky"
+                             Text="{Binding Email}"
+                             PlaceholderText="name@example.com"
+                             Width="320"
+                             HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <Button Classes="sky sky-primary"
+                            Content="Validate email"
+                            Command="{Binding ValidateEmailCommand}" />
+                    <Button Classes="sky sky-outlined"
+                            Content="Clear errors"
+                            Command="{Binding ClearErrorsCommand}" />
+                </StackPanel>
+
+                <sky:SkyFormField Label="Search"
+                                  Hint="Filter library items">
+                    <sky:SkySearchBox Text="{Binding SearchQuery}"
+                                      PlaceholderText="Search tracks, albums, artists"
+                                      Width="320"
+                                      HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <sky:SkyFormField Label="Password"
+                                  Hint="At least 8 characters recommended">
+                    <sky:SkyPasswordBox Text="{Binding Password}"
+                                        PlaceholderText="Enter password"
+                                        Width="320"
+                                        HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Theme" />
+                    <sky:SkyRadioGroup SelectedValue="{Binding Theme}">
+                        <sky:SkyRadioGroupItem Label="Dark" Value="dark" />
+                        <sky:SkyRadioGroupItem Label="Light" Value="light" />
+                        <sky:SkyRadioGroupItem Label="High contrast" Value="hc" />
+                    </sky:SkyRadioGroup>
+                </StackPanel>
+
+                <sky:SkySlider Label="Volume"
+                               Minimum="0"
+                               Maximum="100"
+                               Value="{Binding Volume}"
+                               TickFrequency="10"
+                               IsSnapToTickEnabled="True"
+                               ValueFormat="{}{0:0}%" />
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

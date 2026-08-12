@@ -1,0 +1,93 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.LayoutDemo"
+             x:DataType="vm:LayoutDemoViewModel"
+             SizeChanged="OnSizeChanged">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="24" MaxWidth="720">
+                <TextBlock Classes="sky-feature-heading" Text="Layout" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="SkyCard, SkyDivider, SkyExpander, and responsive grid helpers (SkyResponsiveGrid, SkyGridLayout)." />
+
+                <sky:SkyCard Header="Playback settings"
+                             IsHoverable="True"
+                             Width="360"
+                             HorizontalAlignment="Left">
+                    <StackPanel Spacing="8">
+                        <TextBlock Classes="sky-body"
+                                   Text="Crossfade and gapless playback options." />
+                        <TextBlock Classes="sky-body-secondary"
+                                   Text="Card supports header, content, footer, and hover elevation." />
+                    </StackPanel>
+                    <sky:SkyCard.Footer>
+                        <Button Classes="sky sky-primary" Content="Save" HorizontalAlignment="Left" />
+                    </sky:SkyCard.Footer>
+                </sky:SkyCard>
+
+                <sky:SkyDivider Text="Details" />
+
+                <sky:SkyExpander Header="Advanced options"
+                                 IsExpanded="False"
+                                 Width="360"
+                                 HorizontalAlignment="Left"
+                                 Expanded="OnExpanderExpanded"
+                                 Collapsed="OnExpanderCollapsed">
+                    <TextBlock Classes="sky-body-secondary"
+                               TextWrapping="Wrap"
+                               Text="Expander content for infrequently used settings. Use SkyAccordion when stacking multiple sections." />
+                </sky:SkyExpander>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Responsive grid" />
+                    <TextBlock Classes="sky-body-secondary"
+                               Text="{Binding ColumnCountLabel}" />
+                    <sky:SkyResponsiveGrid x:Name="ResponsiveGrid" MinHeight="120">
+                        <Border Classes="sky-card" Padding="16" MinHeight="72">
+                            <TextBlock Text="Item 1" Classes="sky-body" />
+                        </Border>
+                        <Border Classes="sky-card" Padding="16" MinHeight="72">
+                            <TextBlock Text="Item 2" Classes="sky-body" />
+                        </Border>
+                        <Border Classes="sky-card" Padding="16" MinHeight="72">
+                            <TextBlock Text="Item 3" Classes="sky-body" />
+                        </Border>
+                        <Border Classes="sky-card" Padding="16" MinHeight="72">
+                            <TextBlock Text="Item 4" Classes="sky-body" />
+                        </Border>
+                        <Border Classes="sky-card" Padding="16" MinHeight="72">
+                            <TextBlock Text="Item 5" Classes="sky-body" />
+                        </Border>
+                    </sky:SkyResponsiveGrid>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Grid layout (attached)" />
+                    <TextBlock Classes="sky-body-secondary"
+                               Text="SkyGridLayout.IsResponsive on a Grid with AutoPlaceChildren." />
+                    <Grid sky:SkyGridLayout.IsResponsive="True"
+                          sky:SkyGridLayout.AutoPlaceChildren="True"
+                          ColumnSpacing="16"
+                          RowSpacing="16">
+                        <Border Classes="sky-card" Padding="16" MinHeight="56">
+                            <TextBlock Text="A" Classes="sky-body" />
+                        </Border>
+                        <Border Classes="sky-card" Padding="16" MinHeight="56">
+                            <TextBlock Text="B" Classes="sky-body" />
+                        </Border>
+                        <Border Classes="sky-card" Padding="16" MinHeight="56">
+                            <TextBlock Text="C" Classes="sky-body" />
+                        </Border>
+                    </Grid>
+                </StackPanel>
+
+                <TextBlock Classes="sky-body"
+                           Text="{Binding Status}"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

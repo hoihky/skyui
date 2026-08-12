@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:icons="using:SkyUI.Icons"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.PrimitivesDemo"
+             x:DataType="vm:PrimitivesDemoViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="24" MaxWidth="640">
+                <TextBlock Classes="sky-feature-heading" Text="Primitives" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="Tooltip, popover, loading button state, and consistent disabled opacity via SkyDisabledOpacity." />
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Tooltips" />
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Button Classes="sky sky-outlined"
+                                Content="Hover me"
+                                sky:SkyTooltipProperties.Tip="Quick action description" />
+                        <Button Classes="sky sky-subtle"
+                                Content="Rich tip"
+                                icons:SkyIconProperties.Icon="Settings">
+                            <ToolTip.Tip>
+                                <sky:SkyTooltip>
+                                    <TextBlock Text="SkyTooltip supports any content, not only plain strings."
+                                               TextWrapping="Wrap"
+                                               MaxWidth="220" />
+                                </sky:SkyTooltip>
+                            </ToolTip.Tip>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Popover" />
+                    <Button Classes="sky sky-primary" Content="Open popover">
+                        <Button.Flyout>
+                            <sky:SkyPopover Placement="Bottom">
+                                <StackPanel Spacing="8" MinWidth="220">
+                                    <TextBlock Classes="sky-section-title" Text="Playlist options" />
+                                    <TextBlock Classes="sky-body-secondary"
+                                               TextWrapping="Wrap"
+                                               Text="SkyPopover is for lightweight panels. Use SkyMenuFlyout for command menus." />
+                                    <Button Classes="sky sky-outlined"
+                                            Content="Got it"
+                                            HorizontalAlignment="Left" />
+                                </StackPanel>
+                            </sky:SkyPopover>
+                        </Button.Flyout>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Loading button" />
+                    <Button Classes="sky sky-primary"
+                            Content="Save changes"
+                            Command="{Binding SaveCommand}"
+                            sky:SkyButtonProperties.IsLoading="{Binding IsSaving}"
+                            HorizontalAlignment="Left" />
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Disabled consistency" />
+                    <TextBlock Classes="sky-body-secondary"
+                               Text="All sky controls use SkyDisabledOpacity (0.45) and Arrow cursor where applicable." />
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Button Classes="sky" Content="Disabled" IsEnabled="False" />
+                        <Button Classes="sky sky-primary" Content="Disabled" IsEnabled="False" />
+                        <Button Classes="sky sky-outlined" Content="Disabled" IsEnabled="False" />
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock Classes="sky-body"
+                           Text="{Binding Status}"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

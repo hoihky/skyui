@@ -1,0 +1,114 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <!-- Menu bar strip -->
+  <Style Selector="Menu.sky, Menu.spotify, controls|SkyMenuBar">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="Menu.sky > MenuItem, Menu.spotify > MenuItem, controls|SkyMenuBar > MenuItem">
+    <Setter Property="Padding" Value="12,8" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusStandard}" />
+    <Setter Property="FontWeight" Value="Regular" />
+  </Style>
+  <Style Selector="Menu.sky > MenuItem:pointerover, Menu.spotify > MenuItem:pointerover, controls|SkyMenuBar > MenuItem:pointerover">
+    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+  </Style>
+  <Style Selector="Menu.sky > MenuItem:selected, Menu.spotify > MenuItem:selected, controls|SkyMenuBar > MenuItem:selected">
+    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <!-- Dropdown / context menu shell -->
+  <Style Selector="ContextMenu.sky, ContextMenu.spotify, controls|SkyContextMenu">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="Padding" Value="4" />
+    <Setter Property="MinWidth" Value="200" />
+  </Style>
+  <Style Selector="MenuFlyoutPresenter.sky">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="Padding" Value="4" />
+    <Setter Property="MinWidth" Value="200" />
+  </Style>
+
+  <!-- Menu items inside flyouts -->
+  <Style Selector="ContextMenu.sky MenuItem,
+                   ContextMenu.spotify MenuItem,
+                   controls|SkyContextMenu MenuItem,
+                   MenuFlyoutPresenter.sky MenuItem,
+                   MenuItem.sky,
+                   MenuItem.spotify">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Padding" Value="{DynamicResource SkyDensityMenuItemPadding}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusStandard}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="MinHeight" Value="36" />
+  </Style>
+  <Style Selector="ContextMenu.sky MenuItem:pointerover,
+                   ContextMenu.spotify MenuItem:pointerover,
+                   controls|SkyContextMenu MenuItem:pointerover,
+                   MenuFlyoutPresenter.sky MenuItem:pointerover,
+                   MenuItem.sky:pointerover,
+                   MenuItem.spotify:pointerover">
+    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
+  </Style>
+  <Style Selector="ContextMenu.sky MenuItem:selected,
+                   ContextMenu.spotify MenuItem:selected,
+                   controls|SkyContextMenu MenuItem:selected,
+                   MenuFlyoutPresenter.sky MenuItem:selected,
+                   MenuItem.sky:selected,
+                   MenuItem.spotify:selected">
+    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="ContextMenu.sky MenuItem:disabled,
+                   controls|SkyContextMenu MenuItem:disabled,
+                   MenuFlyoutPresenter.sky MenuItem:disabled,
+                   MenuItem.sky:disabled,
+                   MenuItem.spotify:disabled">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+  </Style>
+
+  <!-- Accelerator hint -->
+  <Style Selector="ContextMenu.sky MenuItem /template/ TextBlock#PART_InputGestureText,
+                   controls|SkyContextMenu MenuItem /template/ TextBlock#PART_InputGestureText,
+                   MenuFlyoutPresenter.sky MenuItem /template/ TextBlock#PART_InputGestureText,
+                   MenuItem.sky /template/ TextBlock#PART_InputGestureText">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Margin" Value="24,0,4,0" />
+  </Style>
+
+  <!-- Submenu chevron -->
+  <Style Selector="MenuItem.sky /template/ Path#PART_ChevronPath,
+                   ContextMenu.sky MenuItem /template/ Path#PART_ChevronPath,
+                   controls|SkyContextMenu MenuItem /template/ Path#PART_ChevronPath">
+    <Setter Property="Fill" Value="{DynamicResource SkyTextSecondaryBrush}" />
+  </Style>
+
+  <!-- Separators -->
+  <Style Selector="ContextMenu.sky Separator,
+                   controls|SkyContextMenu Separator,
+                   MenuFlyoutPresenter.sky Separator,
+                   Separator.sky">
+    <Setter Property="Background" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Margin" Value="8,4" />
+  </Style>
+</Styles>

@@ -15,4 +15,9 @@
     <ProjectReference Include="..\SkyUI.Icons\SkyUI.Icons.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="SkyUI.UnitTests" />
+    <InternalsVisibleTo Include="SkyUI.HeadlessTests" />
+  </ItemGroup>
+
 </Project>

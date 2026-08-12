@@ -1,0 +1,60 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <Style Selector="ToolTip.sky">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusStandard}" />
+    <Setter Property="Padding" Value="8,6" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="MaxWidth" Value="280" />
+  </Style>
+
+  <Style Selector="FlyoutPresenter.sky">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="Padding" Value="12" />
+    <Setter Property="MinWidth" Value="200" />
+    <Setter Property="MaxWidth" Value="360" />
+  </Style>
+
+  <Style Selector="Button.sky.sky-loading:disabled, Button.spotify.sky-loading:disabled">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Cursor" Value="Arrow" />
+  </Style>
+
+  <Style Selector="controls|SkyExpander:disabled">
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyCard:disabled">
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
+  </Style>
+
+  <Style Selector="controls|SkyDatePicker:disabled, controls|SkyTimePicker:disabled">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDisabledBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Cursor" Value="Arrow" />
+  </Style>
+
+  <Style Selector="controls|SkySlider:disabled">
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkySearchBox:disabled, controls|SkyPasswordBox:disabled">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDisabledBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Cursor" Value="Arrow" />
+  </Style>
+</Styles>

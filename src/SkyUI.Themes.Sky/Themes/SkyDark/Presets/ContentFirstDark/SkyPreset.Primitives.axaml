@@ -24,9 +24,6 @@
   <Style Selector="Button.sky:pressed, Button.spotify:pressed">
     <Setter Property="Background" Value="{DynamicResource SkyCardBrush}" />
   </Style>
-  <Style Selector="Button.sky:disabled, Button.spotify:disabled">
-    <Setter Property="Opacity" Value="0.45" />
-  </Style>
 
   <!-- Primary CTA (accent) (functional accent) -->
   <Style Selector="Button.sky.sky-primary, Button.spotify.spotify-primary">
@@ -105,11 +102,11 @@
   </Style>
 
   <Style Selector="Button.sky:disabled, Button.spotify:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
     <Setter Property="Cursor" Value="Arrow" />
   </Style>
   <Style Selector="Button.sky.sky-outlined:disabled, Button.spotify.spotify-outlined:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
   </Style>
 
   <!-- Search / text field — pill surface -->
@@ -134,7 +131,37 @@
     <Setter Property="BorderThickness" Value="2" />
   </Style>
   <Style Selector="TextBox.sky:disabled, TextBox.spotify:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDisabledBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+  </Style>
+  <Style Selector="TextBox.sky.sky-search, TextBox.spotify.sky-search">
+    <Setter Property="Padding" Value="44,12,14,12" />
+  </Style>
+  <Style Selector="TextBox.sky.sky-password, TextBox.spotify.sky-password">
+    <Setter Property="Padding" Value="14,12,40,12" />
+  </Style>
+
+  <Style Selector="RadioButton.sky, RadioButton.spotify">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Padding" Value="4,6" />
+  </Style>
+  <Style Selector="RadioButton.sky:disabled, RadioButton.spotify:disabled">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+  </Style>
+
+  <Style Selector="Slider.sky, Slider.spotify">
+    <Setter Property="Foreground" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="MinHeight" Value="28" />
+  </Style>
+  <Style Selector="Slider.sky:disabled, Slider.spotify:disabled">
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
   </Style>
 
   <Style Selector="CheckBox.sky, CheckBox.spotify">
@@ -146,7 +173,8 @@
     <Setter Property="Foreground" Value="{DynamicResource SkyAccentBrush}" />
   </Style>
   <Style Selector="CheckBox.sky:disabled, CheckBox.spotify:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
   </Style>
 
   <Style Selector="ToggleSwitch.sky, ToggleSwitch.spotify">
@@ -160,7 +188,8 @@
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
   </Style>
   <Style Selector="ToggleSwitch.sky:disabled, ToggleSwitch.spotify:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
   </Style>
   <Style Selector="ToggleSwitch.sky /template/ Border#SwitchTrack">
     <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
@@ -195,7 +224,10 @@
     <Setter Property="BorderThickness" Value="2" />
   </Style>
   <Style Selector="ComboBox.sky:disabled, ComboBox.spotify:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDisabledBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
   </Style>
 
   <Style Selector="ComboBox.sky /template/ Popup, ComboBox.spotify /template/ Popup">
@@ -223,6 +255,7 @@
   </Style>
   <Style Selector="ComboBoxItem:selected">
     <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="FontWeight" Value="SemiBold" />
   </Style>
 
@@ -249,13 +282,15 @@
     <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
   </Style>
   <Style Selector="ListBox.sky ListBoxItem:selected, ListBox.spotify ListBoxItem:selected">
-    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
     <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
-    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="FontWeight" Value="SemiBold" />
   </Style>
   <Style Selector="ListBox.sky ListBoxItem:disabled, ListBox.spotify ListBoxItem:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
   </Style>
 
   <!-- Sidebar nav: inactive silver, active white bold -->
@@ -279,13 +314,13 @@
   </Style>
   <Style Selector="ListBox.sky-nav ListBoxItem:selected, ListBox.spotify-nav ListBoxItem:selected">
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
-    <Setter Property="FontWeight" Value="Bold" />
-    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
     <Setter Property="BorderBrush" Value="Transparent" />
   </Style>
   <Style Selector="ListBox.sky-nav ListBoxItem:selected TextBlock.sky-nav-link, ListBox.spotify-nav ListBoxItem:selected TextBlock.sky-nav-link">
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
-    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="FontWeight" Value="SemiBold" />
   </Style>
   <Style Selector="ListBox.sky-nav ListBoxItem TextBlock.sky-nav-link, ListBox.spotify-nav ListBoxItem TextBlock.sky-nav-link">
     <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
@@ -317,7 +352,7 @@
     <Setter Property="MinHeight" Value="8" />
   </Style>
   <Style Selector="ProgressBar.sky:disabled, ProgressBar.spotify:disabled">
-    <Setter Property="Opacity" Value="0.45" />
+    <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
   </Style>
 
   <!-- Demo / docs sample panels -->

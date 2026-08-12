@@ -11,6 +11,7 @@ internal static class SkyAccentOverrideApplicator
       SkyPaletteKeys.Accent,
       SkyPaletteKeys.AccentPressed,
       SkyPaletteKeys.SelectedTint,
+      SkyPaletteKeys.SelectedBorder,
   ];
 
   private static readonly string[] BrushKeys =
@@ -18,6 +19,7 @@ internal static class SkyAccentOverrideApplicator
       SkyTokenKeys.Brush.Accent,
       SkyTokenKeys.Brush.AccentPressed,
       SkyTokenKeys.Brush.SelectedTint,
+      SkyTokenKeys.Brush.SelectedBorder,
       SkyResourceKeys.SpotifyAccentGreen,
       "SpotifyAccentGreenDarkBrush",
   ];
@@ -36,14 +38,17 @@ internal static class SkyAccentOverrideApplicator
 
     var pressed = SkyColorHarmony.Darken(accent.Value, 0.06);
     var selection = SkyColorHarmony.AccentSelectionTint(accent.Value);
+    var selectionBorder = SkyColorHarmony.AccentSelectionBorder(accent.Value);
 
     dictionary[SkyPaletteKeys.Accent] = accent.Value;
     dictionary[SkyPaletteKeys.AccentPressed] = pressed;
     dictionary[SkyPaletteKeys.SelectedTint] = selection;
+    dictionary[SkyPaletteKeys.SelectedBorder] = selectionBorder;
 
     dictionary[SkyTokenKeys.Brush.Accent] = new SolidColorBrush(accent.Value);
     dictionary[SkyTokenKeys.Brush.AccentPressed] = new SolidColorBrush(pressed);
     dictionary[SkyTokenKeys.Brush.SelectedTint] = new SolidColorBrush(selection);
+    dictionary[SkyTokenKeys.Brush.SelectedBorder] = new SolidColorBrush(selectionBorder);
 
     dictionary[SkyResourceKeys.SpotifyAccentGreen] = new SolidColorBrush(accent.Value);
     dictionary["SpotifyAccentGreenDarkBrush"] = new SolidColorBrush(pressed);

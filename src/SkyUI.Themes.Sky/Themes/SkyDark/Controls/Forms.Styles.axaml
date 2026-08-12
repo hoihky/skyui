@@ -1,0 +1,39 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <!-- Error state: border on nested inputs -->
+  <Style Selector="controls|SkyFormField:error TextBox.sky">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="controls|SkyFormField:error controls|SkySearchBox">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="controls|SkyFormField:error controls|SkyPasswordBox">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="controls|SkyFormField:error ComboBox.sky">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+
+  <Style Selector="controls|SkyRadioGroup">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+
+  <!-- Keep placeholder and typed text vertically centered in icon/reveal fields -->
+  <Style Selector="controls|SkySearchBox /template/ TextBlock#PART_Placeholder,
+                   controls|SkyPasswordBox /template/ TextBlock#PART_Placeholder,
+                   TextBox.sky.sky-search /template/ TextBlock#PART_Placeholder,
+                   TextBox.sky.sky-password /template/ TextBlock#PART_Placeholder">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="controls|SkySearchBox /template/ ScrollViewer#PART_ScrollViewer,
+                   controls|SkyPasswordBox /template/ ScrollViewer#PART_ScrollViewer,
+                   TextBox.sky.sky-search /template/ ScrollViewer#PART_ScrollViewer,
+                   TextBox.sky.sky-password /template/ ScrollViewer#PART_ScrollViewer">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+</Styles>

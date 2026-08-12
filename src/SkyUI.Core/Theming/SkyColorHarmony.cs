@@ -18,5 +18,9 @@ internal static class SkyColorHarmony
 
   /// <summary>Accent selection tint (see SkyPaletteSelectedTint).</summary>
   public static Color AccentSelectionTint(Color accent) =>
-        Color.FromArgb(0x33, accent.R, accent.G, accent.B);
+        Color.FromArgb(0x3A, accent.R, accent.G, accent.B);
+
+  /// <summary>Accent selection border (see SkyPaletteSelectedBorder).</summary>
+  public static Color AccentSelectionBorder(Color accent) =>
+        Color.FromArgb(0x66, accent.R, accent.G, accent.B);
 }

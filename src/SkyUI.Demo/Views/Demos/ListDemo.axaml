@@ -1,15 +1,59 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:icons="using:SkyUI.Icons"
-             x:Class="SkyUI.Demo.Views.Demos.ListDemo">
-    <Border Classes="sky-demo-panel">
-        <StackPanel Spacing="16">
-            <TextBlock Classes="sky-feature-heading" Text="List" />
-            <ListBox Classes="sky" Height="160" Width="320" HorizontalAlignment="Left" SelectedIndex="0">
-                <ListBoxItem Content="List item one" icons:SkyIconProperties.Icon="List" icons:SkyIconProperties.IconChrome="ListItem" />
-                <ListBoxItem Content="List item two" icons:SkyIconProperties.Icon="Check" icons:SkyIconProperties.IconChrome="ListItem" />
-                <ListBoxItem Content="List item three" icons:SkyIconProperties.Icon="Settings" icons:SkyIconProperties.IconChrome="ListItem" />
-            </ListBox>
-        </StackPanel>
-    </Border>
+             xmlns:models="using:SkyUI.Demo.Models"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.ListDemo"
+             x:DataType="vm:ListDemoViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="20" MaxWidth="720">
+                <TextBlock Classes="sky-feature-heading" Text="List" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="SkyVirtualTreeView flattens expanded nodes into a virtualized row list. Reuses CheckedListBox adapters, selection, and optional tri-state checkboxes." />
+
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Selection"
+                                   VerticalAlignment="Center"
+                                   Classes="sky-body-secondary" />
+                        <ComboBox Classes="sky"
+                                  Width="160"
+                                  ItemsSource="{Binding SelectionModes}"
+                                  SelectedItem="{Binding SelectionMode}" />
+                    </StackPanel>
+                    <Button Classes="sky sky-outlined"
+                            Content="{Binding CheckBoxesLabel}"
+                            Command="{Binding ToggleCheckBoxesCommand}" />
+                </StackPanel>
+
+                <sky:SkyVirtualTreeView ItemsSource="{Binding Items}"
+                                        SelectionMode="{Binding SelectionMode}"
+                                        ShowCheckBoxes="{Binding ShowCheckBoxes}"
+                                        Indent="20"
+                                        MinHeight="280"
+                                        MaxHeight="360"
+                                        SelectionChanged="OnSelectionChanged"
+                                        CheckedChanged="OnCheckedChanged">
+                    <sky:SkyVirtualTreeView.ItemTemplate>
+                        <DataTemplate x:DataType="models:DemoCheckedListNode">
+                            <TextBlock Text="{Binding Title}"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource SkyTextPrimaryBrush}" />
+                        </DataTemplate>
+                    </sky:SkyVirtualTreeView.ItemTemplate>
+                </sky:SkyVirtualTreeView>
+
+                <TextBlock Classes="sky-body"
+                           Text="{Binding Status}"
+                           TextWrapping="Wrap" />
+
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Opacity="0.9"
+                           Text="Tip: expand folders with the chevron. Enable checkboxes for tri-state selection like CheckedListBox. Ctrl+click rows when selection mode is Multiple." />
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
 </UserControl>

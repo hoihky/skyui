@@ -22,6 +22,27 @@ public static class SkyThemeClasses
     public const string FeatureHeading = "sky-feature-heading";
     public const string BodySecondary = "sky-body-secondary";
 
+    public const string Search = "sky-search";
+    public const string Password = "sky-password";
+    public const string FieldError = "sky-field-error";
+
+    public const string MenuBar = "sky-menu-bar";
+    public const string ContextMenu = "sky-context-menu";
+
+    public const string DatePicker = "sky-date-picker";
+    public const string Calendar = "sky-calendar";
+    public const string TimePicker = "sky-time-picker";
+
+    public const string VirtualTree = "sky-virtual-tree";
+
+    public const string Divider = "sky-divider";
+    public const string Expander = "sky-expander";
+    public const string ResponsiveGrid = "sky-responsive-grid";
+
+    public const string Tooltip = "sky-tooltip";
+    public const string Popover = "sky-popover";
+    public const string Loading = "sky-loading";
+
     /// <summary>Deprecated style classes; still styled via preset aliases in primitives.</summary>
     public static class LegacySpotify
     {

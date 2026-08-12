@@ -13,6 +13,12 @@
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/VideoTimeline.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Feedback.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Navigation.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Forms.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Menus.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Pickers.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/VirtualTreeView.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Layout.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Primitives.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Styles.Resources>
@@ -21,6 +27,12 @@
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Chip.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Feedback.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Navigation.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Forms.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Menus.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Pickers.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/VirtualTreeView.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Layout.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Primitives.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Primitives.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Focus.axaml" />
   <StyleInclude Source="avares://SkyUI.Icons/Themes/SkyIconStyles.axaml" />

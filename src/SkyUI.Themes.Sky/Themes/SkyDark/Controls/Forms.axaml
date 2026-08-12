@@ -1,0 +1,100 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls"
+                    xmlns:icons="using:SkyUI.Icons">
+  <ControlTheme x:Key="{x:Type controls:SkyFormField}" TargetType="controls:SkyFormField">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Spacing="6">
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock Name="PART_Label"
+                       Text="{TemplateBinding Label}"
+                       Classes="sky-section-title"
+                       VerticalAlignment="Center"
+                       IsVisible="{Binding Label, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <TextBlock Name="PART_RequiredIndicator"
+                       Text="*"
+                       Foreground="{DynamicResource SkyDangerBrush}"
+                       VerticalAlignment="Center"
+                       IsVisible="False" />
+          </StackPanel>
+          <TextBlock Name="PART_Hint"
+                     Text="{TemplateBinding Hint}"
+                     Classes="sky-body-secondary"
+                     FontSize="12"
+                     TextWrapping="Wrap"
+                     IsVisible="{Binding Hint, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <ContentPresenter Name="PART_InputHost"
+                            Content="{TemplateBinding Content}"
+                            HorizontalAlignment="Stretch" />
+          <TextBlock Name="PART_Error"
+                     Text="{TemplateBinding ErrorMessage}"
+                     Foreground="{DynamicResource SkyDangerBrush}"
+                     FontSize="12"
+                     TextWrapping="Wrap"
+                     IsVisible="{Binding ErrorMessage, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyRadioGroup}" TargetType="controls:SkyRadioGroup">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Name="PART_ItemsHost" Spacing="10" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkySlider}" TargetType="controls:SkySlider">
+    <Setter Property="Minimum" Value="0" />
+    <Setter Property="Maximum" Value="100" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Spacing="8">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="{TemplateBinding Label}"
+                       Classes="sky-section-title"
+                       VerticalAlignment="Center"
+                       IsVisible="{Binding Label, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <TextBlock Name="PART_ValueLabel"
+                       Grid.Column="1"
+                       Classes="sky-body-secondary"
+                       VerticalAlignment="Center"
+                       IsVisible="{TemplateBinding ShowValueLabel}" />
+          </Grid>
+          <Slider Name="PART_Slider"
+                  Classes="sky"
+                  Minimum="{TemplateBinding Minimum}"
+                  Maximum="{TemplateBinding Maximum}"
+                  Value="{TemplateBinding Value, Mode=TwoWay}"
+                  TickFrequency="{TemplateBinding TickFrequency}"
+                  IsSnapToTickEnabled="{TemplateBinding IsSnapToTickEnabled}" />
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkySearchBox}"
+                TargetType="controls:SkySearchBox"
+                BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="InnerLeftContent">
+      <Template>
+        <icons:SkyIcon Kind="Search"
+                       Size="Medium"
+                       Margin="12,0,10,0"
+                       VerticalAlignment="Center" />
+      </Template>
+    </Setter>
+    <Setter Property="Padding" Value="44,12,14,12" />
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyPasswordBox}"
+                TargetType="controls:SkyPasswordBox"
+                BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="RevealPassword" Value="True" />
+    <Setter Property="Padding" Value="14,12,40,12" />
+  </ControlTheme>
+</ResourceDictionary>

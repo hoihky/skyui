@@ -29,6 +29,9 @@ public static class SkyPaletteKeys
     public const string HoverTint = "SkyPaletteHoverTint";
     public const string ListHover = "SkyPaletteListHover";
     public const string SelectedTint = "SkyPaletteSelectedTint";
+    public const string SelectedBorder = "SkyPaletteSelectedBorder";
+    public const string DisabledForeground = "SkyPaletteDisabledForeground";
+    public const string DisabledBorder = "SkyPaletteDisabledBorder";
     public const string AvatarFallback = "SkyPaletteAvatarFallback";
     public const string BadgeNeutral = "SkyPaletteBadgeNeutral";
     public const string FocusRing = "SkyPaletteFocusRing";

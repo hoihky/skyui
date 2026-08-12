@@ -1,0 +1,152 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <!-- Date picker field -->
+  <Style Selector="CalendarDatePicker.sky, CalendarDatePicker.spotify, controls|SkyDatePicker">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusPill}" />
+    <Setter Property="Padding" Value="{DynamicResource SkyDensityPickerPadding}" />
+    <Setter Property="MinHeight" Value="{DynamicResource SkyDensityPickerMinHeight}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="controls|SkyDatePicker /template/ TextBox#PART_TextBox,
+                   CalendarDatePicker.sky /template/ TextBox#PART_TextBox">
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="controls|SkyDatePicker /template/ TextBox#PART_TextBox /template/ TextBlock#PART_Placeholder,
+                   CalendarDatePicker.sky /template/ TextBox#PART_TextBox /template/ TextBlock#PART_Placeholder">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="controls|SkyDatePicker /template/ Button#PART_Button,
+                   CalendarDatePicker.sky /template/ Button#PART_Button">
+    <Setter Property="Margin" Value="4,0,12,0" />
+    <Setter Property="Width" Value="24" />
+    <Setter Property="MinHeight" Value="24" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="CalendarDatePicker.sky:pointerover, CalendarDatePicker.spotify:pointerover, controls|SkyDatePicker:pointerover">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
+  </Style>
+  <Style Selector="CalendarDatePicker.sky:focus, CalendarDatePicker.spotify:focus, controls|SkyDatePicker:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="CalendarDatePicker.sky:disabled, CalendarDatePicker.spotify:disabled, controls|SkyDatePicker:disabled">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDisabledBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDatePicker /template/ Calendar,
+                   CalendarDatePicker.sky /template/ Calendar">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="Padding" Value="8" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+  </Style>
+
+  <!-- Time picker field -->
+  <Style Selector="TimePicker.sky, TimePicker.spotify, controls|SkyTimePicker">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusPill}" />
+    <Setter Property="Padding" Value="4,4" />
+    <Setter Property="MinHeight" Value="{DynamicResource SkyDensityPickerMinHeight}" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+  </Style>
+  <Style Selector="controls|SkyTimePicker /template/ TextBlock#PART_HourTextBlock,
+                   controls|SkyTimePicker /template/ TextBlock#PART_MinuteTextBlock,
+                   controls|SkyTimePicker /template/ TextBlock#PART_PeriodTextBlock,
+                   TimePicker.sky /template/ TextBlock#PART_HourTextBlock,
+                   TimePicker.sky /template/ TextBlock#PART_MinuteTextBlock,
+                   TimePicker.sky /template/ TextBlock#PART_PeriodTextBlock">
+    <Setter Property="Padding" Value="18,12" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TimePicker.sky:pointerover, TimePicker.spotify:pointerover, controls|SkyTimePicker:pointerover">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
+  </Style>
+  <Style Selector="TimePicker.sky:focus, TimePicker.spotify:focus, controls|SkyTimePicker:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="TimePicker.sky:disabled, TimePicker.spotify:disabled, controls|SkyTimePicker:disabled">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyDisabledForegroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDisabledBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+  </Style>
+
+  <!-- Inline calendar month view -->
+  <Style Selector="Calendar.sky, Calendar.spotify, controls|SkyCalendar">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="Padding" Value="8" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+  </Style>
+  <Style Selector="Calendar.sky CalendarDayButton, Calendar.spotify CalendarDayButton, controls|SkyCalendar CalendarDayButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusStandard}" />
+    <Setter Property="MinWidth" Value="36" />
+    <Setter Property="MinHeight" Value="36" />
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+  <Style Selector="Calendar.sky CalendarDayButton:pointerover, Calendar.spotify CalendarDayButton:pointerover, controls|SkyCalendar CalendarDayButton:pointerover">
+    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
+  </Style>
+  <Style Selector="Calendar.sky CalendarDayButton:selected, Calendar.spotify CalendarDayButton:selected, controls|SkyCalendar CalendarDayButton:selected">
+    <Setter Property="Background" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyOnAccentBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="Calendar.sky CalendarDayButton.today, Calendar.spotify CalendarDayButton.today, controls|SkyCalendar CalendarDayButton.today">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+  <Style Selector="Calendar.sky CalendarItem, Calendar.spotify CalendarItem, controls|SkyCalendar CalendarItem">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="Calendar.sky CalendarButton, Calendar.spotify CalendarButton, controls|SkyCalendar CalendarButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusStandard}" />
+    <Setter Property="Padding" Value="8,4" />
+  </Style>
+  <Style Selector="Calendar.sky CalendarButton:pointerover, Calendar.spotify CalendarButton:pointerover, controls|SkyCalendar CalendarButton:pointerover">
+    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
+  </Style>
+
+  <!-- Form field error state -->
+  <Style Selector="controls|SkyFormField:error controls|SkyDatePicker">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="controls|SkyFormField:error controls|SkyTimePicker">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+</Styles>

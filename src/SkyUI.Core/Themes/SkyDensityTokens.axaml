@@ -13,6 +13,9 @@
   <Thickness x:Key="SkyDensityListItemPadding">12,10</Thickness>
   <sys:Double x:Key="SkyDensityListItemMinHeight">36</sys:Double>
   <Thickness x:Key="SkyDensityNavItemPadding">12,10</Thickness>
+  <Thickness x:Key="SkyDensityMenuItemPadding">12,10</Thickness>
+  <Thickness x:Key="SkyDensityPickerPadding">14,12,0,12</Thickness>
+  <sys:Double x:Key="SkyDensityPickerMinHeight">44</sys:Double>
   <Thickness x:Key="SkyDensityListBoxPadding">4</Thickness>
   <sys:Double x:Key="SkyDensityToggleMinHeight">38</sys:Double>
   <sys:Double x:Key="SkyDensityPlaySize">56</sys:Double>

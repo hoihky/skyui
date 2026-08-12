@@ -28,6 +28,9 @@
   <SolidColorBrush x:Key="SkyHoverTintBrush" Color="{StaticResource SkyPaletteHoverTint}" />
   <SolidColorBrush x:Key="SkyListHoverBrush" Color="{StaticResource SkyPaletteListHover}" />
   <SolidColorBrush x:Key="SkySelectedTintBrush" Color="{StaticResource SkyPaletteSelectedTint}" />
+  <SolidColorBrush x:Key="SkySelectedBorderBrush" Color="{StaticResource SkyPaletteSelectedBorder}" />
+  <SolidColorBrush x:Key="SkyDisabledForegroundBrush" Color="{StaticResource SkyPaletteDisabledForeground}" />
+  <SolidColorBrush x:Key="SkyDisabledBorderBrush" Color="{StaticResource SkyPaletteDisabledBorder}" />
   <SolidColorBrush x:Key="SkyAvatarFallbackBrush" Color="{StaticResource SkyPaletteAvatarFallback}" />
   <SolidColorBrush x:Key="SkyBadgeNeutralBrush" Color="{StaticResource SkyPaletteBadgeNeutral}" />
   <SolidColorBrush x:Key="SkyLightPillBrush" Color="{StaticResource SkyPaletteLightPill}" />
@@ -78,6 +81,10 @@
   <BoxShadows x:Key="SkyElevation1">0 8 8 0 #4D000000</BoxShadows>
   <BoxShadows x:Key="SkyElevation2">0 8 24 0 #80000000</BoxShadows>
   <BoxShadows x:Key="SkyElevationInsetBorder">0 1 0 0 #121212, inset 0 0 0 1 #7c7c7c</BoxShadows>
+  <!-- endregion -->
+
+  <!-- region: interaction -->
+  <sys:Double x:Key="SkyDisabledOpacity">0.40</sys:Double>
   <!-- endregion -->
 
   <!-- region: typography (roles; font families may be overridden by theme preset) -->

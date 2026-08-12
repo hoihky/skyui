@@ -24,6 +24,9 @@
   <Color x:Key="SkyPaletteHoverTint">#33FFFFFF</Color>
   <Color x:Key="SkyPaletteListHover">#33FFFFFF</Color>
   <Color x:Key="SkyPaletteSelectedTint">#66FFFF00</Color>
+  <Color x:Key="SkyPaletteSelectedBorder">#FFFFFF</Color>
+  <Color x:Key="SkyPaletteDisabledForeground">#B0B0B0</Color>
+  <Color x:Key="SkyPaletteDisabledBorder">#808080</Color>
   <Color x:Key="SkyPaletteAvatarFallback">#FFFFFF</Color>
   <Color x:Key="SkyPaletteBadgeNeutral">#000000</Color>
   <Color x:Key="SkyPaletteFocusRing">#FFFF00</Color>

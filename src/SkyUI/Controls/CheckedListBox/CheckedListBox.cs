@@ -48,6 +48,9 @@ public class CheckedListBox : TemplatedControl
     public static readonly StyledProperty<bool> UseThreeStateForParentsProperty =
         AvaloniaProperty.Register<CheckedListBox, bool>(nameof(UseThreeStateForParents), true);
 
+    public static readonly StyledProperty<bool> ShowCheckBoxesProperty =
+        AvaloniaProperty.Register<CheckedListBox, bool>(nameof(ShowCheckBoxes), true);
+
     private readonly ObservableCollection<CheckedListRowModel> _rows = new();
     private readonly Dictionary<object, object?> _parents = new(ReferenceEqualityComparer.Instance);
     private readonly Dictionary<object, PropertyChangedEventHandler> _itemHandlers = new(ReferenceEqualityComparer.Instance);
@@ -69,6 +72,7 @@ public class CheckedListBox : TemplatedControl
         ItemAdapterProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.RebuildAll());
         ItemTemplateProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
         IndentProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
+        ShowCheckBoxesProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
     }
 
     public IEnumerable? ItemsSource
@@ -111,6 +115,13 @@ public class CheckedListBox : TemplatedControl
     {
         get => GetValue(UseThreeStateForParentsProperty);
         set => SetValue(UseThreeStateForParentsProperty, value);
+    }
+
+    /// <summary>When false, hides checkbox column (tree-only selection).</summary>
+    public bool ShowCheckBoxes
+    {
+        get => GetValue(ShowCheckBoxesProperty);
+        set => SetValue(ShowCheckBoxesProperty, value);
     }
 
     /// <summary>Optional comparer applied to each sibling group when flattening (OCP: inject ordering).</summary>
@@ -196,7 +207,9 @@ public class CheckedListBox : TemplatedControl
 
         var grid = new Grid
         {
-            ColumnDefinitions = new ColumnDefinitions("Auto,Auto,Auto,*"),
+            ColumnDefinitions = owner.ShowCheckBoxes
+                ? new ColumnDefinitions("Auto,Auto,Auto,*")
+                : new ColumnDefinitions("Auto,Auto,*"),
             MinHeight = 32,
         };
 
@@ -219,18 +232,36 @@ public class CheckedListBox : TemplatedControl
         };
         expand.Classes.Add("sky");
         expand.Classes.Add("sky-subtle");
+        expand.Classes.Add("sky-tree-expander");
         Grid.SetColumn(expand, 1);
         grid.Children.Add(expand);
 
-        var cb = new CheckBox { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
-        cb.Classes.Add("sky");
-        cb.Bind(CheckBox.IsCheckedProperty, new Binding(nameof(CheckedListRowModel.IsChecked))
+        void SyncExpand()
         {
-            Source = m,
-            Mode = BindingMode.TwoWay,
-        });
-        Grid.SetColumn(cb, 2);
-        grid.Children.Add(cb);
+            expand.RenderTransform = new RotateTransform(m.IsExpanded ? 90 : 0);
+        }
+
+        m.PropertyChanged += (_, a) =>
+        {
+            if (a.PropertyName == nameof(CheckedListRowModel.IsExpanded))
+                SyncExpand();
+        };
+        SyncExpand();
+
+        var contentColumn = 2;
+        if (owner.ShowCheckBoxes)
+        {
+            var cb = new CheckBox { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
+            cb.Classes.Add("sky");
+            cb.Bind(CheckBox.IsCheckedProperty, new Binding(nameof(CheckedListRowModel.IsChecked))
+            {
+                Source = m,
+                Mode = BindingMode.TwoWay,
+            });
+            Grid.SetColumn(cb, 2);
+            grid.Children.Add(cb);
+            contentColumn = 3;
+        }
 
         var presenter = new ContentPresenter
         {
@@ -239,7 +270,7 @@ public class CheckedListBox : TemplatedControl
         };
         presenter.Bind(ContentPresenter.ContentProperty, new Binding(nameof(CheckedListRowModel.Item)) { Source = m });
         presenter.Bind(ContentPresenter.ContentTemplateProperty, new Binding(nameof(ItemTemplate)) { Source = owner });
-        Grid.SetColumn(presenter, 3);
+        Grid.SetColumn(presenter, contentColumn);
         grid.Children.Add(presenter);
 
         border.Child = grid;

@@ -1,0 +1,46 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <Style Selector="controls|SkyCard.sky-card-hoverable:pointerover /template/ Border#PART_Root">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyDivider:horizontal /template/ Grid#PART_HorizontalRoot">
+    <Setter Property="IsVisible" Value="True" />
+  </Style>
+  <Style Selector="controls|SkyDivider:horizontal /template/ Border#PART_VerticalRoot">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector="controls|SkyDivider:vertical /template/ Grid#PART_HorizontalRoot">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector="controls|SkyDivider:vertical /template/ Border#PART_VerticalRoot">
+    <Setter Property="IsVisible" Value="True" />
+    <Setter Property="MinHeight" Value="48" />
+  </Style>
+
+  <Style Selector="controls|SkyExpander">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="MinHeight" Value="44" />
+  </Style>
+  <Style Selector="controls|SkyExpander /template/ ToggleButton#PART_ToggleButton">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="14,12" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="controls|SkyExpander /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Padding" Value="14,12" />
+  </Style>
+
+  <Style Selector="controls|SkyResponsiveGrid">
+    <Setter Property="Margin" Value="0" />
+  </Style>
+</Styles>

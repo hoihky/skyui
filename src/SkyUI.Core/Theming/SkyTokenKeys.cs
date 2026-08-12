@@ -29,6 +29,9 @@ public static class SkyTokenKeys
         public const string HoverTint = "SkyHoverTintBrush";
         public const string ListHover = "SkyListHoverBrush";
         public const string SelectedTint = "SkySelectedTintBrush";
+        public const string SelectedBorder = "SkySelectedBorderBrush";
+        public const string DisabledForeground = "SkyDisabledForegroundBrush";
+        public const string DisabledBorder = "SkyDisabledBorderBrush";
         public const string AvatarFallback = "SkyAvatarFallbackBrush";
         public const string BadgeNeutral = "SkyBadgeNeutralBrush";
         public const string LightPill = "SkyLightPillBrush";

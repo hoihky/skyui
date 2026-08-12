@@ -15,6 +15,8 @@ public static class SkyDensityKeys
     public const string ListItemMinHeight = "SkyDensityListItemMinHeight";
     public const string NavItemPadding = "SkyDensityNavItemPadding";
     public const string ListBoxPadding = "SkyDensityListBoxPadding";
+    public const string PickerPadding = "SkyDensityPickerPadding";
+    public const string PickerMinHeight = "SkyDensityPickerMinHeight";
     public const string ToggleMinHeight = "SkyDensityToggleMinHeight";
     public const string PlaySize = "SkyDensityPlaySize";
     public const string PlayPadding = "SkyDensityPlayPadding";

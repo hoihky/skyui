@@ -1,5 +1,6 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
   <!-- Keyboard focus rings (WCAG 2.4.7); uses SkyFocusRingBrush / SkyFocusRingThickness tokens. -->
 
   <Style Selector="Button.sky:focus-visible, Button.spotify:focus-visible">
@@ -35,6 +36,43 @@
   </Style>
 
   <Style Selector="ListBox.sky ListBoxItem:focus-visible, ListBox.spotify ListBoxItem:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="RadioButton.sky:focus-visible, RadioButton.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusSubtle}" />
+  </Style>
+
+  <Style Selector="Slider.sky:focus-visible, Slider.spotify:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusSubtle}" />
+  </Style>
+
+  <Style Selector="Menu.sky > MenuItem:focus-visible,
+                   controls|SkyMenuBar > MenuItem:focus-visible,
+                   ContextMenu.sky MenuItem:focus-visible,
+                   controls|SkyContextMenu MenuItem:focus-visible,
+                   MenuFlyoutPresenter.sky MenuItem:focus-visible,
+                   MenuItem.sky:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="CalendarDatePicker.sky:focus-visible,
+                   controls|SkyDatePicker:focus-visible,
+                   TimePicker.sky:focus-visible,
+                   controls|SkyTimePicker:focus-visible,
+                   Calendar.sky CalendarDayButton:focus-visible,
+                   controls|SkyCalendar CalendarDayButton:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="controls|SkyExpander:focus-visible /template/ ToggleButton#PART_ToggleButton">
     <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
     <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
   </Style>

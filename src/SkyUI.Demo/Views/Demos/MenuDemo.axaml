@@ -1,0 +1,112 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.MenuDemo"
+             x:DataType="vm:MenuDemoViewModel">
+    <DockPanel>
+        <sky:SkyMenuBar DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New"
+                          InputGesture="{Binding NewGesture}"
+                          Command="{Binding NewCommand}" />
+                <MenuItem Header="_Open…"
+                          InputGesture="{Binding OpenGesture}"
+                          Command="{Binding OpenCommand}" />
+                <MenuItem Header="_Save"
+                          InputGesture="{Binding SaveGesture}"
+                          Command="{Binding SaveCommand}" />
+                <Separator />
+                <MenuItem Header="E_xit"
+                          InputGesture="Alt+F4" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo"
+                          InputGesture="{x:Static sky:SkyMenuGestures.Undo}" />
+                <MenuItem Header="_Redo"
+                          InputGesture="{x:Static sky:SkyMenuGestures.Redo}" />
+                <Separator />
+                <MenuItem Header="_Cut"
+                          InputGesture="{x:Static sky:SkyMenuGestures.Cut}" />
+                <MenuItem Header="_Copy"
+                          InputGesture="{Binding CopyGesture}"
+                          Command="{Binding CopyCommand}" />
+                <MenuItem Header="_Paste"
+                          InputGesture="{Binding PasteGesture}"
+                          Command="{Binding PasteCommand}" />
+                <Separator />
+                <MenuItem Header="Select _all"
+                          InputGesture="{x:Static sky:SkyMenuGestures.SelectAll}" />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Zoom in" InputGesture="{x:Static sky:SkyMenuGestures.ZoomIn}" />
+                <MenuItem Header="Zoom _out" InputGesture="{x:Static sky:SkyMenuGestures.ZoomOut}" />
+            </MenuItem>
+        </sky:SkyMenuBar>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <Border Classes="sky-demo-panel" Margin="0,12,0,0">
+                <StackPanel Spacing="20" MaxWidth="560">
+                    <TextBlock Classes="sky-feature-heading" Text="Menus" />
+                    <TextBlock Classes="sky-body-secondary"
+                               TextWrapping="Wrap"
+                               Text="SkyMenuBar, SkyContextMenu, and SkyMenuFlyout use Classes=&quot;sky&quot; styling. Bind MenuItem.InputGesture to KeyGesture properties for MVVM accelerators." />
+
+                    <TextBlock Text="{Binding Status}"
+                               Classes="sky-body"
+                               TextWrapping="Wrap" />
+
+                    <Border Height="160"
+                            Background="{DynamicResource SkySurfaceElevatedBrush}"
+                            BorderBrush="{DynamicResource SkyBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="16">
+                        <Border.ContextMenu>
+                            <sky:SkyContextMenu>
+                                <MenuItem Header="Copy"
+                                          InputGesture="{Binding CopyGesture}"
+                                          Command="{Binding CopyCommand}" />
+                                <MenuItem Header="Paste"
+                                          InputGesture="{Binding PasteGesture}"
+                                          Command="{Binding PasteCommand}" />
+                                <Separator />
+                                <MenuItem Header="Delete"
+                                          InputGesture="{Binding DeleteGesture}"
+                                          Command="{Binding DeleteCommand}" />
+                            </sky:SkyContextMenu>
+                        </Border.ContextMenu>
+                        <TextBlock Classes="sky-body-secondary"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Text="Right-click for context menu" />
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Button Classes="sky sky-outlined" Content="Menu flyout">
+                            <Button.Flyout>
+                                <sky:SkyMenuFlyout Placement="Bottom">
+                                    <MenuItem Header="Rename" InputGesture="F2" />
+                                    <MenuItem Header="Duplicate" InputGesture="Ctrl+D" />
+                                    <Separator />
+                                    <MenuItem Header="Delete"
+                                              InputGesture="{Binding DeleteGesture}"
+                                              Command="{Binding DeleteCommand}" />
+                                </sky:SkyMenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="sky-section-title" Text="Accelerator helpers" />
+                        <TextBlock Classes="sky-body-secondary"
+                                   TextWrapping="Wrap"
+                                   Text="SkyMenuGestures provides standard edit/file gestures. SkyAccelerator.Format displays platform-specific text (Ctrl vs ⌘)." />
+                        <TextBlock Classes="sky-body"
+                                   Text="{Binding SaveGesture, Converter={x:Static sky:SkyAcceleratorFormatConverter.Instance}}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls">
+  <ControlTheme x:Key="{x:Type controls:SkyDatePicker}"
+                TargetType="controls:SkyDatePicker"
+                BasedOn="{StaticResource {x:Type CalendarDatePicker}}" />
+
+  <ControlTheme x:Key="{x:Type controls:SkyCalendar}"
+                TargetType="controls:SkyCalendar"
+                BasedOn="{StaticResource {x:Type Calendar}}" />
+
+  <ControlTheme x:Key="{x:Type controls:SkyTimePicker}"
+                TargetType="controls:SkyTimePicker"
+                BasedOn="{StaticResource {x:Type TimePicker}}" />
+</ResourceDictionary>

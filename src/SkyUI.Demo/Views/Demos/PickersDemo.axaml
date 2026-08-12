@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.PickersDemo"
+             x:DataType="vm:PickersDemoViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="24" MaxWidth="560">
+                <TextBlock Classes="sky-feature-heading" Text="Pickers" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="SkyDatePicker, SkyCalendar, and SkyTimePicker apply sky styling and culture-aware formatting via the Culture property." />
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Culture" />
+                    <ComboBox Classes="sky"
+                              Width="280"
+                              HorizontalAlignment="Left"
+                              ItemsSource="{Binding Cultures}"
+                              SelectedItem="{Binding SelectedCulture}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="vm:PickersDemoViewModel+CultureOption">
+                                <TextBlock Text="{Binding Label}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Classes="sky-body-secondary"
+                               TextWrapping="Wrap"
+                               Text="Switch culture to update date patterns, first day of week, and 12/24-hour clock." />
+                </StackPanel>
+
+                <sky:SkyFormField Label="Appointment date"
+                                  Hint="Calendar dropdown with culture-specific format">
+                    <sky:SkyDatePicker SelectedDate="{Binding SelectedDate}"
+                                       Culture="{Binding Culture}"
+                                       PlaceholderText="Select a date"
+                                       Width="280"
+                                       HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <sky:SkyFormField Label="Appointment time"
+                                  Hint="{Binding ClockHint}">
+                    <sky:SkyTimePicker SelectedTime="{Binding SelectedTime}"
+                                       Culture="{Binding Culture}"
+                                       Width="280"
+                                       HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="Calendar month view" />
+                    <sky:SkyCalendar SelectedDate="{Binding SelectedDate}"
+                                     Culture="{Binding Culture}"
+                                     Width="320"
+                                     HorizontalAlignment="Left" />
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="sky-section-title" Text="Formatted values" />
+                    <TextBlock Classes="sky-body"
+                               Text="{Binding FormattedDate, StringFormat=Short date: {0}}" />
+                    <TextBlock Classes="sky-body"
+                               Text="{Binding FormattedLongDate, StringFormat=Long date: {0}}" />
+                    <TextBlock Classes="sky-body"
+                               Text="{Binding FormattedTime, StringFormat=Time: {0}}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

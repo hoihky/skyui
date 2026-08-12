@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls">
+  <ControlTheme x:Key="{x:Type controls:SkyContextMenu}"
+                TargetType="controls:SkyContextMenu"
+                BasedOn="{StaticResource {x:Type ContextMenu}}" />
+
+  <ControlTheme x:Key="{x:Type controls:SkyMenuFlyout}"
+                TargetType="controls:SkyMenuFlyout"
+                BasedOn="{StaticResource {x:Type MenuFlyout}}" />
+
+  <ControlTheme x:Key="{x:Type controls:SkyMenuBar}"
+                TargetType="controls:SkyMenuBar"
+                BasedOn="{StaticResource {x:Type Menu}}" />
+</ResourceDictionary>

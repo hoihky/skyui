@@ -1,0 +1,23 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <Style Selector="controls|SkyVirtualTreeView">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Padding" Value="{DynamicResource SkyDensityListBoxPadding}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="{DynamicResource SkyFontSizeButton}" />
+  </Style>
+
+  <Style Selector="controls|CheckedListBox.sky-virtual-tree,
+                   controls|SkyVirtualTreeView">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyVirtualTreeView Button.sky-tree-expander,
+                   controls|CheckedListBox Button.sky-tree-expander">
+    <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+  </Style>
+</Styles>

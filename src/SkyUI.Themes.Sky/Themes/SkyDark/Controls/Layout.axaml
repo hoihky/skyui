@@ -1,0 +1,84 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls">
+  <ControlTheme x:Key="{x:Type controls:SkyCard}" TargetType="controls:SkyCard">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="Padding" Value="16" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Root"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                BoxShadow="{DynamicResource SkyElevation1}">
+          <StackPanel>
+            <ContentPresenter Name="PART_HeaderPresenter"
+                              Content="{TemplateBinding Header}"
+                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                              Margin="16,16,16,8"
+                              IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <ContentPresenter Name="PART_ContentPresenter"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Margin="{TemplateBinding Padding}" />
+            <ContentPresenter Name="PART_FooterPresenter"
+                              Content="{TemplateBinding Footer}"
+                              ContentTemplate="{TemplateBinding FooterTemplate}"
+                              Margin="16,8,16,16"
+                              IsVisible="{Binding Footer, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDivider}" TargetType="controls:SkyDivider">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="MinHeight" Value="20" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Grid Name="PART_HorizontalRoot"
+                ColumnDefinitions="*,Auto,*"
+                VerticalAlignment="Center">
+            <Border Grid.Column="0"
+                    Height="1"
+                    Background="{DynamicResource SkyBorderBrush}"
+                    VerticalAlignment="Center" />
+            <TextBlock Grid.Column="1"
+                       Text="{TemplateBinding Text}"
+                       Margin="12,0"
+                       VerticalAlignment="Center"
+                       Foreground="{TemplateBinding Foreground}"
+                       IsVisible="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <Border Grid.Column="2"
+                    Height="1"
+                    Background="{DynamicResource SkyBorderBrush}"
+                    VerticalAlignment="Center" />
+          </Grid>
+          <Border Name="PART_VerticalRoot"
+                  Width="1"
+                  HorizontalAlignment="Center"
+                  Background="{DynamicResource SkyBorderBrush}" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyExpander}"
+                TargetType="controls:SkyExpander"
+                BasedOn="{StaticResource {x:Type Expander}}" />
+
+  <ControlTheme x:Key="{x:Type controls:SkyResponsiveGrid}"
+                TargetType="controls:SkyResponsiveGrid">
+    <Setter Property="Background" Value="Transparent" />
+  </ControlTheme>
+</ResourceDictionary>
