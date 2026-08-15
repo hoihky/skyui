@@ -1,3 +1,5 @@
+**Disclaimer:** This project is an experimental, work-in-progress prototype built with the help of "vibe coding". Things will break. Features are currently missing, and the build scripts might not work at all. Please be aware that it may not be stable enough for production use now.
+
 # SkyUI
 
 **SkyUI** is a cross-platform UI library for [.NET](https://dotnet.microsoft.com/) built on [Avalonia](https://avaloniaui.net/). It provides a cohesive design system, a growing catalog of styled controls, and optional data and diagram modules for line-of-business and productivity apps.
