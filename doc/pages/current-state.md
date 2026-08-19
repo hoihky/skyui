@@ -1,6 +1,9 @@
-# Current state
+---
+title: Current state
+order: 10
+---
 
-Snapshot of the SkyUI codebase used as the baseline for [gap analysis](./gap-analysis.md) and the [development roadmap](./development-roadmap.md).
+Snapshot of the SkyUI codebase used as the baseline for [gap analysis](gap-analysis.md) and the [development roadmap](development-roadmap.md).
 
 ## Stack and packaging
 

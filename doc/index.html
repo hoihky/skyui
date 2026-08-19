@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkyUI — Cross-platform UI library for .NET on Avalonia</title>
+  <meta name="description" content="SkyUI is a cross-platform UI library for .NET built on Avalonia 12 — design system, essentials controls, data grid, and diagram modules.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/portfolio.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="#overview">Overview</a>
+        <a href="#quick-start">Quick start</a>
+        <a href="#packages">Architecture</a>
+        <a href="#catalog-essentials">Controls</a>
+        <a href="#prog-theme">Programming</a>
+        <a href="#docs">Docs</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="portfolio-layout">
+      <div class="portfolio-main doc-body">
+      <section class="hero" id="top">
+        <div class="hero-mark" aria-hidden="true">Sky</div>
+        <div class="hero-text">
+          <h1>SkyUI</h1>
+          <p class="hero-tagline">
+            A cross-platform UI library for .NET built on <strong>Avalonia 12</strong>.
+            SkyUI combines a semantic design system, a broad essentials catalog, and optional
+            data and diagram modules for line-of-business and productivity applications.
+          </p>
+          <ul class="skill-list" aria-label="Technologies">
+            <li>Avalonia 12.1.x</li>
+            <li>.NET 10</li>
+            <li>Dark / Light / HC</li>
+            <li>xmlns skyui.dev</li>
+            <li>MIT</li>
+          </ul>
+          <div class="hero-links">
+            <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub repository ↗</a>
+            <a href="#quick-start">Quick start</a>
+            <a href="#packages">Architecture</a>
+            <a href="#docs">Documentation</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="overview">
+        <h2 class="section-title">Overview</h2>
+        <p>
+          SkyUI is organized into four pillars that mirror how you assemble an application:
+        </p>
+        <div class="pillar-grid">
+          <article class="pillar-card"><h3>Sky Design System</h3><p>Semantic tokens, palettes, typography, icons, spacing, elevation, and WCAG-focused focus rings.</p></article>
+          <article class="pillar-card"><h3>Sky Essentials</h3><p>Forms, navigation, menus, pickers, lists, layout, feedback, and primitives—styled consistently.</p></article>
+          <article class="pillar-card"><h3>Sky Data / Pro</h3><p>Virtual data grid, filter builder, virtual tree, diagram surface, and video timeline.</p></article>
+          <article class="pillar-card"><h3>Sky Platform</h3><p>Desktop-first today; roadmap targets mobile and browser with adaptive layout and touch policies.</p></article>
+        </div>
+        <p>
+          The default visual preset is <strong>ContentFirstDark</strong>: near-black surfaces
+          (<code>#121212</code>–<code>#212121</code>) so content and album-art-style imagery stay primary,
+          with functional accent green (<code>#1ed760</code>) for CTAs and selection—not decoration.
+        </p>
+        <blockquote><p><strong>Two ways to consume controls:</strong> use typed <code>Sky*</code> controls
+          (<code>SkyCard</code>, <code>SkyDatePicker</code>, …) or style Avalonia primitives with
+          <code>Classes="sky"</code> plus variant classes (<code>sky-primary</code>, <code>sky-outlined</code>).</p></blockquote>
+      </section>
+
+      <section id="quick-start">
+        <h2 class="section-title">Quick start</h2>
+        <h3>1. Reference packages</h3>
+        <p>Typical app references: <code>SkyUI</code>, <code>SkyUI.Themes.Sky</code>, and optionally <code>SkyUI.Data</code> / <code>SkyUI.Diagram</code>.</p>
+
+        <h3>2. Include the theme</h3>
+        <pre><code>&lt;Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="MyApp.App"
+             RequestedThemeVariant="Dark"
+             sky:SkyThemeProperties.AccentOverride="#1ED760"&gt;
+
+  &lt;Application.Styles&gt;
+    &lt;FluentTheme /&gt;
+    &lt;StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyTheme.axaml" /&gt;
+  &lt;/Application.Styles&gt;
+&lt;/Application&gt;</code></pre>
+
+        <h3>3. Use a control</h3>
+        <pre><code>&lt;sky:SkyCard Header="Settings" IsHoverable="True"&gt;
+  &lt;Button Classes="sky sky-primary" Content="Save" /&gt;
+&lt;/sky:SkyCard&gt;</code></pre>
+
+        <h3>4. Run the demo gallery</h3>
+        <pre><code>dotnet build SkyUI.slnx
+dotnet run --project src/SkyUI.Demo</code></pre>
+      </section>
+
+      <section id="packages">
+        <h2 class="section-title">Package architecture</h2>
+        <p>Dependencies flow from core tokens outward. Apps should not reference <code>SkyUI.Core</code> alone unless building a custom theme.</p>
+        <div class="diagram-block">
+SkyUI.Core          Tokens, SkyThemeProperties, theming contracts
+SkyUI.Fonts         Inter + Noto Sans SC, typography role styles
+SkyUI.Icons         Icon font, SkyIconProperties (attach icons to buttons)
+     │
+SkyUI               Essentials controls + SkyThemeUris
+     ├─► SkyUI.Themes.Sky   Palettes, ContentFirstDark preset, primitive styles
+     ├─► SkyUI.Data         Virtual grid, FilterEditor (+ theme overlay)
+     └─► SkyUI.Diagram      DiagramSurface, edge routing contracts
+        </div>
+        <table>
+          <thead>
+            <tr><th>Package</th><th>Namespace(s)</th><th>Role</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>SkyUI.Core</code></td><td><code>SkyUI.Core</code>, <code>SkyUI.Core.Theming</code></td><td>Design tokens, accent/density attached properties, WCAG helpers</td></tr>
+            <tr><td><code>SkyUI.Fonts</code></td><td><code>SkyUI.Fonts</code></td><td>Font registration, typography classes</td></tr>
+            <tr><td><code>SkyUI.Icons</code></td><td><code>SkyUI.Icons</code></td><td><code>SkyIcon</code>, <code>SkyIconKind</code>, icon attachment API</td></tr>
+            <tr><td><code>SkyUI</code></td><td><code>SkyUI.Controls</code>, <code>SkyUI.Theme</code></td><td>All essentials controls; <code>SkyThemeUris</code> constants</td></tr>
+            <tr><td><code>SkyUI.Themes.Sky</code></td><td><code>SkyUI.Themes.Sky</code></td><td><code>SkyTheme.Apply</code>, <code>SkyThemeClasses</code>, AXAML presets</td></tr>
+            <tr><td><code>SkyUI.Data</code></td><td><code>SkyUI.DataGrid</code>, <code>SkyUI.FilterEditor</code></td><td>Grid virtualization, filter document model</td></tr>
+            <tr><td><code>SkyUI.Diagram</code></td><td><code>SkyUI.Diagram.Presentation</code>, <code>SkyUI.Diagram.Model</code></td><td>Interactive diagram canvas</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="theme-pipeline">
+        <h2 class="section-title">Theme loading pipeline</h2>
+        <p>Styles are merged in a fixed order so palette colors resolve before semantic brushes and control templates.</p>
+        <div class="diagram-block">
+SkyTheme.axaml
+  └─ ContentFirstDark.axaml
+       ├─ SkyResources.Themed.axaml     (palette per RequestedThemeVariant)
+       ├─ SkyDark/Controls/*.axaml      (ControlTheme templates)
+       ├─ SkyDark/Controls/*.Styles.axaml (interaction selectors)
+       ├─ SkyPreset.Primitives.axaml    (Button.sky, TextBox.sky, ListBox…)
+       ├─ SkyPreset.Focus.axaml         (:focus-visible rings)
+       ├─ SkyIconStyles.axaml
+       └─ SkyTypographyStyles.axaml
+
+Token layering:
+  SkyPalette.{Dark|Light|HighContrast}.axaml  → palette slots
+  SkyTokens.axaml + SkyDensityTokens.axaml    → semantic brushes &amp; metrics
+  SkyLegacyBrushAliases.axaml                 → Spotify* backward-compat keys
+        </div>
+        <h3>URI constants</h3>
+        <table>
+          <thead><tr><th>Constant</th><th>Include</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyThemeUris.Theme</code></td><td>Default preset (ContentFirstDark)</td></tr>
+            <tr><td><code>SkyThemeUris.ThemeWithData</code></td><td>Preset + grid/filter templates</td></tr>
+            <tr><td><code>SkyThemeUris.ContentFirstDark</code></td><td>Explicit preset path</td></tr>
+            <tr><td><code>SkyTheme.IncludeUri</code></td><td>Same as <code>SkyThemeUris.Theme</code></td></tr>
+          </tbody>
+        </table>
+        <h3>Runtime options (C#)</h3>
+        <pre><code>using SkyUI.Themes.Sky;
+using SkyUI.Core.Theming;
+
+SkyTheme.Apply(application, new SkyThemeOptions
+{
+    AccentColor = Color.Parse("#1ED760"),
+    Density = SkyDensity.Compact
+});
+
+// Swap palette variant
+application.RequestedThemeVariant = ThemeVariant.Light;
+application.RequestedThemeVariant = SkyThemeVariants.HighContrast;</code></pre>
+        <p>Styles must still be included in XAML; <code>SkyTheme.Apply</code> only updates accent brushes and density tokens on the application resource host.</p>
+      </section>
+
+      <section id="control-patterns">
+        <h2 class="section-title">Control implementation patterns</h2>
+        <h3>Typed Sky controls</h3>
+        <p>Subclass Avalonia primitives or implement <code>TemplatedControl</code>. Constructor adds <code>sky</code> theme classes. Matching <code>ControlTheme</code> lives under <code>src/SkyUI.Themes.Sky/Themes/SkyDark/Controls/</code>.</p>
+        <ul>
+          <li><strong>Thin wrapper</strong> — e.g. <code>SkyMenuFlyout</code> adds <code>FlyoutPresenterClasses.Add("sky")</code></li>
+          <li><strong>Templated</strong> — e.g. <code>SkyFormField</code>, <code>SkyCard</code> with <code>PART_*</code> template parts</li>
+          <li><strong>Pseudo-classes</strong> — e.g. <code>SkyFormField:error</code>, <code>SkyDivider:horizontal</code></li>
+        </ul>
+        <h3>Styled primitives</h3>
+        <p>Standard Avalonia controls with <code>Classes="sky"</code>. Variants defined in <code>SkyPreset.Primitives.axaml</code>. No custom C# type required.</p>
+        <pre><code>&lt;Button Classes="sky sky-primary" Content="Play" /&gt;
+&lt;TextBox Classes="sky sky-search" PlaceholderText="Search…" /&gt;
+&lt;ListBox Classes="sky-nav" /&gt;</code></pre>
+      </section>
+
+      <section id="namespaces">
+        <h2 class="section-title">XAML namespaces</h2>
+        <p>All Sky assemblies register <code>https://skyui.dev</code> via <code>XmlnsDefinition</code>:</p>
+        <table>
+          <thead><tr><th>Assembly</th><th>Namespaces mapped</th></tr></thead>
+          <tbody>
+            <tr><td>SkyUI.Core</td><td><code>SkyUI.Core</code>, <code>SkyUI.Core.Theming</code></td></tr>
+            <tr><td>SkyUI</td><td><code>SkyUI.Controls</code>, <code>SkyUI.Theme</code></td></tr>
+            <tr><td>SkyUI.Data</td><td><code>SkyUI.DataGrid</code>, <code>SkyUI.FilterEditor</code></td></tr>
+            <tr><td>SkyUI.Diagram</td><td><code>SkyUI.Diagram.Presentation</code>, <code>SkyUI.Diagram.Model</code></td></tr>
+          </tbody>
+        </table>
+        <p>Icons and fonts use CLR namespaces:</p>
+        <pre><code>xmlns:sky="https://skyui.dev"
+xmlns:icons="using:SkyUI.Icons"</code></pre>
+      </section>
+
+      <section id="tokens">
+        <h2 class="section-title">Tokens &amp; palettes</h2>
+        <p>Public brand uses <code>sky</code> classes and <code>Sky*</code> brush keys. Legacy <code>spotify</code> / <code>Spotify*</code> aliases remain for migration.</p>
+        <h3>Semantic brushes (examples)</h3>
+        <table>
+          <thead><tr><th>Resource</th><th>Typical use</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyBackgroundBrush</code></td><td>App chrome background</td></tr>
+            <tr><td><code>SkySurfaceBrush</code> / <code>SkySurfaceElevatedBrush</code></td><td>Cards, panels, inputs</td></tr>
+            <tr><td><code>SkyTextPrimaryBrush</code> / <code>SkyTextSecondaryBrush</code></td><td>Body and muted labels</td></tr>
+            <tr><td><code>SkyAccentBrush</code> / <code>SkyOnAccentBrush</code></td><td>CTAs, selected calendar days</td></tr>
+            <tr><td><code>SkyListHoverBrush</code> / <code>SkySelectedTintBrush</code></td><td>Hover and selection states</td></tr>
+            <tr><td><code>SkySelectedBorderBrush</code></td><td>Selection outline on list items</td></tr>
+            <tr><td><code>SkyDisabledForegroundBrush</code></td><td>Muted text on disabled inputs</td></tr>
+            <tr><td><code>SkyFocusRingBrush</code></td><td>Keyboard focus rings (<code>:focus-visible</code>)</td></tr>
+          </tbody>
+        </table>
+        <h3>Palette variants</h3>
+        <table>
+          <thead><tr><th><code>RequestedThemeVariant</code></th><th>File</th></tr></thead>
+          <tbody>
+            <tr><td><code>Dark</code> (default)</td><td><code>SkyPalette.Dark.axaml</code></td></tr>
+            <tr><td><code>Light</code></td><td><code>SkyPalette.Light.axaml</code></td></tr>
+            <tr><td><code>SkyThemeVariants.HighContrast</code></td><td><code>SkyPalette.HighContrast.axaml</code></td></tr>
+          </tbody>
+        </table>
+        <p>C# key catalogs: <code>SkyPaletteKeys</code>, <code>SkyTokenKeys</code>, <code>SkyDensityKeys</code>. See <a href="design-tokens.html">design-tokens.html</a>.</p>
+      </section>
+
+      <section id="breakpoints">
+        <h2 class="section-title">Breakpoints</h2>
+        <p><code>SkyBreakpoint</code> defines shared width constants (device pixels) used by navigation and responsive grids.</p>
+        <table>
+          <thead><tr><th>Width</th><th>Constant</th><th>Navigation (auto)</th><th>Grid columns (default)</th></tr></thead>
+          <tbody>
+            <tr><td>&lt; 425 px</td><td><code>MobileSmall</code></td><td>Bottom</td><td>1</td></tr>
+            <tr><td>425–576</td><td><code>Mobile</code></td><td>Bottom</td><td>1</td></tr>
+            <tr><td>576–768</td><td><code>Tablet</code></td><td>Compact sidebar</td><td>2</td></tr>
+            <tr><td>768–896</td><td><code>TabletLarge</code></td><td>Compact</td><td>3</td></tr>
+            <tr><td>896–1024</td><td><code>DesktopSmall</code></td><td>Expanded</td><td>4</td></tr>
+            <tr><td>1024–1280</td><td><code>Desktop</code></td><td>Expanded</td><td>5</td></tr>
+            <tr><td>≥ 1280</td><td>—</td><td>Expanded</td><td>5</td></tr>
+          </tbody>
+        </table>
+        <pre><code>var mode = SkyBreakpoint.ResolveNavigationDisplayMode(width);
+var columns = SkyGridBreakpoint.ResolveColumns(width);</code></pre>
+      </section>
+
+      <section id="density-focus">
+        <h2 class="section-title">Density &amp; focus</h2>
+        <h3>Density</h3>
+        <p><code>SkyDensity.Comfortable</code> (default) vs <code>SkyDensity.Compact</code> adjusts button padding, field min-height, and list item metrics via <code>SkyDensityTokens.axaml</code>.</p>
+        <pre><code>&lt;Application sky:SkyThemeProperties.Density="Compact" ...&gt;
+
+SkyThemeProperties.SetDensity(app, SkyDensity.Compact);</code></pre>
+        <h3>Focus rings</h3>
+        <p><code>SkyPreset.Focus.axaml</code> applies <code>:focus-visible</code> borders to buttons, inputs, list items, menus, pickers, and expanders—using <code>SkyFocusRingBrush</code> and 2px thickness for WCAG 2.4.7.</p>
+      </section>
+
+      <section id="catalog-essentials">
+        <h2 class="section-title">Essentials catalog</h2>
+
+        <h3>Primitives</h3>
+        <table>
+          <thead><tr><th>API</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyTooltip</code>, <code>SkyTooltipProperties.Tip</code></td><td>Themed tooltips</td></tr>
+            <tr><td><code>SkyPopover</code></td><td>Lightweight flyout panels (non-menu)</td></tr>
+            <tr><td><code>SkyButtonProperties.IsLoading</code></td><td>Progress ring + disable during async work</td></tr>
+            <tr><td><code>Button</code> + <code>Classes="sky"</code></td><td>Pill buttons: primary, outlined, subtle, play</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Forms</h3>
+        <table>
+          <thead><tr><th>Control</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyFormField</code></td><td>Label, hint, required marker, error line, <code>Validate()</code></td></tr>
+            <tr><td><code>SkySearchBox</code>, <code>SkyPasswordBox</code></td><td>Themed search and password inputs</td></tr>
+            <tr><td><code>SkyRadioGroup</code> / <code>SkyRadioGroupItem</code></td><td>MVVM selection by <code>Value</code></td></tr>
+            <tr><td><code>SkySlider</code></td><td>Labeled slider with optional ticks</td></tr>
+            <tr><td><code>SkyValidators</code>, <code>CompositeSkyValidator</code></td><td>Required, email, min/max length, regex, …</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Navigation</h3>
+        <table>
+          <thead><tr><th>Control</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyNavigationView</code></td><td>Adaptive shell: expanded / compact / bottom bar</td></tr>
+            <tr><td><code>SkyTabView</code></td><td>Pill tab strip</td></tr>
+            <tr><td><code>SkyBreadcrumb</code></td><td>Hierarchical path segments</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Menus</h3>
+        <table>
+          <thead><tr><th>Control</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyMenuBar</code>, <code>SkyContextMenu</code></td><td>Application and context menus</td></tr>
+            <tr><td><code>SkyMenuFlyout</code></td><td>Dropdown command menu on buttons</td></tr>
+            <tr><td><code>SkyMenuGestures</code></td><td>Standard <code>KeyGesture</code> constants for MVVM</td></tr>
+            <tr><td><code>SkyAccelerator</code></td><td>Parse/format platform shortcuts</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Pickers</h3>
+        <table>
+          <thead><tr><th>Control</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyDatePicker</code>, <code>SkyCalendar</code></td><td>Date field + inline month grid</td></tr>
+            <tr><td><code>SkyTimePicker</code></td><td>Culture-aware time segments</td></tr>
+            <tr><td><code>SkyPickerFormat</code></td><td>Formatting helpers and converters</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Lists &amp; layout</h3>
+        <table>
+          <thead><tr><th>Control</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyVirtualTreeView</code></td><td>Virtualized tree; optional checkboxes</td></tr>
+            <tr><td><code>CheckedListBox</code></td><td>Hierarchical checklist (always shows boxes)</td></tr>
+            <tr><td><code>SkyCard</code>, <code>SkyDivider</code>, <code>SkyExpander</code></td><td>Surfaces and sections</td></tr>
+            <tr><td><code>SkyResponsiveGrid</code>, <code>SkyGridLayout</code></td><td>Width-driven column layouts</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Feedback &amp; chrome</h3>
+        <table>
+          <thead><tr><th>Control</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyDialogHost</code></td><td>Modal dialog host</td></tr>
+            <tr><td><code>SkySnackbarHost</code></td><td>Queued toast notifications</td></tr>
+            <tr><td><code>SkyBanner</code>, <code>SkyAlert</code></td><td>Inline messaging</td></tr>
+            <tr><td><code>SkyProgressRing</code>, <code>SkySkeleton</code></td><td>Loading indicators</td></tr>
+            <tr><td><code>Avatar</code>, <code>Badge</code>, <code>Chip</code></td><td>Identity and tags</td></tr>
+            <tr><td><code>SkyAccordion</code></td><td>Multi-section expand/collapse</td></tr>
+            <tr><td><code>VideoTimeline</code></td><td>Media scrubber / trim UI</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="catalog-data">
+        <h2 class="section-title">Data &amp; diagram</h2>
+        <h3>SkyUI.Data</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyVirtualDataGrid</code></td><td>Windowed virtual rows; sort events; CSV export</td></tr>
+            <tr><td><code>IVirtualGridDataSource</code></td><td><code>GetRow</code>, <code>RowCount</code>, <code>StructureChanged</code></td></tr>
+            <tr><td><code>SkyDataGridColumn</code></td><td>Header, width, binding path, sort direction</td></tr>
+            <tr><td><code>FilterEditor</code></td><td>Visual filter builder UI</td></tr>
+            <tr><td><code>FilterDocument</code></td><td>Groups, conditions, compare operators</td></tr>
+            <tr><td><code>IFilterSqlExporter</code></td><td>Parameterized SQL export plugins</td></tr>
+          </tbody>
+        </table>
+        <p>Include <code>SkyThemeUris.ThemeWithData</code> instead of <code>Theme</code> when using data controls.</p>
+
+        <h3>SkyUI.Diagram</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>DiagramSurface</code></td><td>Interactive canvas: move, resize, connect, clipboard</td></tr>
+            <tr><td><code>IDiagramModel</code></td><td>Nodes, edges, ports, selection</td></tr>
+            <tr><td><code>IEdgePathComputer</code></td><td>Pluggable routing (<code>StraightEdgePathComputer</code> default)</td></tr>
+            <tr><td><code>IDiagramNodePresenterFactory</code></td><td>Custom node visuals</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="prog-theme">
+        <h2 class="section-title">Programming guide — theme setup</h2>
+        <h3>Minimal application</h3>
+        <pre><code>// App.axaml.cs
+public override void OnFrameworkInitializationCompleted()
+{
+    if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+    {
+        SkyTheme.Apply(this, new SkyThemeOptions
+        {
+            AccentColor = SkyThemeProperties.GetAccentOverride(this),
+            Density = SkyThemeProperties.GetDensity(this)
+        });
+        desktop.MainWindow = new MainWindow();
+    }
+    base.OnFrameworkInitializationCompleted();
+}</code></pre>
+        <h3>Fonts</h3>
+        <pre><code>// Program.cs or AppBuilder
+AppBuilder.Configure&lt;App&gt;()
+    .UsePlatformDetect()
+    .ConfigureSkyFonts();  // SkyUI.Fonts.SkyFonts.Configure</code></pre>
+        <h3>Accent override</h3>
+        <pre><code>SkyThemeProperties.SetAccentOverride(app, Color.Parse("#7C3AED"));
+SkyThemeProperties.SetAccentOverride(app, null); // restore palette accent</code></pre>
+      </section>
+
+      <section id="prog-styled">
+        <h2 class="section-title">Styled primitives</h2>
+        <p>Style class constants live in <code>SkyThemeClasses</code>:</p>
+        <table>
+          <thead><tr><th>Class</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td><code>sky</code></td><td>Base — required on all themed primitives</td></tr>
+            <tr><td><code>sky-primary</code></td><td>Accent-filled button</td></tr>
+            <tr><td><code>sky-outlined</code></td><td>Border-only button</td></tr>
+            <tr><td><code>sky-subtle</code></td><td>Low-emphasis text button</td></tr>
+            <tr><td><code>sky-play</code></td><td>Circular play control</td></tr>
+            <tr><td><code>sky-card</code></td><td>Card surface on <code>Border</code></td></tr>
+            <tr><td><code>sky-nav</code></td><td>Sidebar navigation list</td></tr>
+            <tr><td><code>sky-search</code>, <code>sky-password</code></td><td>Input padding variants</td></tr>
+          </tbody>
+        </table>
+        <p>Typography roles: <code>sky-section-title</code>, <code>sky-feature-heading</code>, <code>sky-body-secondary</code> (from <code>SkyUI.Fonts</code>).</p>
+      </section>
+
+      <section id="prog-mvvm">
+        <h2 class="section-title">MVVM patterns</h2>
+        <p>Demos use compiled bindings with <code>x:DataType</code> on the root control and view models in <code>SkyUI.Demo.ViewModels</code>.</p>
+        <ul>
+          <li><strong>Forms</strong> — bind <code>Validator</code> and <code>ErrorMessage</code> on <code>SkyFormField</code>; commands trigger <code>Validate()</code></li>
+          <li><strong>Menus</strong> — expose <code>KeyGesture</code> properties bound to <code>MenuItem.InputGesture</code></li>
+          <li><strong>Lists</strong> — implement <code>ICheckedListBoxItem</code> or use adapters for tree data</li>
+          <li><strong>Layout</strong> — call <code>SkyGridBreakpoint.ResolveColumns</code> on <code>SizeChanged</code></li>
+          <li><strong>Primitives</strong> — bind <code>SkyButtonProperties.IsLoading</code> to async command state</li>
+        </ul>
+        <pre><code>&lt;UserControl x:DataType="vm:FormsDemoViewModel"&gt;
+  &lt;sky:SkyFormField Label="Email"
+                    ErrorMessage="{Binding EmailError}"
+                    Validator="{Binding EmailValidator}"&gt;
+    &lt;TextBox Classes="sky" Text="{Binding Email}" /&gt;
+  &lt;/sky:SkyFormField&gt;
+&lt;/UserControl&gt;</code></pre>
+      </section>
+
+      <section id="prog-validation">
+        <h2 class="section-title">Validation</h2>
+        <pre><code>// ViewModel
+EmailValidator = new CompositeSkyValidator(
+    SkyValidators.Required("Email is required."),
+    SkyValidators.Email());
+
+// Or inline
+field.Validate();  // uses SkyFormField.Validator
+field.ClearValidation();</code></pre>
+        <p>Built-in rules: <code>Required</code>, <code>Email</code>, <code>MinLength</code>, <code>MaxLength</code>, <code>Regex</code>, <code>Range</code>. Combine with <code>CompositeSkyValidator</code> for ordered evaluation.</p>
+      </section>
+
+      <section id="prog-icons">
+        <h2 class="section-title">Icons</h2>
+        <pre><code>&lt;Button Classes="sky"
+        Content="Add"
+        icons:SkyIconProperties.Icon="Add" /&gt;
+
+&lt;Button Classes="sky sky-play"
+        icons:SkyIconProperties.Icon="Play"
+        icons:SkyIconProperties.IconSize="Large" /&gt;</code></pre>
+        <p><code>SkyIconProperties</code> rebuilds <code>Content</code> as an icon + label row and adds <code>sky-has-icon</code> for spacing in <code>SkyIconStyles.axaml</code>.</p>
+      </section>
+
+      <section id="prog-navigation">
+        <h2 class="section-title">Navigation</h2>
+        <pre><code>&lt;sky:SkyNavigationView DisplayMode="Auto" PaneWidth="240"&gt;
+  &lt;sky:SkyNavigationViewItem Content="Home" Tag="home" /&gt;
+&lt;/sky:SkyNavigationView&gt;</code></pre>
+        <p><code>DisplayMode="Auto"</code> resolves expanded, compact, or bottom navigation from control width via <code>SkyBreakpoint</code>.</p>
+      </section>
+
+      <section id="prog-menus">
+        <h2 class="section-title">Menus &amp; accelerators</h2>
+        <pre><code>&lt;MenuItem Header="_Save"
+          InputGesture="{x:Static sky:SkyMenuGestures.Save}"
+          Command="{Binding SaveCommand}" /&gt;
+
+&lt;Button.Flyout&gt;
+  &lt;sky:SkyMenuFlyout Placement="Bottom"&gt;
+    &lt;MenuItem Header="Export…" /&gt;
+  &lt;/sky:SkyMenuFlyout&gt;
+&lt;/Button.Flyout&gt;</code></pre>
+        <p>Underline in <code>Header</code> defines Alt mnemonics. See <a href="menu-accelerators.html">menu-accelerators.html</a> for platform notes and the full gesture table.</p>
+      </section>
+
+      <section id="prog-layout">
+        <h2 class="section-title">Responsive layout</h2>
+        <pre><code>&lt;!-- UniformGrid that auto-updates columns --&gt;
+&lt;sky:SkyResponsiveGrid&gt;
+  &lt;Border Classes="sky-card" /&gt;
+&lt;/sky:SkyResponsiveGrid&gt;
+
+&lt;!-- Attached properties on Grid --&gt;
+&lt;Grid sky:SkyGridLayout.IsResponsive="True"
+      sky:SkyGridLayout.AutoPlaceChildren="True"&gt;
+  &lt;Border /&gt;
+&lt;/Grid&gt;</code></pre>
+        <p>Custom column profiles via <code>SkyResponsiveColumnProfile</code>. Details in <a href="layout.html">layout.html</a>.</p>
+      </section>
+
+      <section id="prog-attached">
+        <h2 class="section-title">Attached properties reference</h2>
+        <table>
+          <thead><tr><th>Class</th><th>Properties</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkyThemeProperties</code></td><td><code>AccentOverride</code>, <code>Density</code></td><td>Runtime theme tuning on <code>IResourceHost</code></td></tr>
+            <tr><td><code>SkyIconProperties</code></td><td><code>Icon</code>, <code>IconSize</code>, <code>IconChrome</code></td><td>Icon + label content row</td></tr>
+            <tr><td><code>SkyButtonProperties</code></td><td><code>IsLoading</code></td><td>Spinner, disable, <code>sky-loading</code> class</td></tr>
+            <tr><td><code>SkyTooltipProperties</code></td><td><code>Tip</code></td><td>Attach <code>SkyTooltip</code> to any control</td></tr>
+            <tr><td><code>SkyGridLayout</code></td><td><code>IsResponsive</code>, <code>AutoPlaceChildren</code>, <code>ColumnProfile</code></td><td>Responsive <code>Grid</code> columns</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="prog-data">
+        <h2 class="section-title">Data grid &amp; filter</h2>
+        <pre><code>// Virtual grid data source (simplified)
+public class MyGridSource : IVirtualGridDataSource
+{
+    public int RowCount => _rows.Count;
+    public object? GetRow(int index) => _rows[index];
+    public event EventHandler? StructureChanged;
+}
+
+// Filter document
+var doc = new FilterDocument();
+doc.RootGroup.AddCondition(new FilterConditionNode { ... });</code></pre>
+        <p>Grid supports column sort events, row formatting, CSV export via <code>SkyDataGridCsvExporter</code>. Filter editor exports SQL through <code>IFilterSqlExporter</code> implementations.</p>
+      </section>
+
+      <section id="testing">
+        <h2 class="section-title">Testing</h2>
+        <table>
+          <thead><tr><th>Project</th><th>Scope</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>SkyUI.UnitTests</code></td>
+              <td>Logic without UI rendering</td>
+              <td>Validators, palette WCAG contrast, breakpoints, accelerators, token keys</td>
+            </tr>
+            <tr>
+              <td><code>SkyUI.HeadlessTests</code></td>
+              <td>Avalonia headless — controls without a window</td>
+              <td>Form validation round-trip, picker binding, layout measure, menu flyout classes</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>dotnet test</code></pre>
+      </section>
+
+      <section id="demo">
+        <h2 class="section-title">Demo gallery</h2>
+        <p><code>SkyUI.Demo</code> is a master-detail gallery. <code>MainWindow</code> provides theme variant, density, and accent controls; the left nav loads cached demo pages.</p>
+        <p>Key demo pages: Overview, Typography, Icons, Buttons, Feedback, Navigation, Forms, Menus, Pickers, Layout, Primitives, List, Accordion, CheckedListBox, Filter editor, Virtual DataGrid, Diagram, Video timeline.</p>
+        <p>Source: <code>src/SkyUI.Demo/Views/Demos/</code> and <code>ViewModels/</code>.</p>
+      </section>
+
+      <section id="docs">
+        <h2 class="section-title">Further reading</h2>
+        <table>
+          <thead>
+            <tr><th>Document</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="current-state.html">Current state</a></td><td>Repository inventory and capabilities</td></tr>
+            <tr><td><a href="development-roadmap.html">Development roadmap</a></td><td>Phased product plan</td></tr>
+            <tr><td><a href="design-tokens.html">Design tokens</a></td><td>Token layering and theme API</td></tr>
+            <tr><td><a href="gap-analysis.html">Gap analysis</a></td><td>Commercial toolkit comparison</td></tr>
+            <tr><td><a href="layout.html">Layout controls</a></td><td>Cards, grids, expanders</td></tr>
+            <tr><td><a href="menu-accelerators.html">Menu accelerators</a></td><td>Keyboard shortcuts</td></tr>
+            <tr><td><a href="picker-formatting.html">Picker formatting</a></td><td>Culture-aware dates and times</td></tr>
+            <tr><td><a href="virtual-tree.html">Virtual tree</a></td><td>SkyVirtualTreeView MVVM patterns</td></tr>
+            <tr><td><a href="primitives-polish.html">Primitives polish</a></td><td>Tooltips, popovers, loading states</td></tr>
+            <tr><td><a href="rename-strategy.html">Rename strategy</a></td><td>Sky brand migration</td></tr>
+            <tr><td><a href="avalonia-12-upgrade.html">Avalonia 12 upgrade</a></td><td>Migration notes</td></tr>
+          </tbody>
+        </table>
+        <p>Visual specification: <code>src/SkyUI.Themes.Sky/DESIGN.md</code> (ContentFirstDark preset).</p>
+      </section>
+
+
+        <footer class="site-footer">
+          <p>
+            <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">SkyUI on GitHub</a>
+            · <a href="https://avaloniaui.net/" target="_blank" rel="noopener">Avalonia</a>
+            · <a href="https://hoihky.github.io/" target="_blank" rel="noopener">Hoi Kwan Yeung</a>
+          </p>
+        </footer>
+      </div>
+
+      <aside class="toc" aria-label="On this page">
+        <p class="toc-title">On this page</p>
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#quick-start">Quick start</a></li>
+          <li><a href="#packages">Package architecture</a></li>
+          <li><a href="#theme-pipeline">Theme pipeline</a></li>
+          <li><a href="#control-patterns">Control patterns</a></li>
+          <li><a href="#namespaces">XAML namespaces</a></li>
+          <li><a href="#tokens">Tokens &amp; palettes</a></li>
+          <li><a href="#breakpoints">Breakpoints</a></li>
+          <li><a href="#density-focus">Density &amp; focus</a></li>
+          <li><a href="#catalog-essentials">Essentials catalog</a></li>
+          <li><a href="#catalog-data">Data &amp; diagram</a></li>
+          <li class="toc-h3"><a href="#prog-theme">Theme setup</a></li>
+          <li class="toc-h3"><a href="#prog-styled">Styled primitives</a></li>
+          <li class="toc-h3"><a href="#prog-mvvm">MVVM</a></li>
+          <li class="toc-h3"><a href="#prog-validation">Validation</a></li>
+          <li class="toc-h3"><a href="#prog-icons">Icons</a></li>
+          <li class="toc-h3"><a href="#prog-navigation">Navigation</a></li>
+          <li class="toc-h3"><a href="#prog-menus">Menus</a></li>
+          <li class="toc-h3"><a href="#prog-layout">Layout</a></li>
+          <li class="toc-h3"><a href="#prog-attached">Attached properties</a></li>
+          <li class="toc-h3"><a href="#prog-data">Data grid &amp; filter</a></li>
+          <li><a href="#testing">Testing</a></li>
+          <li><a href="#demo">Demo gallery</a></li>
+          <li><a href="#docs">Further reading</a></li>
+        </ul>
+      </aside>
+
+    </main>
+  </div>
+</body>
+</html>

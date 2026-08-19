@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sky design tokens · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Sky design tokens</h1>
+          </header>
+          <div class="doc-body"><p>SkyUI separates <strong>palette</strong> (theme-specific colors), <strong>semantic tokens</strong> (stable public names), <strong>visual presets</strong> (control chrome), and <strong>legacy aliases</strong> (pre-rename resource keys and style classes).</p>
+<h2 id="naming-public-brand-sky">Naming (public brand: Sky)</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Layer</th>
+<th>Path / ID</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Brand</strong></td>
+<td><code>sky</code> style classes, <code>Sky*</code> brushes</td>
+<td>Public API — use in apps and docs</td>
+</tr>
+<tr>
+<td><strong>Theme resources</strong></td>
+<td><code>Themes/SkyDark/</code></td>
+<td>Palettes, themed dictionaries, control templates</td>
+</tr>
+<tr>
+<td><strong>Default preset</strong></td>
+<td><code>Presets/ContentFirstDark/</code> (<code>SkyPresetIds.ContentFirstDark</code>)</td>
+<td>Content-first dark primitives (pill buttons, immersive surfaces)</td>
+</tr>
+<tr>
+<td><strong>Legacy shims</strong></td>
+<td><code>Themes/Sky/</code></td>
+<td>Redirects old <code>avares://…/Themes/Sky/…</code> URIs</td>
+</tr>
+<tr>
+<td><strong>Legacy brushes</strong></td>
+<td><code>SkyLegacyBrushAliases.axaml</code></td>
+<td><code>Spotify*</code> keys → <code>SkyPalette*</code> (deprecated)</td>
+</tr>
+<tr>
+<td><strong>Legacy classes</strong></td>
+<td><code>spotify*</code></td>
+<td>Aliased in primitives; use <code>sky*</code> in new code</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="rename-strategy.html">rename-strategy.md</a> for migration notes.</p>
+<h2 id="layering">Layering</h2>
+<pre><code class="language-text">Themes/SkyDark/SkyPalette.{Dark|Light|HighContrast}.axaml  →  SkyPalette* slots
+        ↓
+SkyResources.Themed.axaml + SkyResources.Variant.axaml
+        ↓
+SkyTokens.axaml + SkyDensityTokens.axaml  →  Sky* semantic brushes, spacing, density
+        ↓
+SkyLegacyBrushAliases.axaml  →  Spotify* brush aliases (backward compatible)
+        ↓
+Presets/ContentFirstDark/SkyPreset.Primitives + Focus  →  Control styles (WCAG focus rings)
+</code></pre>
+<p>Load order is in <code>SkyResources.Themed.axaml</code>, included by <strong><code>ContentFirstDark.axaml</code></strong> (default via <code>Themes/SkyTheme.axaml</code>).</p>
+<p>Set <code>Application.RequestedThemeVariant</code> to <code>Dark</code>, <code>Light</code>, or <code>HighContrast</code> to swap palette brush sets.</p>
+<h2 id="c-api">C# API</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyPresetIds</code></td>
+<td>Preset identifiers (<code>ContentFirstDark</code>)</td>
+</tr>
+<tr>
+<td><code>SkyPaletteKeys</code></td>
+<td>Resource key names for palette slots</td>
+</tr>
+<tr>
+<td><code>SkyTokenKeys</code></td>
+<td>Resource key names for semantic tokens</td>
+</tr>
+<tr>
+<td><code>SkyTokenUris</code></td>
+<td><code>avares://</code> URI for <code>SkyTokens.axaml</code></td>
+</tr>
+<tr>
+<td><code>SkyPresetUris</code></td>
+<td><code>Theme</code> (default), <code>ContentFirstDark</code>; use <code>RequestedThemeVariant</code> for Light / HC</td>
+</tr>
+<tr>
+<td><code>SkyThemeClasses</code></td>
+<td>Style class names (<code>sky</code>, <code>sky-primary</code>, …)</td>
+</tr>
+<tr>
+<td><code>SkyThemeUris</code></td>
+<td>App style includes (<code>Theme</code>, <code>ContentFirstDark</code>, <code>ThemeWithData</code>, …)</td>
+</tr>
+<tr>
+<td><code>ISkyColorPalette</code></td>
+<td>Strategy contract; <code>SkyDarkColorPalette</code>, <code>SkyLightColorPalette</code>, <code>SkyHighContrastColorPalette</code></td>
+</tr>
+<tr>
+<td><code>SkyContrast</code></td>
+<td>WCAG contrast helpers (used by palette unit tests)</td>
+</tr>
+<tr>
+<td><code>SkyThemeVariants</code></td>
+<td><code>SkyThemeVariants.HighContrast</code> custom variant for <code>RequestedThemeVariant</code></td>
+</tr>
+<tr>
+<td><code>SkyDensity</code> / <code>SkyDensityKeys</code></td>
+<td>Comfortable vs compact control metrics</td>
+</tr>
+<tr>
+<td><code>SkyResourceKeys</code></td>
+<td>Obsolete-friendly aliases over <code>SkyTokenKeys.Brush</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="xaml">XAML</h2>
+<p><strong>Recommended (default Sky theme):</strong></p>
+<pre><code class="language-xml">xmlns:sky="https://skyui.dev"
+&lt;Application sky:SkyThemeProperties.AccentOverride="#1ED760"&gt;
+  &lt;Application.Styles&gt;
+    &lt;StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyTheme.axaml" /&gt;
+  &lt;/Application.Styles&gt;
+&lt;/Application&gt;
+</code></pre>
+<p><strong>Explicit preset include:</strong></p>
+<pre><code class="language-xml">&lt;StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/ContentFirstDark.axaml" /&gt;
+</code></pre>
+<p><strong>With data controls (grid, filter):</strong></p>
+<pre><code class="language-xml">&lt;StyleInclude Source="avares://SkyUI.Data/Themes/SkyTheme.WithData.axaml" /&gt;
+</code></pre>
+<p><strong>Code:</strong></p>
+<pre><code class="language-csharp">SkyTheme.Apply(application, new SkyThemeOptions { AccentColor = Color.Parse("#1ED760") });
+SkyTheme.Apply(application, new SkyThemeOptions { Density = SkyDensity.Compact });
+</code></pre>
+<p>Constants: <code>SkyTheme.IncludeUri</code>, <code>SkyPresetUris.ContentFirstDark</code>, <code>SkyThemeUris.Theme</code>, <code>SkyThemeUris.ThemeWithData</code>.</p>
+<p><strong>On controls:</strong> <code>Classes="sky sky-primary"</code> (legacy <code>spotify</code> classes still styled).</p>
+<p><strong>Resources:</strong> <code>{DynamicResource SkyTextPrimaryBrush}</code> (legacy <code>{DynamicResource SpotifyTextPrimaryBrush}</code> still works).</p>
+<h2 id="typography-skyui.fonts">Typography (<code>SkyUI.Fonts</code>)</h2>
+<ol>
+<li>Register fonts before the app starts:</li>
+</ol>
+<pre><code class="language-csharp">AppBuilder.Configure&lt;App&gt;()
+.ConfigureSkyFonts(); // Inter + embedded Noto Sans SC
+</code></pre>
+<ol start="2">
+<li>Theme preset merges <code>SkyTypographyResources.axaml</code> (Inter / Noto stacks on <code>SkyFontFamilyUi</code> / <code>SkyFontFamilyTitle</code>).</li>
+<li>Use role classes: <code>sky-section-title</code>, <code>sky-body</code>, <code>sky-button-label-upper</code>, <code>sky-nav-link-bold</code>, etc. (see <code>SkyTypographyClasses</code>).</li>
+</ol>
+<h2 id="extending-palettes">Extending palettes</h2>
+<ol>
+<li>Add or adjust <code>Themes/SkyDark/SkyPalette.*.axaml</code> with the same <code>SkyPaletteKeys</code> slots (keep <code>SkyPaletteContrastTests</code> passing).</li>
+<li>Register the palette in <code>SkyResources.Themed.axaml</code> <code>ThemeDictionaries</code> if adding a new variant.</li>
+<li>Extend semantics in <code>SkyTokens.axaml</code> only when adding new cross-theme roles.</li>
+</ol>
+<p>Visual reference for the ContentFirstDark preset: <code>src/SkyUI.Themes.Sky/DESIGN.md</code> (internal content-first dark spec).</p>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#naming-public-brand-sky">Naming (public brand: Sky)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#layering">Layering</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#c-api">C# API</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#xaml">XAML</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#typography">Typography ()</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#extending-palettes">Extending palettes</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,4 +1,7 @@
-# Avalonia 12 upgrade
+---
+title: Avalonia 12 upgrade
+order: 110
+---
 
 SkyUI targets **Avalonia 12.1.1** on **.NET 10** (central version in `Directory.Build.props`).
 

@@ -1,4 +1,7 @@
-# Virtual tree view
+---
+title: Virtual tree view
+order: 80
+---
 
 `SkyVirtualTreeView` is a themed hierarchical list with UI virtualization and optional checkboxes. It reuses the same flattening, adapter, and selection infrastructure as `CheckedListBox`.
 
@@ -46,5 +49,5 @@ Set `ShowCheckBoxes="True"` on `SkyVirtualTreeView` to enable tri-state parent a
 
 ## Related
 
-- [Development roadmap](./development-roadmap.md) — Lists sprint
+- [Development roadmap](development-roadmap.md) — Lists sprint
 - `CheckedListBox` demo — full checkbox + sort + cascade examples

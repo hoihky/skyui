@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primitives polish · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Primitives polish</h1>
+          </header>
+          <div class="doc-body"><p>Tooltip, popover, loading button state, and consistent disabled styling for Sky primitives.</p>
+<h2 id="components">Components</h2>
+<table class="table">
+<thead>
+<tr>
+<th>API</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyTooltip</code></td>
+<td>Themed tooltip surface</td>
+</tr>
+<tr>
+<td><code>SkyTooltipProperties.Tip</code></td>
+<td>Attach styled tooltips to any control</td>
+</tr>
+<tr>
+<td><code>SkyPopover</code></td>
+<td>Lightweight flyout panels (non-menu content)</td>
+</tr>
+<tr>
+<td><code>SkyButtonProperties.IsLoading</code></td>
+<td>Replace button content with a progress ring while async work runs</td>
+</tr>
+<tr>
+<td><code>SkyDisabledOpacity</code></td>
+<td>Shared token (<code>0.45</code>) for disabled control opacity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tooltips">Tooltips</h2>
+<pre><code class="language-xml">&lt;Button Classes="sky"
+Content="Hover me"
+sky:SkyTooltipProperties.Tip="Quick action description" /&gt;
+</code></pre>
+<p>Rich content:</p>
+<pre><code class="language-xml">&lt;sky:SkyTooltipProperties.Tip&gt;
+  &lt;sky:SkyTooltip&gt;
+    &lt;TextBlock Text="Supports any content." TextWrapping="Wrap" MaxWidth="220" /&gt;
+  &lt;/sky:SkyTooltip&gt;
+&lt;/sky:SkyTooltipProperties.Tip&gt;
+</code></pre>
+<p>You can also set <code>ToolTip.Tip</code> to a <code>SkyTooltip</code> instance directly.</p>
+<h2 id="popover">Popover</h2>
+<pre><code class="language-xml">&lt;Button Content="Open popover"&gt;
+  &lt;Button.Flyout&gt;
+    &lt;sky:SkyPopover Placement="Bottom"&gt;
+      &lt;StackPanel Spacing="8"&gt;
+        &lt;TextBlock Text="Panel title" Classes="sky-section-title" /&gt;
+        &lt;TextBlock Text="Body copy." Classes="sky-body-secondary" /&gt;
+      &lt;/StackPanel&gt;
+    &lt;/sky:SkyPopover&gt;
+  &lt;/Button.Flyout&gt;
+&lt;/Button&gt;
+</code></pre>
+<p>Use <code>SkyMenuFlyout</code> for command menus; <code>SkyPopover</code> is for informational or form-like panels.</p>
+<h2 id="loading-button">Loading button</h2>
+<pre><code class="language-xml">&lt;Button Classes="sky sky-primary"
+Content="Save changes"
+Command="{Binding SaveCommand}"
+sky:SkyButtonProperties.IsLoading="{Binding IsSaving}" /&gt;
+</code></pre>
+<p>While loading:</p>
+<ul>
+<li>Content is replaced with an indeterminate <code>SkyProgressRing</code></li>
+<li>The button is disabled to prevent duplicate submits</li>
+<li><code>sky-loading</code> keeps full opacity (not the disabled fade)</li>
+</ul>
+<h2 id="disabled-consistency">Disabled consistency</h2>
+<p>All <code>Classes="sky"</code> primitives use <code>SkyDisabledOpacity</code> (0.40) for chrome controls and dedicated disabled foreground/border brushes for text inputs.</p>
+<p>Sky controls (<code>SkyDatePicker</code>, <code>SkyExpander</code>, <code>SkySlider</code>, etc.) follow the same token in <code>Primitives.Styles.axaml</code>.</p>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="development-roadmap.html">Development roadmap</a> — Primitives polish sprint</li>
+<li><a href="menu-accelerators.html">Menu accelerators</a> — <code>SkyMenuFlyout</code> for menus vs. <code>SkyPopover</code> for panels</li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#components">Components</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#tooltips">Tooltips</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#popover">Popover</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#loading-button">Loading button</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#disabled-consistency">Disabled consistency</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#related">Related</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

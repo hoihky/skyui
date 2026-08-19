@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }} · {{ site_title }}</title>
+  <meta name="description" content="{{ site_description }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset_prefix }}assets/css/site.css">
+  <link rel="stylesheet" href="{{ asset_prefix }}assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">{{ site_title }}</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            {{ for item in flat_navigation }}
+            <li class="nav-item depth-{{ item.depth }}{{ if item.is_active }} is-active{{ end }}{{ if item.is_group }} is-group{{ end }}">
+              {{ if item.url }}
+              <a href="{{ rel_prefix }}{{ item.url }}" class="nav-link">{{ item.title }}</a>
+              {{ else }}
+              <span class="nav-group">{{ item.title }}</span>
+              {{ end }}
+            </li>
+            {{ end }}
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>{{ page_title }}</h1>
+          </header>
+          <div class="doc-body">__MDWEB_CONTENT__</div>
+          <footer class="doc-footer">
+            __MDWEB_FOOTER__
+          </footer>
+        </article>
+
+        {{ if table_of_contents.size > 0 }}
+        <aside class="toc" aria-label="On this page">
+          <p class="toc-title">On this page</p>
+          <ul>
+            {{ for heading in table_of_contents }}
+            <li class="toc-h{{ heading.level }}">
+              <a href="#{{ heading.id }}">{{ heading.text }}</a>
+            </li>
+            {{ end }}
+          </ul>
+        </aside>
+        {{ end }}
+      </main>
+    </div>
+  </div>
+  <script src="{{ asset_prefix }}assets/vendor/mermaid.min.js"></script>
+  <script src="{{ asset_prefix }}assets/vendor/highlight.min.js"></script>
+  <script src="{{ asset_prefix }}assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rename strategy (Sky brand) · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Rename strategy (Sky brand)</h1>
+          </header>
+          <div class="doc-body"><h2 id="goals">Goals</h2>
+<ol>
+<li><strong>Public brand</strong> is <strong>Sky</strong> — style classes (<code>sky</code>), semantic brushes (<code>Sky*</code>), packages (<code>SkyUI.*</code>).</li>
+<li><strong>Internal paths</strong> describe what they are, not a third-party product.</li>
+<li><strong>Backward compatibility</strong> — old <code>Themes/Sky/</code> URIs and <code>Spotify*</code> resource keys keep working via shims.</li>
+</ol>
+<h2 id="layout-current">Layout (current)</h2>
+<pre><code class="language-text">SkyUI.Themes.Sky/
+Themes/
+  SkyTheme.axaml                    ← public entry (unchanged URI)
+  SkyDark/                          ← palettes, resources, control templates
+    SkyPalette.{Dark,Light,HighContrast}.axaml
+    SkyResources.*
+    SkyLegacyBrushAliases.axaml     ← was SkySpotifyLegacyResources
+    Controls/
+    Presets/
+      ContentFirstDark/
+        ContentFirstDark.axaml      ← default visual preset
+        SkyPreset.Primitives.axaml
+        SkyPreset.Focus.axaml
+  Sky/                              ← legacy redirects only (do not add new files here)
+</code></pre>
+<h2 id="preset-id">Preset ID</h2>
+<table class="table">
+<thead>
+<tr>
+<th>ID</th>
+<th>URI constant</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ContentFirstDark</code></td>
+<td><code>SkyPresetUris.ContentFirstDark</code></td>
+<td>Default immersive dark UI (pill geometry, content-first surfaces)</td>
+</tr>
+</tbody>
+</table>
+<p><code>SkyPresetUris.Theme</code> and <code>SkyTheme.IncludeUri</code> still point at <code>Themes/SkyTheme.axaml</code>, which loads ContentFirstDark.</p>
+<h2 id="what-to-use-in-new-code">What to use in new code</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Prefer</th>
+<th>Avoid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Classes=&quot;sky&quot;</code></td>
+<td><code>Classes=&quot;spotify&quot;</code></td>
+</tr>
+<tr>
+<td><code>{DynamicResource SkyAccentBrush}</code></td>
+<td><code>{DynamicResource SpotifyAccentGreenBrush}</code></td>
+</tr>
+<tr>
+<td><code>SkyThemeUris.Theme</code></td>
+<td>Hard-coded <code>Themes/Sky/…</code> paths</td>
+</tr>
+<tr>
+<td><code>SkyPresetUris.ContentFirstDark</code></td>
+<td><code>SkyPresetUris.Dark</code> (obsolete alias)</td>
+</tr>
+<tr>
+<td><code>Themes/SkyDark/…</code> when referencing palette files</td>
+<td><code>Themes/Sky/…</code> (shim only)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="legacy-compatibility">Legacy compatibility</h2>
+<ul>
+<li><strong><code>Themes/Sky/**</code></strong> — thin XAML shims that <code>ResourceInclude</code> / <code>StyleInclude</code> the <code>SkyDark</code> or <code>ContentFirstDark</code> targets.</li>
+<li><strong><code>Spotify*</code> brushes</strong> — defined in <code>SkyLegacyBrushAliases.axaml</code>; shim file <code>SkySpotifyLegacyResources.axaml</code> remains under <code>Themes/Sky/</code>.</li>
+<li><strong><code>spotify*</code> style classes</strong> — still matched in <code>SkyPreset.Primitives.axaml</code> alongside <code>sky*</code>.</li>
+<li><strong><code>SkyThemeClasses.LegacySpotify</code></strong> — documents deprecated class names.</li>
+</ul>
+<h2 id="future-presets">Future presets</h2>
+<p>Add siblings under <code>Themes/SkyDark/Presets/</code> (e.g. <code>ContentFirstLight</code>) and new <code>SkyPresetIds</code> constants. Keep <code>Themes/SkyTheme.axaml</code> as the default bundle or expose separate includes per preset.</p>
+<h2 id="design.md">DESIGN.md</h2>
+<p><code>src/SkyUI.Themes.Sky/DESIGN.md</code> remains an <strong>internal visual reference</strong> for ContentFirstDark (historically Spotify-inspired). It is not user-facing product branding.</p>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#goals">Goals</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#layout-current">Layout (current)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#preset-id">Preset ID</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#what-to-use-in-new-code">What to use in new code</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#legacy-compatibility">Legacy compatibility</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#future-presets">Future presets</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#designmd">DESIGN.md</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Avalonia 12 upgrade · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Avalonia 12 upgrade</h1>
+          </header>
+          <div class="doc-body"><p>SkyUI targets <strong>Avalonia 12.1.1</strong> on <strong>.NET 10</strong> (central version in <code>Directory.Build.props</code>).</p>
+<h2 id="evaluation-11.3.12-12.1.1">Evaluation (11.3.12 → 12.1.1)</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Area</th>
+<th>Impact on SkyUI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>.NET</strong></td>
+<td>Already on <code>net10.0</code> — no TFM change required.</td>
+</tr>
+<tr>
+<td><strong>Compiled bindings</strong></td>
+<td>Already <code>AvaloniaUseCompiledBindingsByDefault=true</code> — aligned with v12 default.</td>
+</tr>
+<tr>
+<td><strong><code>Avalonia.Diagnostics</code></strong></td>
+<td>Removed from <code>SkyUI.Demo</code>. Use <a href="https://docs.avaloniaui.net/docs/tools/developer-tools/installation">Avalonia Plus Dev Tools</a> + <code>AvaloniaUI.DiagnosticsSupport</code> if licensed.</td>
+</tr>
+<tr>
+<td><strong>C# <code>Binding</code></strong></td>
+<td><code>Binding(path, mode)</code> ctor removed; use <code>{ Mode = … }</code> initializer (fixed in <code>SkyAccordionItem</code>). Other <code>new Binding(path) { … }</code> usages remain valid (<code>Binding</code> → reflection binding).</td>
+</tr>
+<tr>
+<td><strong>Clipboard / DnD</strong></td>
+<td>No <code>IDataObject</code> usage in repo.</td>
+</tr>
+<tr>
+<td><strong>Window decorations</strong></td>
+<td>Demo uses default window chrome — no <code>SystemDecorations</code> usage.</td>
+</tr>
+<tr>
+<td><strong>Tests</strong></td>
+<td>All unit + headless tests pass after upgrade.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="packages-per-project">Packages (per project)</h2>
+<p>All Avalonia packages use <code>$(AvaloniaVersion)</code>:</p>
+<ul>
+<li><code>Avalonia</code>, <code>Avalonia.Desktop</code>, <code>Avalonia.Themes.Fluent</code> (demo)</li>
+<li><code>Avalonia.Fonts.Inter</code> (<code>SkyUI.Fonts</code>)</li>
+</ul>
+<h2 id="optional-dev-tools-debug">Optional: Dev Tools (Debug)</h2>
+<p>If you have Avalonia Plus:</p>
+<pre><code class="language-xml">&lt;PackageReference Include=&quot;AvaloniaUI.DiagnosticsSupport&quot; Version=&quot;2.2.3&quot; /&gt;
+</code></pre>
+<pre><code class="language-csharp">// After app startup (e.g. MainWindow loaded):
+this.AttachDeveloperTools();
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://docs.avaloniaui.net/docs/avalonia12-breaking-changes">Breaking changes in Avalonia 12</a></li>
+<li><a href="https://github.com/AvaloniaUI/Avalonia/releases">12.1.1 release</a></li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#evaluation-11312-1211">Evaluation (11.3.12 → 12.1.1)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#packages-per-project">Packages (per project)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#optional-dev-tools-debug">Optional: Dev Tools (Debug)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#references">References</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

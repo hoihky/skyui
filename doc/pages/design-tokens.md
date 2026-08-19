@@ -1,4 +1,7 @@
-# Sky design tokens
+---
+title: Sky design tokens
+order: 40
+---
 
 SkyUI separates **palette** (theme-specific colors), **semantic tokens** (stable public names), **visual presets** (control chrome), and **legacy aliases** (pre-rename resource keys and style classes).
 
@@ -13,7 +16,7 @@ SkyUI separates **palette** (theme-specific colors), **semantic tokens** (stable
 | **Legacy brushes** | `SkyLegacyBrushAliases.axaml` | `Spotify*` keys → `SkyPalette*` (deprecated) |
 | **Legacy classes** | `spotify*` | Aliased in primitives; use `sky*` in new code |
 
-See [rename-strategy.md](./rename-strategy.md) for migration notes.
+See [rename-strategy.md](rename-strategy.md) for migration notes.
 
 ## Layering
 

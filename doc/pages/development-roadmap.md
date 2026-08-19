@@ -1,6 +1,9 @@
-# Development roadmap
+---
+title: Development roadmap
+order: 30
+---
 
-Phased plan to evolve SkyUI from the [current state](./current-state.md) toward a commercial-grade, multiplatform toolkit, addressing gaps in [gap-analysis.md](./gap-analysis.md).
+Phased plan to evolve SkyUI from the [current state](current-state.md) toward a commercial-grade, multiplatform toolkit, addressing gaps in [gap-analysis.md](gap-analysis.md).
 
 Durations assume a small core team; workstreams within a phase can run in parallel where noted.
 
@@ -95,11 +98,11 @@ Dependency direction: `Core` → `SkyUI` → (`Data`, `Diagram`); `Themes` and `
 | Feedback | Modal/dialog host, snackbar queue, banner, progress ring, skeleton placeholder — **SkyAlert, SkyBanner, SkySnackbarHost, SkyDialogHost, SkyProgressRing, SkySkeleton** |
 | Navigation | Navigation view (sidebar / compact / bottom on narrow width), styled tab control, breadcrumb — **SkyNavigationView, SkyTabView, SkyBreadcrumb** |
 | Forms | Form field wrapper (label, hint, validation, error state), radio group, slider, password and search variants — **SkyFormField, SkyRadioGroup, SkySlider, SkySearchBox, SkyPasswordBox** |
-| Menus | Context menu and menubar styles; keyboard accelerators documented — **SkyMenuBar, SkyContextMenu, SkyMenuFlyout, SkyAccelerator, SkyMenuGestures** ([menu-accelerators.md](./menu-accelerators.md)) |
-| Pickers | Date picker, calendar month view, time picker; culture-aware formatting — **SkyDatePicker, SkyCalendar, SkyTimePicker, SkyPickerFormat** ([picker-formatting.md](./picker-formatting.md)) |
-| Lists | Virtual tree view (checkboxes optional); patterns reused from `CheckedListBox` — **SkyVirtualTreeView** ([virtual-tree.md](./virtual-tree.md)) |
-| Layout | Card, divider, expander; responsive grid helpers — **SkyCard, SkyDivider, SkyExpander, SkyResponsiveGrid, SkyGridLayout** ([layout.md](./layout.md)) |
-| Primitives polish | Tooltip, popover, loading button state, disabled consistency — **SkyTooltip, SkyPopover, SkyTooltipProperties, SkyButtonProperties** ([primitives-polish.md](./primitives-polish.md)) |
+| Menus | Context menu and menubar styles; keyboard accelerators documented — **SkyMenuBar, SkyContextMenu, SkyMenuFlyout, SkyAccelerator, SkyMenuGestures** ([menu-accelerators.md](menu-accelerators.md)) |
+| Pickers | Date picker, calendar month view, time picker; culture-aware formatting — **SkyDatePicker, SkyCalendar, SkyTimePicker, SkyPickerFormat** ([picker-formatting.md](picker-formatting.md)) |
+| Lists | Virtual tree view (checkboxes optional); patterns reused from `CheckedListBox` — **SkyVirtualTreeView** ([virtual-tree.md](virtual-tree.md)) |
+| Layout | Card, divider, expander; responsive grid helpers — **SkyCard, SkyDivider, SkyExpander, SkyResponsiveGrid, SkyGridLayout** ([layout.md](layout.md)) |
+| Primitives polish | Tooltip, popover, loading button state, disabled consistency — **SkyTooltip, SkyPopover, SkyTooltipProperties, SkyButtonProperties** ([primitives-polish.md](primitives-polish.md)) |
 
 ### Per-control definition of done
 
@@ -241,5 +244,5 @@ Adjust quarters to team size; Phase 4 can overlap Phase 3 once grid API is stabl
 ## Related documents
 
 - [README](./README.md)
-- [Current state](./current-state.md)
-- [Gap analysis](./gap-analysis.md)
+- [Current state](current-state.md)
+- [Gap analysis](gap-analysis.md)

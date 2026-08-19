@@ -1,4 +1,7 @@
-# Rename strategy (Sky brand)
+---
+title: Rename strategy (Sky brand)
+order: 100
+---
 
 ## Goals
 

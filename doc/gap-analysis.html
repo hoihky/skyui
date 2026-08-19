@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gap analysis · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Gap analysis</h1>
+          </header>
+          <div class="doc-body"><p>This document compares the <a href="current-state.html">current state</a> of SkyUI against expectations for a <strong>commercial-grade, multiplatform UI toolkit</strong>. Benchmarks are used conceptually: enterprise desktop suites (Telerik, DevExpress, Syncfusion), design systems (Fluent UI, Material), and cross-platform frameworks (Qt Quick Controls, Flutter).</p>
+<h2 id="executive-summary">Executive summary</h2>
+<p>SkyUI is a <strong>young Avalonia control library</strong> with a <strong>cohesive dark theme</strong> and <strong>several advanced, well-architected controls</strong> (virtual grid, filter editor, diagram, tree checklist, video timeline). It is <strong>not yet</strong> a full commercial toolkit: missing product infrastructure (tests, CI, NuGet, API docs), <strong>unproven mobile and web targets</strong>, and a <strong>narrow essential control catalog</strong> relative to line-of-business needs.</p>
+<p>A credible commercial position: <strong>Avalonia multiplatform + Sky design system + data/diagram/media Pro tier</strong>, rather than a custom rendering stack.</p>
+<hr>
+<h2 id="platform-and-adaptive-ux">1. Platform and adaptive UX</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Gap</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No validated mobile/web</td>
+<td>Library depends on Avalonia core only; demo uses <code>Avalonia.Desktop</code>. Touch, safe areas, keyboard insets, and browser constraints are unproven.</td>
+</tr>
+<tr>
+<td>No adaptive primitives</td>
+<td><code>DESIGN.md</code> defines breakpoints and collapsing sidebar/nav behavior; the library does not expose <code>SkyBreakpoint</code>, compact density, or bottom-nav vs sidebar patterns.</td>
+</tr>
+<tr>
+<td>No platform services layer</td>
+<td>Commercial kits often wrap file pickers, share sheets, biometrics, haptics, and deep links with consistent APIs.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact:</strong> Cannot credibly market as “multiplatform” until build matrix, sample apps, and input policies exist for at least iOS, Android, and browser (WASM).</p>
+<hr>
+<h2 id="component-catalog-breadth">2. Component catalog breadth</h2>
+<p>SkyUI is <strong>strong in data/diagram/media</strong> and <strong>thin on everyday app UI</strong>.</p>
+<h3 id="missing-or-incomplete-typical-commercial-expectation">Missing or incomplete (typical commercial expectation)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Category</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shell</td>
+<td>Navigation view, tab view, breadcrumb, command bar, status bar, split view templates</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>Modal/dialog host, snackbar/toast, banner, inline alert, skeleton loading, empty states</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>Form field (label, hint, validation, error), radio group, slider, numeric up/down, password/search field, autocomplete</td>
+</tr>
+<tr>
+<td>Date/time</td>
+<td>Calendar, date picker, date range, time picker</td>
+</tr>
+<tr>
+<td>Menus</td>
+<td>Context menu, menubar, overflow — Sky-styled and keyboard-complete</td>
+</tr>
+<tr>
+<td>Data display</td>
+<td>Themed virtual tree view, cards list, KPI tiles</td>
+</tr>
+<tr>
+<td>Media / viz</td>
+<td>Image carousel, charts, gauges (often required in suites; may be phased or partnered)</td>
+</tr>
+</tbody>
+</table>
+<p>Many primitives are <strong>styled Avalonia controls</strong> in the Spotify theme but lack a <strong>unified Sky API</strong> (<code>Sky*</code> controls or documented <code>sky</code> style contract).</p>
+<p><strong>Impact:</strong> Adopters must assemble app chrome from raw Avalonia or fork theme XAML.</p>
+<hr>
+<h2 id="data-grid-and-filtering">3. Data grid and filtering</h2>
+<h3 id="skyvirtualdatagrid-gaps">SkyVirtualDataGrid — gaps</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Capability</th>
+<th>Current</th>
+<th>Commercial expectation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column sizing</td>
+<td>Fixed pixel width</td>
+<td>Resize, auto-fit, star/proportional columns</td>
+</tr>
+<tr>
+<td>Selection</td>
+<td>Single <code>SelectedRowIndex</code></td>
+<td>Multi-select, checkbox column, select-all</td>
+</tr>
+<tr>
+<td>Filtering</td>
+<td>External only</td>
+<td>In-grid filter row, header filters; integration with <code>FilterEditor</code></td>
+</tr>
+<tr>
+<td>Grouping / summaries</td>
+<td>None</td>
+<td>Group rows, aggregates</td>
+</tr>
+<tr>
+<td>Clipboard / fill</td>
+<td>None</td>
+<td>Copy/paste, fill down (enterprise)</td>
+</tr>
+<tr>
+<td>Export</td>
+<td>CSV</td>
+<td>Excel, PDF; extensible exporter pipeline</td>
+</tr>
+<tr>
+<td>Async data</td>
+<td>Sync <code>GetRow</code></td>
+<td>Paging, cancellation, documented threading</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>Not audited</td>
+<td>Grid navigation, screen reader names, focus model</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filtereditor-gaps">FilterEditor — gaps</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save/load filter definitions (e.g. JSON), named views</td>
+</tr>
+<tr>
+<td>Type-aware value editors (date, enum, numeric ranges)</td>
+</tr>
+<tr>
+<td>Parameterized SQL (injection-safe exporters per dialect)</td>
+</tr>
+<tr>
+<td>First-class integration samples with grid and query layer</td>
+</tr>
+<tr>
+<td>Validation and empty/incomplete condition UX</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact:</strong> Existing modules are a <strong>moat</strong> if extended; without grid 2.0 and filter integration, they remain demo-grade.</p>
+<hr>
+<h2 id="diagram-module">4. Diagram module</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Present</th>
+<th>Missing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model, selection, move/resize, connect/reconnect, copy/paste</td>
+<td>Orthogonal and bezier routers (only <code>StraightEdgePathComputer</code> today)</td>
+</tr>
+<tr>
+<td>Pluggable <code>IEdgePathComputer</code></td>
+<td>Zoom/pan, snap grid, alignment guides</td>
+</tr>
+<tr>
+<td></td>
+<td>Undo/redo command stack</td>
+</tr>
+<tr>
+<td></td>
+<td>Multi-select marquee, grouping/subgraphs, layers</td>
+</tr>
+<tr>
+<td></td>
+<td>Edge labels, minimap</td>
+</tr>
+<tr>
+<td></td>
+<td>Export SVG/PNG, print</td>
+</tr>
+<tr>
+<td></td>
+<td>Touch: pinch-zoom, long-press connect</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact:</strong> Suitable for early flow editors; not yet competitive with dedicated diagram SKUs.</p>
+<hr>
+<h2 id="design-system-and-theming">5. Design system and theming</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Gap</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Token model</td>
+<td><code>Spotify*</code> resource keys; no semantic <code>SkyToken</code> layer decoupled from one brand</td>
+</tr>
+<tr>
+<td>Themes</td>
+<td>Dark only in practice; no light, high contrast, or forced-colors story</td>
+</tr>
+<tr>
+<td>Runtime branding</td>
+<td>No documented accent override or theme builder API</td>
+</tr>
+<tr>
+<td>Icons</td>
+<td>No shared icon font or SVG set in the package</td>
+</tr>
+<tr>
+<td>Motion</td>
+<td>No shared transition/animation guidelines in code</td>
+</tr>
+<tr>
+<td>Density</td>
+<td>Comfortable / compact via <code>SkyDensity</code> and <code>SkyDensityTokens.axaml</code></td>
+</tr>
+<tr>
+<td>Legal / brand</td>
+<td>Spotify-inspired DESIGN.md and naming may limit commercial positioning; need Sky-native design language</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact:</strong> Enterprise buyers expect white-label theming and accessibility modes.</p>
+<hr>
+<h2 id="quality-developer-experience-and-go-to-market">6. Quality, developer experience, and go-to-market</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Gap</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No unit/headless UI tests</td>
+<td>High regression risk on virtualization and pointer input</td>
+</tr>
+<tr>
+<td>No CI (build, test, format, analyzers)</td>
+<td>Blocks team scaling and contributor trust</td>
+</tr>
+<tr>
+<td>No API reference / doc site</td>
+<td>Slow adoption</td>
+</tr>
+<tr>
+<td>No semver policy, changelog, deprecation</td>
+<td>Blocks enterprise procurement</td>
+</tr>
+<tr>
+<td>No NuGet publish pipeline</td>
+<td>No distribution</td>
+</tr>
+<tr>
+<td>No visual regression tests</td>
+<td>Theme and layout breaks undetected</td>
+</tr>
+<tr>
+<td>No WCAG conformance statement</td>
+<td>Blocks public sector and strict vendors</td>
+</tr>
+<tr>
+<td>No localization (RTL, resources)</td>
+<td>Blocks global products</td>
+</tr>
+<tr>
+<td>Weak getting started</td>
+<td>Root README is minimal</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="legal-and-positioning">7. Legal and positioning</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Topic</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>License</td>
+<td>MIT on project code is compatible with commercial use of <strong>your</strong> code.</td>
+</tr>
+<tr>
+<td>Legal / brand</td>
+<td>Sky-branded public API (<code>sky</code>, <code>Sky*</code>); ContentFirstDark preset; legacy Spotify paths aliased — see <a href="rename-strategy.html">rename-strategy.md</a></td>
+</tr>
+<tr>
+<td>Third-party fonts</td>
+<td>Use bundled open fonts (e.g. Inter, Noto) for shipping products.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="priority-matrix">Priority matrix</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Priority</th>
+<th>Item</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0</td>
+<td>CI, tests, NuGet, README</td>
+<td>Enables all other work</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>Design tokens + light/high-contrast themes</td>
+<td>Branding, accessibility, sales</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Navigation shell, dialogs, snackbar</td>
+<td>Required for real apps</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Date/time pickers, form field wrapper</td>
+<td>LOB blocker</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Mobile/browser demo + adaptive navigation</td>
+<td>Validates multiplatform claim</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Grid 2.0 + filter integration</td>
+<td>Extends existing strength</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Themed virtual tree view</td>
+<td>Complements <code>CheckedListBox</code></td>
+</tr>
+<tr>
+<td>P3</td>
+<td>Diagram zoom/undo/routers</td>
+<td>Completes differentiator</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>Charts</td>
+<td>High demand; consider embed or partner initially</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="risks-and-mitigations">Risks and mitigations</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avalonia API churn</td>
+<td>Pin versions; headless integration tests; track release notes</td>
+</tr>
+<tr>
+<td>WASM bundle size</td>
+<td>Optional packages (<code>SkyUI.Data</code>, <code>SkyUI.Diagram</code>), trimming, lazy load</td>
+</tr>
+<tr>
+<td>Scope vs large vendors</td>
+<td>Focus Pro tier on data + diagram + timeline; essentials via disciplined styling</td>
+</tr>
+<tr>
+<td>Virtualization bugs</td>
+<td>Headless scroll tests; invariant tests for row index mapping</td>
+</tr>
+<tr>
+<td>SQL injection in filters</td>
+<td>Document safe exporters; parameterized queries only in official exporters</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="related-documents">Related documents</h2>
+<ul>
+<li><a href="current-state.html">Current state</a></li>
+<li><a href="development-roadmap.html">Development roadmap</a></li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#executive-summary">Executive summary</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#1-platform-and-adaptive-ux">1. Platform and adaptive UX</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#2-component-catalog-breadth">2. Component catalog breadth</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#missing-or-incomplete-typical-commercial-expectation">Missing or incomplete (typical commercial expectation)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#3-data-grid-and-filtering">3. Data grid and filtering</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#skyvirtualdatagrid-gaps">SkyVirtualDataGrid — gaps</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#filtereditor-gaps">FilterEditor — gaps</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#4-diagram-module">4. Diagram module</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#5-design-system-and-theming">5. Design system and theming</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#6-quality-developer-experience-and-go-to-market">6. Quality, developer experience, and go-to-market</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#7-legal-and-positioning">7. Legal and positioning</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#priority-matrix">Priority matrix</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#risks-and-mitigations">Risks and mitigations</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#related-documents">Related documents</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

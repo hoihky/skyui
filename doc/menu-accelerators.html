@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu keyboard accelerators · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Menu keyboard accelerators</h1>
+          </header>
+          <div class="doc-body"><p>SkyUI menus use Avalonia <code>MenuItem.InputGesture</code> (<code>KeyGesture</code>) for keyboard shortcuts. Accelerators are shown on the right side of each menu item and are handled by the platform when the menu is not open.</p>
+<h2 id="quick-start">Quick start</h2>
+<h3 id="xaml-mvvm">XAML (MVVM)</h3>
+<pre><code class="language-xml">&lt;sky:SkyMenuBar&gt;
+  &lt;MenuItem Header="_File"&gt;
+    &lt;MenuItem Header="_Save"
+              InputGesture="{x:Static sky:SkyMenuGestures.Save}"
+              Command="{Binding SaveCommand}" /&gt;
+  &lt;/MenuItem&gt;
+&lt;/sky:SkyMenuBar&gt;
+
+&lt;sky:SkyContextMenu&gt;
+  &lt;MenuItem Header="Copy"
+            InputGesture="{Binding CopyGesture}"
+            Command="{Binding CopyCommand}" /&gt;
+&lt;/sky:SkyContextMenu&gt;
+</code></pre>
+<h3 id="view-model">View model</h3>
+<pre><code class="language-csharp">public KeyGesture SaveGesture =&gt; SkyMenuGestures.Save;
+
+public ICommand SaveCommand { get; }
+</code></pre>
+<p>Bind <code>InputGesture</code> to a <code>KeyGesture</code> property and <code>Command</code> to your <code>ICommand</code>. The menu item handles display; the command handles execution when clicked.</p>
+<h2 id="sky-controls">Sky controls</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyMenuBar</code></td>
+<td>Top application menu (<code>Menu</code> with <code>sky</code> styling)</td>
+</tr>
+<tr>
+<td><code>SkyContextMenu</code></td>
+<td>Right-click menus</td>
+</tr>
+<tr>
+<td><code>SkyMenuFlyout</code></td>
+<td>Dropdown from buttons or toolbar items</td>
+</tr>
+</tbody>
+</table>
+<p>All apply <code>Classes="sky"</code> automatically. Child <code>MenuItem</code> elements inherit styling from the parent menu.</p>
+<h2 id="standard-gestures-skymenugestures">Standard gestures (<code>SkyMenuGestures</code>)</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Gesture</th>
+<th>Default</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>New</code></td>
+<td>Ctrl+N</td>
+<td>New document</td>
+</tr>
+<tr>
+<td><code>Open</code></td>
+<td>Ctrl+O</td>
+<td>Open</td>
+</tr>
+<tr>
+<td><code>Save</code></td>
+<td>Ctrl+S</td>
+<td>Save</td>
+</tr>
+<tr>
+<td><code>SaveAs</code></td>
+<td>Ctrl+Shift+S</td>
+<td>Save as</td>
+</tr>
+<tr>
+<td><code>Close</code></td>
+<td>Ctrl+W</td>
+<td>Close tab/window</td>
+</tr>
+<tr>
+<td><code>Quit</code></td>
+<td>Ctrl+Q</td>
+<td>Quit application</td>
+</tr>
+<tr>
+<td><code>Undo</code></td>
+<td>Ctrl+Z</td>
+<td>Undo</td>
+</tr>
+<tr>
+<td><code>Redo</code></td>
+<td>Ctrl+Y</td>
+<td>Redo</td>
+</tr>
+<tr>
+<td><code>Cut</code></td>
+<td>Ctrl+X</td>
+<td>Cut</td>
+</tr>
+<tr>
+<td><code>Copy</code></td>
+<td>Ctrl+C</td>
+<td>Copy</td>
+</tr>
+<tr>
+<td><code>Paste</code></td>
+<td>Ctrl+V</td>
+<td>Paste</td>
+</tr>
+<tr>
+<td><code>SelectAll</code></td>
+<td>Ctrl+A</td>
+<td>Select all</td>
+</tr>
+<tr>
+<td><code>Delete</code></td>
+<td>Delete</td>
+<td>Delete selection</td>
+</tr>
+<tr>
+<td><code>Find</code></td>
+<td>Ctrl+F</td>
+<td>Find</td>
+</tr>
+</tbody>
+</table>
+<p>Use these constants instead of hard-coding strings so menus stay consistent across the app.</p>
+<h2 id="formatting-and-parsing-skyaccelerator">Formatting and parsing (<code>SkyAccelerator</code>)</h2>
+<pre><code class="language-csharp">// Platform-specific display (Ctrl+S on Windows, ⌘S on macOS)
+var label = SkyAccelerator.Format(SkyMenuGestures.Save);
+
+// Parse user-entered shortcut strings
+var gesture = SkyAccelerator.Parse("Ctrl+Shift+S");
+</code></pre>
+<p>For bindings, use <code>SkyAcceleratorFormatConverter</code>:</p>
+<pre><code class="language-xml">&lt;TextBlock Text="{Binding SaveGesture, Converter={x:Static sky:SkyAcceleratorFormatConverter.Instance}}" /&gt;
+</code></pre>
+<h2 id="mnemonics-access-keys">Mnemonics (access keys)</h2>
+<p>Prefix a letter in <code>Header</code> with <code>_</code> to define a mnemonic:</p>
+<pre><code class="language-xml">&lt;MenuItem Header="_File"&gt;
+  &lt;MenuItem Header="_Save" ... /&gt;
+&lt;/MenuItem&gt;
+</code></pre>
+<p>Press <strong>Alt+F</strong> (Windows/Linux) to open the File menu, then <strong>S</strong> for Save.</p>
+<h2 id="global-shortcuts-vs-menu-accelerators">Global shortcuts vs menu accelerators</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>When it runs</th>
+<th>Where to define</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MenuItem.InputGesture</code></td>
+<td>When menu is focused or via platform integration</td>
+<td>Menu XAML / VM <code>KeyGesture</code></td>
+</tr>
+<tr>
+<td><code>KeyBinding</code> on <code>Window</code></td>
+<td>App-wide while window is active</td>
+<td><code>Window.KeyBindings</code></td>
+</tr>
+<tr>
+<td><code>Command</code> + gesture</td>
+<td>Same as menu item click</td>
+<td><code>ICommand</code> on menu item</td>
+</tr>
+</tbody>
+</table>
+<p>For app-wide shortcuts (e.g. Ctrl+S always saves), add <code>KeyBinding</code> on the window <strong>and</strong> set <code>InputGesture</code> on the menu item so the shortcut appears in the menu:</p>
+<pre><code class="language-xml">&lt;Window KeyBindings="{Binding KeyBindings}"&gt;
+  ...
+&lt;/Window&gt;
+</code></pre>
+<pre><code class="language-csharp">new KeyBinding { Gesture = SkyMenuGestures.Save, Command = SaveCommand }
+</code></pre>
+<h2 id="platform-notes">Platform notes</h2>
+<ul>
+<li><strong>Windows / Linux:</strong> Modifiers display as <code>Ctrl</code>, <code>Alt</code>, <code>Shift</code>.</li>
+<li><strong>macOS:</strong> Modifiers display as <code>⌘</code>, <code>⌥</code>, <code>⇧</code> via <code>PlatformKeyGestureConverter</code>.</li>
+<li>Use <code>SkyMenuGestures</code> with <code>KeyModifiers.Control</code>; Avalonia maps to Command (⌘) on macOS where appropriate.</li>
+</ul>
+<h2 id="styling">Styling</h2>
+<p>Menu styles live in <code>Themes/SkyDark/Controls/Menus.Styles.axaml</code>. Apply <code>Classes="sky"</code> on <code>Menu</code>, <code>ContextMenu</code>, or use <code>Sky*</code> menu controls. Focus rings use <code>SkyFocusRingBrush</code> for keyboard navigation (WCAG 2.4.7).</p>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="design-tokens.html">Design tokens</a> — semantic brushes used by menu chrome</li>
+<li><a href="development-roadmap.html">Development roadmap</a> — Menus sprint scope</li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#quick-start">Quick start</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#xaml-mvvm">XAML (MVVM)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#view-model">View model</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#sky-controls">Sky controls</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#standard-gestures">Standard gestures ()</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#formatting-and-parsing">Formatting and parsing ()</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#mnemonics-access-keys">Mnemonics (access keys)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#global-shortcuts-vs-menu-accelerators">Global shortcuts vs menu accelerators</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#platform-notes">Platform notes</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#styling">Styling</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#related">Related</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

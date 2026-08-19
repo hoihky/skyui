@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Virtual tree view · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Virtual tree view</h1>
+          </header>
+          <div class="doc-body"><p><code>SkyVirtualTreeView</code> is a themed hierarchical list with UI virtualization and optional checkboxes. It reuses the same flattening, adapter, and selection infrastructure as <code>CheckedListBox</code>.</p>
+<h2 id="controls">Controls</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyVirtualTreeView</code></td>
+<td>Explorer-style tree (checkboxes off by default)</td>
+</tr>
+<tr>
+<td><code>CheckedListBox</code></td>
+<td>Hierarchical checklist (checkboxes always on)</td>
+</tr>
+</tbody>
+</table>
+<p>Both use <code>VirtualizingStackPanel</code> to recycle row visuals for expanded nodes.</p>
+<h2 id="mvvm">MVVM</h2>
+<p>Implement <code>ICheckedListBoxItem</code> on your node type, or supply a custom <code>ICheckedListItemAdapter</code>:</p>
+<pre><code class="language-xml">&lt;sky:SkyVirtualTreeView ItemsSource="{Binding Folders}"
+                       SelectionMode="Single"
+                       ShowCheckBoxes="{Binding AllowChecks}"
+                       Indent="20"&gt;
+  &lt;sky:SkyVirtualTreeView.ItemTemplate&gt;
+    &lt;DataTemplate x:DataType="vm:FolderNode"&gt;
+      &lt;TextBlock Text="{Binding Name}" /&gt;
+    &lt;/DataTemplate&gt;
+  &lt;/sky:SkyVirtualTreeView.ItemTemplate&gt;
+&lt;/sky:SkyVirtualTreeView&gt;
+</code></pre>
+<h3 id="node-contract-icheckedlistboxitem">Node contract (<code>ICheckedListBoxItem</code>)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Property</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IsExpanded</code></td>
+<td>Show/hide children</td>
+</tr>
+<tr>
+<td><code>IsChecked</code></td>
+<td>Tri-state checkbox state (when <code>ShowCheckBoxes</code> is true)</td>
+</tr>
+<tr>
+<td><code>Children</code></td>
+<td>Child collection</td>
+</tr>
+</tbody>
+</table>
+<h2 id="selection">Selection</h2>
+<p><code>CheckedListBoxSelectionMode</code>: <code>None</code>, <code>Single</code>, <code>Multiple</code> (Ctrl+click for multi-select).</p>
+<h2 id="checkboxes">Checkboxes</h2>
+<p>Set <code>ShowCheckBoxes="True"</code> on <code>SkyVirtualTreeView</code> to enable tri-state parent aggregation via <code>CascadeToChildren</code> and <code>UseThreeStateForParents</code> (inherited from <code>CheckedListBox</code>).</p>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="development-roadmap.html">Development roadmap</a> — Lists sprint</li>
+<li><code>CheckedListBox</code> demo — full checkbox + sort + cascade examples</li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#controls">Controls</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#mvvm">MVVM</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#node-contract">Node contract ()</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#selection">Selection</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#checkboxes">Checkboxes</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#related">Related</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,4 +1,7 @@
-# Primitives polish
+---
+title: Primitives polish
+order: 90
+---
 
 Tooltip, popover, loading button state, and consistent disabled styling for Sky primitives.
 
@@ -72,5 +75,5 @@ Sky controls (`SkyDatePicker`, `SkyExpander`, `SkySlider`, etc.) follow the same
 
 ## Related
 
-- [Development roadmap](./development-roadmap.md) — Primitives polish sprint
-- [Menu accelerators](./menu-accelerators.md) — `SkyMenuFlyout` for menus vs. `SkyPopover` for panels
+- [Development roadmap](development-roadmap.md) — Primitives polish sprint
+- [Menu accelerators](menu-accelerators.md) — `SkyMenuFlyout` for menus vs. `SkyPopover` for panels

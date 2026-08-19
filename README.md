@@ -110,10 +110,11 @@ doc/                    Product docs, roadmap, control guides
 
 | Document | Description |
 |----------|-------------|
+| [doc/index.html](doc/index.html) | SDK introduction — architecture and programming guide |
 | [doc/README.md](doc/README.md) | Documentation index |
-| [doc/current-state.md](doc/current-state.md) | Repository inventory |
-| [doc/development-roadmap.md](doc/development-roadmap.md) | Phased product plan |
-| [doc/design-tokens.md](doc/design-tokens.md) | Token layer and theming API |
+| [doc/current-state.html](doc/current-state.html) | Repository inventory |
+| [doc/development-roadmap.html](doc/development-roadmap.html) | Phased product plan |
+| [doc/design-tokens.html](doc/design-tokens.html) | Token layer and theming API |
 | [src/SkyUI.Themes.Sky/DESIGN.md](src/SkyUI.Themes.Sky/DESIGN.md) | Visual specification (ContentFirstDark) |
 
 Control guides (menus, pickers, layout, primitives, and more) live under `doc/`.

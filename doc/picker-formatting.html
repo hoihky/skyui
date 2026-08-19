@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Picker culture formatting · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Picker culture formatting</h1>
+          </header>
+          <div class="doc-body"><p>SkyUI pickers use .NET <code>CultureInfo</code> for date patterns, first day of week, and 12/24-hour clocks.</p>
+<h2 id="controls">Controls</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyDatePicker</code></td>
+<td>Text field with calendar dropdown (<code>CalendarDatePicker</code>)</td>
+</tr>
+<tr>
+<td><code>SkyCalendar</code></td>
+<td>Inline month grid</td>
+</tr>
+<tr>
+<td><code>SkyTimePicker</code></td>
+<td>Hour/minute selection with culture-aware clock</td>
+</tr>
+</tbody>
+</table>
+<p>Set <code>Culture</code> on any picker to override the thread culture:</p>
+<pre><code class="language-xml">&lt;sky:SkyDatePicker SelectedDate="{Binding DueDate}"
+Culture="{Binding AppCulture}" /&gt;
+</code></pre>
+<p>When <code>Culture</code> is null, <code>CultureInfo.CurrentCulture</code> is used.</p>
+<h2 id="formatting-skypickerformat">Formatting (<code>SkyPickerFormat</code>)</h2>
+<pre><code class="language-csharp">var shortDate = SkyPickerFormat.FormatDate(date, culture);
+var longDate = SkyPickerFormat.FormatLongDate(date, culture);
+var time = SkyPickerFormat.FormatTime(timeSpan, culture);
+
+SkyPickerFormat.ApplyCulture(datePicker, culture);
+SkyPickerFormat.ApplyCulture(calendar, culture);
+SkyPickerFormat.ApplyCulture(timePicker, culture);
+</code></pre>
+<p>For bindings:</p>
+<pre><code class="language-xml">&lt;TextBlock Text="{Binding DueDate, Converter={x:Static sky:SkyPickerFormatConverter.DateInstance}, ConverterParameter={Binding AppCulture}}" /&gt;
+</code></pre>
+<h2 id="what-culture-changes">What culture changes</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Setting</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short date pattern</td>
+<td><code>CultureInfo.DateTimeFormat.ShortDatePattern</code></td>
+</tr>
+<tr>
+<td>Long date pattern</td>
+<td><code>CultureInfo.DateTimeFormat.LongDatePattern</code></td>
+</tr>
+<tr>
+<td>First day of week</td>
+<td><code>CultureInfo.DateTimeFormat.FirstDayOfWeek</code></td>
+</tr>
+<tr>
+<td>12 vs 24-hour clock</td>
+<td>Derived from <code>ShortTimePattern</code> (<code>h</code>/<code>t</code> → 12-hour)</td>
+</tr>
+<tr>
+<td>Calendar language</td>
+<td>Day/month names follow thread culture when rendering</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mvvm-example">MVVM example</h2>
+<pre><code class="language-csharp">public CultureInfo AppCulture { get; set; } = new CultureInfo("de-DE");
+public DateTime? DueDate { get; set; }
+public string DueDateLabel =&gt; SkyPickerFormat.FormatDate(DueDate, AppCulture);
+</code></pre>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="development-roadmap.html">Development roadmap</a> — Pickers sprint scope</li>
+<li><a href="design-tokens.html">Design tokens</a> — picker surface and accent brushes</li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#controls">Controls</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#formatting">Formatting ()</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#what-culture-changes">What culture changes</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#mvvm-example">MVVM example</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#related">Related</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

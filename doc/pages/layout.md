@@ -1,4 +1,7 @@
-# Layout controls
+---
+title: Layout controls
+order: 50
+---
 
 SkyUI layout primitives for cards, dividers, expanders, and responsive grids.
 
@@ -79,5 +82,5 @@ Custom column counts via `SkyResponsiveColumnProfile` on `SkyResponsiveGrid.Colu
 
 ## Related
 
-- [Development roadmap](./development-roadmap.md) — Layout sprint
+- [Development roadmap](development-roadmap.md) — Layout sprint
 - `SkyBreakpoint` — shared width tokens for navigation and grids

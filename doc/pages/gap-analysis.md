@@ -1,6 +1,9 @@
-# Gap analysis
+---
+title: Gap analysis
+order: 20
+---
 
-This document compares the [current state](./current-state.md) of SkyUI against expectations for a **commercial-grade, multiplatform UI toolkit**. Benchmarks are used conceptually: enterprise desktop suites (Telerik, DevExpress, Syncfusion), design systems (Fluent UI, Material), and cross-platform frameworks (Qt Quick Controls, Flutter).
+This document compares the [current state](current-state.md) of SkyUI against expectations for a **commercial-grade, multiplatform UI toolkit**. Benchmarks are used conceptually: enterprise desktop suites (Telerik, DevExpress, Syncfusion), design systems (Fluent UI, Material), and cross-platform frameworks (Qt Quick Controls, Flutter).
 
 ## Executive summary
 
@@ -126,7 +129,7 @@ Many primitives are **styled Avalonia controls** in the Spotify theme but lack a
 | Topic | Notes |
 |-------|--------|
 | License | MIT on project code is compatible with commercial use of **your** code. |
-| Legal / brand | Sky-branded public API (`sky`, `Sky*`); ContentFirstDark preset; legacy Spotify paths aliased — see [rename-strategy.md](./rename-strategy.md) |
+| Legal / brand | Sky-branded public API (`sky`, `Sky*`); ContentFirstDark preset; legacy Spotify paths aliased — see [rename-strategy.md](rename-strategy.md) |
 | Third-party fonts | Use bundled open fonts (e.g. Inter, Noto) for shipping products. |
 
 ---
@@ -161,5 +164,5 @@ Many primitives are **styled Avalonia controls** in the Spotify theme but lack a
 
 ## Related documents
 
-- [Current state](./current-state.md)
-- [Development roadmap](./development-roadmap.md)
+- [Current state](current-state.md)
+- [Development roadmap](development-roadmap.md)

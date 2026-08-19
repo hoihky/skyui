@@ -1,4 +1,7 @@
-# Picker culture formatting
+---
+title: Picker culture formatting
+order: 70
+---
 
 SkyUI pickers use .NET `CultureInfo` for date patterns, first day of week, and 12/24-hour clocks.
 
@@ -57,5 +60,5 @@ public string DueDateLabel => SkyPickerFormat.FormatDate(DueDate, AppCulture);
 
 ## Related
 
-- [Development roadmap](./development-roadmap.md) — Pickers sprint scope
-- [Design tokens](./design-tokens.md) — picker surface and accent brushes
+- [Development roadmap](development-roadmap.md) — Pickers sprint scope
+- [Design tokens](design-tokens.md) — picker surface and accent brushes

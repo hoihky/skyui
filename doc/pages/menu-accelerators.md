@@ -1,4 +1,7 @@
-# Menu keyboard accelerators
+---
+title: Menu keyboard accelerators
+order: 60
+---
 
 SkyUI menus use Avalonia `MenuItem.InputGesture` (`KeyGesture`) for keyboard shortcuts. Accelerators are shown on the right side of each menu item and are handled by the platform when the menu is not open.
 
@@ -123,5 +126,5 @@ Menu styles live in `Themes/SkyDark/Controls/Menus.Styles.axaml`. Apply `Classes
 
 ## Related
 
-- [Design tokens](./design-tokens.md) — semantic brushes used by menu chrome
-- [Development roadmap](./development-roadmap.md) — Menus sprint scope
+- [Design tokens](design-tokens.md) — semantic brushes used by menu chrome
+- [Development roadmap](development-roadmap.md) — Menus sprint scope

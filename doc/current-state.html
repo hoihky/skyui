@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Current state · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Current state</h1>
+          </header>
+          <div class="doc-body"><p>Snapshot of the SkyUI codebase used as the baseline for <a href="gap-analysis.html">gap analysis</a> and the <a href="development-roadmap.html">development roadmap</a>.</p>
+<h2 id="stack-and-packaging">Stack and packaging</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Area</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Solution</td>
+<td><code>SkyUI.slnx</code> at repository root</td>
+</tr>
+<tr>
+<td>UI framework</td>
+<td>Avalonia <strong>12.1.1</strong> (<code>Directory.Build.props</code> → <code>AvaloniaVersion</code>)</td>
+</tr>
+<tr>
+<td>Target framework</td>
+<td>.NET 10 (<code>net10.0</code>)</td>
+</tr>
+<tr>
+<td>Packages</td>
+<td>See <a href="#repository-layout">repository layout</a> below</td>
+</tr>
+<tr>
+<td>Demo app</td>
+<td><code>src/SkyUI.Demo</code> — desktop gallery referencing all packages</td>
+</tr>
+<tr>
+<td>Automated tests</td>
+<td><code>tests/SkyUI.UnitTests</code>, <code>tests/SkyUI.HeadlessTests</code></td>
+</tr>
+<tr>
+<td>Public API docs</td>
+<td><code>doc/</code>; visual preset spec in <code>src/SkyUI.Themes.Sky/DESIGN.md</code></td>
+</tr>
+<tr>
+<td>License</td>
+<td>MIT (<code>LICENSE</code>)</td>
+</tr>
+<tr>
+<td>XAML xmlns</td>
+<td><code>https://skyui.dev</code> (split per assembly via <code>XmlnsDefinition</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="repository-layout">Repository layout</h2>
+<pre><code class="language-text">skyui/
+SkyUI.slnx
+Directory.Build.props
+src/
+  SkyUI.Core/           Tokens, theme attached properties
+  SkyUI.Fonts/          Inter + Noto Sans SC, typography role styles
+  SkyUI/                Essentials controls + SkyThemeUris hooks
+  SkyUI.Themes.Sky/     Sky preset (Dark / Light / HighContrast) + primitive styles
+  SkyUI.Data/           Virtual grid + filter editor + SkyDataTheme.axaml
+  SkyUI.Diagram/        Diagram surface and routers
+  SkyUI.Demo/           Control gallery
+tests/
+  SkyUI.UnitTests/
+  SkyUI.HeadlessTests/
+doc/
+</code></pre>
+<h3 id="package-dependencies">Package dependencies</h3>
+<pre><code class="language-text">SkyUI.Core
+SkyUI.Fonts
+SkyUI.Icons
+SkyUI          → Core, Icons
+SkyUI.Themes.Sky → Core, Fonts, SkyUI
+SkyUI.Data     → Core, SkyUI
+SkyUI.Diagram  → Core, SkyUI
+</code></pre>
+<p>Apps typically reference <code>SkyUI</code>, <code>SkyUI.Themes.Sky</code>, and optionally <code>SkyUI.Data</code> / <code>SkyUI.Diagram</code>. Include styles:</p>
+<ul>
+<li><code>avares://SkyUI.Themes.Sky/Themes/SkyTheme.axaml</code> (or <code>SkyUI.Theme.SkyThemeUris.Theme</code>)</li>
+<li><code>avares://SkyUI.Data/Themes/SkyTheme.WithData.axaml</code> when using data controls</li>
+</ul>
+<h2 id="design-system">Design system</h2>
+<ul>
+<li><strong>Theme package</strong>: <code>src/SkyUI.Themes.Sky/Themes/SkyDark/</code> (palettes, resources) + <code>Presets/ContentFirstDark/</code> (default primitives). Legacy <code>Themes/Sky/</code> shims redirect old URIs.</li>
+<li><strong>Data theme</strong>: <code>src/SkyUI.Data/Themes/SkyDataTheme.axaml</code> — grid and filter templates (optional split for smaller browser bundles).</li>
+</ul>
+<h2 id="custom-controls-library">Custom controls (library)</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Namespace</th>
+<th>Package</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyVirtualDataGrid</code></td>
+<td><code>SkyUI.DataGrid</code></td>
+<td><code>SkyUI.Data</code></td>
+</tr>
+<tr>
+<td><code>FilterEditor</code></td>
+<td><code>SkyUI.FilterEditor</code></td>
+<td><code>SkyUI.Data</code></td>
+</tr>
+<tr>
+<td><code>DiagramSurface</code></td>
+<td><code>SkyUI.Diagram.Presentation</code></td>
+<td><code>SkyUI.Diagram</code></td>
+</tr>
+<tr>
+<td><code>CheckedListBox</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>VideoTimeline</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>SkyAccordion</code> / <code>SkyAccordionItem</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>Avatar</code>, <code>Badge</code>, <code>Chip</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>SkyPlaceholderControl</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-grid-capabilities-today">Data grid capabilities (today)</h2>
+<ul>
+<li>Data via <code>IVirtualGridDataSource</code> (windowed <code>GetRow</code>, <code>RowCount</code>, <code>StructureChanged</code>, optional <code>ApplySort</code>).</li>
+<li>Columns: <code>SkyDataGridColumn</code> — header, fixed width, binding path, read-only, sort direction, optional cell template.</li>
+<li>Events: sorting, row formatting, column/row reorder, cell edit committed.</li>
+<li>Export: <code>ExportToCsvAsync</code> via <code>SkyDataGridCsvExporter</code>.</li>
+</ul>
+<h2 id="filter-editor-capabilities-today">Filter editor capabilities (today)</h2>
+<ul>
+<li>Logical groups and conditions (<code>FilterDocument</code>, <code>FilterGroupNode</code>, <code>FilterConditionNode</code>).</li>
+<li>Compare operators: equal, not equal, ordering, contains/starts/ends with, is null / is not null.</li>
+<li>Field descriptors and data kinds; <code>BasicFilterSqlExporter</code> and custom <code>IFilterSqlExporter</code>.</li>
+</ul>
+<h2 id="diagram-module-today">Diagram module (today)</h2>
+<ul>
+<li>Contracts: <code>IDiagramModel</code>, <code>IDiagramNode</code>, <code>IDiagramEdge</code>, <code>IDiagramPort</code>, <code>IDiagramSelection</code>, <code>IEdgePathComputer</code>, <code>IDiagramNodePresenterFactory</code>, <code>IDiagramSceneHitTester</code>.</li>
+<li>Default straight routing: <code>StraightEdgePathComputer</code> (orthogonal/spline intended as replacements).</li>
+<li>Interaction on <code>DiagramSurface</code>: move, resize, connect, reconnect, clipboard.</li>
+</ul>
+<h2 id="demo-gallery-pages">Demo gallery pages</h2>
+<p>Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox &amp; Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline.</p>
+<h2 id="architectural-strengths">Architectural strengths</h2>
+<ul>
+<li><strong>Pluggable boundaries</strong> in Diagram and Filter (routers, exporters, presenters, hit testing).</li>
+<li><strong>Virtual data</strong> pattern suitable for large or server-backed grids.</li>
+<li><strong>Cohesive dark theme</strong> for primitives and custom templates.</li>
+<li><strong>XmlnsDefinition</strong> for product-style XAML consumption.</li>
+</ul>
+<h2 id="known-limitations-baseline">Known limitations (baseline)</h2>
+<ul>
+<li>Desktop-only demo; multiplatform not validated.</li>
+<li>No automated quality gates or published NuGet package.</li>
+<li>Thin coverage of app chrome (navigation shell, dialogs, toasts, pickers, charts).</li>
+<li>Grid lacks many enterprise features (resize, multi-select, grouping, in-grid filter, etc.).</li>
+<li>Branding tied to “Spotify” naming in resources and design doc — consider product-neutral tokens for commercial positioning.</li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#stack-and-packaging">Stack and packaging</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#repository-layout">Repository layout</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#package-dependencies">Package dependencies</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#design-system">Design system</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#custom-controls-library">Custom controls (library)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#data-grid-capabilities-today">Data grid capabilities (today)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#filter-editor-capabilities-today">Filter editor capabilities (today)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#diagram-module-today">Diagram module (today)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#demo-gallery-pages">Demo gallery pages</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#architectural-strengths">Architectural strengths</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#known-limitations-baseline">Known limitations (baseline)</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
