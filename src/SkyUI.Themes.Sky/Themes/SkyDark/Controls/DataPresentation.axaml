@@ -1,0 +1,178 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls"
+                    xmlns:icons="using:SkyUI.Icons">
+  <ControlTheme x:Key="{x:Type controls:SkyPagination}" TargetType="controls:SkyPagination">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <Button Name="PART_FirstButton"
+                  Classes="sky sky-outlined"
+                  Content="First"
+                  Command="{Binding FirstPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+          <Button Name="PART_PreviousButton"
+                  Classes="sky sky-outlined"
+                  Content="Prev"
+                  Command="{Binding PreviousPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+          <TextBlock VerticalAlignment="Center"
+                     Classes="sky-body-secondary">
+            <TextBlock.Text>
+              <MultiBinding StringFormat="Page {0} of {1}">
+                <Binding Path="CurrentPage" RelativeSource="{RelativeSource TemplatedParent}" />
+                <Binding Path="PageCount" RelativeSource="{RelativeSource TemplatedParent}" />
+              </MultiBinding>
+            </TextBlock.Text>
+          </TextBlock>
+          <Button Name="PART_NextButton"
+                  Classes="sky sky-outlined"
+                  Content="Next"
+                  Command="{Binding NextPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+          <Button Name="PART_LastButton"
+                  Classes="sky sky-outlined"
+                  Content="Last"
+                  Command="{Binding LastPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDataPager}" TargetType="controls:SkyDataPager">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
+          <StackPanel Grid.Column="0"
+                      Orientation="Horizontal"
+                      Spacing="8"
+                      VerticalAlignment="Center">
+            <TextBlock Text="{TemplateBinding PageSizeLabel}"
+                       Classes="sky-body-secondary"
+                       VerticalAlignment="Center"
+                       IsVisible="{Binding PageSizeLabel, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <ComboBox Name="PART_PageSizeCombo"
+                      Classes="sky"
+                      MinWidth="72"
+                      VerticalAlignment="Center" />
+          </StackPanel>
+
+          <TextBlock Grid.Column="1"
+                     Text="{Binding SummaryText, RelativeSource={RelativeSource TemplatedParent}}"
+                     Classes="sky-body-secondary"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Center" />
+
+          <StackPanel Grid.Column="2"
+                      Orientation="Horizontal"
+                      Spacing="8"
+                      VerticalAlignment="Center">
+            <Button Name="PART_FirstButton"
+                    Classes="sky sky-outlined"
+                    Content="First"
+                    Command="{Binding FirstPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Button Name="PART_PreviousButton"
+                    Classes="sky sky-outlined"
+                    Content="Prev"
+                    Command="{Binding PreviousPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+            <TextBlock VerticalAlignment="Center" Classes="sky-body-secondary">
+              <TextBlock.Text>
+                <MultiBinding StringFormat="Page {0} of {1}">
+                  <Binding Path="CurrentPage" RelativeSource="{RelativeSource TemplatedParent}" />
+                  <Binding Path="PageCount" RelativeSource="{RelativeSource TemplatedParent}" />
+                </MultiBinding>
+              </TextBlock.Text>
+            </TextBlock>
+            <Button Name="PART_NextButton"
+                    Classes="sky sky-outlined"
+                    Content="Next"
+                    Command="{Binding NextPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Button Name="PART_LastButton"
+                    Classes="sky sky-outlined"
+                    Content="Last"
+                    Command="{Binding LastPageCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+          </StackPanel>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyKpiTile}" TargetType="controls:SkyKpiTile">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
+    <Setter Property="Padding" Value="16" />
+    <Setter Property="MinWidth" Value="180" />
+    <Setter Property="MinHeight" Value="120" />
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="ValueTemplate">
+      <DataTemplate>
+        <TextBlock Text="{Binding}"
+                   Classes="sky-feature-heading"
+                   FontSize="28" />
+      </DataTemplate>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="{TemplateBinding Padding}"
+                BoxShadow="{DynamicResource SkyElevation1}">
+          <Grid RowDefinitions="Auto,*,Auto" RowSpacing="8">
+            <TextBlock Grid.Row="0"
+                       Text="{TemplateBinding Label}"
+                       Classes="sky-body-secondary"
+                       FontSize="12"
+                       IsVisible="{Binding Label, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <StackPanel Grid.Row="1" Spacing="4">
+              <ContentPresenter Content="{TemplateBinding Value}"
+                                ContentTemplate="{TemplateBinding ValueTemplate}" />
+              <TextBlock Name="PART_Delta"
+                         Text="{TemplateBinding Delta}"
+                         FontSize="13"
+                         FontWeight="SemiBold"
+                         IsVisible="{Binding Delta, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            </StackPanel>
+            <ContentPresenter Name="PART_SparklinePresenter"
+                              Grid.Row="2"
+                              Content="{TemplateBinding SparklineContent}"
+                              ContentTemplate="{TemplateBinding SparklineTemplate}"
+                              MinHeight="36"
+                              IsVisible="{Binding SparklineContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyLoadingOverlay}" TargetType="controls:SkyLoadingOverlay">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+          <Panel Name="PART_Overlay"
+                 Background="{DynamicResource SkyScrimBrush}"
+                 IsVisible="False">
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Spacing="12">
+              <controls:SkyProgressRing IsIndeterminate="True" />
+              <TextBlock Text="{TemplateBinding LoadingText}"
+                         Foreground="{DynamicResource SkyTextPrimaryBrush}"
+                         HorizontalAlignment="Center"
+                         IsVisible="{Binding LoadingText, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            </StackPanel>
+          </Panel>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

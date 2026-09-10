@@ -29,6 +29,7 @@ public partial class MainWindow : Window
             new("App chrome", () => new AppChromeDemo(), SkyIconKind.LayoutGrid),
             new("App templates", () => new AppTemplatesDemo(), SkyIconKind.LayoutGrid),
             new("Forms", () => new FormsDemo(), SkyIconKind.Sliders),
+            new("Data presentation", () => new DataPresentationDemo(), SkyIconKind.Table),
             new("Menus", () => new MenuDemo(), SkyIconKind.List),
             new("Pickers", () => new PickersDemo(), SkyIconKind.LayoutGrid),
             new("Layout", () => new LayoutDemo(), SkyIconKind.LayoutGrid),

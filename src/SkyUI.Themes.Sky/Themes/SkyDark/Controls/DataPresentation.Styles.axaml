@@ -1,0 +1,17 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <Style Selector="controls|SkyKpiTile.sky-kpi-tile-delta-positive /template/ TextBlock#PART_Delta">
+    <Setter Property="Foreground" Value="{DynamicResource SkyAccentBrush}" />
+  </Style>
+  <Style Selector="controls|SkyKpiTile.sky-kpi-tile-delta-negative /template/ TextBlock#PART_Delta">
+    <Setter Property="Foreground" Value="{DynamicResource SkyDangerBrush}" />
+  </Style>
+  <Style Selector="controls|SkyKpiTile.sky-kpi-tile-delta-neutral /template/ TextBlock#PART_Delta">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyLoadingOverlay.sky-loading-overlay-active /template/ Panel#PART_Overlay">
+    <Setter Property="IsVisible" Value="True" />
+  </Style>
+</Styles>

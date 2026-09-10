@@ -1,0 +1,128 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.DataPresentationDemo"
+             x:DataType="vm:DataPresentationDemoViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="28" MaxWidth="920">
+                <TextBlock Classes="sky-feature-heading" Text="Data presentation" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="Pagination, KPI tiles, and loading overlays for dashboards and data-heavy views. Pagers slice ItemsSource and can bind directly to a list or grid target." />
+
+                <TextBlock Classes="sky-section-title" Text="KPI tiles" />
+                <UniformGrid Columns="3" HorizontalAlignment="Stretch">
+                    <sky:SkyKpiTile Label="Revenue"
+                                    Value="$128,430"
+                                    Delta="+12.4%"
+                                    DeltaTrend="Positive"
+                                    Margin="0,0,12,12">
+                        <sky:SkyKpiTile.SparklineContent>
+                            <ItemsControl ItemsSource="{Binding RevenueSparkline}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="4" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Width="8"
+                                                Height="{Binding}"
+                                                VerticalAlignment="Bottom"
+                                                Background="{DynamicResource SkyAccentBrush}"
+                                                CornerRadius="2" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </sky:SkyKpiTile.SparklineContent>
+                    </sky:SkyKpiTile>
+
+                    <sky:SkyKpiTile Label="Active users"
+                                    Value="8,214"
+                                    Delta="-3.1%"
+                                    DeltaTrend="Negative"
+                                    Margin="0,0,12,12">
+                        <sky:SkyKpiTile.SparklineContent>
+                            <ItemsControl ItemsSource="{Binding UsersSparkline}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="4" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Width="8"
+                                                Height="{Binding}"
+                                                VerticalAlignment="Bottom"
+                                                Background="{DynamicResource SkyDangerBrush}"
+                                                CornerRadius="2" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </sky:SkyKpiTile.SparklineContent>
+                    </sky:SkyKpiTile>
+
+                    <sky:SkyKpiTile Label="Uptime"
+                                    Value="99.98%"
+                                    Delta="0.0%"
+                                    DeltaTrend="Neutral"
+                                    Margin="0,0,0,12" />
+                </UniformGrid>
+
+                <TextBlock Classes="sky-section-title" Text="Data pager" />
+                <sky:SkyDataPager x:Name="GridPager"
+                                  ItemsSource="{Binding GridRows}"
+                                  PageSize="10"
+                                  PageChanged="OnPagerPageChanged" />
+                <ListBox x:Name="GridList"
+                         Classes="sky"
+                         MinHeight="220">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:DataPresentationDemoViewModel+DemoGridRow">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <TextBlock Grid.Column="0" Text="{Binding Id}" Classes="sky-body-secondary" />
+                                <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                                <TextBlock Grid.Column="2" Text="{Binding Category}" Classes="sky-body-secondary" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Classes="sky-section-title" Text="Compact pagination" />
+                <sky:SkyPagination x:Name="CompactPager"
+                                   ItemsSource="{Binding CompactItems}"
+                                   PageSize="5"
+                                   PageChanged="OnPagerPageChanged" />
+                <ItemsControl ItemsSource="{Binding #CompactPager.CurrentPageItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Margin="0,2" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock Classes="sky-section-title" Text="Loading overlay" />
+                <sky:SkyLoadingOverlay IsLoading="{Binding IsLoading}"
+                                       LoadingText="Refreshing metrics…">
+                    <Border Classes="sky-demo-panel"
+                            MinHeight="160"
+                            Padding="20">
+                        <StackPanel Spacing="12">
+                            <TextBlock Text="Panel content stays mounted while work runs in the background."
+                                       TextWrapping="Wrap"
+                                       Classes="sky-body-secondary" />
+                            <Button Classes="sky sky-primary"
+                                    Content="Simulate async load"
+                                    Command="{Binding SimulateLoadCommand}" />
+                        </StackPanel>
+                    </Border>
+                </sky:SkyLoadingOverlay>
+
+                <TextBlock Classes="sky-body-secondary"
+                           Text="{Binding PageChangedCount, StringFormat=Page changes: {0}}" />
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>
