@@ -34,4 +34,17 @@ public class VirtualTreeControlsTests
         var tree = new SkyVirtualTreeView { ShowCheckBoxes = true };
         Assert.True(tree.ShowCheckBoxes);
     }
+
+    [Fact]
+    public void CheckedListBox_exposes_enhancement_properties()
+    {
+        var list = new CheckedListBox
+        {
+            AllowReorder = true,
+            AllowInlineEdit = true,
+        };
+
+        Assert.True(list.AllowReorder);
+        Assert.True(list.AllowInlineEdit);
+    }
 }

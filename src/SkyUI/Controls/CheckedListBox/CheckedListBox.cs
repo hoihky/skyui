@@ -26,6 +26,7 @@ public class CheckedListBox : TemplatedControl
 {
     public const string PartScrollViewer = "PART_ScrollViewer";
     public const string PartItemsHost = "PART_ItemsHost";
+    public const string PartReorderOverlay = "PART_ReorderOverlay";
 
     public static readonly StyledProperty<IEnumerable?> ItemsSourceProperty =
         AvaloniaProperty.Register<CheckedListBox, IEnumerable?>(nameof(ItemsSource));
@@ -51,19 +52,36 @@ public class CheckedListBox : TemplatedControl
     public static readonly StyledProperty<bool> ShowCheckBoxesProperty =
         AvaloniaProperty.Register<CheckedListBox, bool>(nameof(ShowCheckBoxes), true);
 
+    public static readonly StyledProperty<bool> AllowReorderProperty =
+        AvaloniaProperty.Register<CheckedListBox, bool>(nameof(AllowReorder));
+
+    public static readonly StyledProperty<bool> AllowInlineEditProperty =
+        AvaloniaProperty.Register<CheckedListBox, bool>(nameof(AllowInlineEdit));
+
+    public static readonly StyledProperty<ICheckedListEditableAdapter?> EditableAdapterProperty =
+        AvaloniaProperty.Register<CheckedListBox, ICheckedListEditableAdapter?>(nameof(EditableAdapter));
+
+    public static readonly StyledProperty<ICheckedListRowActionProvider?> RowActionProviderProperty =
+        AvaloniaProperty.Register<CheckedListBox, ICheckedListRowActionProvider?>(nameof(RowActionProvider));
+
     private readonly ObservableCollection<CheckedListRowModel> _rows = new();
+    private readonly HashSet<object> loadingItems = new(ReferenceEqualityComparer.Instance);
+    private readonly HashSet<INotifyCollectionChanged> subscribedCollections = new(ReferenceEqualityComparer.Instance);
     private readonly Dictionary<object, object?> _parents = new(ReferenceEqualityComparer.Instance);
     private readonly Dictionary<object, PropertyChangedEventHandler> _itemHandlers = new(ReferenceEqualityComparer.Instance);
     private INotifyCollectionChanged? _rootNotify;
     private NotifyCollectionChangedEventHandler? _rootCollectionHandler;
     private ScrollViewer? _scroll;
     private ItemsControl? _itemsHost;
+    private Panel? reorderOverlay;
     private bool _rebuildScheduled;
     private IComparer<object?>? _itemComparer;
+    private CheckedListDragReorderHandler? dragReorderHandler;
 
     public CheckedListBox()
     {
         ItemAdapter = new DefaultCheckedListItemAdapter();
+        dragReorderHandler = new CheckedListDragReorderHandler(this);
     }
 
     static CheckedListBox()
@@ -73,7 +91,11 @@ public class CheckedListBox : TemplatedControl
         ItemTemplateProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
         IndentProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
         ShowCheckBoxesProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
+        AllowInlineEditProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
+        RowActionProviderProperty.Changed.AddClassHandler<CheckedListBox>((o, _) => o.ApplyItemTemplate());
     }
+
+    internal CheckedListDragReorderHandler DragReorderHandler => dragReorderHandler!;
 
     public IEnumerable? ItemsSource
     {
@@ -124,6 +146,30 @@ public class CheckedListBox : TemplatedControl
         set => SetValue(ShowCheckBoxesProperty, value);
     }
 
+    public bool AllowReorder
+    {
+        get => GetValue(AllowReorderProperty);
+        set => SetValue(AllowReorderProperty, value);
+    }
+
+    public bool AllowInlineEdit
+    {
+        get => GetValue(AllowInlineEditProperty);
+        set => SetValue(AllowInlineEditProperty, value);
+    }
+
+    public ICheckedListEditableAdapter? EditableAdapter
+    {
+        get => GetValue(EditableAdapterProperty);
+        set => SetValue(EditableAdapterProperty, value);
+    }
+
+    public ICheckedListRowActionProvider? RowActionProvider
+    {
+        get => GetValue(RowActionProviderProperty);
+        set => SetValue(RowActionProviderProperty, value);
+    }
+
     /// <summary>Optional comparer applied to each sibling group when flattening (OCP: inject ordering).</summary>
     public IComparer<object?>? ItemComparer
     {
@@ -143,11 +189,20 @@ public class CheckedListBox : TemplatedControl
 
     public event EventHandler<CheckedListBoxSelectionChangedEventArgs>? SelectionChanged;
 
+    public event EventHandler<CheckedListReorderEventArgs>? ReorderRequested;
+
+    public event EventHandler<CheckedListEditStartingEventArgs>? EditStarting;
+
+    public event EventHandler<CheckedListEditCommittedEventArgs>? EditCommitted;
+
+    public event EventHandler<CheckedListEditCancelledEventArgs>? EditCancelled;
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
         _scroll = e.NameScope.Find<ScrollViewer>(PartScrollViewer);
         _itemsHost = e.NameScope.Find<ItemsControl>(PartItemsHost);
+        reorderOverlay = e.NameScope.Find<Panel>(PartReorderOverlay);
         if (_itemsHost != null)
         {
             _itemsHost.ItemsSource = _rows;
@@ -175,109 +230,16 @@ public class CheckedListBox : TemplatedControl
     {
         if (_itemsHost == null)
             return;
-        _itemsHost.ItemTemplate = new FuncDataTemplate<CheckedListRowModel?>((m, _) => BuildRow(this, m), supportsRecycling: false);
+        _itemsHost.ItemTemplate = new FuncDataTemplate<CheckedListRowModel?>((m, _) => CheckedListRowBuilder.Build(this, m), supportsRecycling: false);
     }
 
-    private static Control BuildRow(CheckedListBox owner, CheckedListRowModel? m)
-    {
-        if (m is null)
-            return new Border();
+    internal void HandleRowPointerPressed(CheckedListRowModel row, PointerReleasedEventArgs e) =>
+        SelectRow(row, e.KeyModifiers);
 
-        var border = new Border
-        {
-            Padding = new Thickness(4, 2),
-            Background = Brushes.Transparent,
-            CornerRadius = new CornerRadius(4),
-        };
-        border.PointerPressed += (_, e) => owner.HandleRowPointerPressed(m, e);
+    internal void HandleRowPointerPressed(CheckedListRowModel row, PointerPressedEventArgs e) =>
+        SelectRow(row, e.KeyModifiers);
 
-        void SyncSelection()
-        {
-            border.Background = m.IsSelected
-                ? owner.FindBrush(SkyTokenKeys.Brush.SelectedTint, new SolidColorBrush(Color.Parse("#331ED760")))
-                : Brushes.Transparent;
-        }
-
-        m.PropertyChanged += (_, a) =>
-        {
-            if (a.PropertyName == nameof(CheckedListRowModel.IsSelected))
-                SyncSelection();
-        };
-        SyncSelection();
-
-        var grid = new Grid
-        {
-            ColumnDefinitions = owner.ShowCheckBoxes
-                ? new ColumnDefinitions("Auto,Auto,Auto,*")
-                : new ColumnDefinitions("Auto,Auto,*"),
-            MinHeight = 32,
-        };
-
-        var indent = new Border { Width = m.Depth * owner.Indent, Background = Brushes.Transparent };
-        Grid.SetColumn(indent, 0);
-        grid.Children.Add(indent);
-
-        var expand = new Button
-        {
-            Width = 26,
-            Height = 26,
-            Margin = new Thickness(0, 0, 4, 0),
-            Padding = new Thickness(0),
-            HorizontalContentAlignment = HorizontalAlignment.Center,
-            VerticalContentAlignment = VerticalAlignment.Center,
-            Content = "›",
-            FontSize = 14,
-            IsVisible = m.HasChildren,
-            Command = m.ToggleExpandCommand,
-        };
-        expand.Classes.Add("sky");
-        expand.Classes.Add("sky-subtle");
-        expand.Classes.Add("sky-tree-expander");
-        Grid.SetColumn(expand, 1);
-        grid.Children.Add(expand);
-
-        void SyncExpand()
-        {
-            expand.RenderTransform = new RotateTransform(m.IsExpanded ? 90 : 0);
-        }
-
-        m.PropertyChanged += (_, a) =>
-        {
-            if (a.PropertyName == nameof(CheckedListRowModel.IsExpanded))
-                SyncExpand();
-        };
-        SyncExpand();
-
-        var contentColumn = 2;
-        if (owner.ShowCheckBoxes)
-        {
-            var cb = new CheckBox { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
-            cb.Classes.Add("sky");
-            cb.Bind(CheckBox.IsCheckedProperty, new Binding(nameof(CheckedListRowModel.IsChecked))
-            {
-                Source = m,
-                Mode = BindingMode.TwoWay,
-            });
-            Grid.SetColumn(cb, 2);
-            grid.Children.Add(cb);
-            contentColumn = 3;
-        }
-
-        var presenter = new ContentPresenter
-        {
-            VerticalContentAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-        };
-        presenter.Bind(ContentPresenter.ContentProperty, new Binding(nameof(CheckedListRowModel.Item)) { Source = m });
-        presenter.Bind(ContentPresenter.ContentTemplateProperty, new Binding(nameof(ItemTemplate)) { Source = owner });
-        Grid.SetColumn(presenter, contentColumn);
-        grid.Children.Add(presenter);
-
-        border.Child = grid;
-        return border;
-    }
-
-    private void HandleRowPointerPressed(CheckedListRowModel row, PointerPressedEventArgs e)
+    private void SelectRow(CheckedListRowModel row, KeyModifiers keyModifiers)
     {
         if (SelectionMode == CheckedListBoxSelectionMode.None)
             return;
@@ -289,7 +251,7 @@ public class CheckedListBox : TemplatedControl
         }
         else if (SelectionMode == CheckedListBoxSelectionMode.Multiple)
         {
-            if ((e.KeyModifiers & KeyModifiers.Control) != 0)
+            if ((keyModifiers & KeyModifiers.Control) != 0)
                 row.IsSelected = !row.IsSelected;
             else
             {
@@ -299,7 +261,6 @@ public class CheckedListBox : TemplatedControl
         }
 
         SelectionChanged?.Invoke(this, new CheckedListBoxSelectionChangedEventArgs(row.Item, row.IsSelected));
-        e.Handled = true;
     }
 
     private void OnRowCheckCommitted(CheckedListRowModel row, bool? value)
@@ -347,14 +308,159 @@ public class CheckedListBox : TemplatedControl
             _itemComparer,
             RequestStructureRebuild,
             OnRowCheckCommitted,
-            (row, e) => HandleRowPointerPressed(row, e));
+            static (_, _) => { },
+            OnRowExpandRequested,
+            item => item is not null && loadingItems.Contains(item));
         SubscribeItemTree(ItemsSource, adapter);
+    }
+
+    private void OnRowExpandRequested(CheckedListRowModel row) =>
+        _ = EnsureChildrenLoadedAsync(row.Item);
+
+    private async Task EnsureChildrenLoadedAsync(object? item)
+    {
+        if (item is null || ItemAdapter is not AsyncCheckedListItemAdapter asyncAdapter)
+            return;
+
+        var source = asyncAdapter.AsyncSource;
+        if (!source.HasChildren(item) || source.AreChildrenLoaded(item) || loadingItems.Contains(item))
+            return;
+
+        loadingItems.Add(item);
+        RequestStructureRebuild();
+
+        try
+        {
+            var children = await source.LoadChildrenAsync(item).ConfigureAwait(true);
+            source.ApplyLoadedChildren(item, children);
+        }
+        finally
+        {
+            loadingItems.Remove(item);
+            RequestStructureRebuild();
+        }
+    }
+
+    internal void RaiseReorderRequested(CheckedListReorderEventArgs args)
+    {
+        object? parent = null;
+        if (args.SourceItem is not null)
+            _parents.TryGetValue(args.SourceItem, out parent);
+
+        ReorderRequested?.Invoke(this, new CheckedListReorderEventArgs(
+            args.SourceItem,
+            args.TargetItem,
+            args.Position,
+            parent));
+
+        RebuildAll();
+    }
+
+    public void BeginEditForItem(object? item)
+    {
+        foreach (var row in _rows)
+        {
+            if (ReferenceEquals(row.Item, item))
+            {
+                BeginInlineEdit(row);
+                break;
+            }
+        }
+    }
+
+    internal Panel GetReorderIndicatorHost() =>
+        reorderOverlay ?? throw new InvalidOperationException("CheckedListBox template is not applied.");
+
+    internal bool HaveSameParent(object? left, object? right)
+    {
+        if (left is null || right is null)
+            return false;
+
+        if (!_parents.TryGetValue(left, out var leftParent))
+            return false;
+
+        if (!_parents.TryGetValue(right, out var rightParent))
+            return false;
+
+        return ReferenceEquals(leftParent, rightParent);
+    }
+
+    internal void RequestRowVisualRefresh() => ApplyItemTemplate();
+
+    internal IBrush FindRowBrush(string key, IBrush fallback) => FindBrush(key, fallback);
+
+    internal void BeginInlineEdit(CheckedListRowModel row)
+    {
+        if (!AllowInlineEdit || EditableAdapter is null || row.Item is null)
+            return;
+
+        if (!EditableAdapter.CanEdit(row.Item))
+            return;
+
+        var text = EditableAdapter.GetEditText(row.Item);
+        var starting = new CheckedListEditStartingEventArgs(row.Item, text);
+        EditStarting?.Invoke(this, starting);
+        if (starting.Cancel)
+            return;
+
+        foreach (var other in _rows)
+            other.IsEditing = false;
+
+        row.EditText = starting.Text;
+        row.IsEditing = true;
+    }
+
+    internal void CommitInlineEdit(CheckedListRowModel row, string text)
+    {
+        if (!row.IsEditing || EditableAdapter is null || row.Item is null)
+            return;
+
+        if (!EditableAdapter.TryCommitEdit(row.Item, text, out _))
+        {
+            CancelInlineEdit(row);
+            return;
+        }
+
+        row.IsEditing = false;
+        EditCommitted?.Invoke(this, new CheckedListEditCommittedEventArgs(row.Item, text));
+    }
+
+    internal void CancelInlineEdit(CheckedListRowModel row)
+    {
+        if (!row.IsEditing || row.Item is null)
+            return;
+
+        var original = EditableAdapter?.GetEditText(row.Item) ?? row.EditText;
+        row.IsEditing = false;
+        EditCancelled?.Invoke(this, new CheckedListEditCancelledEventArgs(row.Item, original));
+    }
+
+    internal void ShowRowActions(CheckedListRowModel row, Control anchor)
+    {
+        var actions = RowActionProvider?.GetActions(row.Item);
+        if (actions is null || actions.Count == 0)
+            return;
+
+        var flyout = new SkyMenuFlyout();
+        foreach (var action in actions)
+        {
+            flyout.Items.Add(new MenuItem
+            {
+                Header = action.Label,
+                Command = action.Command,
+                CommandParameter = action.CommandParameter ?? row.Item,
+            });
+        }
+
+        flyout.ShowAt(anchor);
     }
 
     private void SubscribeItemTree(IEnumerable? roots, ICheckedListItemAdapter adapter)
     {
+        SubscribeCollection(roots);
         if (roots == null)
             return;
+
         foreach (var r in roots)
         {
             if (r is null)
@@ -379,12 +485,35 @@ public class CheckedListBox : TemplatedControl
             _itemHandlers[node] = Handler;
         }
 
+        SubscribeCollection(ResolveChildCollection(node));
         foreach (var c in adapter.GetChildren(node))
         {
             if (c is null)
                 continue;
             SubscribeNode(c, adapter);
         }
+    }
+
+    private static IEnumerable? ResolveChildCollection(object node) =>
+        node is ICheckedListBoxItem item ? item.Children : null;
+
+    private void SubscribeCollection(IEnumerable? items)
+    {
+        if (items is not INotifyCollectionChanged collection)
+            return;
+
+        if (!subscribedCollections.Add(collection))
+            return;
+
+        collection.CollectionChanged += OnSubscribedCollectionChanged;
+    }
+
+    private void OnSubscribedCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (Dispatcher.UIThread.CheckAccess())
+            RebuildAll();
+        else
+            RequestStructureRebuild();
     }
 
     private void UnsubscribeItemTree()
@@ -396,6 +525,11 @@ public class CheckedListBox : TemplatedControl
         }
 
         _itemHandlers.Clear();
+
+        foreach (var collection in subscribedCollections)
+            collection.CollectionChanged -= OnSubscribedCollectionChanged;
+
+        subscribedCollections.Clear();
     }
 
     private IBrush FindBrush(string key, IBrush fallback) =>

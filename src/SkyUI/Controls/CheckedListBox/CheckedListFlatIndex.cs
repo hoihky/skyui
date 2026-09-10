@@ -43,7 +43,9 @@ internal static class CheckedListFlatIndex
         IComparer<object?>? comparer,
         Action requestRebuild,
         Action<CheckedListRowModel, bool?> checkCommitted,
-        Action<CheckedListRowModel, PointerPressedEventArgs> pointerPressed)
+        Action<CheckedListRowModel, PointerReleasedEventArgs> pointerPressed,
+        Action<CheckedListRowModel>? expandRequested = null,
+        Func<object?, bool>? isLoadingChildren = null)
     {
         target.Clear();
         if (roots == null)
@@ -56,7 +58,7 @@ internal static class CheckedListFlatIndex
         {
             if (item is null)
                 continue;
-            AppendSubtree(target, item, 0, adapter, comparer, requestRebuild, checkCommitted, pointerPressed);
+            AppendSubtree(target, item, 0, adapter, comparer, requestRebuild, checkCommitted, pointerPressed, expandRequested, isLoadingChildren);
         }
     }
 
@@ -68,10 +70,15 @@ internal static class CheckedListFlatIndex
         IComparer<object?>? comparer,
         Action requestRebuild,
         Action<CheckedListRowModel, bool?> checkCommitted,
-        Action<CheckedListRowModel, PointerPressedEventArgs> pointerPressed)
+        Action<CheckedListRowModel, PointerReleasedEventArgs> pointerPressed,
+        Action<CheckedListRowModel>? expandRequested,
+        Func<object?, bool>? isLoadingChildren)
     {
         var has = adapter.HasChildren(item);
-        var row = new CheckedListRowModel(item, depth, has, adapter, requestRebuild, checkCommitted, pointerPressed);
+        var row = new CheckedListRowModel(item, depth, has, adapter, requestRebuild, checkCommitted, pointerPressed, expandRequested)
+        {
+            IsLoadingChildren = isLoadingChildren?.Invoke(item) ?? false,
+        };
         target.Add(row);
         if (!has || !adapter.GetIsExpanded(item))
             return;
@@ -83,7 +90,7 @@ internal static class CheckedListFlatIndex
         {
             if (c is null)
                 continue;
-            AppendSubtree(target, c, depth + 1, adapter, comparer, requestRebuild, checkCommitted, pointerPressed);
+            AppendSubtree(target, c, depth + 1, adapter, comparer, requestRebuild, checkCommitted, pointerPressed, expandRequested, isLoadingChildren);
         }
     }
 

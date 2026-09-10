@@ -21,7 +21,7 @@ public class CheckedListFlatIndexTests
         var rows = new List<CheckedListRowModel>();
         Action requestRebuild = () => { };
         Action<CheckedListRowModel, bool?> checkCommitted = (_, _) => { };
-        Action<CheckedListRowModel, PointerPressedEventArgs> pointerPressed = (_, _) => { };
+        Action<CheckedListRowModel, PointerReleasedEventArgs> pointerPressed = (_, _) => { };
         CheckedListFlatIndex.AppendVisibleRows(
             rows,
             new[] { root },
@@ -46,7 +46,7 @@ public class CheckedListFlatIndexTests
         var rows = new List<CheckedListRowModel>();
         Action requestRebuild = () => { };
         Action<CheckedListRowModel, bool?> checkCommitted = (_, _) => { };
-        Action<CheckedListRowModel, PointerPressedEventArgs> pointerPressed = (_, _) => { };
+        Action<CheckedListRowModel, PointerReleasedEventArgs> pointerPressed = (_, _) => { };
         CheckedListFlatIndex.AppendVisibleRows(
             rows,
             new[] { root },

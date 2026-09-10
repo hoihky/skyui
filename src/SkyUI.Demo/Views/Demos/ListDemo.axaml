@@ -49,10 +49,28 @@
                            Text="{Binding Status}"
                            TextWrapping="Wrap" />
 
+                <TextBlock Classes="sky-section-title" Text="Async tree loading" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="Expand a lazy node to load children on demand via IAsyncTreeDataSource." />
+                <sky:SkyVirtualTreeView x:Name="LazyTree"
+                                        ItemsSource="{Binding LazyItems}"
+                                        ItemAdapter="{Binding LazyItemAdapter}"
+                                        MinHeight="180"
+                                        MaxHeight="220"
+                                        AllowInlineEdit="True"
+                                        EditableAdapter="{Binding LazyEditableAdapter}">
+                    <sky:SkyVirtualTreeView.ItemTemplate>
+                        <DataTemplate x:DataType="models:LazyDemoTreeNode">
+                            <TextBlock Text="{Binding Title}" VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </sky:SkyVirtualTreeView.ItemTemplate>
+                </sky:SkyVirtualTreeView>
+
                 <TextBlock Classes="sky-body-secondary"
                            TextWrapping="Wrap"
                            Opacity="0.9"
-                           Text="Tip: expand folders with the chevron. Enable checkboxes for tri-state selection like CheckedListBox. Ctrl+click rows when selection mode is Multiple." />
+                           Text="Tip: expand folders with the chevron. Enable checkboxes for tri-state selection like CheckedListBox. Ctrl+click rows when selection mode is Multiple. Double-click a row to edit when inline edit is enabled." />
             </StackPanel>
         </Border>
     </ScrollViewer>

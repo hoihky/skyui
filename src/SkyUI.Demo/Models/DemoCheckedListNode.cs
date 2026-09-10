@@ -12,15 +12,27 @@ public sealed class DemoCheckedListNode : ICheckedListBoxItem
     private bool? _isChecked;
     private bool _isExpanded = true;
 
+    private string title;
+
     public DemoCheckedListNode(string title, ObservableCollection<DemoCheckedListNode>? children = null)
     {
-        Title = title;
+        this.title = title;
         Children = children;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public string Title { get; }
+    public string Title
+    {
+        get => title;
+        set
+        {
+            if (title == value)
+                return;
+            title = value;
+            OnPropertyChanged();
+        }
+    }
 
     public ObservableCollection<DemoCheckedListNode>? Children { get; }
 

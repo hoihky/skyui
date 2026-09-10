@@ -16,12 +16,28 @@ public sealed class ListDemoViewModel : INotifyPropertyChanged
     public ListDemoViewModel()
     {
         Items = DemoTreeData.CreateFileExplorerTree();
+        LazyItems =
+        [
+            new LazyDemoTreeNode("Projects", hasLazyChildren: true),
+            new LazyDemoTreeNode("Shared drives", hasLazyChildren: true),
+        ];
+        LazyDataSource = new LazyDemoTreeDataSource();
+        LazyItemAdapter = new AsyncCheckedListItemAdapter(new DefaultCheckedListItemAdapter(), LazyDataSource);
+        LazyEditableAdapter = new LazyDemoTreeEditableAdapter();
         ToggleCheckBoxesCommand = new RelayCommand(() => ShowCheckBoxes = !ShowCheckBoxes);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public ObservableCollection<DemoCheckedListNode> Items { get; }
+
+    public ObservableCollection<LazyDemoTreeNode> LazyItems { get; }
+
+    public LazyDemoTreeDataSource LazyDataSource { get; }
+
+    public AsyncCheckedListItemAdapter LazyItemAdapter { get; }
+
+    public LazyDemoTreeEditableAdapter LazyEditableAdapter { get; }
 
     public bool ShowCheckBoxes
     {

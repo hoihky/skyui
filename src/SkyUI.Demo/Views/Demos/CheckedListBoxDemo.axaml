@@ -24,7 +24,10 @@
                         <ToggleSwitch x:Name="ThreeStateToggle" Classes="sky" Content="Tri-state parents" IsChecked="True" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <ToggleSwitch x:Name="SortToggle" Classes="sky" Content="Sort siblings (A–Z)" IsChecked="True" />
+                        <ToggleSwitch x:Name="SortToggle" Classes="sky" Content="Sort siblings (A–Z)" IsChecked="False" />
+                        <ToggleSwitch x:Name="ReorderToggle" Classes="sky" Content="Drag reorder" IsChecked="True" />
+                        <ToggleSwitch x:Name="InlineEditToggle" Classes="sky" Content="Inline edit" IsChecked="True" />
+                        <ToggleSwitch x:Name="RowActionsToggle" Classes="sky" Content="Row actions" IsChecked="True" />
                         <Button x:Name="AddRootButton" Classes="sky sky-outlined" Content="Add root node" />
                         <Button x:Name="ClearLogButton" Classes="sky sky-subtle" Content="Clear log" />
                     </StackPanel>
@@ -39,7 +42,9 @@
                                     SelectionMode="Multiple"
                                     Indent="20"
                                     CascadeToChildren="True"
-                                    UseThreeStateForParents="True">
+                                    UseThreeStateForParents="True"
+                                    AllowReorder="True"
+                                    AllowInlineEdit="True">
                     <sky:CheckedListBox.ItemTemplate>
                         <DataTemplate x:DataType="models:DemoCheckedListNode">
                             <TextBlock Text="{Binding Title}"
@@ -62,7 +67,7 @@
                        TextWrapping="Wrap"
                        Foreground="{DynamicResource SkyTextSecondaryBrush}"
                        Opacity="0.9"
-                       Text="Tip: expand “Europe” or “Asia” to see sorted city lists. Ctrl+click rows for multi-select. Checking a region cascades to cities when cascade is on." />
+                       Text="Tip: drag a row label to reorder siblings (not on checkbox/expander). Expand regions to reorder cities. Double-click to rename when inline edit is on." />
         </Grid>
     </Border>
 </UserControl>

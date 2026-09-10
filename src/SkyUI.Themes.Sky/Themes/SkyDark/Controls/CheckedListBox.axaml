@@ -11,11 +11,14 @@
                 CornerRadius="8"
                 BorderBrush="{DynamicResource SkyBorderBrush}"
                 BorderThickness="1">
-          <ScrollViewer x:Name="PART_ScrollViewer"
-                        HorizontalScrollBarVisibility="Disabled"
-                        VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="PART_ItemsHost" />
-          </ScrollViewer>
+          <Grid>
+            <ScrollViewer x:Name="PART_ScrollViewer"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+              <ItemsControl x:Name="PART_ItemsHost" />
+            </ScrollViewer>
+            <Panel x:Name="PART_ReorderOverlay" IsHitTestVisible="False" />
+          </Grid>
         </Border>
       </ControlTemplate>
     </Setter>

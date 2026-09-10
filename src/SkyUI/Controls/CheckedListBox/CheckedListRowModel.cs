@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -13,9 +14,14 @@ public sealed class CheckedListRowModel : INotifyPropertyChanged
     private readonly ICheckedListItemAdapter _adapter;
     private readonly Action _requestStructureRebuild;
     private readonly Action<CheckedListRowModel, bool?> _checkCommitted;
-    private readonly Action<CheckedListRowModel, PointerPressedEventArgs> _pointerPressed;
-    private bool _isSelected;
-    private ICommand? _toggleExpandCommand;
+    private readonly Action<CheckedListRowModel, PointerReleasedEventArgs> _pointerPressed;
+    private readonly Action<CheckedListRowModel>? _expandRequested;
+    private bool isSelected;
+    private bool isEditing;
+    private bool isLoadingChildren;
+    private string editText = string.Empty;
+    private Rect rowBounds;
+    private ICommand? toggleExpandCommand;
 
     internal CheckedListRowModel(
         object? item,
@@ -24,7 +30,8 @@ public sealed class CheckedListRowModel : INotifyPropertyChanged
         ICheckedListItemAdapter adapter,
         Action requestStructureRebuild,
         Action<CheckedListRowModel, bool?> checkCommitted,
-        Action<CheckedListRowModel, PointerPressedEventArgs> pointerPressed)
+        Action<CheckedListRowModel, PointerReleasedEventArgs> pointerPressed,
+        Action<CheckedListRowModel>? expandRequested = null)
     {
         Item = item;
         Depth = depth;
@@ -33,6 +40,7 @@ public sealed class CheckedListRowModel : INotifyPropertyChanged
         _requestStructureRebuild = requestStructureRebuild;
         _checkCommitted = checkCommitted;
         _pointerPressed = pointerPressed;
+        _expandRequested = expandRequested;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -52,7 +60,56 @@ public sealed class CheckedListRowModel : INotifyPropertyChanged
                 return;
             _adapter.SetIsExpanded(Item, value);
             OnPropertyChanged(nameof(IsExpanded));
+            if (value)
+                _expandRequested?.Invoke(this);
             _requestStructureRebuild();
+        }
+    }
+
+    public bool IsLoadingChildren
+    {
+        get => isLoadingChildren;
+        internal set
+        {
+            if (isLoadingChildren == value)
+                return;
+            isLoadingChildren = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsEditing
+    {
+        get => isEditing;
+        internal set
+        {
+            if (isEditing == value)
+                return;
+            isEditing = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string EditText
+    {
+        get => editText;
+        internal set
+        {
+            if (editText == value)
+                return;
+            editText = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public Rect RowBounds
+    {
+        get => rowBounds;
+        internal set
+        {
+            if (rowBounds == value)
+                return;
+            rowBounds = value;
         }
     }
 
@@ -72,18 +129,18 @@ public sealed class CheckedListRowModel : INotifyPropertyChanged
 
     public bool IsSelected
     {
-        get => _isSelected;
+        get => isSelected;
         set
         {
-            if (_isSelected == value)
+            if (isSelected == value)
                 return;
-            _isSelected = value;
+            isSelected = value;
             OnPropertyChanged();
         }
     }
 
     public ICommand ToggleExpandCommand =>
-        _toggleExpandCommand ??= new CheckedListRelayCommand(
+        toggleExpandCommand ??= new CheckedListRelayCommand(
             () =>
             {
                 if (!HasChildren)
@@ -102,7 +159,7 @@ public sealed class CheckedListRowModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(IsExpanded));
     }
 
-    internal void HandleRowPointerPressed(PointerPressedEventArgs e) => _pointerPressed(this, e);
+    internal void HandleRowPointerPressed(PointerReleasedEventArgs e) => _pointerPressed(this, e);
 
     private void OnPropertyChanged([CallerMemberName] string? name = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
