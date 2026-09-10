@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-MDWEB_CLI="${MDWEB_CLI:-/Users/rainechen/Desktop/Kwan/Source/Projects/MDWeb/src/MDWeb.Cli}"
-DOC_DIR="$ROOT/doc"
+MDWEB_CLI="${MDWEB_CLI:-$ROOT/../MDWeb/src/MDWeb.Cli}"
+DOC_DIR="$ROOT/docs"
 BUILD_DIR="$DOC_DIR/_build"
+
+if [ ! -e "$MDWEB_CLI" ]; then
+  echo "MDWeb CLI not found at: $MDWEB_CLI" >&2
+  echo "Clone MDWeb as a sibling repo or set MDWEB_CLI to your MDWeb.Cli project path." >&2
+  exit 1
+fi
 
 dotnet run --project "$MDWEB_CLI" -- \
   --source "$DOC_DIR/pages" \

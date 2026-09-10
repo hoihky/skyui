@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Samples.SettingsApp.ViewModels"
+             x:Class="SkyUI.Samples.SettingsApp.Views.AppearanceSettingsView"
+             x:DataType="vm:AppearanceSettingsViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="20" MaxWidth="520" Margin="8">
+      <TextBlock Classes="sky-feature-heading" Text="Appearance" />
+      <TextBlock Classes="sky-body-secondary"
+                 TextWrapping="Wrap"
+                 Text="Theme changes apply immediately. Save settings to persist your choices." />
+
+      <StackPanel Spacing="8">
+        <TextBlock Classes="sky-section-title" Text="Theme variant" />
+        <sky:SkyRadioGroup SelectedValue="{Binding ThemeVariant}">
+          <sky:SkyRadioGroupItem Label="Dark" Value="Dark" />
+          <sky:SkyRadioGroupItem Label="Light" Value="Light" />
+          <sky:SkyRadioGroupItem Label="High contrast" Value="HighContrast" />
+        </sky:SkyRadioGroup>
+      </StackPanel>
+
+      <StackPanel Spacing="8">
+        <TextBlock Classes="sky-section-title" Text="Density" />
+        <sky:SkyRadioGroup SelectedValue="{Binding Density}">
+          <sky:SkyRadioGroupItem Label="Comfortable" Value="Comfortable" />
+          <sky:SkyRadioGroupItem Label="Compact" Value="Compact" />
+        </sky:SkyRadioGroup>
+      </StackPanel>
+
+      <sky:SkyFormField Label="Accent color"
+                        Hint="Hex color, e.g. #1ED760">
+        <TextBox Classes="sky"
+                 Text="{Binding AccentHex}"
+                 PlaceholderText="#RRGGBB" />
+      </sky:SkyFormField>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

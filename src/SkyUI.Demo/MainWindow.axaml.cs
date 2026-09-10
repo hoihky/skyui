@@ -48,6 +48,8 @@ public partial class MainWindow : Window
             new("Badge", () => new BadgeDemo(), SkyIconKind.Check),
             new("Feedback", () => new FeedbackDemo(), SkyIconKind.Layers),
             new("Navigation", () => new NavigationDemo(), SkyIconKind.LayoutGrid),
+            new("App chrome", () => new AppChromeDemo(), SkyIconKind.LayoutGrid),
+            new("App templates", () => new AppTemplatesDemo(), SkyIconKind.LayoutGrid),
             new("Forms", () => new FormsDemo(), SkyIconKind.Sliders),
             new("Menus", () => new MenuDemo(), SkyIconKind.List),
             new("Pickers", () => new PickersDemo(), SkyIconKind.LayoutGrid),

@@ -7,4 +7,6 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <AvaloniaVersion>12.1.1</AvaloniaVersion>
   </PropertyGroup>
+
+  <Import Project="Directory.Pack.props" Condition="Exists('Directory.Pack.props')" />
 </Project>

@@ -1,6 +1,22 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:SkyUI.Controls">
+  <Style Selector="controls|SkyNavigationView /template/ Border#PART_SideNavHost">
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Width" Duration="{DynamicResource SkyMotionDurationMedium}" />
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="controls|SkyNavigationView /template/ ContentPresenter#PART_Content">
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Opacity" Duration="{DynamicResource SkyMotionDurationFast}" />
+      </Transitions>
+    </Setter>
+  </Style>
+
   <!-- Compact sidebar: icon-only -->
   <Style Selector="controls|SkyNavigationView:compact ListBox.sky-nav ListBoxItem TextBlock.sky-nav-link">
     <Setter Property="IsVisible" Value="False" />

@@ -36,7 +36,9 @@
   <SolidColorBrush x:Key="SkyLightPillBrush" Color="{StaticResource SkyPaletteLightPill}" />
   <SolidColorBrush x:Key="SkyLightPillTextBrush" Color="{StaticResource SkyPaletteLightPillText}" />
   <SolidColorBrush x:Key="SkyFocusRingBrush" Color="{StaticResource SkyPaletteFocusRing}" />
+  <SolidColorBrush x:Key="SkyScrimBrush" Color="{StaticResource SkyPaletteScrim}" />
   <Thickness x:Key="SkyFocusRingThickness">2</Thickness>
+  <Thickness x:Key="SkyFeedbackBorderThickness">1</Thickness>
   <sys:Double x:Key="SkyIconSizeSmall">16</sys:Double>
   <sys:Double x:Key="SkyIconSizeMedium">20</sys:Double>
   <sys:Double x:Key="SkyIconSizeLarge">24</sys:Double>
@@ -85,6 +87,18 @@
 
   <!-- region: interaction -->
   <sys:Double x:Key="SkyDisabledOpacity">0.40</sys:Double>
+  <!-- endregion -->
+
+  <!-- region: motion (durations, easing, enter/exit presets) -->
+  <sys:TimeSpan x:Key="SkyMotionDurationInstant">0:0:0</sys:TimeSpan>
+  <sys:TimeSpan x:Key="SkyMotionDurationFast">0:0:0.15</sys:TimeSpan>
+  <sys:TimeSpan x:Key="SkyMotionDurationMedium">0:0:0.25</sys:TimeSpan>
+  <sys:TimeSpan x:Key="SkyMotionDurationSlow">0:0:0.35</sys:TimeSpan>
+  <sys:TimeSpan x:Key="SkyMotionDurationEnter">0:0:0.25</sys:TimeSpan>
+  <sys:TimeSpan x:Key="SkyMotionDurationExit">0:0:0.2</sys:TimeSpan>
+  <sys:Double x:Key="SkyMotionDialogEnterScale">0.96</sys:Double>
+  <sys:Double x:Key="SkyMotionSheetEnterOffset">24</sys:Double>
+  <sys:Double x:Key="SkyMotionSnackbarEnterOffset">16</sys:Double>
   <!-- endregion -->
 
   <!-- region: typography (roles; font families may be overridden by theme preset) -->

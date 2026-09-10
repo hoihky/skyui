@@ -1,0 +1,131 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.AppTemplatesDemo"
+             x:DataType="vm:AppTemplatesDemoViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Classes="sky-demo-panel">
+            <StackPanel Spacing="24">
+                <TextBlock Classes="sky-feature-heading" Text="App templates" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="Composite page scaffolds for settings, list-detail, and form-first apps. Drop in navigation or form content and bind commands from your view model." />
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="SkySettingsPage" />
+                    <Border BorderBrush="{DynamicResource SkyBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            ClipToBounds="True"
+                            Height="320">
+                        <sky:SkySettingsPage SaveCommand="{Binding SaveSettingsCommand}"
+                                             ResetCommand="{Binding ResetSettingsCommand}"
+                                             SaveButtonText="Save settings"
+                                             ResetButtonText="Reset">
+                            <sky:SkySettingsPage.NavigationContent>
+                                <sky:SkyNavigationView Header="Settings" Height="280">
+                                    <sky:SkyNavigationViewItem Label="Profile" IconKind="Settings">
+                                        <StackPanel Spacing="12" Margin="8" MaxWidth="420">
+                                            <sky:SkyFormField Label="Display name">
+                                                <TextBox Classes="sky" Text="{Binding ProfileName}" />
+                                            </sky:SkyFormField>
+                                            <sky:SkyFormField Label="Email">
+                                                <TextBox Classes="sky" Text="{Binding ProfileEmail}" />
+                                            </sky:SkyFormField>
+                                        </StackPanel>
+                                    </sky:SkyNavigationViewItem>
+                                    <sky:SkyNavigationViewItem Label="Appearance" IconKind="Sliders">
+                                        <TextBlock Classes="sky-body-secondary"
+                                                   Margin="8"
+                                                   Text="Theme and density options go here." />
+                                    </sky:SkyNavigationViewItem>
+                                </sky:SkyNavigationView>
+                            </sky:SkySettingsPage.NavigationContent>
+                        </sky:SkySettingsPage>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="SkyListDetailPage" />
+                    <Border BorderBrush="{DynamicResource SkyBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            ClipToBounds="True"
+                            Height="360">
+                        <sky:SkyListDetailPage x:Name="ListDetailPage"
+                                               Title="Customers"
+                                               Subtitle="Browse and edit records"
+                                               CommandBarTitle="Workspace"
+                                               StatusText="{Binding StatusText}"
+                                               StatusLeftContent="Connected"
+                                               StatusRightContent="3 records"
+                                               IsDrawerOpen="{Binding IsDrawerOpen, Mode=TwoWay}"
+                                               DrawerTitle="Filters"
+                                               DrawerPlacement="Right"
+                                               DrawerWidth="260"
+                                               OpenPaneLength="200">
+                            <sky:SkyListDetailPage.HeaderActionContent>
+                                <Button Classes="sky sky-subtle"
+                                        Content="Filters"
+                                        Command="{Binding OpenDrawerCommand}" />
+                            </sky:SkyListDetailPage.HeaderActionContent>
+                            <sky:SkyCommandBarItem Label="New"
+                                                   IconKind="Add"
+                                                   Command="{Binding NewItemCommand}" />
+                            <sky:SkyListDetailPage.PaneContent>
+                                <ListBox ItemsSource="{Binding Customers}" />
+                            </sky:SkyListDetailPage.PaneContent>
+                            <sky:SkyListDetailPage.DetailContent>
+                                <TextBlock Classes="sky-body"
+                                           Text="{Binding DetailText}"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Center" />
+                            </sky:SkyListDetailPage.DetailContent>
+                            <sky:SkyListDetailPage.DrawerContent>
+                                <StackPanel Spacing="12">
+                                    <TextBox Classes="sky" PlaceholderText="Search customers" />
+                                    <Button Classes="sky sky-primary"
+                                            Content="Apply"
+                                            HorizontalAlignment="Left" />
+                                </StackPanel>
+                            </sky:SkyListDetailPage.DrawerContent>
+                        </sky:SkyListDetailPage>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="sky-section-title" Text="SkyFormPage" />
+                    <Border BorderBrush="{DynamicResource SkyBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            ClipToBounds="True"
+                            Height="360">
+                        <sky:SkyFormPage Title="Edit profile"
+                                         Subtitle="Update account details"
+                                         IsBackButtonVisible="True"
+                                         SubmitCommand="{Binding SubmitFormCommand}"
+                                         CancelCommand="{Binding CancelFormCommand}"
+                                         SubmitButtonText="Save profile"
+                                         CancelButtonText="Cancel">
+                            <StackPanel Spacing="16" MaxWidth="480">
+                                <sky:SkyFormField Label="Display name" IsRequired="True">
+                                    <TextBox Classes="sky" Text="{Binding ProfileName}" />
+                                </sky:SkyFormField>
+                                <sky:SkyFormField Label="Email" IsRequired="True">
+                                    <TextBox Classes="sky" Text="{Binding ProfileEmail}" />
+                                </sky:SkyFormField>
+                                <sky:SkyFormField Label="Bio">
+                                    <TextBox Classes="sky"
+                                             AcceptsReturn="True"
+                                             Height="96"
+                                             Text="Product designer based in Seattle." />
+                                </sky:SkyFormField>
+                            </StackPanel>
+                        </sky:SkyFormPage>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

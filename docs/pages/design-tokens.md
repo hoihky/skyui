@@ -51,6 +51,8 @@ Set `Application.RequestedThemeVariant` to `Dark`, `Light`, or `HighContrast` to
 | `SkyContrast` | WCAG contrast helpers (used by palette unit tests) |
 | `SkyThemeVariants` | `SkyThemeVariants.HighContrast` custom variant for `RequestedThemeVariant` |
 | `SkyDensity` / `SkyDensityKeys` | Comfortable vs compact control metrics |
+| `SkyTokenKeys.Motion` | Shared duration keys for enter/exit transitions |
+| `SkyMotionDurations` / `ISkyMotionAnimator` | C# motion helpers used by dialog, snackbar, sheet, navigation |
 | `SkyResourceKeys` | Obsolete-friendly aliases over `SkyTokenKeys.Brush` |
 
 ## XAML
@@ -102,6 +104,26 @@ AppBuilder.Configure<App>()
 
 2. Theme preset merges `SkyTypographyResources.axaml` (Inter / Noto stacks on `SkyFontFamilyUi` / `SkyFontFamilyTitle`).
 3. Use role classes: `sky-section-title`, `sky-body`, `sky-button-label-upper`, `sky-nav-link-bold`, etc. (see `SkyTypographyClasses`).
+
+## Motion tokens
+
+Durations live in `SkyTokens.axaml` (`SkyMotionDurationFast`, `Enter`, `Exit`, …) and are consumed by:
+
+- `SkyDialogHost` — scrim fade + dialog scale
+- `SkySnackbarHost` — slide-up enter / fade exit
+- `SkySheetHost` — bottom sheet slide
+- `SkyNavigationView` — content cross-fade on selection change
+
+Override durations in a merged resource dictionary if your product needs slower or faster motion.
+
+## High contrast / forced colors
+
+- Set `RequestedThemeVariant` to `SkyThemeVariants.HighContrast` for the WCAG-oriented palette.
+- `SkyFeedbackBorderThickness` increases to **2** in the HighContrast theme dictionary (dialogs, snackbars, sheets).
+- `SkyFocusRingThickness` increases to **3** for stronger keyboard focus rings.
+- `SkyScrimBrush` is palette-driven (no hard-coded overlay hex).
+
+See [legacy-sunset.md](legacy-sunset.md) for Spotify alias removal timeline.
 
 ## Extending palettes
 

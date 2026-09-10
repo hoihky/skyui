@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.AppChromeDemo"
+             x:DataType="vm:AppChromeDemoViewModel">
+    <Border Classes="sky-demo-panel"
+            BorderBrush="{DynamicResource SkyBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="8"
+            ClipToBounds="True"
+            Height="520">
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <sky:SkyPageHeader Grid.Row="0"
+                               Title="{Binding PageTitle}"
+                               Subtitle="{Binding PageSubtitle}"
+                               IsBackButtonVisible="True"
+                               BackCommand="{Binding BackCommand}">
+                <sky:SkyPageHeader.ActionContent>
+                    <Button Classes="sky sky-subtle"
+                            Content="Filters"
+                            Command="{Binding OpenDrawerCommand}" />
+                </sky:SkyPageHeader.ActionContent>
+            </sky:SkyPageHeader>
+
+            <sky:SkyCommandBar Grid.Row="1" Title="Workspace">
+                <sky:SkyCommandBarItem Label="New"
+                                       IconKind="Add"
+                                       ToolTip="New"
+                                       Command="{Binding NewCommand}" />
+                <sky:SkyCommandBarItem Label="Save"
+                                       IconKind="Check"
+                                       ToolTip="Save"
+                                       Command="{Binding SaveCommand}" />
+            </sky:SkyCommandBar>
+
+            <sky:SkySplitView Grid.Row="2"
+                              IsPaneOpen="{Binding IsPaneOpen}"
+                              DisplayMode="Inline"
+                              OpenPaneLength="220">
+                <sky:SkySplitView.PaneContent>
+                    <ListBox ItemsSource="{Binding PaneItems}" />
+                </sky:SkySplitView.PaneContent>
+                <sky:SkySplitView.DetailContent>
+                    <TextBlock Classes="sky-body"
+                               Text="{Binding DetailText}"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center" />
+                </sky:SkySplitView.DetailContent>
+            </sky:SkySplitView>
+
+            <sky:SkyStatusBar Grid.Row="3"
+                              Text="{Binding StatusText}"
+                              Progress="{Binding Progress}"
+                              LeftContent="Connected"
+                              RightContent="5 records" />
+
+            <sky:SkyDrawer x:Name="FiltersDrawer"
+                           Grid.Row="0"
+                           Grid.RowSpan="4"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                           IsOpen="{Binding IsDrawerOpen, Mode=TwoWay}"
+                           Title="Filters"
+                           Placement="Right"
+                           DrawerWidth="280"
+                           Closed="OnDrawerClosed">
+                <sky:SkyDrawer.DrawerContent>
+                    <StackPanel Spacing="12">
+                        <TextBlock Classes="sky-body-secondary"
+                                   Text="Filter customers by region, status, or tag."
+                                   TextWrapping="Wrap" />
+                        <TextBox Classes="sky" PlaceholderText="Search" />
+                        <Button Classes="sky sky-primary"
+                                Content="Apply"
+                                HorizontalAlignment="Left" />
+                    </StackPanel>
+                </sky:SkyDrawer.DrawerContent>
+            </sky:SkyDrawer>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,114 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sky="https://skyui.dev"
+        xmlns:vm="using:SkyUI.Samples.ThemeBuilderApp.ViewModels"
+        x:Class="SkyUI.Samples.ThemeBuilderApp.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="SkyUI Theme Builder"
+        Width="1024"
+        Height="720"
+        MinWidth="800"
+        MinHeight="560"
+        Background="{DynamicResource SkyBackgroundBrush}"
+        FontFamily="{DynamicResource SkyFontFamilyUi}">
+  <Grid ColumnDefinitions="320,*">
+    <Border Grid.Column="0"
+            Padding="20"
+            Background="{DynamicResource SkySurfaceBrush}"
+            BorderBrush="{DynamicResource SkyBorderBrush}"
+            BorderThickness="0,0,1,0">
+      <StackPanel Spacing="20">
+        <TextBlock Classes="sky-section-title" Text="Theme builder" />
+        <TextBlock Classes="sky-body"
+                   Text="Configure variant, density, and accent via SkyTheme APIs — no theme XAML copied into your app."
+                   TextWrapping="Wrap"
+                   Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+
+        <sky:SkyFormField Label="Theme variant" IsRequired="True">
+          <ComboBox Classes="sky"
+                    ItemsSource="{Binding ThemeVariants}"
+                    SelectedItem="{Binding ThemeVariant}" />
+        </sky:SkyFormField>
+
+        <sky:SkyFormField Label="Density">
+          <ComboBox Classes="sky"
+                    ItemsSource="{Binding DensityOptions}"
+                    SelectedItem="{Binding Density}" />
+        </sky:SkyFormField>
+
+        <sky:SkyFormField Label="Accent color"
+                          Hint="Hex value, e.g. #7C3AED">
+          <TextBox Classes="sky"
+                   Text="{Binding AccentHex}"
+                   PlaceholderText="#RRGGBB" />
+        </sky:SkyFormField>
+      </StackPanel>
+    </Border>
+
+    <Grid Grid.Column="1" RowDefinitions="*,Auto">
+      <ScrollViewer Grid.Row="0" Padding="24">
+        <StackPanel Spacing="20">
+          <TextBlock Classes="sky-feature-heading" Text="Live preview" />
+
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Classes="sky sky-primary" Content="Primary" />
+            <Button Classes="sky sky-outlined" Content="Outlined" />
+            <Button Classes="sky sky-subtle" Content="Subtle" />
+          </StackPanel>
+
+          <sky:SkyCard Header="Form sample" IsHoverable="True">
+            <StackPanel Spacing="12">
+              <sky:SkyFormField Label="Display name">
+                <TextBox Classes="sky" PlaceholderText="Your name" />
+              </sky:SkyFormField>
+              <CheckBox Classes="sky" Content="Enable notifications" />
+            </StackPanel>
+          </sky:SkyCard>
+
+          <sky:SkyNavigationView Header="Navigation sample" MinHeight="180">
+            <sky:SkyNavigationViewItem Label="Overview" IconKind="Home">
+              <TextBlock Classes="sky-body" Text="Overview content" Margin="8" />
+            </sky:SkyNavigationViewItem>
+            <sky:SkyNavigationViewItem Label="Reports" IconKind="List">
+              <TextBlock Classes="sky-body" Text="Reports content" Margin="8" />
+            </sky:SkyNavigationViewItem>
+          </sky:SkyNavigationView>
+        </StackPanel>
+      </ScrollViewer>
+
+      <Border Grid.Row="1"
+              Padding="20,12"
+              Background="{DynamicResource SkySurfaceBrush}"
+              BorderBrush="{DynamicResource SkyBorderBrush}"
+              BorderThickness="0,1,0,0">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Button x:Name="ShowDialogButton" Classes="sky sky-outlined" Content="Show dialog" />
+          <Button x:Name="ShowSheetButton" Classes="sky sky-outlined" Content="Show sheet" />
+          <Button x:Name="ShowSnackbarButton" Classes="sky sky-primary" Content="Show snackbar" />
+        </StackPanel>
+      </Border>
+
+      <sky:SkyDialogHost x:Name="PreviewDialog"
+                         Grid.Row="0"
+                         Grid.RowSpan="2"
+                         Title="Dialog preview"
+                         PrimaryButtonText="OK"
+                         SecondaryButtonText="Cancel"
+                         DialogContent="Modal dialog with scrim and motion tokens." />
+
+      <sky:SkySheetHost x:Name="PreviewSheet"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Title="Sheet preview"
+                        SheetContent="Bottom sheet slides up using shared motion tokens." />
+
+      <sky:SkySnackbarHost x:Name="PreviewSnackbar"
+                           Grid.Row="0"
+                           Grid.RowSpan="2"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,72"
+                           IsHitTestVisible="False" />
+    </Grid>
+  </Grid>
+</Window>

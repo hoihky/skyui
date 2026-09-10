@@ -4,6 +4,8 @@
     <RootNamespace>SkyUI.Fonts</RootNamespace>
     <AssemblyName>SkyUI.Fonts</AssemblyName>
     <Description>SkyUI typography: Inter + Noto Sans SC (CJK) and DESIGN.md text roles.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageId>SkyUI.Fonts</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

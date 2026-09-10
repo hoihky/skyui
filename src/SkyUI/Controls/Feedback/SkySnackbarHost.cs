@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
+using SkyUI.Core.Theming;
 
 namespace SkyUI.Controls;
 
@@ -14,10 +15,10 @@ public class SkySnackbarHost : TemplatedControl
     public static readonly StyledProperty<int> DefaultDurationMsProperty =
         AvaloniaProperty.Register<SkySnackbarHost, int>(nameof(DefaultDurationMs), 4000);
 
-    private ItemsControl? _itemsHost;
-    private readonly ObservableCollection<SkySnackbarMessage> _messages = new();
-    private readonly Queue<(SkySnackbarMessage Message, DispatcherTimer Timer)> _queue = new();
-    private bool _showing;
+    private ItemsControl? itemsHost;
+    private readonly ObservableCollection<SkySnackbarMessage> messages = new();
+    private readonly Queue<(SkySnackbarMessage Message, DispatcherTimer Timer)> queue = new();
+    private bool showing;
 
     public int DefaultDurationMs
     {
@@ -29,7 +30,7 @@ public class SkySnackbarHost : TemplatedControl
 
     public SkySnackbarHost()
     {
-        Messages = new ReadOnlyObservableCollection<SkySnackbarMessage>(_messages);
+        Messages = new ReadOnlyObservableCollection<SkySnackbarMessage>(messages);
     }
 
     public void Enqueue(string message, SkyFeedbackVariant variant = SkyFeedbackVariant.Neutral, int? durationMs = null)
@@ -40,35 +41,70 @@ public class SkySnackbarHost : TemplatedControl
         var duration = durationMs ?? DefaultDurationMs;
         var item = new SkySnackbarMessage(message.Trim(), variant, Math.Max(1000, duration));
         var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(item.DurationMs) };
-        timer.Tick += (_, _) => OnMessageExpired(item, timer);
-        _queue.Enqueue((item, timer));
+        timer.Tick += (_, _) => _ = ExpireMessageAsync(item, timer);
+        queue.Enqueue((item, timer));
         TryShowNext();
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        _itemsHost = e.NameScope.Find(ItemsHostPartName) as ItemsControl;
-        if (_itemsHost is not null)
-            _itemsHost.ItemsSource = _messages;
+        itemsHost = e.NameScope.Find(ItemsHostPartName) as ItemsControl;
+        if (itemsHost is not null)
+            itemsHost.ItemsSource = messages;
     }
 
     private void TryShowNext()
     {
-        if (_showing || _queue.Count == 0)
+        if (showing || queue.Count == 0)
             return;
 
-        var (message, timer) = _queue.Dequeue();
-        _showing = true;
-        _messages.Add(message);
+        var (message, timer) = queue.Dequeue();
+        showing = true;
+        messages.Add(message);
         timer.Start();
+        _ = PlayEnterAnimationAsync(message);
     }
 
-    private void OnMessageExpired(SkySnackbarMessage message, DispatcherTimer timer)
+    private async Task PlayEnterAnimationAsync(SkySnackbarMessage message)
+    {
+        if (itemsHost is null)
+            return;
+
+        SkySnackbarBar? bar = null;
+        for (var attempt = 0; attempt < 8 && bar is null; attempt++)
+        {
+            await Dispatcher.UIThread.InvokeAsync(() => { });
+            bar = itemsHost.ContainerFromItem(message) as SkySnackbarBar;
+            if (bar is null)
+                await Task.Delay(16);
+        }
+
+        if (bar is null)
+            return;
+
+        bar.Opacity = 0;
+        await Task.WhenAll(
+            SkyMotionAnimator.Default.FadeAsync(bar, 0, 1, SkyMotionDurations.Enter),
+            SkyMotionAnimator.Default.TranslateYAsync(bar, 16, 0, SkyMotionDurations.Enter));
+    }
+
+    private async Task ExpireMessageAsync(SkySnackbarMessage message, DispatcherTimer timer)
     {
         timer.Stop();
-        _messages.Remove(message);
-        _showing = false;
+        if (itemsHost is not null)
+        {
+            var bar = itemsHost.ContainerFromItem(message) as SkySnackbarBar;
+            if (bar is not null)
+            {
+                await Task.WhenAll(
+                    SkyMotionAnimator.Default.FadeAsync(bar, bar.Opacity, 0, SkyMotionDurations.Exit),
+                    SkyMotionAnimator.Default.TranslateYAsync(bar, 0, 8, SkyMotionDurations.Exit));
+            }
+        }
+
+        messages.Remove(message);
+        showing = false;
         TryShowNext();
     }
 }

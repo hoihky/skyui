@@ -4,6 +4,8 @@
     <RootNamespace>SkyUI.Core</RootNamespace>
     <AssemblyName>SkyUI.Core</AssemblyName>
     <Description>SkyUI design tokens, shared contracts, and theme attached properties.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageId>SkyUI.Core</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +18,7 @@
 
   <ItemGroup>
     <AvaloniaResource Include="Themes\SkyDensityTokens.axaml" />
+    <AvaloniaResource Include="Themes\SkyTokens.axaml" />
   </ItemGroup>
 
 </Project>

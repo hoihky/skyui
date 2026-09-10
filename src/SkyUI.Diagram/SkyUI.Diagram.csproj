@@ -4,6 +4,8 @@
     <RootNamespace>SkyUI.Diagram</RootNamespace>
     <AssemblyName>SkyUI.Diagram</AssemblyName>
     <Description>SkyUI interactive diagram surface and edge routers.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageId>SkyUI.Diagram</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

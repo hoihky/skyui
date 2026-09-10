@@ -128,7 +128,7 @@
     <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFeedbackBorderThickness}" />
     <Setter Property="CornerRadius" Value="8" />
     <Setter Property="Padding" Value="12,10" />
     <Setter Property="Margin" Value="0,0,0,8" />
@@ -137,7 +137,7 @@
       <ControlTemplate>
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
+                BorderThickness="{DynamicResource SkyFeedbackBorderThickness}"
                 CornerRadius="{TemplateBinding CornerRadius}"
                 Padding="{TemplateBinding Padding}"
                 Margin="{TemplateBinding Margin}"
@@ -176,15 +176,59 @@
     </Setter>
   </ControlTheme>
 
-  <ControlTheme x:Key="{x:Type controls:SkyDialogHost}" TargetType="controls:SkyDialogHost">
+  <ControlTheme x:Key="{x:Type controls:SkySheetHost}" TargetType="controls:SkySheetHost">
+    <Setter Property="IsHitTestVisible" Value="False" />
     <Setter Property="Template">
       <ControlTemplate>
         <Panel>
           <Panel Name="PART_Overlay"
-                 Background="#99000000"
-                 IsVisible="{TemplateBinding IsOpen}"
-                 IsHitTestVisible="{TemplateBinding IsOpen}">
-            <Border HorizontalAlignment="Center"
+                 Background="{DynamicResource SkyScrimBrush}"
+                 IsVisible="False"
+                 IsHitTestVisible="False">
+            <Border Name="PART_SheetPanel"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Stretch"
+                    Margin="0"
+                    Padding="20,16"
+                    Background="{DynamicResource SkySurfaceElevatedBrush}"
+                    BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="{DynamicResource SkyFeedbackBorderThickness}"
+                    CornerRadius="12,12,0,0"
+                    BoxShadow="{DynamicResource SkyElevation2}">
+              <StackPanel Spacing="16">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Text="{TemplateBinding Title}"
+                             Classes="sky-feature-heading"
+                             IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                  <Button Name="PART_CloseButton"
+                          Grid.Column="1"
+                          Classes="sky sky-subtle"
+                          Width="28"
+                          Height="28"
+                          Padding="0"
+                          Content="×"
+                          FontSize="18" />
+                </Grid>
+                <ContentPresenter Content="{TemplateBinding SheetContent}" />
+              </StackPanel>
+            </Border>
+          </Panel>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDialogHost}" TargetType="controls:SkyDialogHost">
+    <Setter Property="IsHitTestVisible" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Panel Name="PART_Overlay"
+                 Background="{DynamicResource SkyScrimBrush}"
+                 IsVisible="False"
+                 IsHitTestVisible="False">
+            <Border Name="PART_DialogPanel"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     MinWidth="320"
                     MaxWidth="480"
@@ -192,7 +236,7 @@
                     Padding="20"
                     Background="{DynamicResource SkySurfaceBrush}"
                     BorderBrush="{DynamicResource SkyBorderBrush}"
-                    BorderThickness="1"
+                    BorderThickness="{DynamicResource SkyFeedbackBorderThickness}"
                     CornerRadius="12"
                     BoxShadow="{DynamicResource SkyElevation2}">
               <StackPanel Spacing="16">

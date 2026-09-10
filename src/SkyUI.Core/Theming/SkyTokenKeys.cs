@@ -37,6 +37,7 @@ public static class SkyTokenKeys
         public const string LightPill = "SkyLightPillBrush";
         public const string LightPillText = "SkyLightPillTextBrush";
         public const string FocusRing = "SkyFocusRingBrush";
+        public const string Scrim = "SkyScrimBrush";
     }
 
     /// <summary>8px-based spacing scale (see DESIGN.md).</summary>
@@ -116,10 +117,29 @@ public static class SkyTokenKeys
         public const string RingThickness = "SkyFocusRingThickness";
     }
 
+    public static class Feedback
+    {
+        public const string BorderThickness = "SkyFeedbackBorderThickness";
+    }
+
     public static class Icon
     {
         public const string SizeSmall = "SkyIconSizeSmall";
         public const string SizeMedium = "SkyIconSizeMedium";
         public const string SizeLarge = "SkyIconSizeLarge";
+    }
+
+    /// <summary>Shared motion durations and easing keys (<c>SkyTokens.axaml</c> motion region).</summary>
+    public static class Motion
+    {
+        public const string DurationInstant = "SkyMotionDurationInstant";
+        public const string DurationFast = "SkyMotionDurationFast";
+        public const string DurationMedium = "SkyMotionDurationMedium";
+        public const string DurationSlow = "SkyMotionDurationSlow";
+        public const string DurationEnter = "SkyMotionDurationEnter";
+        public const string DurationExit = "SkyMotionDurationExit";
+        public const string DialogEnterScale = "SkyMotionDialogEnterScale";
+        public const string SheetEnterOffset = "SkyMotionSheetEnterOffset";
+        public const string SnackbarEnterOffset = "SkyMotionSnackbarEnterOffset";
     }
 }

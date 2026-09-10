@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Samples.SettingsApp.ViewModels"
+             x:Class="SkyUI.Samples.SettingsApp.Views.NotificationSettingsView"
+             x:DataType="vm:NotificationSettingsViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="20" MaxWidth="520" Margin="8">
+      <TextBlock Classes="sky-feature-heading" Text="Notifications" />
+      <TextBlock Classes="sky-body-secondary"
+                 TextWrapping="Wrap"
+                 Text="Choose which updates you want to receive from this sample application." />
+
+      <sky:SkyCard Header="Email preferences">
+        <StackPanel Spacing="12">
+          <CheckBox Classes="sky"
+                    Content="Product updates"
+                    IsChecked="{Binding ProductUpdates}" />
+          <CheckBox Classes="sky"
+                    Content="Security alerts"
+                    IsChecked="{Binding SecurityAlerts}" />
+          <CheckBox Classes="sky"
+                    Content="Weekly digest"
+                    IsChecked="{Binding WeeklyDigest}" />
+        </StackPanel>
+      </sky:SkyCard>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

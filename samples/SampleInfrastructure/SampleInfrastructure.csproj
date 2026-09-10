@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SkyUI.Samples.Infrastructure</RootNamespace>
+    <AssemblyName>SkyUI.Samples.Infrastructure</AssemblyName>
+    <Description>Shared MVVM primitives for SkyUI sample applications.</Description>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+</Project>

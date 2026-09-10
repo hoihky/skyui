@@ -31,4 +31,5 @@
   <Color x:Key="SkyPaletteBadgeNeutral">#2a2a2a</Color>
   <!-- Focus ring: accent green meets ≥3:1 on dark surfaces -->
   <Color x:Key="SkyPaletteFocusRing">#1ED760</Color>
+  <Color x:Key="SkyPaletteScrim">#B3000000</Color>
 </ResourceDictionary>

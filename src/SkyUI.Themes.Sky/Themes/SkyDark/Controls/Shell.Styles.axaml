@@ -1,0 +1,37 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <Style Selector="controls|SkySplitView:overlay:open /template/ Border#PART_Pane">
+    <Setter Property="IsVisible" Value="True" />
+    <Setter Property="ZIndex" Value="2" />
+  </Style>
+
+  <Style Selector="controls|SkySplitView:overlay:closed /template/ Border#PART_Pane">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+
+  <Style Selector="controls|SkySplitView:right /template/ Border#PART_Pane">
+    <Setter Property="BorderThickness" Value="1,0,0,0" />
+  </Style>
+
+  <Style Selector="controls|SkySplitView /template/ Border#PART_ResizeGrip:pointerover">
+    <Setter Property="Background" Value="{DynamicResource SkyBorderBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkySplitView:resizing /template/ Border#PART_ResizeGrip">
+    <Setter Property="Background" Value="{DynamicResource SkyFocusRingBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyDrawer.sky-drawer-left /template/ Border#PART_DrawerPanel">
+    <Setter Property="HorizontalAlignment" Value="Left" />
+  </Style>
+
+  <Style Selector="controls|SkyDrawer.sky-drawer-right /template/ Border#PART_DrawerPanel">
+    <Setter Property="HorizontalAlignment" Value="Right" />
+  </Style>
+
+  <Style Selector="controls|SkyPageHeader /template/ Button#PART_BackButton:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+</Styles>

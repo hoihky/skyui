@@ -35,4 +35,5 @@ public static class SkyPaletteKeys
     public const string AvatarFallback = "SkyPaletteAvatarFallback";
     public const string BadgeNeutral = "SkyPaletteBadgeNeutral";
     public const string FocusRing = "SkyPaletteFocusRing";
+    public const string Scrim = "SkyPaletteScrim";
 }

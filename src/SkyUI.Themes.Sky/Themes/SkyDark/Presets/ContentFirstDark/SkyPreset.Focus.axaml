@@ -76,4 +76,15 @@
     <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
     <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
   </Style>
+
+  <Style Selector="controls|SkyDialogHost /template/ Button:focus-visible,
+                 controls|SkySheetHost /template/ Button:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
+
+  <Style Selector="controls|SkyNavigationView /template/ ListBoxItem:focus-visible">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyFocusRingBrush}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource SkyFocusRingThickness}" />
+  </Style>
 </Styles>

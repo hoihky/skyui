@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sky="https://skyui.dev"
+        xmlns:vm="using:SkyUI.Samples.CrudListDetail.ViewModels"
+        xmlns:models="using:SkyUI.Samples.CrudListDetail.Models"
+        x:Class="SkyUI.Samples.CrudListDetail.Views.ShellWindow"
+        x:DataType="vm:ShellViewModel"
+        Title="SkyUI Customer Directory"
+        Width="1100"
+        Height="720"
+        MinWidth="900"
+        MinHeight="560"
+        Background="{DynamicResource SkyBackgroundBrush}"
+        FontFamily="{DynamicResource SkyFontFamilyUi}">
+  <Grid RowDefinitions="Auto,*" RowSpacing="0">
+    <Border Grid.Row="0"
+            Padding="16,12"
+            Background="{DynamicResource SkySurfaceBrush}"
+            BorderBrush="{DynamicResource SkyBorderBrush}"
+            BorderThickness="0,0,0,1">
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <StackPanel Spacing="4">
+          <TextBlock Classes="sky-feature-heading" Text="Customers" />
+          <TextBlock Classes="sky-body-secondary" Text="{Binding StatusMessage}" />
+        </StackPanel>
+        <sky:SkySearchBox Grid.Column="1"
+                          Width="280"
+                          Text="{Binding SearchQuery}"
+                          PlaceholderText="Search company, contact, email" />
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1" ColumnDefinitions="*,360">
+      <sky:SkyCard Grid.Column="0"
+                   Margin="16,16,8,16"
+                   Header="Customer list"
+                   IsHoverable="False">
+        <sky:SkyVirtualDataGrid x:Name="CustomerGrid"
+                                MinHeight="400"
+                                DataSource="{Binding GridDataSource}"
+                                SelectedRowIndex="{Binding SelectedRowIndex}"
+                                EnableRowVirtualization="True" />
+      </sky:SkyCard>
+
+      <sky:SkyCard Grid.Column="1"
+                   Margin="8,16,16,16"
+                   Header="{Binding DetailTitle}"
+                   IsHoverable="False">
+        <StackPanel Spacing="16" DataContext="{Binding Detail}">
+          <sky:SkyFormField Label="Company" IsRequired="True">
+            <TextBox Classes="sky" Text="{Binding Company}" PlaceholderText="Company name" />
+          </sky:SkyFormField>
+
+          <sky:SkyFormField Label="Contact name">
+            <TextBox Classes="sky" Text="{Binding ContactName}" PlaceholderText="Primary contact" />
+          </sky:SkyFormField>
+
+          <sky:SkyFormField Label="Email"
+                            IsRequired="True"
+                            ErrorMessage="{Binding EmailError}"
+                            Validator="{Binding EmailValidator}">
+            <TextBox Classes="sky" Text="{Binding Email}" PlaceholderText="email@company.com" />
+          </sky:SkyFormField>
+
+          <sky:SkyFormField Label="Status">
+            <ComboBox Classes="sky"
+                      SelectedItem="{Binding Status}"
+                      HorizontalAlignment="Stretch">
+              <models:CustomerStatus>Active</models:CustomerStatus>
+              <models:CustomerStatus>Prospect</models:CustomerStatus>
+              <models:CustomerStatus>Inactive</models:CustomerStatus>
+            </ComboBox>
+          </sky:SkyFormField>
+
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Classes="sky sky-primary"
+                    Content="Save"
+                    Command="{Binding SaveCommand}" />
+            <Button Classes="sky sky-outlined"
+                    Content="New"
+                    Command="{Binding NewCommand}" />
+            <Button Classes="sky sky-outlined"
+                    Content="Delete"
+                    Command="{Binding DeleteCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </sky:SkyCard>
+    </Grid>
+
+    <sky:SkySnackbarHost x:Name="SnackbarHostControl"
+                         Grid.Row="0"
+                         Grid.RowSpan="2"
+                         VerticalAlignment="Bottom"
+                         HorizontalAlignment="Center"
+                         Margin="0,0,0,24"
+                         IsHitTestVisible="False" />
+  </Grid>
+</Window>

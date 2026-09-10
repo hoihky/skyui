@@ -9,8 +9,14 @@
     <Project Path="src/SkyUI.Themes.Sky/SkyUI.Themes.Sky.csproj" />
     <Project Path="src/SkyUI/SkyUI.csproj" />
   </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/SampleInfrastructure/SampleInfrastructure.csproj" />
+    <Project Path="samples/SettingsApp/SettingsApp.csproj" />
+    <Project Path="samples/CrudListDetail/CrudListDetail.csproj" />
+    <Project Path="samples/ThemeBuilderApp/ThemeBuilderApp.csproj" />
+  </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/SkyUI.HeadlessTests/SkyUI.HeadlessTests.csproj" />
     <Project Path="tests/SkyUI.UnitTests/SkyUI.UnitTests.csproj" />
+    <Project Path="tests/SkyUI.HeadlessTests/SkyUI.HeadlessTests.csproj" />
   </Folder>
 </Solution>

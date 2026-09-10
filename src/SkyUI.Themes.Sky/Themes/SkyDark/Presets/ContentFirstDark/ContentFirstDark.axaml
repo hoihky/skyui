@@ -18,6 +18,7 @@
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Pickers.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/VirtualTreeView.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Layout.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Shell.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Primitives.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
@@ -32,6 +33,7 @@
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Pickers.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/VirtualTreeView.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Layout.Styles.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Shell.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Primitives.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Primitives.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Focus.axaml" />

@@ -108,7 +108,7 @@
           <header class="doc-header">
             <h1>Development roadmap</h1>
           </header>
-          <div class="doc-body"><p>Phased plan to evolve SkyUI from the <a href="current-state.html">current state</a> toward a commercial-grade, multiplatform toolkit, addressing gaps in <a href="gap-analysis.html">gap-analysis.md</a>.</p>
+          <div class="doc-body"><p>Phased plan to evolve SkyUI from the <a href="current-state.html">current state</a> toward a <strong>production-ready toolkit for realistic desktop and mobile applications</strong>, addressing gaps in <a href="gap-analysis.html">gap-analysis.md</a>.</p>
 <p>Durations assume a small core team; workstreams within a phase can run in parallel where noted.</p>
 <h2 id="product-vision">Product vision</h2>
 <table class="table">
@@ -137,62 +137,169 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Positioning:</strong> Cross-platform .NET apps that need <strong>data-heavy UI</strong> and <strong>diagram/media</strong> tooling, built on Avalonia.</p>
+<p><strong>Positioning:</strong> Cross-platform .NET apps that need <strong>data-heavy UI</strong>, <strong>diagram/media</strong> tooling, and <strong>credible mobile UX</strong> — built on Avalonia.</p>
+<hr>
+<h2 id="progress-snapshot">Progress snapshot</h2>
+<p>SkyUI has moved beyond an early prototype. The roadmap below is <strong>forward-looking</strong> from this baseline.</p>
+<h3 id="largely-complete">Largely complete</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Area</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Design system</strong></td>
+<td>Semantic tokens, Dark / Light / High contrast, density, accent override, Inter + Noto fonts, icon set</td>
+</tr>
+<tr>
+<td><strong>Navigation shell</strong></td>
+<td><code>SkyNavigationView</code> (expanded / compact / bottom), <code>SkyTabView</code>, <code>SkyBreadcrumb</code></td>
+</tr>
+<tr>
+<td><strong>Forms (core)</strong></td>
+<td><code>SkyFormField</code>, validators, search/password, radio group, slider</td>
+</tr>
+<tr>
+<td><strong>Menus</strong></td>
+<td><code>SkyMenuBar</code>, <code>SkyContextMenu</code>, <code>SkyMenuFlyout</code>, accelerators</td>
+</tr>
+<tr>
+<td><strong>Pickers</strong></td>
+<td><code>SkyDatePicker</code>, <code>SkyCalendar</code>, <code>SkyTimePicker</code>, culture formatting</td>
+</tr>
+<tr>
+<td><strong>Feedback</strong></td>
+<td><code>SkyDialogHost</code>, <code>SkySnackbarHost</code>, <code>SkyAlert</code>, <code>SkyBanner</code>, progress, skeleton</td>
+</tr>
+<tr>
+<td><strong>Layout</strong></td>
+<td><code>SkyCard</code>, <code>SkyDivider</code>, <code>SkyExpander</code>, <code>SkyResponsiveGrid</code>, breakpoints</td>
+</tr>
+<tr>
+<td><strong>Lists</strong></td>
+<td><code>CheckedListBox</code>, <code>SkyVirtualTreeView</code></td>
+</tr>
+<tr>
+<td><strong>Primitives</strong></td>
+<td><code>SkyTooltip</code>, <code>SkyPopover</code>, loading button state</td>
+</tr>
+<tr>
+<td><strong>Data / diagram (v1)</strong></td>
+<td><code>SkyVirtualDataGrid</code>, <code>FilterEditor</code>, <code>DiagramSurface</code>, <code>VideoTimeline</code></td>
+</tr>
+<tr>
+<td><strong>Tests</strong></td>
+<td>Unit + headless suites (~190+ tests)</td>
+</tr>
+<tr>
+<td><strong>Docs</strong></td>
+<td>Static site, SDK guide, control guides</td>
+</tr>
+</tbody>
+</table>
+<h3 id="still-blocking-realistic-apps">Still blocking realistic apps</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Gap</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No CI / NuGet publish</strong></td>
+<td>Cannot ship or adopt as a dependency in production pipelines</td>
+</tr>
+<tr>
+<td><strong>Thin app chrome</strong></td>
+<td>No command bar, split view, drawer, status bar, or master-detail templates</td>
+</tr>
+<tr>
+<td><strong>Forms gaps</strong></td>
+<td>No autocomplete, numeric up/down, date range, masked input, validation summary</td>
+</tr>
+<tr>
+<td><strong>Grid / filter v1 limits</strong></td>
+<td>No resize, multi-select, in-grid filter, grouping, async paging — LOB apps stall here</td>
+</tr>
+<tr>
+<td><strong>Mobile unproven</strong></td>
+<td>No safe area, sheets, touch policy, keyboard insets, or mobile sample app</td>
+</tr>
+<tr>
+<td><strong>No reference apps</strong></td>
+<td>Demo gallery ≠ settings app, field-service app, or CRUD shell</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="target-package-architecture">Target package architecture</h2>
-<p>Start as a single package; split when consumers need smaller browser bundles.</p>
 <pre><code class="language-text">SkyUI.Core          Tokens, shared interfaces, attached properties
 SkyUI               Essentials controls + default theme hooks
 SkyUI.Themes.Sky    Default dark/light/high-contrast theme resources
 SkyUI.Icons         Icon font or SVG set
 SkyUI.Data          Grid, filter (optional split from core)
 SkyUI.Diagram       Diagram surface and routers (optional split)
+SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI initially)
 </code></pre>
-<p>Dependency direction: <code>Core</code> → <code>SkyUI</code> → (<code>Data</code>, <code>Diagram</code>); <code>Themes</code> and <code>Icons</code> plug into <code>SkyUI</code>.</p>
+<p>Dependency direction: <code>Core</code> → <code>SkyUI</code> → (<code>Data</code>, <code>Diagram</code>, <code>Mobile</code>); <code>Themes</code> and <code>Icons</code> plug into <code>SkyUI</code>.</p>
 <hr>
-<h2 id="phase-0-foundation-812-weeks">Phase 0 — Foundation (8–12 weeks)</h2>
+<h2 id="phase-0-foundation-48-weeks-remaining">Phase 0 — Foundation (4–8 weeks remaining)</h2>
 <p><strong>Goal:</strong> Operate SkyUI as a shippable product.</p>
-<h3 id="deliverables">Deliverables</h3>
 <table class="table">
 <thead>
 <tr>
 <th>Workstream</th>
 <th>Features</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Repository layout</td>
-<td>Root <code>skyui.sln</code>; <code>src/SkyUI</code>, <code>src/SkyUI.Demo</code>, <code>tests/SkyUI.UnitTests</code>, <code>tests/SkyUI.HeadlessTests</code> (Avalonia headless); optional <code>samples/</code></td>
+<td><code>SkyUI.slnx</code>, demo, unit + headless tests</td>
+<td>Done</td>
 </tr>
 <tr>
 <td>CI/CD</td>
-<td>Build on PR; <code>dotnet format</code>; analyzers (including Avalonia); test gate; NuGet artifact on version tag</td>
+<td>Build on PR; <code>dotnet format</code>; analyzers; test gate; <strong>GitHub Pages</strong> deploy from <code>docs/</code></td>
+<td><strong>Todo</strong></td>
 </tr>
 <tr>
 <td>Packaging</td>
 <td><code>PackageId</code>, authors, repository URL, README in package, symbol packages, <strong>0.x semver</strong></td>
+<td><strong>Todo</strong></td>
 </tr>
 <tr>
 <td>Documentation v1</td>
-<td>Root README: install, include theme, control index; XML comments on public API; screenshots from demo</td>
+<td>README, install guide, control index, screenshots</td>
+<td>Partial</td>
 </tr>
 <tr>
 <td>Engineering policy</td>
-<td>CONTRIBUTING; control checklist (template parts, theme AXAML, demo page, tests); breaking-change policy</td>
+<td>CONTRIBUTING, control checklist, breaking-change policy</td>
+<td><strong>Todo</strong></td>
+</tr>
+<tr>
+<td>Reference samples</td>
+<td><code>samples/SettingsApp</code>, <code>samples/CrudListDetail</code> (minimal, NuGet-consuming)</td>
+<td><strong>Todo</strong></td>
 </tr>
 </tbody>
 </table>
 <h3 id="exit-criteria">Exit criteria</h3>
 <ul>
-<li>Green CI on every PR.</li>
+<li>Green CI on every PR; docs site deploys on merge to <code>main</code>.</li>
 <li>Publishable NuGet package (even if unlisted initially).</li>
-<li>Every public control has XML docs and a demo entry.</li>
+<li>At least one sample app references SkyUI from NuGet, not project reference.</li>
 </ul>
 <hr>
-<h2 id="phase-1-design-system-2.0-1014-weeks">Phase 1 — Design system 2.0 (10–14 weeks)</h2>
-<p><strong>Goal:</strong> White-label-ready theming without losing the current look.</p>
-<h3 id="planned-features">Planned features</h3>
+<h2 id="phase-1-design-system-polish-46-weeks">Phase 1 — Design system polish (4–6 weeks)</h2>
+<p><strong>Goal:</strong> Finish white-label and motion story; retire legacy naming.</p>
+<p>Most token and theme work is done. Remaining:</p>
 <table class="table">
 <thead>
 <tr>
@@ -202,107 +309,148 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </thead>
 <tbody>
 <tr>
-<td><strong>Sky token layer</strong></td>
-<td><code>SkyTokens.axaml</code>: semantic colors (<code>Background</code>, <code>Surface</code>, <code>Accent</code>, <code>Danger</code>, …), 8px spacing scale, radius and elevation scales, typography roles</td>
+<td><strong>Motion tokens</strong></td>
+<td>Shared duration/easing resources; enter/exit for dialogs, snackbars, sheets</td>
 </tr>
 <tr>
-<td><strong>Theme mapping</strong></td>
-<td>Sky-branded preset (<code>ContentFirstDark</code>); palettes under <code>Themes/SkyDark/</code>; legacy <code>Spotify*</code> / <code>Themes/Sky/</code> shims retained</td>
+<td><strong>Forced-colors audit</strong></td>
+<td>High-contrast + Windows high-contrast mode pass on all Essentials</td>
 </tr>
 <tr>
-<td><strong>Theme API</strong></td>
-<td>Single <code>SkyTheme</code> include; accent override (attached property or <code>SkyThemeOptions</code>)</td>
+<td><strong>Legacy alias sunset plan</strong></td>
+<td>Document migration from <code>Spotify*</code> keys; deprecate in 1.x</td>
 </tr>
 <tr>
-<td><strong>Light + high contrast</strong></td>
-<td>Full brush sets; focus rings; target WCAG AA contrast for text and controls</td>
-</tr>
-<tr>
-<td><strong>Icons</strong></td>
-<td><code>SkyUI.Icons</code> or embedded font; sizes 16/20/24 used in buttons, nav, list items</td>
-</tr>
-<tr>
-<td><strong>Typography</strong></td>
-<td>Ship open fonts (e.g. Inter + Noto CJK) aligned with <code>DESIGN.md</code> hierarchy</td>
-</tr>
-<tr>
-<td><strong>Density</strong></td>
-<td>Comfortable (default) and compact modes via <code>SkyDensityTokens</code> + <code>SkyThemeProperties.Density</code></td>
+<td><strong>Theme builder sample</strong></td>
+<td>Third-party app sets accent + density without copying XAML</td>
 </tr>
 </tbody>
 </table>
 <h3 id="exit-criteria-1">Exit criteria</h3>
 <ul>
-<li>Demo toggles Dark / Light / High contrast.</li>
-<li>Sample third-party app sets accent color without copying theme XAML.</li>
+<li>Motion applied consistently on dialog, snackbar, and navigation transitions.</li>
+<li>WCAG AA contrast verified for text and focus rings on all three palettes.</li>
 </ul>
 <hr>
-<h2 id="phase-2-essentials-catalog-1624-weeks-parallel-sprints">Phase 2 — Essentials catalog (16–24 weeks, parallel sprints)</h2>
-<p><strong>Goal:</strong> Cover majority of line-of-business UI with documented, tested controls.</p>
-<p><strong>API strategy (choose one and apply consistently):</strong></p>
-<ul>
-<li><strong>Option A:</strong> <code>Sky*</code> templated controls wrapping Avalonia primitives, or</li>
-<li><strong>Option B:</strong> Documented <code>Classes="sky"</code> + behaviors/helpers.</li>
-</ul>
-<h3 id="sprint-themes">Sprint themes</h3>
+<h2 id="phase-2-essentials-wave-2-realistic-app-ui-1420-weeks">Phase 2 — Essentials wave 2: realistic app UI (14–20 weeks)</h2>
+<p><strong>Goal:</strong> Close the gap between “control gallery” and <strong>apps users actually ship</strong> — settings, CRM, inventory, field service, admin portals.</p>
+<p>Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback controls are <strong>shipped</strong>. This wave adds <strong>missing high-value controls</strong> identified for desktop and shared mobile/desktop patterns.</p>
+<h3 id="p0-app-shell-and-navigation-desktop-tablet">P0 — App shell and navigation (desktop + tablet)</h3>
 <table class="table">
 <thead>
 <tr>
-<th>Sprint</th>
-<th>Controls and behaviors</th>
+<th>Control / pattern</th>
+<th>Description</th>
+<th style="text-align: center;">Desktop</th>
+<th style="text-align: center;">Mobile</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Feedback</td>
-<td>Modal/dialog host, snackbar queue, banner, progress ring, skeleton placeholder — <strong>SkyAlert, SkyBanner, SkySnackbarHost, SkyDialogHost, SkyProgressRing, SkySkeleton</strong></td>
+<td><strong>SkyCommandBar</strong></td>
+<td>Primary toolbar with icon buttons, labels, overflow menu</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td>Navigation</td>
-<td>Navigation view (sidebar / compact / bottom on narrow width), styled tab control, breadcrumb — <strong>SkyNavigationView, SkyTabView, SkyBreadcrumb</strong></td>
+<td><strong>SkyStatusBar</strong></td>
+<td>Bottom status line (connection, selection count, progress)</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr>
-<td>Forms</td>
-<td>Form field wrapper (label, hint, validation, error state), radio group, slider, password and search variants — <strong>SkyFormField, SkyRadioGroup, SkySlider, SkySearchBox, SkyPasswordBox</strong></td>
+<td><strong>SkySplitView</strong></td>
+<td>Master-detail pane with collapsible list + detail</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td>Menus</td>
-<td>Context menu and menubar styles; keyboard accelerators documented — <strong>SkyMenuBar, SkyContextMenu, SkyMenuFlyout, SkyAccelerator, SkyMenuGestures</strong> (<a href="menu-accelerators.html">menu-accelerators.md</a>)</td>
+<td><strong>SkyDrawer</strong></td>
+<td>Slide-in panel for filters, settings, nav (overlay on narrow width)</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td>Pickers</td>
-<td>Date picker, calendar month view, time picker; culture-aware formatting — <strong>SkyDatePicker, SkyCalendar, SkyTimePicker, SkyPickerFormat</strong> (<a href="picker-formatting.html">picker-formatting.md</a>)</td>
+<td><strong>SkyPageHeader</strong></td>
+<td>Title, subtitle, back button, action slots</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td>Lists</td>
-<td>Virtual tree view (checkboxes optional); patterns reused from <code>CheckedListBox</code> — <strong>SkyVirtualTreeView</strong> (<a href="virtual-tree.html">virtual-tree.md</a>)</td>
-</tr>
-<tr>
-<td>Layout</td>
-<td>Card, divider, expander; responsive grid helpers — <strong>SkyCard, SkyDivider, SkyExpander, SkyResponsiveGrid, SkyGridLayout</strong> (<a href="layout.html">layout.md</a>)</td>
-</tr>
-<tr>
-<td>Primitives polish</td>
-<td>Tooltip, popover, loading button state, disabled consistency — <strong>SkyTooltip, SkyPopover, SkyTooltipProperties, SkyButtonProperties</strong> (<a href="primitives-polish.html">primitives-polish.md</a>)</td>
+<td><strong>App templates</strong></td>
+<td><code>SkySettingsPage</code>, <code>SkyListDetailPage</code>, <code>SkyFormPage</code> XAML/C# scaffolds</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 </tbody>
 </table>
-<h3 id="per-control-definition-of-done">Per-control definition of done</h3>
-<ul>
-<li>Theme AXAML (all interaction states).</li>
-<li>Demo page in <code>SkyUI.Demo</code>.</li>
-<li>Headless or unit tests for critical behavior (open/close, selection, validation state).</li>
-<li>Accessibility pass: name, keyboard, focus visible.</li>
-</ul>
-<h3 id="exit-criteria-2">Exit criteria</h3>
-<ul>
-<li>Reference sample: settings + list + form app built only from Sky docs and packages.</li>
-<li>Essentials list published in README/doc site.</li>
-</ul>
-<hr>
-<h2 id="phase-3-multiplatform-and-adaptive-layout-1216-weeks">Phase 3 — Multiplatform and adaptive layout (12–16 weeks)</h2>
-<p><strong>Goal:</strong> Prove desktop, mobile, and browser on Avalonia.</p>
-<h3 id="planned-features-1">Planned features</h3>
+<h3 id="p0-forms-and-input-lob-blocker">P0 — Forms and input (LOB blocker)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyAutocomplete</strong></td>
+<td>Typeahead with async <code>ItemsSource</code>, free text, FormField integration</td>
+</tr>
+<tr>
+<td><strong>SkyComboBoxField</strong></td>
+<td><code>SkyFormField</code> wrapper around styled ComboBox with validation</td>
+</tr>
+<tr>
+<td><strong>SkyNumericUpDown</strong></td>
+<td>Decimal/integer with min/max, step, culture formatting</td>
+</tr>
+<tr>
+<td><strong>SkyDateRangePicker</strong></td>
+<td>Start/end date with presets (today, this week, custom)</td>
+</tr>
+<tr>
+<td><strong>SkyMaskedTextBox</strong></td>
+<td>Phone, credit card, custom mask; pairs with <code>SkyFormField</code></td>
+</tr>
+<tr>
+<td><strong>SkyValidationSummary</strong></td>
+<td>Form-level error list; links to first invalid field</td>
+</tr>
+<tr>
+<td><strong>SkyEmptyState</strong></td>
+<td>Illustration + title + action for empty lists, grids, search</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1-data-presentation-beyond-raw-grid">P1 — Data presentation (beyond raw grid)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyDataPager</strong></td>
+<td>Page size, first/prev/next/last, total count; binds to grid or list</td>
+</tr>
+<tr>
+<td><strong>SkyPagination</strong></td>
+<td>Generic pagination for any <code>ItemsSource</code></td>
+</tr>
+<tr>
+<td><strong>SkyKpiTile</strong></td>
+<td>Metric card (value, delta, sparkline slot) for dashboards</td>
+</tr>
+<tr>
+<td><strong>SkyLoadingOverlay</strong></td>
+<td>Semi-transparent blocker over panel/window during async work</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1-dialogs-and-system-integration">P1 — Dialogs and system integration</h3>
 <table class="table">
 <thead>
 <tr>
@@ -312,44 +460,219 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </thead>
 <tbody>
 <tr>
-<td>TFM matrix</td>
-<td><code>net10.0</code> plus optional <code>net10.0-android</code>, <code>net10.0-ios</code>, browser WASM project</td>
+<td><strong>SkyMessageBox</strong></td>
+<td>Static <code>ShowAsync</code> API: info/warning/error/confirm; maps to <code>SkyDialogHost</code></td>
 </tr>
 <tr>
-<td>Package splitting</td>
-<td>Heavy modules optional for WASM size (<code>SkyUI.Data</code>, <code>SkyUI.Diagram</code>)</td>
+<td><strong>SkyFilePicker</strong></td>
+<td>Styled wrapper over Avalonia storage pickers; consistent API across platforms</td>
 </tr>
 <tr>
-<td><strong>SkyUI.Mobile</strong> (or unified demo)</td>
-<td>Phone: bottom nav; tablet: split; desktop: existing gallery</td>
+<td><strong>SkyClipboard</strong></td>
+<td>Helper for copy/paste text and tabular data from grid selection</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2-lists-and-trees-productivity">P2 — Lists and trees (productivity)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Drag-drop reorder</strong></td>
+<td><code>CheckedListBox</code> / <code>SkyVirtualTreeView</code> row reorder</td>
 </tr>
 <tr>
-<td>Touch policy</td>
-<td>Minimum 44dp targets; press-and-hold where needed on diagram/timeline</td>
+<td><strong>Inline edit</strong></td>
+<td>Tree/list cell edit with commit/cancel</td>
 </tr>
 <tr>
-<td>Safe area</td>
-<td>Attached properties for notched devices and browser viewport</td>
+<td><strong>Context row actions</strong></td>
+<td>Swipe or overflow menu pattern (shared with mobile)</td>
 </tr>
 <tr>
-<td>Input</td>
-<td>Soft keyboard avoidance for text fields; scroll integration</td>
+<td><strong>Async tree loading</strong></td>
+<td><code>IAsyncTreeDataSource</code> with expand-to-load children</td>
+</tr>
+</tbody>
+</table>
+<h3 id="per-control-definition-of-done">Per-control definition of done</h3>
+<ul>
+<li>Theme AXAML (all interaction states + disabled).</li>
+<li>Demo page in <code>SkyUI.Demo</code>.</li>
+<li>Headless or unit tests for open/close, validation, selection.</li>
+<li>Accessibility: name, keyboard, <code>:focus-visible</code>.</li>
+</ul>
+<h3 id="exit-criteria-2">Exit criteria</h3>
+<ul>
+<li><strong>Settings sample app</strong> built only from SkyUI packages: nav + form fields + save snackbar.</li>
+<li><strong>List-detail sample app</strong>: split view + virtual grid or list + detail form.</li>
+<li>Essentials catalog published on doc site with desktop/mobile applicability notes.</li>
+</ul>
+<hr>
+<h2 id="phase-3-mobile-and-adaptive-ux-1418-weeks">Phase 3 — Mobile and adaptive UX (14–18 weeks)</h2>
+<p><strong>Goal:</strong> SkyUI works on <strong>phone and tablet</strong>, not only desktop with a narrow window.</p>
+<p><code>SkyNavigationView</code> bottom mode and breakpoints exist but are <strong>not validated</strong> on iOS/Android. This phase makes mobile a first-class target.</p>
+<h3 id="p0-platform-matrix">P0 — Platform matrix</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Target</th>
+<th>Deliverable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TFM matrix</strong></td>
+<td><code>net10.0-android</code>, <code>net10.0-ios</code>; browser WASM optional</td>
 </tr>
 <tr>
-<td>Browser</td>
-<td>Supported browser list; WASM size budget; lazy-load large demos</td>
+<td><strong>SkyUI.Mobile.Demo</strong></td>
+<td>Phone + tablet sample (or adaptive single app)</td>
 </tr>
 <tr>
-<td>Breakpoints</td>
-<td>Implement <code>DESIGN.md</code> breakpoint table as <code>SkyBreakpoint</code> + markup helpers</td>
+<td><strong>CI builds</strong></td>
+<td>Android + iOS (or at least compile gate); manual test matrix doc</td>
+</tr>
+<tr>
+<td><strong>Package splitting</strong></td>
+<td><code>SkyUI.Data</code> / <code>SkyUI.Diagram</code> optional for WASM size</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p0-mobile-primitives-high-value">P0 — Mobile primitives (high value)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control / API</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkySafeArea</strong></td>
+<td>Attached properties: <code>PaddingTop/Bottom/Left/Right</code> from device insets</td>
+</tr>
+<tr>
+<td><strong>SkyBottomSheet</strong></td>
+<td>Modal sheet from bottom; snap heights; drag-to-dismiss</td>
+</tr>
+<tr>
+<td><strong>SkyActionSheet</strong></td>
+<td>Destructive/primary action list (iOS-style)</td>
+</tr>
+<tr>
+<td><strong>SkyFab</strong></td>
+<td>Floating action button; position above safe area + bottom nav</td>
+</tr>
+<tr>
+<td><strong>SkyPullToRefresh</strong></td>
+<td>Wrapper control for scrollable content</td>
+</tr>
+<tr>
+<td><strong>SkyKeyboardInset</strong></td>
+<td>Adjusts bottom padding when soft keyboard opens</td>
+</tr>
+<tr>
+<td><strong>SkyTouchTarget</strong></td>
+<td>Enforces minimum 44×44 dp via attached property or style</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1-touch-interaction-policy">P1 — Touch interaction policy</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Area</th>
+<th>Policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hit targets</strong></td>
+<td>All interactive Essentials meet 44 dp on mobile density</td>
+</tr>
+<tr>
+<td><strong>Long-press</strong></td>
+<td>Context menu on list/tree rows; connect handle on diagram</td>
+</tr>
+<tr>
+<td><strong>Pinch-zoom</strong></td>
+<td>Diagram surface and image viewer</td>
+</tr>
+<tr>
+<td><strong>Scroll conflict</strong></td>
+<td>Nested scroll (grid inside nav) documented patterns</td>
+</tr>
+<tr>
+<td><strong>Hover vs press</strong></td>
+<td><code>:pointerover</code> styles do not replace pressed state on touch</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1-adaptive-layouts">P1 — Adaptive layouts</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Compact density auto</strong></td>
+<td>Optional auto-switch to <code>SkyDensity.Compact</code> below tablet breakpoint</td>
+</tr>
+<tr>
+<td><strong>Master-detail adaptive</strong></td>
+<td>Split view on tablet/desktop; navigate push on phone</td>
+</tr>
+<tr>
+<td><strong>Sheet vs dialog</strong></td>
+<td><code>SkyDialogHost</code> uses full-screen sheet on narrow width</td>
+</tr>
+<tr>
+<td><strong>Typography scale</strong></td>
+<td>Optional larger body/label on mobile</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2-platform-services-thin-wrappers">P2 — Platform services (thin wrappers)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Service</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ISkyShareService</strong></td>
+<td>Share text/file via platform share sheet</td>
+</tr>
+<tr>
+<td><strong>ISkyHapticService</strong></td>
+<td>Light feedback on confirm/delete (mobile)</td>
+</tr>
+<tr>
+<td><strong>ISkyBrowserService</strong></td>
+<td>Open URL in system browser</td>
+</tr>
+<tr>
+<td><strong>Deep link hooks</strong></td>
+<td>Document Avalonia app link integration (not in-library)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="exit-criteria-3">Exit criteria</h3>
 <ul>
-<li>CI builds mobile and browser targets.</li>
-<li>Documented manual test matrix.</li>
-<li><code>SkyVirtualDataGrid</code> usable on tablet (scroll, column policy).</li>
+<li>Field-service <strong>mobile sample</strong>: bottom nav, form, pull-to-refresh list, bottom sheet filters.</li>
+<li>Tablet sample: split view + virtual grid with touch scroll.</li>
+<li>Documented manual test matrix: iOS, Android, Windows, macOS (minimum).</li>
 </ul>
 <hr>
 <h2 id="phase-4-data-and-productivity-20-weeks-ongoing">Phase 4 — Data and productivity (20+ weeks, ongoing)</h2>
@@ -360,40 +683,59 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 <tr>
 <th>Feature</th>
 <th>Description</th>
+<th>Priority</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Column resize</td>
-<td>Drag handles; optional auto-fit; star columns</td>
+<td>Drag handles; auto-fit; star columns</td>
+<td>P0</td>
 </tr>
 <tr>
 <td>Selection</td>
 <td>Multi-select, checkbox column, select all</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>Async paging</td>
+<td><code>IAsyncVirtualGridDataSource</code>; cancellation; loading row</td>
+<td>P0</td>
 </tr>
 <tr>
 <td>Header UX</td>
-<td>Context menu, column chooser</td>
+<td>Context menu, column chooser, freeze columns</td>
+<td>P1</td>
 </tr>
 <tr>
 <td>Filtering</td>
-<td>Filter row or header filters bound to <code>FilterDocument</code> / expression model</td>
+<td>Filter row or header filters → <code>FilterDocument</code></td>
+<td>P1</td>
+</tr>
+<tr>
+<td>Clipboard</td>
+<td>Copy/paste TSV; optional fill-down</td>
+<td>P1</td>
 </tr>
 <tr>
 <td>Grouping</td>
-<td>Optional group rows and summaries</td>
-</tr>
-<tr>
-<td>Data source</td>
-<td>Async paging contract; cancellation; threading documentation</td>
+<td>Group rows and summaries</td>
+<td>P2</td>
 </tr>
 <tr>
 <td>Export</td>
-<td>CSV (existing), Excel, PDF table via <code>ISkyDataGridExporter</code> plugins</td>
+<td>CSV (existing), Excel, PDF via <code>ISkyDataGridExporter</code></td>
+<td>P1</td>
+</tr>
+<tr>
+<td>Touch</td>
+<td>Horizontal scroll, column resize on touch, row select</td>
+<td>P1</td>
 </tr>
 <tr>
 <td>Accessibility</td>
 <td>Full keyboard navigation; automation peers</td>
+<td>P1</td>
 </tr>
 </tbody>
 </table>
@@ -412,37 +754,49 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </tr>
 <tr>
 <td>Editors</td>
-<td>Per-type value UI (date, enum, numeric)</td>
+<td>Per-type value UI (date range, enum, numeric between)</td>
 </tr>
 <tr>
 <td>SQL</td>
-<td>Parameterized exporters; dialect plugins (SQLite, PostgreSQL, SQL Server)</td>
+<td>Parameterized exporters; dialect plugins</td>
 </tr>
 <tr>
 <td>Integration</td>
-<td>Official sample: filter → grid data source</td>
+<td>Official sample: filter → grid data source → export</td>
 </tr>
 </tbody>
 </table>
-<h3 id="scheduling-optional-phase-4b">Scheduling (optional Phase 4b)</h3>
+<h3 id="visualization-phased">Visualization (phased)</h3>
 <table class="table">
 <thead>
 <tr>
 <th>Feature</th>
 <th>Description</th>
+<th>Approach</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SkyScheduler</td>
-<td>Day/week/month views; reuse timeline rendering where possible</td>
+<td><strong>SkyChart</strong></td>
+<td>Line, bar, area for dashboards</td>
+<td>Lightweight in-house or embed (e.g. LiveCharts2)</td>
+</tr>
+<tr>
+<td><strong>SkyGauge</strong></td>
+<td>Radial/linear gauge for KPIs</td>
+<td>Phase 4b</td>
+</tr>
+<tr>
+<td><strong>SkyScheduler</strong></td>
+<td>Day/week/month calendar views</td>
+<td>Reuse timeline rendering; Phase 4c</td>
 </tr>
 </tbody>
 </table>
 <h3 id="exit-criteria-4">Exit criteria</h3>
 <ul>
-<li>Shipped sample: CRM list + advanced filter + export.</li>
-<li>Performance target documented: e.g. 1M logical rows with smooth scroll on desktop (virtualization on).</li>
+<li>CRM sample: list + advanced filter + grid 2.0 + export.</li>
+<li>Performance target: 1M logical rows, smooth scroll on desktop; 10k rows on tablet.</li>
 </ul>
 <hr>
 <h2 id="phase-5-diagram-pro-1216-weeks">Phase 5 — Diagram Pro (12–16 weeks)</h2>
@@ -460,7 +814,7 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </tr>
 <tr>
 <td>Viewport</td>
-<td>Zoom/pan (wheel + pinch), snap grid</td>
+<td>Zoom/pan (wheel + pinch), snap grid, alignment guides</td>
 </tr>
 <tr>
 <td>Commands</td>
@@ -468,7 +822,7 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </tr>
 <tr>
 <td>Editing</td>
-<td>Multi-select, align/distribute</td>
+<td>Multi-select marquee, align/distribute, grouping</td>
 </tr>
 <tr>
 <td>Model</td>
@@ -486,8 +840,8 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </table>
 <h3 id="exit-criteria-5">Exit criteria</h3>
 <ul>
-<li>Flow-editor demo with router swap documented in API docs.</li>
-<li>Undo/redo covers move, resize, connect, delete.</li>
+<li>Flow-editor demo with router swap and undo/redo.</li>
+<li>Usable on tablet with touch (pinch, two-finger pan).</li>
 </ul>
 <hr>
 <h2 id="phase-6-commercial-hardening-continuous-from-phase-2">Phase 6 — Commercial hardening (continuous from Phase 2)</h2>
@@ -501,7 +855,7 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 <tbody>
 <tr>
 <td>Accessibility</td>
-<td>WCAG 2.1 AA audit; known gaps list; focus and contrast fixes</td>
+<td>WCAG 2.1 AA audit; grid/tree focus model documented</td>
 </tr>
 <tr>
 <td>Localization</td>
@@ -509,11 +863,11 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </tr>
 <tr>
 <td>Security</td>
-<td>Safe filter SQL guidance; no dynamic SQL concatenation in default exporters</td>
+<td>Safe filter SQL guidance; no dynamic SQL in default exporters</td>
 </tr>
 <tr>
 <td>Licensing</td>
-<td>MIT core; optional commercial license for Pro packages if desired</td>
+<td>MIT core; optional commercial license for Pro packages</td>
 </tr>
 <tr>
 <td>Support</td>
@@ -525,18 +879,125 @@ SkyUI.Diagram       Diagram surface and routers (optional split)
 </tr>
 <tr>
 <td>Telemetry</td>
-<td>None in library; opt-in analytics only in demo if any</td>
+<td>None in library</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="priority-matrix-realistic-apps">Priority matrix (realistic apps)</h2>
+<p>Use this when sequencing work across phases.</p>
+<table class="table">
+<thead>
+<tr>
+<th>Priority</th>
+<th>Item</th>
+<th style="text-align: center;">Desktop</th>
+<th style="text-align: center;">Mobile</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0</strong></td>
+<td>CI, NuGet, GitHub Pages</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Unblocks all adoption</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td><code>SkySplitView</code> + list-detail template</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Every LOB app needs master-detail</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td><code>SkyCommandBar</code> + <code>SkyPageHeader</code></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>App chrome beyond raw nav</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td>Autocomplete, numeric, date range, masked input</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Forms in real apps</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td><code>SkyMessageBox</code> + <code>SkyEmptyState</code></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Polish users expect</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td>Safe area + bottom sheet + keyboard inset</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td>Mobile unusable without these</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td>Mobile demo app + CI compile</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td>Proves multiplatform claim</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>Grid 2.0 (resize, multi-select, async paging)</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Data apps</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td><code>SkyDataPager</code>, <code>SkyDrawer</code>, file picker</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Common workflows</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>Touch target policy + pull-to-refresh</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td>Mobile list apps</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>Charts / KPI tiles</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Dashboards</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>Diagram zoom/undo/routers</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Differentiator</td>
+</tr>
+<tr>
+<td><strong>P3</strong></td>
+<td>Scheduler, rich text, PDF viewer</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td>Vertical-specific</td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h2 id="milestone-timeline-indicative">Milestone timeline (indicative)</h2>
-<pre><code class="language-text">Q1–Q2   Phase 0 + Phase 1 start
-Q2–Q3   Phase 1 complete + Phase 2 Essentials (first waves)
-Q3–Q4   Phase 3 multiplatform + Phase 2 completion
-Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
+<pre><code class="language-text">Now–Q2    Phase 0 (CI/NuGet/samples) + Phase 2 shell/forms wave
+Q2–Q3     Phase 3 mobile primitives + adaptive samples
+Q3–Q4     Phase 4 grid 2.0 + filter integration
+Year 2    Phase 5 diagram; Phase 4b charts; Phase 6 continuous
 </code></pre>
-<p>Adjust quarters to team size; Phase 4 can overlap Phase 3 once grid API is stable.</p>
+<p>Phase 3 can start in parallel once Phase 0 CI exists. Phase 4 grid work can overlap Phase 3 after async paging API is designed.</p>
 <hr>
 <h2 id="success-metrics">Success metrics</h2>
 <table class="table">
@@ -553,7 +1014,11 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
 </tr>
 <tr>
 <td>CI reliability</td>
-<td>&gt;99% green main branch</td>
+<td>&gt;99% green <code>main</code> branch</td>
+</tr>
+<tr>
+<td>Reference apps</td>
+<td>≥2 samples (settings + list-detail) + 1 mobile field app</td>
 </tr>
 <tr>
 <td>API coverage</td>
@@ -561,24 +1026,29 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
 </tr>
 <tr>
 <td>a11y</td>
-<td>WCAG AA on Essentials; grid/tree documented exceptions</td>
+<td>WCAG AA on Essentials; grid/tree exceptions documented</td>
 </tr>
 <tr>
 <td>Platforms</td>
-<td>4 targets in CI: Windows, macOS/Linux, Android or iOS, Browser</td>
+<td>4 targets in CI: Windows, macOS/Linux, Android or iOS, Browser (optional)</td>
 </tr>
 <tr>
 <td>Performance</td>
 <td>Published grid virtualization benchmarks</td>
+</tr>
+<tr>
+<td>Mobile</td>
+<td>Safe area + bottom sheet in mobile demo; touch target audit pass</td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h2 id="related-documents">Related documents</h2>
 <ul>
-<li><a href="./README.md">README</a></li>
 <li><a href="current-state.html">Current state</a></li>
 <li><a href="gap-analysis.html">Gap analysis</a></li>
+<li><a href="layout.html">Layout controls</a></li>
+<li><a href="design-tokens.html">Design tokens</a></li>
 </ul>
 </div>
           <footer class="doc-footer">
@@ -596,15 +1066,23 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
                         </li>
                         
                         <li class="toc-h2">
+                          <a href="#progress-snapshot">Progress snapshot</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#largely-complete">Largely complete</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#still-blocking-realistic-apps">Still blocking realistic apps</a>
+                        </li>
+                        
+                        <li class="toc-h2">
                           <a href="#target-package-architecture">Target package architecture</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#phase-0-foundation-812-weeks">Phase 0 — Foundation (8–12 weeks)</a>
-                        </li>
-                        
-                        <li class="toc-h3">
-                          <a href="#deliverables">Deliverables</a>
+                          <a href="#phase-0-foundation-48-weeks-remaining">Phase 0 — Foundation (4–8 weeks remaining)</a>
                         </li>
                         
                         <li class="toc-h3">
@@ -612,11 +1090,7 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#phase-1-design-system-20-1014-weeks">Phase 1 — Design system 2.0 (10–14 weeks)</a>
-                        </li>
-                        
-                        <li class="toc-h3">
-                          <a href="#planned-features">Planned features</a>
+                          <a href="#phase-1-design-system-polish-46-weeks">Phase 1 — Design system polish (4–6 weeks)</a>
                         </li>
                         
                         <li class="toc-h3">
@@ -624,11 +1098,27 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#phase-2-essentials-catalog-1624-weeks-parallel-sprints">Phase 2 — Essentials catalog (16–24 weeks, parallel sprints)</a>
+                          <a href="#phase-2-essentials-wave-2-realistic-app-ui-1420-weeks">Phase 2 — Essentials wave 2: realistic app UI (14–20 weeks)</a>
                         </li>
                         
                         <li class="toc-h3">
-                          <a href="#sprint-themes">Sprint themes</a>
+                          <a href="#p0-app-shell-and-navigation-desktop-tablet">P0 — App shell and navigation (desktop + tablet)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p0-forms-and-input-lob-blocker">P0 — Forms and input (LOB blocker)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p1-data-presentation-beyond-raw-grid">P1 — Data presentation (beyond raw grid)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p1-dialogs-and-system-integration">P1 — Dialogs and system integration</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p2-lists-and-trees-productivity">P2 — Lists and trees (productivity)</a>
                         </li>
                         
                         <li class="toc-h3">
@@ -640,11 +1130,27 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#phase-3-multiplatform-and-adaptive-layout-1216-weeks">Phase 3 — Multiplatform and adaptive layout (12–16 weeks)</a>
+                          <a href="#phase-3-mobile-and-adaptive-ux-1418-weeks">Phase 3 — Mobile and adaptive UX (14–18 weeks)</a>
                         </li>
                         
                         <li class="toc-h3">
-                          <a href="#planned-features">Planned features</a>
+                          <a href="#p0-platform-matrix">P0 — Platform matrix</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p0-mobile-primitives-high-value">P0 — Mobile primitives (high value)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p1-touch-interaction-policy">P1 — Touch interaction policy</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p1-adaptive-layouts">P1 — Adaptive layouts</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#p2-platform-services-thin-wrappers">P2 — Platform services (thin wrappers)</a>
                         </li>
                         
                         <li class="toc-h3">
@@ -664,7 +1170,7 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
                         </li>
                         
                         <li class="toc-h3">
-                          <a href="#scheduling-optional-phase-4b">Scheduling (optional Phase 4b)</a>
+                          <a href="#visualization-phased">Visualization (phased)</a>
                         </li>
                         
                         <li class="toc-h3">
@@ -681,6 +1187,10 @@ Year 2  Phase 4 Data + Phase 5 Diagram; Phase 6 continuous
                         
                         <li class="toc-h2">
                           <a href="#phase-6-commercial-hardening-continuous-from-phase-2">Phase 6 — Commercial hardening (continuous from Phase 2)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#priority-matrix-realistic-apps">Priority matrix (realistic apps)</a>
                         </li>
                         
                         <li class="toc-h2">

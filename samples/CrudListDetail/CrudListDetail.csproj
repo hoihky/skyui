@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SkyUI.Samples.CrudListDetail</RootNamespace>
+    <AssemblyName>SkyUI.CrudListDetail</AssemblyName>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <IsPackable>false</IsPackable>
+    <SkyUIPackageVersion>0.1.0-local</SkyUIPackageVersion>
+    <SkyUISampleData>true</SkyUISampleData>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <Import Project="..\SkyUI.SampleReferences.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\SampleInfrastructure\SampleInfrastructure.csproj" />
+  </ItemGroup>
+</Project>

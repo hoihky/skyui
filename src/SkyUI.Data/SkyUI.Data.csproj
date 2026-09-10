@@ -4,6 +4,8 @@
     <RootNamespace>SkyUI.Data</RootNamespace>
     <AssemblyName>SkyUI.Data</AssemblyName>
     <Description>SkyUI data controls: virtual grid and filter editor.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageId>SkyUI.Data</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

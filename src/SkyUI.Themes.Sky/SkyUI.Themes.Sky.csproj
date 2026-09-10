@@ -4,6 +4,8 @@
     <RootNamespace>SkyUI.Themes.Sky</RootNamespace>
     <AssemblyName>SkyUI.Themes.Sky</AssemblyName>
     <Description>Sky design system theme package: semantic tokens, ContentFirstDark preset, SkyDark palettes.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageId>SkyUI.Themes.Sky</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

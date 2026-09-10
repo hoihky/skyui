@@ -1,0 +1,53 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sky="https://skyui.dev"
+        xmlns:vm="using:SkyUI.Samples.SettingsApp.ViewModels"
+        xmlns:views="using:SkyUI.Samples.SettingsApp.Views"
+        x:Class="SkyUI.Samples.SettingsApp.Views.ShellWindow"
+        x:DataType="vm:ShellViewModel"
+        Title="SkyUI Settings"
+        Width="960"
+        Height="640"
+        MinWidth="720"
+        MinHeight="480"
+        Background="{DynamicResource SkyBackgroundBrush}"
+        FontFamily="{DynamicResource SkyFontFamilyUi}">
+  <Grid RowDefinitions="*,Auto">
+    <sky:SkyNavigationView Grid.Row="0"
+                           Header="Settings"
+                           SelectedIndex="{Binding SelectedNavigationIndex}">
+      <sky:SkyNavigationViewItem Label="Profile" IconKind="Settings">
+        <views:ProfileSettingsView DataContext="{Binding NavigationPages[0]}" />
+      </sky:SkyNavigationViewItem>
+      <sky:SkyNavigationViewItem Label="Appearance" IconKind="Sliders">
+        <views:AppearanceSettingsView DataContext="{Binding NavigationPages[1]}" />
+      </sky:SkyNavigationViewItem>
+      <sky:SkyNavigationViewItem Label="Notifications" IconKind="List">
+        <views:NotificationSettingsView DataContext="{Binding NavigationPages[2]}" />
+      </sky:SkyNavigationViewItem>
+    </sky:SkyNavigationView>
+
+    <Border Grid.Row="1"
+            Padding="16,12"
+            Background="{DynamicResource SkySurfaceBrush}"
+            BorderBrush="{DynamicResource SkyBorderBrush}"
+            BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Right">
+        <Button Classes="sky sky-outlined"
+                Content="Reset"
+                Command="{Binding ResetCommand}" />
+        <Button Classes="sky sky-primary"
+                Content="Save settings"
+                Command="{Binding SaveCommand}" />
+      </StackPanel>
+    </Border>
+
+    <sky:SkySnackbarHost x:Name="SnackbarHostControl"
+                         Grid.Row="0"
+                         Grid.RowSpan="2"
+                         VerticalAlignment="Bottom"
+                         HorizontalAlignment="Center"
+                         Margin="0,0,0,72"
+                         IsHitTestVisible="False" />
+  </Grid>
+</Window>

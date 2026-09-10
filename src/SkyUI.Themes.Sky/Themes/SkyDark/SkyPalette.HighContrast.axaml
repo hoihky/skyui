@@ -30,4 +30,5 @@
   <Color x:Key="SkyPaletteAvatarFallback">#FFFFFF</Color>
   <Color x:Key="SkyPaletteBadgeNeutral">#000000</Color>
   <Color x:Key="SkyPaletteFocusRing">#FFFF00</Color>
+  <Color x:Key="SkyPaletteScrim">#CC000000</Color>
 </ResourceDictionary>

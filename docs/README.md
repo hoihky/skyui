@@ -18,6 +18,7 @@ Product and engineering documentation for evolving SkyUI into a commercial-grade
 | [Virtual tree](./virtual-tree.html) | SkyVirtualTreeView MVVM patterns. |
 | [Primitives polish](./primitives-polish.html) | Tooltips, popovers, loading button states. |
 | [Rename strategy](./rename-strategy.html) | Sky brand migration notes. |
+| [Legacy sunset](./legacy-sunset.html) | Spotify alias deprecation timeline (1.x). |
 | [Avalonia 12 upgrade](./avalonia-12-upgrade.html) | Avalonia 12 migration notes. |
 
 ## Source layout

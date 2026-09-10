@@ -4,6 +4,8 @@
     <RootNamespace>SkyUI.Icons</RootNamespace>
     <AssemblyName>SkyUI.Icons</AssemblyName>
     <Description>SkyUI icon glyphs, sizes (16/20/24), and optional symbol font helpers.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageId>SkyUI.Icons</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

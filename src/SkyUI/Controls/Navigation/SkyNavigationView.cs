@@ -4,9 +4,11 @@ using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Metadata;
+using SkyUI.Core.Theming;
 
 namespace SkyUI.Controls;
 
@@ -54,13 +56,15 @@ public class SkyNavigationView : TemplatedControl
     public static readonly RoutedEvent<RoutedEventArgs> SelectionChangedEvent =
         RoutedEvent.Register<SkyNavigationView, RoutedEventArgs>(nameof(SelectionChanged), RoutingStrategies.Bubble);
 
-    private readonly AvaloniaList<SkyNavigationViewItem> _items = new();
-    private Control? _root;
-    private ListBox? _sideNavList;
-    private ListBox? _bottomNavList;
-    private Control? _sideNavHost;
-    private Control? _bottomNavHost;
-    private bool _syncingSelection;
+    private readonly AvaloniaList<SkyNavigationViewItem> items = new();
+    private Control? root;
+    private ListBox? sideNavList;
+    private ListBox? bottomNavList;
+    private Control? sideNavHost;
+    private Control? bottomNavHost;
+    private ContentPresenter? contentPresenter;
+    private bool syncingSelection;
+    private CancellationTokenSource? contentAnimationCancellation;
 
     static SkyNavigationView()
     {
@@ -71,11 +75,11 @@ public class SkyNavigationView : TemplatedControl
 
     public SkyNavigationView()
     {
-        _items.CollectionChanged += OnItemsCollectionChanged;
+        items.CollectionChanged += OnItemsCollectionChanged;
     }
 
     [Content]
-    public IList Items => _items;
+    public IList Items => items;
 
     public SkyNavigationDisplayMode DisplayMode
     {
@@ -129,17 +133,18 @@ public class SkyNavigationView : TemplatedControl
     {
         base.OnApplyTemplate(e);
 
-        DetachNavHandlers(_sideNavList);
-        DetachNavHandlers(_bottomNavList);
+        DetachNavHandlers(sideNavList);
+        DetachNavHandlers(bottomNavList);
 
-        _root = e.NameScope.Find(RootPartName) as Control;
-        _sideNavList = e.NameScope.Find(SideNavListPartName) as ListBox;
-        _bottomNavList = e.NameScope.Find(BottomNavListPartName) as ListBox;
-        _sideNavHost = e.NameScope.Find(SideNavHostPartName) as Control;
-        _bottomNavHost = e.NameScope.Find(BottomNavHostPartName) as Control;
+        root = e.NameScope.Find(RootPartName) as Control;
+        sideNavList = e.NameScope.Find(SideNavListPartName) as ListBox;
+        bottomNavList = e.NameScope.Find(BottomNavListPartName) as ListBox;
+        sideNavHost = e.NameScope.Find(SideNavHostPartName) as Control;
+        bottomNavHost = e.NameScope.Find(BottomNavHostPartName) as Control;
+        contentPresenter = e.NameScope.Find(ContentPartName) as ContentPresenter;
 
-        AttachNavHandlers(_sideNavList);
-        AttachNavHandlers(_bottomNavList);
+        AttachNavHandlers(sideNavList);
+        AttachNavHandlers(bottomNavList);
 
         SyncNavItemsSource();
         ApplyDisplayMode();
@@ -191,19 +196,19 @@ public class SkyNavigationView : TemplatedControl
 
     private void SyncNavItemsSource()
     {
-        var items = _items.ToList();
-        if (_sideNavList is not null)
-            _sideNavList.ItemsSource = items;
-        if (_bottomNavList is not null)
-            _bottomNavList.ItemsSource = items;
+        var navItems = items.ToList();
+        if (sideNavList is not null)
+            sideNavList.ItemsSource = navItems;
+        if (bottomNavList is not null)
+            bottomNavList.ItemsSource = navItems;
 
-        if (SelectedIndex < 0 && items.Count > 0)
+        if (SelectedIndex < 0 && navItems.Count > 0)
             SelectedIndex = 0;
     }
 
     private void OnNavSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (_syncingSelection || sender is not ListBox listBox)
+        if (syncingSelection || sender is not ListBox listBox)
             return;
 
         if (listBox.SelectedItem is SkyNavigationViewItem item)
@@ -213,9 +218,9 @@ public class SkyNavigationView : TemplatedControl
     private void OnSelectedIndexChanged(AvaloniaPropertyChangedEventArgs e)
     {
         var index = e.GetNewValue<int>();
-        var items = _items.ToList();
-        if (index >= 0 && index < items.Count)
-            SelectedItem = items[index];
+        var navItems = items.ToList();
+        if (index >= 0 && index < navItems.Count)
+            SelectedItem = navItems[index];
         else if (index < 0)
             SelectedItem = null;
     }
@@ -223,29 +228,60 @@ public class SkyNavigationView : TemplatedControl
     private void OnSelectedItemChanged(AvaloniaPropertyChangedEventArgs e)
     {
         var item = e.NewValue as SkyNavigationViewItem;
-        var items = _items.ToList();
-        var index = item is null ? -1 : items.IndexOf(item);
+        var navItems = items.ToList();
+        var index = item is null ? -1 : navItems.IndexOf(item);
         if (index != SelectedIndex)
             SetCurrentValue(SelectedIndexProperty, index);
 
         SetCurrentValue(ContentProperty, item?.Content);
         SyncSelectionToNavLists();
+        _ = AnimateContentChangeAsync();
         RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
     }
 
     private void SyncSelectionToNavLists()
     {
-        _syncingSelection = true;
+        syncingSelection = true;
         try
         {
-            if (_sideNavList is not null)
-                _sideNavList.SelectedItem = SelectedItem;
-            if (_bottomNavList is not null)
-                _bottomNavList.SelectedItem = SelectedItem;
+            if (sideNavList is not null)
+                sideNavList.SelectedItem = SelectedItem;
+            if (bottomNavList is not null)
+                bottomNavList.SelectedItem = SelectedItem;
         }
         finally
         {
-            _syncingSelection = false;
+            syncingSelection = false;
+        }
+    }
+
+    private async Task AnimateContentChangeAsync()
+    {
+        if (contentPresenter is null)
+            return;
+
+        contentAnimationCancellation?.Cancel();
+        contentAnimationCancellation = new CancellationTokenSource();
+        var token = contentAnimationCancellation.Token;
+
+        try
+        {
+            await SkyMotionAnimator.Default.FadeAsync(
+                contentPresenter,
+                contentPresenter.Opacity,
+                0,
+                SkyMotionDurations.Fast,
+                token);
+            await SkyMotionAnimator.Default.FadeAsync(
+                contentPresenter,
+                0,
+                1,
+                SkyMotionDurations.Fast,
+                token);
+        }
+        catch (OperationCanceledException)
+        {
+            contentPresenter.Opacity = 1;
         }
     }
 
@@ -257,28 +293,28 @@ public class SkyNavigationView : TemplatedControl
 
         var useBottom = mode == SkyNavigationDisplayMode.Bottom;
 
-        if (_sideNavHost is not null)
+        if (sideNavHost is not null)
         {
-            _sideNavHost.IsVisible = !useBottom;
-            _sideNavHost.Width = mode == SkyNavigationDisplayMode.Compact
+            sideNavHost.IsVisible = !useBottom;
+            sideNavHost.Width = mode == SkyNavigationDisplayMode.Compact
                 ? CompactSideNavWidth
                 : ExpandedSideNavWidth;
         }
 
-        if (_bottomNavHost is not null)
-            _bottomNavHost.IsVisible = useBottom;
+        if (bottomNavHost is not null)
+            bottomNavHost.IsVisible = useBottom;
 
-        if (_root is Grid root)
+        if (root is Grid grid)
         {
             if (useBottom)
             {
-                root.ColumnDefinitions[0].Width = new GridLength(0);
-                root.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                grid.ColumnDefinitions[0].Width = new GridLength(0);
+                grid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
             }
             else
             {
-                root.ColumnDefinitions[0].Width = GridLength.Auto;
-                root.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                grid.ColumnDefinitions[0].Width = GridLength.Auto;
+                grid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
             }
         }
 

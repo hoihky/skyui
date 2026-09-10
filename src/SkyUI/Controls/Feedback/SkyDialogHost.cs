@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
+using SkyUI.Core.Theming;
 
 namespace SkyUI.Controls;
 
@@ -13,6 +15,7 @@ public class SkyDialogHost : TemplatedControl
     public const string PrimaryButtonPartName = "PART_PrimaryButton";
     public const string SecondaryButtonPartName = "PART_SecondaryButton";
     public const string OverlayPartName = "PART_Overlay";
+    public const string DialogPanelPartName = "PART_DialogPanel";
 
     public static readonly StyledProperty<bool> IsOpenProperty =
         AvaloniaProperty.Register<SkyDialogHost, bool>(nameof(IsOpen));
@@ -35,10 +38,23 @@ public class SkyDialogHost : TemplatedControl
     public static readonly RoutedEvent<RoutedEventArgs> PrimaryActionEvent =
         RoutedEvent.Register<SkyDialogHost, RoutedEventArgs>(nameof(PrimaryAction), RoutingStrategies.Bubble);
 
-    private Button? _closeButton;
-    private Button? _primaryButton;
-    private Button? _secondaryButton;
-    private Panel? _overlay;
+    private Button? closeButton;
+    private Button? primaryButton;
+    private Button? secondaryButton;
+    private Panel? overlayPanel;
+    private Control? dialogPanel;
+    private CancellationTokenSource? animationCancellation;
+    private bool templateApplied;
+
+    static SkyDialogHost()
+    {
+        IsOpenProperty.Changed.AddClassHandler<SkyDialogHost>((host, e) => _ = host.OnIsOpenChangedAsync(e));
+    }
+
+    public SkyDialogHost()
+    {
+        IsHitTestVisible = false;
+    }
 
     public bool IsOpen
     {
@@ -86,6 +102,9 @@ public class SkyDialogHost : TemplatedControl
 
     public void Close()
     {
+        if (!IsOpen)
+            return;
+
         IsOpen = false;
         RaiseEvent(new RoutedEventArgs(ClosedEvent));
     }
@@ -94,34 +113,125 @@ public class SkyDialogHost : TemplatedControl
     {
         base.OnApplyTemplate(e);
 
-        if (_closeButton is not null)
-            _closeButton.Click -= OnCloseClick;
+        if (closeButton is not null)
+            closeButton.Click -= OnCloseClick;
 
-        if (_primaryButton is not null)
-            _primaryButton.Click -= OnPrimaryClick;
+        if (primaryButton is not null)
+            primaryButton.Click -= OnPrimaryClick;
 
-        if (_secondaryButton is not null)
-            _secondaryButton.Click -= OnSecondaryClick;
+        if (secondaryButton is not null)
+            secondaryButton.Click -= OnSecondaryClick;
 
-        if (_overlay is not null)
-            _overlay.PointerPressed -= OnOverlayPointerPressed;
+        if (overlayPanel is not null)
+            overlayPanel.PointerPressed -= OnOverlayPointerPressed;
 
-        _closeButton = e.NameScope.Find(CloseButtonPartName) as Button;
-        _primaryButton = e.NameScope.Find(PrimaryButtonPartName) as Button;
-        _secondaryButton = e.NameScope.Find(SecondaryButtonPartName) as Button;
-        _overlay = e.NameScope.Find(OverlayPartName) as Panel;
+        closeButton = e.NameScope.Find(CloseButtonPartName) as Button;
+        primaryButton = e.NameScope.Find(PrimaryButtonPartName) as Button;
+        secondaryButton = e.NameScope.Find(SecondaryButtonPartName) as Button;
+        overlayPanel = e.NameScope.Find(OverlayPartName) as Panel;
+        dialogPanel = e.NameScope.Find(DialogPanelPartName) as Control;
 
-        if (_closeButton is not null)
-            _closeButton.Click += OnCloseClick;
+        if (closeButton is not null)
+            closeButton.Click += OnCloseClick;
 
-        if (_primaryButton is not null)
-            _primaryButton.Click += OnPrimaryClick;
+        if (primaryButton is not null)
+            primaryButton.Click += OnPrimaryClick;
 
-        if (_secondaryButton is not null)
-            _secondaryButton.Click += OnSecondaryClick;
+        if (secondaryButton is not null)
+            secondaryButton.Click += OnSecondaryClick;
 
-        if (_overlay is not null)
-            _overlay.PointerPressed += OnOverlayPointerPressed;
+        if (overlayPanel is not null)
+            overlayPanel.PointerPressed += OnOverlayPointerPressed;
+
+        templateApplied = true;
+        if (IsOpen)
+        {
+            IsHitTestVisible = true;
+            _ = PlayOpenAnimationAsync(CancellationToken.None);
+        }
+        else
+        {
+            SetClosedState();
+        }
+    }
+
+    private async Task OnIsOpenChangedAsync(AvaloniaPropertyChangedEventArgs change)
+    {
+        var isOpen = change.GetNewValue<bool>();
+
+        if (!templateApplied || overlayPanel is null || dialogPanel is null)
+        {
+            IsHitTestVisible = isOpen;
+            return;
+        }
+
+        animationCancellation?.Cancel();
+        animationCancellation = new CancellationTokenSource();
+        var token = animationCancellation.Token;
+
+        try
+        {
+            if (isOpen)
+            {
+                IsHitTestVisible = true;
+                await PlayOpenAnimationAsync(token);
+            }
+            else
+            {
+                await PlayCloseAnimationAsync(token);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Superseded by a newer transition.
+        }
+        finally
+        {
+            if (!IsOpen)
+                SetClosedState();
+        }
+    }
+
+    private async Task PlayOpenAnimationAsync(CancellationToken token)
+    {
+        overlayPanel!.IsVisible = true;
+        overlayPanel.IsHitTestVisible = true;
+        overlayPanel.Opacity = 0;
+        dialogPanel!.Opacity = 0;
+
+        await Task.WhenAll(
+            SkyMotionAnimator.Default.FadeAsync(overlayPanel, 0, 1, SkyMotionDurations.Enter, token),
+            SkyMotionAnimator.Default.ScaleAsync(dialogPanel, 0.96, 1, SkyMotionDurations.Enter, token),
+            SkyMotionAnimator.Default.FadeAsync(dialogPanel, 0, 1, SkyMotionDurations.Enter, token));
+    }
+
+    private async Task PlayCloseAnimationAsync(CancellationToken token)
+    {
+        await Task.WhenAll(
+            SkyMotionAnimator.Default.FadeAsync(dialogPanel!, dialogPanel!.Opacity, 0, SkyMotionDurations.Exit, token),
+            SkyMotionAnimator.Default.FadeAsync(overlayPanel!, overlayPanel!.Opacity, 0, SkyMotionDurations.Exit, token));
+    }
+
+    private void SetClosedState()
+    {
+        IsHitTestVisible = false;
+
+        if (overlayPanel is null)
+            return;
+
+        overlayPanel.IsVisible = false;
+        overlayPanel.IsHitTestVisible = false;
+        overlayPanel.Opacity = 0;
+
+        if (dialogPanel is null)
+            return;
+
+        dialogPanel.Opacity = 0;
+        if (dialogPanel.RenderTransform is ScaleTransform scale)
+        {
+            scale.ScaleX = 0.96;
+            scale.ScaleY = 0.96;
+        }
     }
 
     private void OnPrimaryClick(object? sender, RoutedEventArgs e) =>
@@ -133,7 +243,7 @@ public class SkyDialogHost : TemplatedControl
 
     private void OnOverlayPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (e.Source == _overlay)
+        if (e.Source == overlayPanel)
             Close();
     }
 }

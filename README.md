@@ -75,6 +75,32 @@ For data controls, swap the style include:
 
 Constants are also available in code: `SkyThemeUris.Theme`, `SkyThemeUris.ThemeWithData`.
 
+## Local NuGet packages and sample apps
+
+SkyUI libraries can be packed to a **local feed** (not published to nuget.org):
+
+```bash
+./scripts/pack-local.sh
+```
+
+Packages are written to `artifacts/packages` at version **0.1.0-local**. The root `nuget.config` registers this folder as the `skyui-local` source.
+
+Reference apps that consume SkyUI via `PackageReference`:
+
+| Sample | Demonstrates |
+|--------|----------------|
+| `samples/SettingsApp` | Navigation shell, form fields, validators, theme/density/accent, snackbar, JSON settings |
+| `samples/CrudListDetail` | Master-detail layout, virtual grid, repository pattern, CRUD MVVM |
+| `samples/ThemeBuilderApp` | Live theme builder: variant, density, accent without copying theme XAML |
+
+```bash
+dotnet run --project samples/SettingsApp
+dotnet run --project samples/CrudListDetail
+dotnet run --project samples/ThemeBuilderApp
+```
+
+See [samples/README.md](samples/README.md) for architecture notes (MVVM, DI, SOLID).
+
 ## Build and run
 
 ```bash
@@ -103,21 +129,25 @@ src/
 tests/
   SkyUI.UnitTests/
   SkyUI.HeadlessTests/
-doc/                    Product docs, roadmap, control guides
+samples/
+  SettingsApp/          Settings shell (NuGet-consuming reference app)
+  CrudListDetail/       List-detail CRUD (NuGet-consuming reference app)
+  SampleInfrastructure/ Shared MVVM primitives for samples
+docs/                   Product docs, roadmap, control guides
 ```
 
 ## Documentation
 
 | Document | Description |
 |----------|-------------|
-| [doc/index.html](doc/index.html) | SDK introduction — architecture and programming guide |
-| [doc/README.md](doc/README.md) | Documentation index |
-| [doc/current-state.html](doc/current-state.html) | Repository inventory |
-| [doc/development-roadmap.html](doc/development-roadmap.html) | Phased product plan |
-| [doc/design-tokens.html](doc/design-tokens.html) | Token layer and theming API |
+| [docs/index.html](docs/index.html) | SDK introduction — architecture and programming guide |
+| [docs/README.md](docs/README.md) | Documentation index |
+| [docs/pages/current-state.html](docs/pages/current-state.html) | Repository inventory |
+| [docs/pages/development-roadmap.html](docs/pages/development-roadmap.html) | Phased product plan |
+| [docs/pages/design-tokens.html](docs/pages/design-tokens.html) | Token layer and theming API |
 | [src/SkyUI.Themes.Sky/DESIGN.md](src/SkyUI.Themes.Sky/DESIGN.md) | Visual specification (ContentFirstDark) |
 
-Control guides (menus, pickers, layout, primitives, and more) live under `doc/`.
+Control guides (menus, pickers, layout, primitives, and more) live under `docs/pages/`.
 
 ## License
 

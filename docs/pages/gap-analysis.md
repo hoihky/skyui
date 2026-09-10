@@ -138,15 +138,18 @@ Many primitives are **styled Avalonia controls** in the Spotify theme but lack a
 
 | Priority | Item | Rationale |
 |----------|------|-----------|
-| P0 | CI, tests, NuGet, README | Enables all other work |
-| P0 | Design tokens + light/high-contrast themes | Branding, accessibility, sales |
-| P1 | Navigation shell, dialogs, snackbar | Required for real apps |
-| P1 | Date/time pickers, form field wrapper | LOB blocker |
-| P1 | Mobile/browser demo + adaptive navigation | Validates multiplatform claim |
-| P2 | Grid 2.0 + filter integration | Extends existing strength |
-| P2 | Themed virtual tree view | Complements `CheckedListBox` |
-| P3 | Diagram zoom/undo/routers | Completes differentiator |
-| P3 | Charts | High demand; consider embed or partner initially |
+| P0 | CI, NuGet, GitHub Pages | Enables all other work |
+| P0 | App shell: command bar, split view, drawer, page header | Required for realistic desktop/tablet apps |
+| P0 | Forms wave 2: autocomplete, numeric, date range, masked input, validation summary | LOB blocker beyond current `SkyFormField` |
+| P0 | Mobile: safe area, bottom sheet, keyboard inset, touch targets | Mobile unusable without these |
+| P0 | Mobile demo + CI compile matrix | Validates multiplatform claim |
+| P1 | Grid 2.0 + filter integration + data pager | Extends existing strength |
+| P1 | Message box, empty state, file picker, loading overlay | Expected product polish |
+| P2 | Charts / KPI tiles | Dashboard demand; embed or partner initially |
+| P2 | Diagram zoom/undo/routers | Completes differentiator |
+| P3 | Scheduler, rich text, PDF viewer | Vertical-specific |
+
+See [development-roadmap.md](development-roadmap.md) for phased delivery and desktop/mobile applicability.
 
 ---
 

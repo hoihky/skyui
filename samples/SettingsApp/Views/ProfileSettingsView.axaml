@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Samples.SettingsApp.ViewModels"
+             x:Class="SkyUI.Samples.SettingsApp.Views.ProfileSettingsView"
+             x:DataType="vm:ProfileSettingsViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="20" MaxWidth="520" Margin="8">
+      <TextBlock Classes="sky-feature-heading" Text="Profile" />
+      <TextBlock Classes="sky-body-secondary"
+                 TextWrapping="Wrap"
+                 Text="Update your display name and contact email. Settings persist to local application data." />
+
+      <sky:SkyFormField Label="Display name"
+                        Hint="Shown in the app header"
+                        IsRequired="True">
+        <TextBox Classes="sky"
+                 Text="{Binding DisplayName}"
+                 PlaceholderText="Your name" />
+      </sky:SkyFormField>
+
+      <sky:SkyFormField Label="Email"
+                        Hint="Used for account recovery"
+                        IsRequired="True"
+                        ErrorMessage="{Binding EmailError}"
+                        Validator="{Binding EmailValidator}">
+        <TextBox Classes="sky"
+                 Text="{Binding Email}"
+                 PlaceholderText="name@example.com" />
+      </sky:SkyFormField>
+
+      <sky:SkyFormField Label="Bio"
+                        Hint="Optional short description">
+        <TextBox Classes="sky"
+                 Text="{Binding Bio}"
+                 AcceptsReturn="True"
+                 MinHeight="96"
+                 TextWrapping="Wrap"
+                 PlaceholderText="Tell us about your project" />
+      </sky:SkyFormField>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

@@ -26,6 +26,7 @@
       <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/SkyResources.Variant.axaml" />
     </ResourceDictionary.MergedDictionaries>
     <Thickness x:Key="SkyFocusRingThickness">3</Thickness>
+    <Thickness x:Key="SkyFeedbackBorderThickness">2</Thickness>
   </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

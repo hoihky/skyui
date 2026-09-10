@@ -1,0 +1,29 @@
+<Project>
+  <!--
+    Shared SkyUI references for sample apps.
+    Inside the repository: project references (always see latest APIs).
+    Outside / CI NuGet validation: set UseSkyUIProjectReferences=false and run ./scripts/pack-local.sh.
+  -->
+  <PropertyGroup Condition="'$(UseSkyUIProjectReferences)' == ''">
+    <UseSkyUIProjectReferences Condition="Exists('$(MSBuildThisFileDirectory)../src/SkyUI/SkyUI.csproj')">true</UseSkyUIProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(UseSkyUIProjectReferences)' == 'true'">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../src/SkyUI.Core/SkyUI.Core.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../src/SkyUI.Fonts/SkyUI.Fonts.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../src/SkyUI.Icons/SkyUI.Icons.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../src/SkyUI/SkyUI.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../src/SkyUI.Themes.Sky/SkyUI.Themes.Sky.csproj" />
+    <ProjectReference Condition="'$(SkyUISampleData)' == 'true'"
+                      Include="$(MSBuildThisFileDirectory)../src/SkyUI.Data/SkyUI.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseSkyUIProjectReferences)' != 'true'">
+    <PackageReference Include="SkyUI.Core" Version="$(SkyUIPackageVersion)" />
+    <PackageReference Include="SkyUI" Version="$(SkyUIPackageVersion)" />
+    <PackageReference Include="SkyUI.Fonts" Version="$(SkyUIPackageVersion)" />
+    <PackageReference Include="SkyUI.Themes.Sky" Version="$(SkyUIPackageVersion)" />
+    <PackageReference Condition="'$(SkyUISampleData)' == 'true'"
+                      Include="SkyUI.Data" Version="$(SkyUIPackageVersion)" />
+  </ItemGroup>
+</Project>

@@ -4,6 +4,8 @@
     <RootNamespace>SkyUI</RootNamespace>
     <AssemblyName>SkyUI</AssemblyName>
     <Description>SkyUI essentials controls and default theme integration hooks.</Description>
+    <IsPackable>true</IsPackable>
+    <PackageId>SkyUI</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
