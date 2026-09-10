@@ -102,4 +102,64 @@ public class SkyFormFieldTests
         var field = new SkyFormField();
         Assert.True(field.Validate());
     }
+
+    [Fact]
+    public void GetInputValue_reads_masked_text_box_raw_text()
+    {
+        var field = new SkyFormField
+        {
+            Content = new SkyMaskedTextBox
+            {
+                MaskKind = SkyInputMaskKind.Phone,
+                RawText = "5551234567"
+            }
+        };
+
+        Assert.Equal("5551234567", field.GetInputValue());
+    }
+
+    [Fact]
+    public void GetInputValue_reads_numeric_up_down_value()
+    {
+        var field = new SkyFormField
+        {
+            Content = new SkyNumericUpDown { Value = 42 }
+        };
+
+        Assert.Equal(42m, field.GetInputValue());
+    }
+
+    [Fact]
+    public void GetInputValue_reads_autocomplete_selection()
+    {
+        var field = new SkyFormField
+        {
+            Content = new SkyAutocomplete
+            {
+                Text = "typed",
+                SelectedItem = "selected"
+            }
+        };
+
+        Assert.Equal("selected", field.GetInputValue());
+    }
+
+    [Fact]
+    public void GetInputValue_reads_date_range_picker()
+    {
+        var start = DateTime.Today;
+        var end = DateTime.Today.AddDays(7);
+        var field = new SkyFormField
+        {
+            Content = new SkyDateRangePicker
+            {
+                StartDate = start,
+                EndDate = end
+            }
+        };
+
+        var value = Assert.IsType<SkyDateRangeValue>(field.GetInputValue());
+        Assert.Equal(start, value.Start);
+        Assert.Equal(end, value.End);
+    }
 }

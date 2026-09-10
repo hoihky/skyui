@@ -163,40 +163,41 @@
     <Setter Property="VerticalAlignment" Value="Stretch" />
     <Setter Property="Template">
       <ControlTemplate>
-        <Panel HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch">
+        <Panel>
           <Panel Name="PART_Overlay"
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Stretch"
                  Background="{DynamicResource SkyScrimBrush}"
                  IsVisible="False"
-                 IsHitTestVisible="False" />
-          <Border Name="PART_DrawerPanel"
-                  Width="{TemplateBinding DrawerWidth}"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Stretch"
-                  Background="{DynamicResource SkySurfaceElevatedBrush}"
-                  BorderBrush="{DynamicResource SkyBorderBrush}"
-                  BorderThickness="{DynamicResource SkyFeedbackBorderThickness}"
-                  BoxShadow="{DynamicResource SkyElevation2}">
-            <DockPanel LastChildFill="True">
-              <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="16,12,12,8">
-                <TextBlock Text="{TemplateBinding Title}"
-                           Classes="sky-feature-heading"
-                           VerticalAlignment="Center"
-                           IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
-                <Button Name="PART_CloseButton"
-                        Grid.Column="1"
-                        Classes="sky sky-subtle"
-                        Width="28"
-                        Height="28"
-                        Padding="0"
-                        Content="×"
-                        FontSize="18" />
-              </Grid>
-              <ContentPresenter Content="{TemplateBinding DrawerContent}" Margin="16,0,16,16" />
-            </DockPanel>
-          </Border>
+                 IsHitTestVisible="False">
+            <Border Name="PART_DrawerPanel"
+                    Width="{TemplateBinding DrawerWidth}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    IsVisible="False"
+                    Background="{DynamicResource SkySurfaceElevatedBrush}"
+                    BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="{DynamicResource SkyFeedbackBorderThickness}"
+                    BoxShadow="{DynamicResource SkyElevation2}">
+              <DockPanel LastChildFill="True">
+                <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="16,12,12,8">
+                  <TextBlock Text="{TemplateBinding Title}"
+                             Classes="sky-feature-heading"
+                             VerticalAlignment="Center"
+                             IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                  <Button Name="PART_CloseButton"
+                          Grid.Column="1"
+                          Classes="sky sky-subtle"
+                          Width="28"
+                          Height="28"
+                          Padding="0"
+                          Content="×"
+                          FontSize="18" />
+                </Grid>
+                <ContentPresenter Content="{TemplateBinding DrawerContent}" Margin="16,0,16,16" />
+              </DockPanel>
+            </Border>
+          </Panel>
         </Panel>
       </ControlTemplate>
     </Setter>

@@ -49,4 +49,55 @@ public class FormsHeadlessTests
         Assert.Equal('•', password.PasswordChar);
         Assert.Equal("secret", password.Text);
     }
+
+    [Fact]
+    public void SkyMaskedTextBox_phone_mask_roundtrip()
+    {
+        var masked = new SkyMaskedTextBox
+        {
+            MaskKind = SkyInputMaskKind.Phone,
+            RawText = "5551234567"
+        };
+
+        Assert.Equal("(555) 123-4567", masked.Text);
+        Assert.True(masked.IsMaskComplete);
+    }
+
+    [Fact]
+    public void SkyNumericUpDown_clamps_value()
+    {
+        var numeric = new SkyNumericUpDown { Minimum = 0, Maximum = 10, Value = 15 };
+        Assert.Equal(10, numeric.Value);
+    }
+
+    [Fact]
+    public void SkyDateRangePicker_today_preset()
+    {
+        var picker = new SkyDateRangePicker();
+        picker.SelectedPreset = SkyDateRangePreset.Today;
+        Assert.Equal(DateTime.Today, picker.StartDate);
+        Assert.Equal(DateTime.Today, picker.EndDate);
+    }
+
+    [Fact]
+    public void SkyValidationSummary_collects_errors()
+    {
+        var summary = new SkyValidationSummary();
+        summary.SetErrors([new SkyValidationSummaryItem("field", "Error message")]);
+        Assert.True(summary.HasErrors);
+        Assert.Single(summary.Items);
+    }
+
+    [Fact]
+    public void SkyComboBoxField_selected_item_roundtrip()
+    {
+        var field = new SkyComboBoxField
+        {
+            ItemsSource = new[] { "A", "B" },
+            SelectedItem = "A"
+        };
+
+        field.SelectedItem = "B";
+        Assert.Equal("B", field.GetInputValue());
+    }
 }

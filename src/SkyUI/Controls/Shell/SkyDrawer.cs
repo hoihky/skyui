@@ -1,15 +1,18 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using SkyUI.Core.Theming;
 
 namespace SkyUI.Controls;
 
 /// <summary>Slide-in side panel for filters, settings, or navigation on narrow widths.</summary>
+[TemplatePart(OverlayPartName, typeof(Panel))]
+[TemplatePart(DrawerPanelPartName, typeof(Border))]
+[TemplatePart(CloseButtonPartName, typeof(Button))]
 public class SkyDrawer : TemplatedControl
 {
     public const string CloseButtonPartName = "PART_CloseButton";
@@ -40,15 +43,13 @@ public class SkyDrawer : TemplatedControl
 
     private Button? closeButton;
     private Panel? overlayPanel;
-    private Control? drawerPanel;
-    private CancellationTokenSource? animationCancellation;
+    private Border? drawerPanel;
     private bool templateApplied;
 
     static SkyDrawer()
     {
-        IsOpenProperty.Changed.AddClassHandler<SkyDrawer>((drawer, e) => _ = drawer.OnIsOpenChangedAsync(e));
+        IsOpenProperty.Changed.AddClassHandler<SkyDrawer>((drawer, e) => drawer.OnIsOpenChanged(e));
         PlacementProperty.Changed.AddClassHandler<SkyDrawer>((drawer, _) => drawer.SyncPlacementClass());
-        DrawerWidthProperty.Changed.AddClassHandler<SkyDrawer>((drawer, _) => drawer.SyncClosedTransform());
     }
 
     public SkyDrawer()
@@ -116,7 +117,7 @@ public class SkyDrawer : TemplatedControl
 
         closeButton = e.NameScope.Find(CloseButtonPartName) as Button;
         overlayPanel = e.NameScope.Find(OverlayPartName) as Panel;
-        drawerPanel = e.NameScope.Find(DrawerPanelPartName) as Control;
+        drawerPanel = e.NameScope.Find(DrawerPanelPartName) as Border;
 
         if (closeButton is not null)
             closeButton.Click += OnCloseClick;
@@ -124,23 +125,9 @@ public class SkyDrawer : TemplatedControl
         if (overlayPanel is not null)
             overlayPanel.PointerPressed += OnOverlayPointerPressed;
 
-        templateApplied = true;
+        templateApplied = overlayPanel is not null && drawerPanel is not null;
         SyncPlacementClass();
-
-        if (IsOpen)
-        {
-            IsHitTestVisible = true;
-            PrepareDrawerForOpen();
-            overlayPanel!.IsVisible = true;
-            overlayPanel.IsHitTestVisible = true;
-            overlayPanel.Opacity = 1;
-            drawerPanel!.Opacity = 1;
-            SyncClosedTransform(0);
-        }
-        else
-        {
-            SetClosedState();
-        }
+        ApplyOpenState(IsOpen, raiseClosed: false);
     }
 
     private void SyncPlacementClass()
@@ -149,114 +136,49 @@ public class SkyDrawer : TemplatedControl
         Classes.Set("sky-drawer-right", Placement == SkyDrawerPlacement.Right);
     }
 
-    private async Task OnIsOpenChangedAsync(AvaloniaPropertyChangedEventArgs change)
+    private void OnIsOpenChanged(AvaloniaPropertyChangedEventArgs change)
     {
         var isOpen = change.GetNewValue<bool>();
         var wasOpen = change.GetOldValue<bool>();
 
-        if (!templateApplied || overlayPanel is null || drawerPanel is null)
+        if (!templateApplied)
         {
-            IsHitTestVisible = isOpen;
             if (!isOpen && wasOpen)
                 RaiseClosed();
 
             return;
         }
 
-        animationCancellation?.Cancel();
-        animationCancellation = new CancellationTokenSource();
-        var token = animationCancellation.Token;
-
-        try
-        {
-            if (isOpen)
-            {
-                IsHitTestVisible = true;
-                await PlayOpenAnimationAsync(token);
-            }
-            else
-            {
-                await PlayCloseAnimationAsync(token);
-            }
-        }
-        catch (OperationCanceledException)
-        {
-            // Superseded by a newer transition.
-        }
-        finally
-        {
-            if (!IsOpen)
-            {
-                SetClosedState();
-                if (wasOpen)
-                    RaiseClosed();
-            }
-        }
+        ApplyOpenState(isOpen, raiseClosed: wasOpen && !isOpen);
     }
 
-    private double GetClosedOffsetX() =>
-        Placement == SkyDrawerPlacement.Left ? -DrawerWidth : DrawerWidth;
-
-    private void PrepareDrawerForOpen()
+    private void ApplyOpenState(bool isOpen, bool raiseClosed)
     {
         if (overlayPanel is null || drawerPanel is null)
             return;
 
-        overlayPanel.IsVisible = true;
-        overlayPanel.IsHitTestVisible = true;
-        overlayPanel.Opacity = 0;
-        drawerPanel.Opacity = 0;
-        SyncClosedTransform();
-    }
-
-    private void SyncClosedTransform(double? offset = null)
-    {
-        if (drawerPanel is null)
+        if (isOpen)
+        {
+            IsHitTestVisible = true;
+            overlayPanel.IsVisible = true;
+            overlayPanel.IsHitTestVisible = true;
+            overlayPanel.Opacity = 1d;
+            drawerPanel.IsVisible = true;
+            drawerPanel.IsHitTestVisible = true;
+            drawerPanel.Opacity = 1d;
+            drawerPanel.RenderTransform = null;
             return;
+        }
 
-        var closedOffset = offset ?? GetClosedOffsetX();
-        if (drawerPanel.RenderTransform is TranslateTransform translate)
-            translate.X = closedOffset;
-        else
-            drawerPanel.RenderTransform = new TranslateTransform(closedOffset, 0);
-    }
-
-    private async Task PlayOpenAnimationAsync(CancellationToken token)
-    {
-        PrepareDrawerForOpen();
-
-        var fromOffset = GetClosedOffsetX();
-        await Task.WhenAll(
-            SkyMotionAnimator.Default.FadeAsync(overlayPanel!, 0, 1, SkyMotionDurations.Enter, token),
-            SkyMotionAnimator.Default.FadeAsync(drawerPanel!, 0, 1, SkyMotionDurations.Enter, token),
-            SkyMotionAnimator.Default.TranslateXAsync(drawerPanel!, fromOffset, 0, SkyMotionDurations.Enter, token));
-    }
-
-    private async Task PlayCloseAnimationAsync(CancellationToken token)
-    {
-        var toOffset = GetClosedOffsetX();
-        await Task.WhenAll(
-            SkyMotionAnimator.Default.FadeAsync(overlayPanel!, overlayPanel!.Opacity, 0, SkyMotionDurations.Exit, token),
-            SkyMotionAnimator.Default.FadeAsync(drawerPanel!, drawerPanel!.Opacity, 0, SkyMotionDurations.Exit, token),
-            SkyMotionAnimator.Default.TranslateXAsync(drawerPanel!, 0, toOffset, SkyMotionDurations.Exit, token));
-    }
-
-    private void SetClosedState()
-    {
         IsHitTestVisible = false;
-
-        if (overlayPanel is null)
-            return;
-
         overlayPanel.IsVisible = false;
         overlayPanel.IsHitTestVisible = false;
-        overlayPanel.Opacity = 0;
+        overlayPanel.Opacity = 0d;
+        drawerPanel.IsVisible = false;
+        drawerPanel.IsHitTestVisible = false;
 
-        if (drawerPanel is null)
-            return;
-
-        drawerPanel.Opacity = 0;
-        SyncClosedTransform();
+        if (raiseClosed)
+            RaiseClosed();
     }
 
     private void RaiseClosed() =>

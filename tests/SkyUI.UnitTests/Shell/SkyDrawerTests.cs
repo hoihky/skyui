@@ -75,9 +75,19 @@ public class SkyDrawerTests
         Assert.False(drawer.IsHitTestVisible);
 
         drawer.Show();
-        Assert.True(drawer.IsHitTestVisible);
+        Assert.True(drawer.IsOpen);
 
         drawer.Close();
+        Assert.False(drawer.IsHitTestVisible);
+    }
+
+    [Fact]
+    public void Open_does_not_block_hits_before_template_is_applied()
+    {
+        var drawer = new SkyDrawer();
+        drawer.Show();
+
+        Assert.True(drawer.IsOpen);
         Assert.False(drawer.IsHitTestVisible);
     }
 
@@ -94,5 +104,17 @@ public class SkyDrawerTests
         Assert.Equal("Filters", drawer.Title);
         Assert.Equal("Filter form", drawer.DrawerContent);
         Assert.Equal(400, drawer.DrawerWidth);
+    }
+
+    [Fact]
+    public void Close_while_not_open_does_not_raise_closed_event()
+    {
+        var drawer = new SkyDrawer();
+        var closedCount = 0;
+        drawer.Closed += (_, _) => closedCount++;
+
+        drawer.Close();
+
+        Assert.Equal(0, closedCount);
     }
 }

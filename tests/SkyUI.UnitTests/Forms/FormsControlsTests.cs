@@ -13,6 +13,13 @@ public class FormsControlsTests
         Assert.NotNull(new SkySlider());
         Assert.NotNull(new SkySearchBox());
         Assert.NotNull(new SkyPasswordBox());
+        Assert.NotNull(new SkyMaskedTextBox());
+        Assert.NotNull(new SkyNumericUpDown());
+        Assert.NotNull(new SkyAutocomplete());
+        Assert.NotNull(new SkyComboBoxField());
+        Assert.NotNull(new SkyDateRangePicker());
+        Assert.NotNull(new SkyValidationSummary());
+        Assert.NotNull(new SkyEmptyState());
     }
 
     [Fact]

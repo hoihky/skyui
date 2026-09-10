@@ -109,6 +109,18 @@ public sealed class SkyMotionAnimator : ISkyMotionAnimator
         CancellationToken cancellationToken,
         ScaleTransform? scaleTransform = null)
     {
+        var fromValue = (double)from;
+        var toValue = (double)to;
+
+        if (duration <= TimeSpan.Zero)
+        {
+            target.SetValue(property, toValue);
+            if (scaleTransform is not null)
+                scaleTransform.ScaleY = toValue;
+
+            return;
+        }
+
         var animation = new Animation
         {
             Duration = duration,
@@ -118,13 +130,13 @@ public sealed class SkyMotionAnimator : ISkyMotionAnimator
             {
                 new KeyFrame
                 {
-                    Cue = new Cue(0),
-                    Setters = { new Setter(property, from) },
+                    Cue = new Cue(0d),
+                    Setters = { new Setter(property, fromValue) },
                 },
                 new KeyFrame
                 {
-                    Cue = new Cue(1),
-                    Setters = { new Setter(property, to) },
+                    Cue = new Cue(1d),
+                    Setters = { new Setter(property, toValue) },
                 },
             },
         };
@@ -133,12 +145,15 @@ public sealed class SkyMotionAnimator : ISkyMotionAnimator
         {
             await animation.RunAsync(target, cancellationToken);
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            target.SetValue(property, to);
+            return;
         }
 
+        if (!cancellationToken.IsCancellationRequested)
+            target.SetValue(property, toValue);
+
         if (scaleTransform is not null)
-            scaleTransform.ScaleY = to;
+            scaleTransform.ScaleY = toValue;
     }
 }

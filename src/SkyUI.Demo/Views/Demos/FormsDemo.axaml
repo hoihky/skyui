@@ -6,13 +6,16 @@
              x:DataType="vm:FormsDemoViewModel">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <Border Classes="sky-demo-panel">
-            <StackPanel Spacing="24" MaxWidth="520">
+            <StackPanel Spacing="24" MaxWidth="560">
                 <TextBlock Classes="sky-feature-heading" Text="Forms" />
                 <TextBlock Classes="sky-body-secondary"
                            TextWrapping="Wrap"
-                           Text="SkyFormField wraps inputs with label, hint, and validation. SkyRadioGroup, SkySlider, SkySearchBox, and SkyPasswordBox are MVVM-friendly." />
+                           Text="SkyFormField wraps inputs with label, hint, and validation. New controls include autocomplete, masked input, numeric stepper, date range, validation summary, and empty states." />
 
-                <sky:SkyFormField Label="Email"
+                <sky:SkyValidationSummary x:Name="ValidationSummary" />
+
+                <sky:SkyFormField x:Name="EmailField"
+                                  Label="Email"
                                   Hint="Used for account recovery"
                                   IsRequired="True"
                                   ErrorMessage="{Binding EmailError}"
@@ -20,24 +23,62 @@
                     <TextBox Classes="sky"
                              Text="{Binding Email}"
                              PlaceholderText="name@example.com"
-                             Width="320"
                              HorizontalAlignment="Stretch" />
                 </sky:SkyFormField>
 
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <Button Classes="sky sky-primary"
-                            Content="Validate email"
-                            Command="{Binding ValidateEmailCommand}" />
+                            Content="Validate form"
+                            Click="OnValidateFormClick" />
                     <Button Classes="sky sky-outlined"
                             Content="Clear errors"
                             Command="{Binding ClearErrorsCommand}" />
                 </StackPanel>
 
+                <sky:SkyFormField Label="City"
+                                  Hint="Typeahead with async provider">
+                    <sky:SkyAutocomplete Text="{Binding CityText}"
+                                         SelectedItem="{Binding SelectedCity}"
+                                         Provider="{Binding CityProvider}"
+                                         PlaceholderText="Search cities"
+                                         HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <sky:SkyComboBoxField Label="Role"
+                                      Hint="Styled combo with validation"
+                                      PlaceholderText="Select a role"
+                                      ItemsSource="{Binding RoleOptions}"
+                                      SelectedItem="{Binding SelectedRole}" />
+
+                <sky:SkyFormField Label="Quantity"
+                                  Hint="Min 1, max 99, integer stepper">
+                    <sky:SkyNumericUpDown Value="{Binding Quantity}"
+                                          Minimum="1"
+                                          Maximum="99"
+                                          Step="1"
+                                          IsInteger="True"
+                                          HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <sky:SkyFormField Label="Reporting period"
+                                  Hint="Presets: today, this week, or custom">
+                    <sky:SkyDateRangePicker StartDate="{Binding RangeStart}"
+                                            EndDate="{Binding RangeEnd}"
+                                            SelectedPreset="{Binding RangePreset}"
+                                            HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
+                <sky:SkyFormField Label="Phone"
+                                  Hint="Masked phone input">
+                    <sky:SkyMaskedTextBox MaskKind="Phone"
+                                          RawText="{Binding PhoneRaw}"
+                                          HorizontalAlignment="Stretch" />
+                </sky:SkyFormField>
+
                 <sky:SkyFormField Label="Search"
                                   Hint="Filter library items">
                     <sky:SkySearchBox Text="{Binding SearchQuery}"
                                       PlaceholderText="Search tracks, albums, artists"
-                                      Width="320"
                                       HorizontalAlignment="Stretch" />
                 </sky:SkyFormField>
 
@@ -45,7 +86,6 @@
                                   Hint="At least 8 characters recommended">
                     <sky:SkyPasswordBox Text="{Binding Password}"
                                         PlaceholderText="Enter password"
-                                        Width="320"
                                         HorizontalAlignment="Stretch" />
                 </sky:SkyFormField>
 
@@ -65,6 +105,21 @@
                                TickFrequency="10"
                                IsSnapToTickEnabled="True"
                                ValueFormat="{}{0:0}%" />
+
+                <StackPanel Spacing="8">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBlock Classes="sky-section-title" Text="Empty state" VerticalAlignment="Center" />
+                        <Button Classes="sky sky-outlined"
+                                Content="Toggle"
+                                Command="{Binding ToggleEmptyStateCommand}" />
+                    </StackPanel>
+                    <sky:SkyEmptyState Title="No items yet"
+                                       Description="Create your first item to populate this list."
+                                       IconKind="Search"
+                                       ActionText="Create item"
+                                       ActionCommand="{Binding CreateItemCommand}"
+                                       IsVisible="{Binding ShowEmptyState}" />
+                </StackPanel>
             </StackPanel>
         </Border>
     </ScrollViewer>

@@ -97,4 +97,174 @@
     <Setter Property="RevealPassword" Value="True" />
     <Setter Property="Padding" Value="14,12,40,12" />
   </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyMaskedTextBox}"
+                TargetType="controls:SkyMaskedTextBox"
+                BasedOn="{StaticResource {x:Type TextBox}}" />
+
+  <ControlTheme x:Key="{x:Type controls:SkyNumericUpDown}" TargetType="controls:SkyNumericUpDown">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="*,Auto,Auto">
+          <TextBox Name="PART_TextBox"
+                   Grid.Column="0"
+                   Classes="sky"
+                   HorizontalAlignment="Stretch"
+                   TextAlignment="Right" />
+          <Button Name="PART_IncrementButton"
+                  Grid.Column="1"
+                  Classes="sky sky-subtle"
+                  Content="+"
+                  MinWidth="36"
+                  Margin="4,0,0,0" />
+          <Button Name="PART_DecrementButton"
+                  Grid.Column="2"
+                  Classes="sky sky-subtle"
+                  Content="−"
+                  MinWidth="36"
+                  Margin="4,0,0,0" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyAutocomplete}" TargetType="controls:SkyAutocomplete">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+          <TextBox Name="PART_TextBox"
+                   Classes="sky"
+                   PlaceholderText="{TemplateBinding PlaceholderText}"
+                   HorizontalAlignment="Stretch" />
+          <Popup Name="PART_Popup"
+                 PlacementTarget="{Binding #PART_TextBox}"
+                 IsLightDismissEnabled="True"
+                 IsOpen="{TemplateBinding IsSuggestionOpen}">
+            <Border Classes="sky-card"
+                    MaxHeight="240"
+                    MinWidth="{Binding #PART_TextBox.Bounds.Width}">
+              <ListBox Name="PART_Suggestions"
+                       Classes="sky"
+                       Background="Transparent"
+                       BorderThickness="0">
+                <ListBox.ItemTemplate>
+                  <DataTemplate x:DataType="controls:SkyAutocompleteItem">
+                    <StackPanel Spacing="2" Margin="4,2">
+                      <TextBlock Text="{Binding Text}" Classes="sky-body" />
+                      <TextBlock Text="{Binding Description}"
+                                 Classes="sky-body-secondary"
+                                 FontSize="12"
+                                 IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                    </StackPanel>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
+            </Border>
+          </Popup>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDateRangePicker}" TargetType="controls:SkyDateRangePicker">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Spacing="10">
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Name="PART_PresetToday"
+                    Classes="sky sky-outlined"
+                    Content="Today" />
+            <Button Name="PART_PresetWeek"
+                    Classes="sky sky-outlined"
+                    Content="This week" />
+          </StackPanel>
+          <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+            <StackPanel Grid.Column="0" Spacing="6">
+              <TextBlock Text="Start" Classes="sky-body-secondary" FontSize="12" />
+              <controls:SkyDatePicker Name="PART_StartDate"
+                                      SelectedDate="{Binding StartDate, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Spacing="6">
+              <TextBlock Text="End" Classes="sky-body-secondary" FontSize="12" />
+              <controls:SkyDatePicker Name="PART_EndDate"
+                                      SelectedDate="{Binding EndDate, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch" />
+            </StackPanel>
+          </Grid>
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <DataTemplate x:Key="SkyValidationSummaryItemTemplate" x:DataType="controls:SkyValidationSummaryItem">
+    <TextBlock Text="{Binding Message}"
+               Classes="sky-body"
+               Foreground="{DynamicResource SkyDangerBrush}"
+               TextWrapping="Wrap"
+               Margin="0,2" />
+  </DataTemplate>
+
+  <ControlTheme x:Key="{x:Type controls:SkyValidationSummary}" TargetType="controls:SkyValidationSummary">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card"
+                Padding="12"
+                BorderBrush="{DynamicResource SkyDangerBrush}"
+                BorderThickness="1">
+          <StackPanel Spacing="8">
+            <TextBlock Text="{TemplateBinding Header}"
+                       Classes="sky-section-title"
+                       Foreground="{DynamicResource SkyDangerBrush}" />
+            <ListBox Name="PART_Items"
+                     ItemTemplate="{StaticResource SkyValidationSummaryItemTemplate}"
+                     Background="Transparent"
+                     BorderThickness="0" />
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyEmptyState}" TargetType="controls:SkyEmptyState">
+    <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Spacing="12"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    MaxWidth="360">
+          <icons:SkyIcon Name="PART_Icon"
+                         Kind="{TemplateBinding IconKind}"
+                         Size="Large"
+                         HorizontalAlignment="Center"
+                         Opacity="0.6" />
+          <TextBlock Text="{TemplateBinding Title}"
+                     Classes="sky-feature-heading"
+                     TextAlignment="Center"
+                     TextWrapping="Wrap"
+                     IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <TextBlock Text="{TemplateBinding Description}"
+                     Classes="sky-body-secondary"
+                     TextAlignment="Center"
+                     TextWrapping="Wrap"
+                     IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <ContentPresenter Name="PART_Action"
+                            Content="{TemplateBinding ActionContent}"
+                            HorizontalAlignment="Center"
+                            IsVisible="{Binding ActionContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Name="PART_ActionButton"
+                  Classes="sky sky-primary"
+                  Content="{TemplateBinding ActionText}"
+                  Command="{TemplateBinding ActionCommand}"
+                  HorizontalAlignment="Center"
+                  IsVisible="{Binding ActionText, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
 </ResourceDictionary>

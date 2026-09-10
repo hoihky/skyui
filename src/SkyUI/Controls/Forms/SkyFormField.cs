@@ -163,12 +163,17 @@ public class SkyFormField : TemplatedControl
         {
             SkySearchBox searchBox => searchBox.Text,
             SkyPasswordBox passwordBox => passwordBox.Text,
+            SkyMaskedTextBox maskedTextBox => maskedTextBox.RawText,
+            SkyAutocomplete autocomplete => autocomplete.SelectedItem ?? autocomplete.Text,
+            SkyNumericUpDown numericUpDown => numericUpDown.Value,
+            SkyDateRangePicker dateRange => new SkyDateRangeValue(dateRange.StartDate, dateRange.EndDate),
             TextBox textBox => textBox.Text,
             SkySlider slider => slider.Value,
             Slider nativeSlider => nativeSlider.Value,
             CheckBox checkBox => checkBox.IsChecked,
             ToggleSwitch toggle => toggle.IsChecked,
             ComboBox comboBox => comboBox.SelectedItem,
+            SkyComboBoxField comboField => comboField.SelectedItem,
             _ => input.GetValue(TextBox.TextProperty) is string text ? text : input
         };
     }

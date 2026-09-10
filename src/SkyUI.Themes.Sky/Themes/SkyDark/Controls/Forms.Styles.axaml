@@ -18,6 +18,39 @@
     <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
     <Setter Property="BorderThickness" Value="2" />
   </Style>
+  <Style Selector="controls|SkyFormField:error controls|SkyMaskedTextBox">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="controls|SkyFormField:error controls|SkyAutocomplete /template/ TextBox">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="controls|SkyFormField:error controls|SkyNumericUpDown /template/ TextBox">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="controls|SkyFormField:error controls|SkyDateRangePicker controls|SkyDatePicker">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyDangerBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+
+  <Style Selector="controls|SkyValidationSummary">
+    <Setter Property="Margin" Value="0,8,0,0" />
+  </Style>
+  <Style Selector="controls|SkyEmptyState">
+    <Setter Property="Padding" Value="32,24" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="controls|SkyDateRangePicker">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="controls|SkyNumericUpDown">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="controls|SkyAutocomplete">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
 
   <Style Selector="controls|SkyRadioGroup">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
