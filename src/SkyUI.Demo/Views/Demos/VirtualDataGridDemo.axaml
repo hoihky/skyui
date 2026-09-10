@@ -12,6 +12,7 @@
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
                 <Button x:Name="ExportCsvButton" Classes="sky sky-outlined" Content="Export first 10k CSV" />
+                <Button x:Name="CopySelectionButton" Classes="sky sky-outlined" Content="Copy selected row" />
                 <Button x:Name="BumpButton" Classes="sky sky-outlined" Content="Bump row 0 (background)" />
                 <TextBlock x:Name="StatusText" VerticalAlignment="Center"
                            Foreground="{DynamicResource SkyTextSecondaryBrush}" />

@@ -64,4 +64,19 @@ public class FeedbackHeadlessTests
     [Fact]
     public void Feedback_controls_instantiate() =>
         Assert.NotNull(new SkyAlert { Message = "Hi" });
+
+    [Fact]
+    public void SkyDialogHost_secondary_action_closes_dialog()
+    {
+        var dialog = new SkyDialogHost { SecondaryButtonText = "Cancel" };
+        var secondaryRaised = false;
+        dialog.SecondaryAction += (_, _) => secondaryRaised = true;
+
+        dialog.Show();
+        dialog.RaiseEvent(new RoutedEventArgs(SkyDialogHost.SecondaryActionEvent));
+        dialog.Close();
+
+        Assert.True(secondaryRaised);
+        Assert.False(dialog.IsOpen);
+    }
 }

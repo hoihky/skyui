@@ -46,6 +46,18 @@
                         <Button Classes="sky sky-primary" Content="Show snackbar" Click="OnShowSnackbarClick" />
                         <Button Classes="sky sky-outlined" Content="Show dialog" Click="OnShowDialogClick" />
                     </StackPanel>
+
+                    <TextBlock Classes="sky-section-title" Text="SkyMessageBox" />
+                    <TextBlock Classes="sky-body-secondary"
+                               TextWrapping="Wrap"
+                               Text="Static ShowAsync API backed by SkyDialogHost. Call SkyMessageBox.Attach(host) once at startup." />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="sky sky-outlined" Content="Info" Click="OnMessageBoxInfoClick" Margin="0,0,8,8" />
+                        <Button Classes="sky sky-outlined" Content="Warning" Click="OnMessageBoxWarningClick" Margin="0,0,8,8" />
+                        <Button Classes="sky sky-outlined" Content="Error" Click="OnMessageBoxErrorClick" Margin="0,0,8,8" />
+                        <Button Classes="sky sky-primary" Content="Confirm" Click="OnMessageBoxConfirmClick" Margin="0,0,8,8" />
+                    </WrapPanel>
+                    <TextBlock x:Name="MessageBoxResultText" Classes="sky-body-secondary" />
                 </StackPanel>
             </Border>
         </ScrollViewer>

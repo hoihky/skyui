@@ -160,6 +160,9 @@ public class SkyVirtualDataGrid : TemplatedControl
         return exporter.ExportAsync(ds, Columns.ToList(), destination, startIndex, maxRows, ct);
     }
 
+    public Task CopySelectionToClipboardAsync(bool includeHeaders = true, CancellationToken cancellationToken = default) =>
+        SkyVirtualDataGridClipboard.CopySelectionAsync(this, includeHeaders, cancellationToken);
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);

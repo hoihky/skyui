@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using SkyUI.Controls;
 using SkyUI.DataGrid;
 
 namespace SkyUI.Demo.Views.Demos;
@@ -26,7 +27,9 @@ public partial class VirtualDataGridDemo : UserControl
         Grid.Sorting += OnSorting;
         Grid.RowFormatting += OnRowFormatting;
         ExportCsvButton.Click += OnExportCsv;
+        CopySelectionButton.Click += OnCopySelection;
         BumpButton.Click += OnBump;
+        Grid.SelectedRowIndex = 0;
     }
 
     private void OnSorting(object? sender, SkyDataGridSortingEventArgs e)
@@ -38,6 +41,13 @@ public partial class VirtualDataGridDemo : UserControl
     {
         if (e.RowIndex % 1000 == 0 && e.RowIndex >= 0)
             e.RowClasses.Add("sky-grid-milestone");
+    }
+
+    private async void OnCopySelection(object? sender, RoutedEventArgs e)
+    {
+        await Grid.CopySelectionToClipboardAsync().ConfigureAwait(true);
+        var pasted = await SkyClipboard.GetTextAsync(this).ConfigureAwait(true);
+        StatusText.Text = pasted is null ? "Clipboard unavailable." : $"Copied TSV ({pasted.Length} chars)";
     }
 
     private async void OnExportCsv(object? sender, RoutedEventArgs e)

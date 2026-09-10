@@ -38,6 +38,9 @@ public class SkyDialogHost : TemplatedControl
     public static readonly RoutedEvent<RoutedEventArgs> PrimaryActionEvent =
         RoutedEvent.Register<SkyDialogHost, RoutedEventArgs>(nameof(PrimaryAction), RoutingStrategies.Bubble);
 
+    public static readonly RoutedEvent<RoutedEventArgs> SecondaryActionEvent =
+        RoutedEvent.Register<SkyDialogHost, RoutedEventArgs>(nameof(SecondaryAction), RoutingStrategies.Bubble);
+
     private Button? closeButton;
     private Button? primaryButton;
     private Button? secondaryButton;
@@ -96,6 +99,12 @@ public class SkyDialogHost : TemplatedControl
     {
         add => AddHandler(PrimaryActionEvent, value);
         remove => RemoveHandler(PrimaryActionEvent, value);
+    }
+
+    public event EventHandler<RoutedEventArgs>? SecondaryAction
+    {
+        add => AddHandler(SecondaryActionEvent, value);
+        remove => RemoveHandler(SecondaryActionEvent, value);
     }
 
     public void Show() => IsOpen = true;
@@ -237,7 +246,11 @@ public class SkyDialogHost : TemplatedControl
     private void OnPrimaryClick(object? sender, RoutedEventArgs e) =>
         RaiseEvent(new RoutedEventArgs(PrimaryActionEvent));
 
-    private void OnSecondaryClick(object? sender, RoutedEventArgs e) => Close();
+    private void OnSecondaryClick(object? sender, RoutedEventArgs e)
+    {
+        RaiseEvent(new RoutedEventArgs(SecondaryActionEvent));
+        Close();
+    }
 
     private void OnCloseClick(object? sender, RoutedEventArgs e) => Close();
 
