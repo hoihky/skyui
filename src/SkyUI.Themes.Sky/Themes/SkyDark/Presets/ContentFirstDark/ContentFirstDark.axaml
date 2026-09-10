@@ -21,6 +21,7 @@
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Layout.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Shell.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Primitives.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Mobile.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Styles.Resources>

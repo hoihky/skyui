@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Mobile.Views.Demos.MobileNavigationDemo">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="16" Margin="16">
+      <TextBlock Classes="sky-feature-heading" Text="Navigation" />
+      <TextBlock TextWrapping="Wrap"
+                 Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                 Text="SkyNavigationView uses bottom bar mode on phone widths. Breadcrumbs and tabs adapt to narrow screens." />
+
+      <sky:SkyBreadcrumb Separator="/">
+        <sky:SkyBreadcrumbItem Title="Home" />
+        <sky:SkyBreadcrumbItem Title="Projects" />
+        <sky:SkyBreadcrumbItem Title="SkyUI Mobile" IsCurrent="True" />
+      </sky:SkyBreadcrumb>
+
+      <sky:SkyTabView MinHeight="220">
+        <TabItem Header="Overview">
+          <TextBlock Text="Tab content for overview."
+                     Margin="8"
+                     Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+        </TabItem>
+        <TabItem Header="Activity">
+          <TextBlock Text="Tab content for activity."
+                     Margin="8"
+                     Foreground="{DynamicResource SkyTextSecondaryBrush}" />
+        </TabItem>
+      </sky:SkyTabView>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

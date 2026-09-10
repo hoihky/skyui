@@ -2,15 +2,13 @@
 
   <PropertyGroup>
     <TargetFrameworks>net10.0;net9.0</TargetFrameworks>
-    <RootNamespace>SkyUI.Themes.Sky</RootNamespace>
-    <AssemblyName>SkyUI.Themes.Sky</AssemblyName>
-    <Description>Sky design system theme package: semantic tokens, ContentFirstDark preset, SkyDark palettes.</Description>
-    <IsPackable>true</IsPackable>
-    <PackageId>SkyUI.Themes.Sky</PackageId>
+    <RootNamespace>SkyUI.Demo.Mobile</RootNamespace>
+    <AssemblyName>SkyUI.Demo.Mobile</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +16,7 @@
     <ProjectReference Include="..\SkyUI.Fonts\SkyUI.Fonts.csproj" />
     <ProjectReference Include="..\SkyUI.Icons\SkyUI.Icons.csproj" />
     <ProjectReference Include="..\SkyUI\SkyUI.csproj" />
+    <ProjectReference Include="..\SkyUI.Themes.Sky\SkyUI.Themes.Sky.csproj" />
   </ItemGroup>
 
 </Project>

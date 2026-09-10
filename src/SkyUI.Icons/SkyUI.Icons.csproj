@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>net10.0;net9.0</TargetFrameworks>
     <RootNamespace>SkyUI.Icons</RootNamespace>
     <AssemblyName>SkyUI.Icons</AssemblyName>
     <Description>SkyUI icon glyphs, sizes (16/20/24), and optional symbol font helpers.</Description>

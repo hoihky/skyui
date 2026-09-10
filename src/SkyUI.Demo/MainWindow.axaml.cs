@@ -25,6 +25,7 @@ public partial class MainWindow : Window
             new("Chip", () => new ChipDemo(), SkyIconKind.Sliders),
             new("Badge", () => new BadgeDemo(), SkyIconKind.Check),
             new("Feedback", () => new FeedbackDemo(), SkyIconKind.Layers),
+            new("Mobile", () => new MobileDemo(), SkyIconKind.LayoutGrid),
             new("Navigation", () => new NavigationDemo(), SkyIconKind.LayoutGrid),
             new("App chrome", () => new AppChromeDemo(), SkyIconKind.LayoutGrid),
             new("App templates", () => new AppTemplatesDemo(), SkyIconKind.LayoutGrid),

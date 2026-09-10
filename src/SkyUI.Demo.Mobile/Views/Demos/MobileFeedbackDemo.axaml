@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Mobile.Views.Demos.MobileFeedbackDemo">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="16" Margin="16">
+      <TextBlock Classes="sky-feature-heading" Text="Feedback" />
+      <TextBlock TextWrapping="Wrap"
+                 Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                 Text="Alerts, banners, snackbars, and message boxes for mobile workflows." />
+
+      <sky:SkyAlert Title="Heads up"
+                    Message="Flight AA204 departs in 30 minutes."
+                    IsCloseable="True" />
+
+      <sky:SkyBanner Title="Offline mode"
+                     Message="Changes will sync when you reconnect."
+                     IsOpen="True"
+                     IsCloseable="True" />
+
+      <Button x:Name="SnackbarButton" Classes="sky sky-outlined" Content="Show snackbar" />
+      <Button x:Name="MessageButton" Classes="sky sky-primary" Content="Show message box" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>net10.0;net9.0</TargetFrameworks>
     <RootNamespace>SkyUI.Core</RootNamespace>
     <AssemblyName>SkyUI.Core</AssemblyName>
     <Description>SkyUI design tokens, shared contracts, and theme attached properties.</Description>

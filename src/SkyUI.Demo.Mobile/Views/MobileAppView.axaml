@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Mobile.Views.MobileAppView">
+  <Grid>
+    <sky:SkySafeArea>
+      <sky:SkyNavigationView x:Name="ShellNav"
+                             DisplayMode="Bottom"
+                             Header="SkyUI Mobile" />
+    </sky:SkySafeArea>
+
+    <sky:SkySnackbarHost x:Name="SnackbarHost" VerticalAlignment="Bottom" />
+    <sky:SkySheetHost x:Name="ActionSheetHost" />
+    <sky:SkyDialogHost x:Name="DialogHost" />
+  </Grid>
+</UserControl>

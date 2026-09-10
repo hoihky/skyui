@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Mobile.Views.Demos.MobilePrimitivesDemo">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="16" Margin="16">
+      <TextBlock Classes="sky-feature-heading" Text="Mobile primitives" />
+      <TextBlock TextWrapping="Wrap"
+                 Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                 Text="Safe area, touch targets, action sheets, and bottom sheets tuned for phone layouts." />
+
+      <Border Classes="sky-card" Padding="14">
+        <StackPanel Spacing="10">
+          <TextBlock Text="Touch targets (44pt minimum)" FontWeight="SemiBold" />
+          <Button x:Name="SmallButton" Classes="sky sky-subtle" Content="Small label" Padding="8,4" />
+          <Button x:Name="TouchButton" Classes="sky sky-primary" Content="Ensured touch target" />
+        </StackPanel>
+      </Border>
+
+      <Border Classes="sky-card" Padding="14">
+        <StackPanel Spacing="10">
+          <TextBlock Text="Action sheet" FontWeight="SemiBold" />
+          <Button x:Name="ActionSheetButton" Classes="sky sky-outlined" Content="Show action sheet" />
+          <TextBlock x:Name="ActionSheetResult"
+                     Foreground="{DynamicResource SkyTextSecondaryBrush}"
+                     TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+
+      <Border Classes="sky-card" Padding="14">
+        <StackPanel Spacing="10">
+          <TextBlock Text="Bottom sheet" FontWeight="SemiBold" />
+          <Button x:Name="SheetButton" Classes="sky sky-outlined" Content="Open filter sheet" />
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

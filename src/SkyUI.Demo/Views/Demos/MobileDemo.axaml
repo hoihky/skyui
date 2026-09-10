@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Views.Demos.MobileDemo">
+  <Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+      <Border Classes="sky-demo-panel" Margin="0,0,0,80">
+        <StackPanel Spacing="20">
+          <TextBlock Classes="sky-feature-heading" Text="Mobile primitives" />
+          <TextBlock Classes="sky-body-secondary"
+                     TextWrapping="Wrap"
+                     Text="SkySafeArea, SkyTouchTarget, SkyActionSheet, SkySheetHost, and SkyKeyboardInset. Safe-area and keyboard insets are no-ops on desktop but the controls are fully interactive here." />
+
+          <StackPanel Spacing="8">
+            <TextBlock Classes="sky-section-title" Text="SkySafeArea" />
+            <TextBlock Classes="sky-body-secondary"
+                       TextWrapping="Wrap"
+                       Text="Applies device insets from IInsetsManager. Padding is typically zero on desktop." />
+            <Border BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Height="120"
+                    ClipToBounds="True">
+              <sky:SkySafeArea Background="{DynamicResource SkySurfaceElevatedBrush}">
+                <TextBlock Margin="8"
+                           VerticalAlignment="Center"
+                           Text="Content inside SkySafeArea (insets applied as padding)."
+                           TextWrapping="Wrap" />
+              </sky:SkySafeArea>
+            </Border>
+          </StackPanel>
+
+          <StackPanel Spacing="8">
+            <TextBlock Classes="sky-section-title" Text="SkyTouchTarget" />
+            <StackPanel Orientation="Horizontal" Spacing="16">
+              <Button x:Name="SmallButton" Classes="sky sky-subtle" Content="Small (32px)" Padding="8,4" />
+              <Button x:Name="TouchButton" Classes="sky sky-primary" Content="Ensured 44pt target" />
+            </StackPanel>
+          </StackPanel>
+
+          <StackPanel Spacing="8">
+            <TextBlock Classes="sky-section-title" Text="SkyActionSheet" />
+            <Button x:Name="ActionSheetButton" Classes="sky sky-outlined" Content="Show action sheet" HorizontalAlignment="Left" />
+            <TextBlock x:Name="ActionSheetResult" Classes="sky-body-secondary" TextWrapping="Wrap" />
+          </StackPanel>
+
+          <StackPanel Spacing="8">
+            <TextBlock Classes="sky-section-title" Text="SkySheetHost" />
+            <Button x:Name="SheetButton" Classes="sky sky-outlined" Content="Open filter sheet" HorizontalAlignment="Left" />
+          </StackPanel>
+
+          <StackPanel Spacing="8">
+            <TextBlock Classes="sky-section-title" Text="SkyKeyboardInset" />
+            <TextBlock Classes="sky-body-secondary"
+                       TextWrapping="Wrap"
+                       Text="Wraps scrollable form content; bottom padding grows when the soft keyboard is visible (mobile)." />
+            <Border BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Height="220"
+                    ClipToBounds="True">
+              <sky:SkyKeyboardInset>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                  <StackPanel Spacing="12" Margin="12">
+                    <sky:SkyFormField Label="Notes">
+                      <TextBox Classes="sky" PlaceholderText="Focus a field to test keyboard inset on device" />
+                    </sky:SkyFormField>
+                    <sky:SkyFormField Label="Email">
+                      <TextBox Classes="sky" PlaceholderText="you@example.com" />
+                    </sky:SkyFormField>
+                  </StackPanel>
+                </ScrollViewer>
+              </sky:SkyKeyboardInset>
+            </Border>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+    </ScrollViewer>
+
+    <sky:SkySheetHost x:Name="SheetHost" />
+  </Grid>
+</UserControl>

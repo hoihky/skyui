@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             x:Class="SkyUI.Demo.Mobile.Views.Demos.MobileFormsDemo">
+  <sky:SkyKeyboardInset>
+    <sky:SkyFormPage Title="Profile"
+                     Subtitle="Keyboard inset keeps fields visible."
+                     SubmitButtonText="Save">
+      <StackPanel Spacing="14">
+        <sky:SkyFormField Label="Display name">
+          <TextBox Classes="sky" PlaceholderText="Jane Doe" />
+        </sky:SkyFormField>
+        <sky:SkyFormField Label="Email">
+          <TextBox Classes="sky" PlaceholderText="jane@example.com" />
+        </sky:SkyFormField>
+        <sky:SkyFormField Label="Bio">
+          <TextBox Classes="sky"
+                   AcceptsReturn="True"
+                   Height="96"
+                   TextWrapping="Wrap"
+                   PlaceholderText="Tell us about yourself" />
+        </sky:SkyFormField>
+      </StackPanel>
+    </sky:SkyFormPage>
+  </sky:SkyKeyboardInset>
+</UserControl>

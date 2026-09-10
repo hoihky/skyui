@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>net10.0;net9.0</TargetFrameworks>
     <RootNamespace>SkyUI.Fonts</RootNamespace>
     <AssemblyName>SkyUI.Fonts</AssemblyName>
     <Description>SkyUI typography: Inter + Noto Sans SC (CJK) and DESIGN.md text roles.</Description>
