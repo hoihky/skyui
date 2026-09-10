@@ -332,6 +332,7 @@ SkyThemeProperties.SetDensity(app, SkyDensity.Compact);</code></pre>
           <thead><tr><th>Control</th><th>Description</th></tr></thead>
           <tbody>
             <tr><td><code>SkyDialogHost</code></td><td>Modal dialog host</td></tr>
+            <tr><td><code>SkySheetHost</code></td><td>Bottom sheet with scrim and slide animation</td></tr>
             <tr><td><code>SkySnackbarHost</code></td><td>Queued toast notifications</td></tr>
             <tr><td><code>SkyBanner</code>, <code>SkyAlert</code></td><td>Inline messaging</td></tr>
             <tr><td><code>SkyProgressRing</code>, <code>SkySkeleton</code></td><td>Loading indicators</td></tr>
@@ -340,6 +341,18 @@ SkyThemeProperties.SetDensity(app, SkyDensity.Compact);</code></pre>
             <tr><td><code>VideoTimeline</code></td><td>Media scrubber / trim UI</td></tr>
           </tbody>
         </table>
+
+        <h3>Mobile</h3>
+        <table>
+          <thead><tr><th>Control / API</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SkySafeArea</code></td><td>Safe-area padding from <code>IInsetsManager</code> (per-edge toggles)</td></tr>
+            <tr><td><code>SkyKeyboardInset</code></td><td>Bottom padding when soft keyboard is open</td></tr>
+            <tr><td><code>SkyTouchTarget</code></td><td>Attached property for 44×44 pt minimum hit targets</td></tr>
+            <tr><td><code>SkyActionSheet</code></td><td>iOS-style action list over <code>SkySheetHost</code></td></tr>
+          </tbody>
+        </table>
+        <p>Details: <a href="mobile.html">mobile.html</a>. Try the <strong>Mobile</strong> page in <code>SkyUI.Demo</code> or run <code>SkyUI.Demo.iOS</code> on device.</p>
       </section>
 
       <section id="catalog-data">
@@ -507,8 +520,28 @@ field.ClearValidation();</code></pre>
             <tr><td><code>SkyButtonProperties</code></td><td><code>IsLoading</code></td><td>Spinner, disable, <code>sky-loading</code> class</td></tr>
             <tr><td><code>SkyTooltipProperties</code></td><td><code>Tip</code></td><td>Attach <code>SkyTooltip</code> to any control</td></tr>
             <tr><td><code>SkyGridLayout</code></td><td><code>IsResponsive</code>, <code>AutoPlaceChildren</code>, <code>ColumnProfile</code></td><td>Responsive <code>Grid</code> columns</td></tr>
+            <tr><td><code>SkyTouchTarget</code></td><td><code>EnsureTouchTarget</code>, <code>MinTouchSize</code></td><td>Minimum touch hit area on mobile</td></tr>
           </tbody>
         </table>
+      </section>
+
+      <section id="prog-mobile">
+        <h2>Mobile primitives</h2>
+        <pre><code>&lt;sky:SkySafeArea&gt;
+  &lt;Grid&gt;...&lt;/Grid&gt;
+&lt;/sky:SkySafeArea&gt;
+
+&lt;Button Classes="sky"
+        sky:SkyTouchTarget.EnsureTouchTarget="True"
+        Content="Delete" /&gt;
+
+// Action sheet (attach SkySheetHost in XAML first)
+SkyActionSheet.Attach(SheetHost);
+var index = await SkyActionSheet.ShowAsync([
+    new SkyActionSheetItem { Title = "Share" },
+    new SkyActionSheetItem { Title = "Delete", IsDestructive = true },
+]);</code></pre>
+        <p>See <a href="mobile.html">mobile.html</a> for sample apps and iOS host setup.</p>
       </section>
 
       <section id="prog-data">
@@ -550,7 +583,8 @@ doc.RootGroup.AddCondition(new FilterConditionNode { ... });</code></pre>
       <section id="demo">
         <h2>Demo gallery</h2>
         <p><code>SkyUI.Demo</code> is a master-detail gallery. <code>MainWindow</code> provides theme variant, density, and accent controls; the left nav loads cached demo pages.</p>
-        <p>Key demo pages: Overview, Typography, Icons, Buttons, Feedback, Navigation, Forms, Menus, Pickers, Layout, Primitives, List, Accordion, CheckedListBox, Filter editor, Virtual DataGrid, Diagram, Video timeline.</p>
+        <p>Key demo pages: Overview, Typography, Icons, Buttons, Feedback, Navigation, Forms, Menus, Pickers, Layout, Primitives, List, Accordion, CheckedListBox, Filter editor, Virtual DataGrid, Diagram, Video timeline, <strong>Mobile</strong>.</p>
+        <p>Mobile sample apps: <code>src/SkyUI.Demo.Mobile</code> (shared shell) and <code>src/SkyUI.Demo.iOS</code> (<code>net10.0-ios</code>).</p>
         <p>Source: <code>src/SkyUI.Demo/Views/Demos/</code> and <code>ViewModels/</code>.</p>
       </section>
 
@@ -566,6 +600,7 @@ doc.RootGroup.AddCondition(new FilterConditionNode { ... });</code></pre>
             <tr><td><a href="design-tokens.html">Design tokens</a></td><td>Token layering and theme API</td></tr>
             <tr><td><a href="gap-analysis.html">Gap analysis</a></td><td>Commercial toolkit comparison</td></tr>
             <tr><td><a href="layout.html">Layout controls</a></td><td>Cards, grids, expanders</td></tr>
+            <tr><td><a href="mobile.html">Mobile primitives</a></td><td>Safe area, touch targets, action sheet, keyboard inset</td></tr>
             <tr><td><a href="menu-accelerators.html">Menu accelerators</a></td><td>Keyboard shortcuts</td></tr>
             <tr><td><a href="picker-formatting.html">Picker formatting</a></td><td>Culture-aware dates and times</td></tr>
             <tr><td><a href="virtual-tree.html">Virtual tree</a></td><td>SkyVirtualTreeView MVVM patterns</td></tr>

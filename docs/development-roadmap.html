@@ -35,6 +35,12 @@
             
                         <li class="nav-item depth-0">
                           
+                            <a href="legacy-sunset.html" class="nav-link">legacy sunset</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
                             <a href="current-state.html" class="nav-link">Current state</a>
                             
                         </li>
@@ -60,6 +66,12 @@
                         <li class="nav-item depth-0">
                           
                             <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="mobile.html" class="nav-link">Mobile primitives</a>
                             
                         </li>
                         
@@ -198,6 +210,10 @@
 <td><strong>Docs</strong></td>
 <td>Static site, SDK guide, control guides</td>
 </tr>
+<tr>
+<td><strong>Mobile (early)</strong></td>
+<td><code>SkySafeArea</code>, <code>SkyKeyboardInset</code>, <code>SkyTouchTarget</code>, <code>SkyActionSheet</code>, <code>SkySheetHost</code>; desktop Mobile gallery page; <code>SkyUI.Demo.Mobile</code> + <code>SkyUI.Demo.iOS</code> (<code>net10.0-ios</code>)</td>
+</tr>
 </tbody>
 </table>
 <h3 id="still-blocking-realistic-apps">Still blocking realistic apps</h3>
@@ -226,8 +242,8 @@
 <td>No resize, multi-select, in-grid filter, grouping, async paging — LOB apps stall here</td>
 </tr>
 <tr>
-<td><strong>Mobile unproven</strong></td>
-<td>No safe area, sheets, touch policy, keyboard insets, or mobile sample app</td>
+<td><strong>Mobile incomplete</strong></td>
+<td>P0 primitives landed in <code>SkyUI</code>; FAB, pull-to-refresh, CI compile matrix, and on-device validation still open</td>
 </tr>
 <tr>
 <td><strong>No reference apps</strong></td>
@@ -271,7 +287,7 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <td>Packaging</td>
 <td><code>PackageId</code>, authors, repository URL, README in package, symbol packages, <strong>0.x semver</strong></td>
-<td><strong>Todo</strong></td>
+<td><strong>Partial</strong> (local feed via <code>scripts/pack-local.sh</code>; not published to nuget.org)</td>
 </tr>
 <tr>
 <td>Documentation v1</td>
@@ -286,7 +302,7 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <td>Reference samples</td>
 <td><code>samples/SettingsApp</code>, <code>samples/CrudListDetail</code> (minimal, NuGet-consuming)</td>
-<td><strong>Todo</strong></td>
+<td><strong>Done</strong></td>
 </tr>
 </tbody>
 </table>
@@ -294,42 +310,46 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <ul>
 <li>Green CI on every PR; docs site deploys on merge to <code>main</code>.</li>
 <li>Publishable NuGet package (even if unlisted initially).</li>
-<li>At least one sample app references SkyUI from NuGet, not project reference.</li>
+<li>At least one sample app references SkyUI from NuGet, not project reference. <strong>Done</strong> (<code>samples/SettingsApp</code>, <code>samples/CrudListDetail</code> via local <code>skyui-local</code> feed).</li>
 </ul>
 <hr>
 <h2 id="phase-1-design-system-polish-46-weeks">Phase 1 — Design system polish (4–6 weeks)</h2>
 <p><strong>Goal:</strong> Finish white-label and motion story; retire legacy naming.</p>
-<p>Most token and theme work is done. Remaining:</p>
 <table class="table">
 <thead>
 <tr>
 <th>Feature</th>
 <th>Description</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Motion tokens</strong></td>
 <td>Shared duration/easing resources; enter/exit for dialogs, snackbars, sheets</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>Forced-colors audit</strong></td>
-<td>High-contrast + Windows high-contrast mode pass on all Essentials</td>
+<td>High-contrast palette pass on feedback + navigation; focus rings</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>Legacy alias sunset plan</strong></td>
 <td>Document migration from <code>Spotify*</code> keys; deprecate in 1.x</td>
+<td><strong>Done</strong> (<a href="legacy-sunset.html">legacy-sunset.md</a>)</td>
 </tr>
 <tr>
 <td><strong>Theme builder sample</strong></td>
 <td>Third-party app sets accent + density without copying XAML</td>
+<td><strong>Done</strong> (<code>samples/ThemeBuilderApp</code>)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="exit-criteria-1">Exit criteria</h3>
 <ul>
-<li>Motion applied consistently on dialog, snackbar, and navigation transitions.</li>
-<li>WCAG AA contrast verified for text and focus rings on all three palettes.</li>
+<li>Motion applied consistently on dialog, snackbar, sheet, and navigation transitions. <strong>Done</strong></li>
+<li>WCAG AA contrast verified for text and focus rings on all three palettes. <strong>Done</strong> (unit tests)</li>
 </ul>
 <hr>
 <h2 id="phase-2-essentials-wave-2-realistic-app-ui-1420-weeks">Phase 2 — Essentials wave 2: realistic app UI (14–20 weeks)</h2>
@@ -379,8 +399,8 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <td><strong>App templates</strong></td>
 <td><code>SkySettingsPage</code>, <code>SkyListDetailPage</code>, <code>SkyFormPage</code> XAML/C# scaffolds</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
@@ -516,31 +536,36 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <hr>
 <h2 id="phase-3-mobile-and-adaptive-ux-1418-weeks">Phase 3 — Mobile and adaptive UX (14–18 weeks)</h2>
 <p><strong>Goal:</strong> SkyUI works on <strong>phone and tablet</strong>, not only desktop with a narrow window.</p>
-<p><code>SkyNavigationView</code> bottom mode and breakpoints exist but are <strong>not validated</strong> on iOS/Android. This phase makes mobile a first-class target.</p>
+<p><code>SkyNavigationView</code> bottom mode and breakpoints exist; P0 mobile primitives are <strong>in progress</strong> with an iOS sample host. This phase makes mobile a first-class target.</p>
 <h3 id="p0-platform-matrix">P0 — Platform matrix</h3>
 <table class="table">
 <thead>
 <tr>
 <th>Target</th>
 <th>Deliverable</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>TFM matrix</strong></td>
 <td><code>net10.0-android</code>, <code>net10.0-ios</code>; browser WASM optional</td>
+<td><strong>Partial</strong> — <code>SkyUI.Demo.iOS</code> on <code>net10.0-ios</code>; Android todo</td>
 </tr>
 <tr>
-<td><strong>SkyUI.Mobile.Demo</strong></td>
+<td><strong>SkyUI.Demo.Mobile</strong></td>
 <td>Phone + tablet sample (or adaptive single app)</td>
+<td><strong>Done</strong> (shared shell + four sections)</td>
 </tr>
 <tr>
 <td><strong>CI builds</strong></td>
 <td>Android + iOS (or at least compile gate); manual test matrix doc</td>
+<td><strong>Todo</strong></td>
 </tr>
 <tr>
 <td><strong>Package splitting</strong></td>
 <td><code>SkyUI.Data</code> / <code>SkyUI.Diagram</code> optional for WASM size</td>
+<td><strong>Todo</strong></td>
 </tr>
 </tbody>
 </table>
@@ -550,36 +575,44 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <th>Control / API</th>
 <th>Description</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>SkySafeArea</strong></td>
-<td>Attached properties: <code>PaddingTop/Bottom/Left/Right</code> from device insets</td>
+<td>Per-edge safe-area padding from <code>IInsetsManager</code></td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
-<td><strong>SkyBottomSheet</strong></td>
-<td>Modal sheet from bottom; snap heights; drag-to-dismiss</td>
+<td><strong>SkySheetHost</strong> / bottom sheet</td>
+<td>Modal sheet from bottom with motion</td>
+<td><strong>Done</strong> (no snap heights / drag-to-dismiss yet)</td>
 </tr>
 <tr>
 <td><strong>SkyActionSheet</strong></td>
 <td>Destructive/primary action list (iOS-style)</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyKeyboardInset</strong></td>
+<td>Bottom padding when soft keyboard opens</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyTouchTarget</strong></td>
+<td>Minimum 44×44 dp via attached property</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyFab</strong></td>
 <td>Floating action button; position above safe area + bottom nav</td>
+<td><strong>Todo</strong></td>
 </tr>
 <tr>
 <td><strong>SkyPullToRefresh</strong></td>
 <td>Wrapper control for scrollable content</td>
-</tr>
-<tr>
-<td><strong>SkyKeyboardInset</strong></td>
-<td>Adjusts bottom padding when soft keyboard opens</td>
-</tr>
-<tr>
-<td><strong>SkyTouchTarget</strong></td>
-<td>Enforces minimum 44×44 dp via attached property or style</td>
+<td><strong>Todo</strong></td>
 </tr>
 </tbody>
 </table>
@@ -937,14 +970,14 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <td>Safe area + bottom sheet + keyboard inset</td>
 <td style="text-align: center;">—</td>
 <td style="text-align: center;">✓</td>
-<td>Mobile unusable without these</td>
+<td><strong>Partial</strong> — shipped in <code>SkyUI</code>; see <a href="mobile.html">mobile.md</a></td>
 </tr>
 <tr>
 <td><strong>P0</strong></td>
 <td>Mobile demo app + CI compile</td>
 <td style="text-align: center;">—</td>
 <td style="text-align: center;">✓</td>
-<td>Proves multiplatform claim</td>
+<td><strong>Partial</strong> — <code>SkyUI.Demo.Mobile</code> + iOS host; CI todo</td>
 </tr>
 <tr>
 <td><strong>P1</strong></td>
@@ -1048,6 +1081,7 @@ Year 2    Phase 5 diagram; Phase 4b charts; Phase 6 continuous
 <li><a href="current-state.html">Current state</a></li>
 <li><a href="gap-analysis.html">Gap analysis</a></li>
 <li><a href="layout.html">Layout controls</a></li>
+<li><a href="mobile.html">Mobile primitives</a></li>
 <li><a href="design-tokens.html">Design tokens</a></li>
 </ul>
 </div>

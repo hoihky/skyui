@@ -13,6 +13,7 @@ Product and engineering documentation for evolving SkyUI into a commercial-grade
 | [Development roadmap](./development-roadmap.html) | Phased plan, exit criteria, package architecture. |
 | [Design tokens](./design-tokens.html) | Palette, semantic resources, legacy aliases. |
 | [Layout controls](./layout.html) | Cards, dividers, expanders, responsive grids. |
+| [Mobile primitives](./mobile.html) | Safe area, touch targets, action sheet, keyboard inset, sample apps. |
 | [Menu accelerators](./menu-accelerators.html) | Keyboard shortcuts and platform notes. |
 | [Picker formatting](./picker-formatting.html) | Culture-aware date/time formatting. |
 | [Virtual tree](./virtual-tree.html) | SkyVirtualTreeView MVVM patterns. |

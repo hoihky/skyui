@@ -35,6 +35,12 @@
             
                         <li class="nav-item depth-0">
                           
+                            <a href="legacy-sunset.html" class="nav-link">legacy sunset</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
                             <a href="current-state.html" class="nav-link">Current state</a>
                             
                         </li>
@@ -60,6 +66,12 @@
                         <li class="nav-item depth-0">
                           
                             <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="mobile.html" class="nav-link">Mobile primitives</a>
                             
                         </li>
                         
@@ -219,6 +231,14 @@ Presets/ContentFirstDark/SkyPreset.Primitives + Focus  →  Control styles (WCAG
 <td>Comfortable vs compact control metrics</td>
 </tr>
 <tr>
+<td><code>SkyTokenKeys.Motion</code></td>
+<td>Shared duration keys for enter/exit transitions</td>
+</tr>
+<tr>
+<td><code>SkyMotionDurations</code> / <code>ISkyMotionAnimator</code></td>
+<td>C# motion helpers used by dialog, snackbar, sheet, navigation</td>
+</tr>
+<tr>
 <td><code>SkyResourceKeys</code></td>
 <td>Obsolete-friendly aliases over <code>SkyTokenKeys.Brush</code></td>
 </tr>
@@ -257,6 +277,23 @@ SkyTheme.Apply(application, new SkyThemeOptions { Density = SkyDensity.Compact }
 <li>Theme preset merges <code>SkyTypographyResources.axaml</code> (Inter / Noto stacks on <code>SkyFontFamilyUi</code> / <code>SkyFontFamilyTitle</code>).</li>
 <li>Use role classes: <code>sky-section-title</code>, <code>sky-body</code>, <code>sky-button-label-upper</code>, <code>sky-nav-link-bold</code>, etc. (see <code>SkyTypographyClasses</code>).</li>
 </ol>
+<h2 id="motion-tokens">Motion tokens</h2>
+<p>Durations live in <code>SkyTokens.axaml</code> (<code>SkyMotionDurationFast</code>, <code>Enter</code>, <code>Exit</code>, …) and are consumed by:</p>
+<ul>
+<li><code>SkyDialogHost</code> — scrim fade + dialog scale</li>
+<li><code>SkySnackbarHost</code> — slide-up enter / fade exit</li>
+<li><code>SkySheetHost</code> — bottom sheet slide</li>
+<li><code>SkyNavigationView</code> — content cross-fade on selection change</li>
+</ul>
+<p>Override durations in a merged resource dictionary if your product needs slower or faster motion.</p>
+<h2 id="high-contrast-forced-colors">High contrast / forced colors</h2>
+<ul>
+<li>Set <code>RequestedThemeVariant</code> to <code>SkyThemeVariants.HighContrast</code> for the WCAG-oriented palette.</li>
+<li><code>SkyFeedbackBorderThickness</code> increases to <strong>2</strong> in the HighContrast theme dictionary (dialogs, snackbars, sheets).</li>
+<li><code>SkyFocusRingThickness</code> increases to <strong>3</strong> for stronger keyboard focus rings.</li>
+<li><code>SkyScrimBrush</code> is palette-driven (no hard-coded overlay hex).</li>
+</ul>
+<p>See <a href="legacy-sunset.html">legacy-sunset.md</a> for Spotify alias removal timeline.</p>
 <h2 id="extending-palettes">Extending palettes</h2>
 <ol>
 <li>Add or adjust <code>Themes/SkyDark/SkyPalette.*.axaml</code> with the same <code>SkyPaletteKeys</code> slots (keep <code>SkyPaletteContrastTests</code> passing).</li>
@@ -293,6 +330,14 @@ SkyTheme.Apply(application, new SkyThemeOptions { Density = SkyDensity.Compact }
                         
                         <li class="toc-h2">
                           <a href="#typography">Typography ()</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#motion-tokens">Motion tokens</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#high-contrast-forced-colors">High contrast / forced colors</a>
                         </li>
                         
                         <li class="toc-h2">

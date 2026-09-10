@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Primitives polish · SkyUI</title>
+  <title>Mobile primitives · SkyUI</title>
   <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,7 +69,7 @@
                             
                         </li>
                         
-                        <li class="nav-item depth-0">
+                        <li class="nav-item depth-0 is-active">
                           
                             <a href="mobile.html" class="nav-link">Mobile primitives</a>
                             
@@ -93,7 +93,7 @@
                             
                         </li>
                         
-                        <li class="nav-item depth-0 is-active">
+                        <li class="nav-item depth-0">
                           
                             <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
                             
@@ -118,85 +118,111 @@
       <main class="content">
         <article class="doc">
           <header class="doc-header">
-            <h1>Primitives polish</h1>
+            <h1>Mobile primitives</h1>
           </header>
-          <div class="doc-body"><p>Tooltip, popover, loading button state, and consistent disabled styling for Sky primitives.</p>
-<h2 id="components">Components</h2>
+          <div class="doc-body"><p>Early mobile primitives live in <code>SkyUI.Controls</code> (not a separate <code>SkyUI.Mobile</code> package yet). They target phone and tablet layouts on Avalonia iOS/Android while remaining usable on desktop for development and testing.</p>
+<h2 id="controls-and-apis">Controls and APIs</h2>
 <table class="table">
 <thead>
 <tr>
-<th>API</th>
-<th>Use for</th>
+<th>Control / API</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>SkyTooltip</code></td>
-<td>Themed tooltip surface</td>
+<td><code>SkySafeArea</code></td>
+<td>Content control that applies <code>IInsetsManager</code> safe-area padding (per-edge toggles)</td>
 </tr>
 <tr>
-<td><code>SkyTooltipProperties.Tip</code></td>
-<td>Attach styled tooltips to any control</td>
+<td><code>SkyKeyboardInset</code></td>
+<td>Adds bottom padding when <code>IInputPane</code> reports an open soft keyboard</td>
 </tr>
 <tr>
-<td><code>SkyPopover</code></td>
-<td>Lightweight flyout panels (non-menu content)</td>
+<td><code>SkyTouchTarget</code></td>
+<td>Attached property <code>EnsureTouchTarget</code> — enforces 44×44 pt minimum hit size</td>
 </tr>
 <tr>
-<td><code>SkyButtonProperties.IsLoading</code></td>
-<td>Replace button content with a progress ring while async work runs</td>
+<td><code>SkySheetHost</code></td>
+<td>Bottom sheet host with scrim and slide animation (shared with desktop feedback)</td>
 </tr>
 <tr>
-<td><code>SkyDisabledOpacity</code></td>
-<td>Shared token (<code>0.45</code>) for disabled control opacity</td>
+<td><code>SkyActionSheet</code></td>
+<td>Static <code>ShowAsync</code> — iOS-style action list over <code>SkySheetHost</code></td>
 </tr>
 </tbody>
 </table>
-<h2 id="tooltips">Tooltips</h2>
-<pre><code class="language-xml">&lt;Button Classes="sky"
-Content="Hover me"
-sky:SkyTooltipProperties.Tip="Quick action description" /&gt;
+<h2 id="skysafearea">SkySafeArea</h2>
+<pre><code class="language-xml">&lt;sky:SkySafeArea&gt;
+  &lt;Grid RowDefinitions="Auto,*"&gt;
+    &lt;!-- content respects notch / home indicator when insets are available --&gt;
+  &lt;/Grid&gt;
+&lt;/sky:SkySafeArea&gt;
 </code></pre>
-<p>Rich content:</p>
-<pre><code class="language-xml">&lt;sky:SkyTooltipProperties.Tip&gt;
-  &lt;sky:SkyTooltip&gt;
-    &lt;TextBlock Text="Supports any content." TextWrapping="Wrap" MaxWidth="220" /&gt;
-  &lt;/sky:SkyTooltip&gt;
-&lt;/sky:SkyTooltipProperties.Tip&gt;
+<p>Per-edge toggles: <code>ApplyTop</code>, <code>ApplyBottom</code>, <code>ApplyLeft</code>, <code>ApplyRight</code> (all default to <code>true</code>). On desktop, insets are typically zero.</p>
+<h2 id="skytouchtarget">SkyTouchTarget</h2>
+<pre><code class="language-xml">&lt;Button Classes="sky sky-subtle"
+Content="Delete"
+sky:SkyTouchTarget.EnsureTouchTarget="True" /&gt;
 </code></pre>
-<p>You can also set <code>ToolTip.Tip</code> to a <code>SkyTooltip</code> instance directly.</p>
-<h2 id="popover">Popover</h2>
-<pre><code class="language-xml">&lt;Button Content="Open popover"&gt;
-  &lt;Button.Flyout&gt;
-    &lt;sky:SkyPopover Placement="Bottom"&gt;
-      &lt;StackPanel Spacing="8"&gt;
-        &lt;TextBlock Text="Panel title" Classes="sky-section-title" /&gt;
-        &lt;TextBlock Text="Body copy." Classes="sky-body-secondary" /&gt;
-      &lt;/StackPanel&gt;
-    &lt;/sky:SkyPopover&gt;
-  &lt;/Button.Flyout&gt;
-&lt;/Button&gt;
+<p>Optional <code>SkyTouchTarget.MinTouchSize</code> overrides the default <strong>44</strong> pt recommendation.</p>
+<h2 id="skyactionsheet">SkyActionSheet</h2>
+<p>Attach a <code>SkySheetHost</code> once (usually at the root of the page), then show actions from code:</p>
+<pre><code class="language-csharp">SkyActionSheet.Attach(SheetHost);
+
+var index = await SkyActionSheet.ShowAsync([
+    new SkyActionSheetItem { Title = "Share" },
+    new SkyActionSheetItem { Title = "Delete", IsDestructive = true },
+], title: "Actions");
+
+if (index is int selected)
+    // user picked items[selected]
 </code></pre>
-<p>Use <code>SkyMenuFlyout</code> for command menus; <code>SkyPopover</code> is for informational or form-like panels.</p>
-<h2 id="loading-button">Loading button</h2>
-<pre><code class="language-xml">&lt;Button Classes="sky sky-primary"
-Content="Save changes"
-Command="{Binding SaveCommand}"
-sky:SkyButtonProperties.IsLoading="{Binding IsSaving}" /&gt;
+<p><code>ShowAsync</code> returns <code>null</code> when the user cancels. Pass <code>sheetHost:</code> explicitly if you do not call <code>Attach</code>.</p>
+<h2 id="skykeyboardinset">SkyKeyboardInset</h2>
+<p>Wrap scrollable form content so the bottom clears the soft keyboard on mobile:</p>
+<pre><code class="language-xml">&lt;sky:SkyKeyboardInset&gt;
+  &lt;ScrollViewer&gt;
+    &lt;StackPanel&gt;
+      &lt;sky:SkyFormField Label="Notes"&gt;
+        &lt;TextBox Classes="sky" /&gt;
+      &lt;/sky:SkyFormField&gt;
+    &lt;/StackPanel&gt;
+  &lt;/ScrollViewer&gt;
+&lt;/sky:SkyKeyboardInset&gt;
 </code></pre>
-<p>While loading:</p>
-<ul>
-<li>Content is replaced with an indeterminate <code>SkyProgressRing</code></li>
-<li>The button is disabled to prevent duplicate submits</li>
-<li><code>sky-loading</code> keeps full opacity (not the disabled fade)</li>
-</ul>
-<h2 id="disabled-consistency">Disabled consistency</h2>
-<p>All <code>Classes="sky"</code> primitives use <code>SkyDisabledOpacity</code> (0.40) for chrome controls and dedicated disabled foreground/border brushes for text inputs.</p>
-<p>Sky controls (<code>SkyDatePicker</code>, <code>SkyExpander</code>, <code>SkySlider</code>, etc.) follow the same token in <code>Primitives.Styles.axaml</code>.</p>
+<h2 id="sample-apps">Sample apps</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Project</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyUI.Demo</code> → <strong>Mobile</strong> page</td>
+<td>Desktop gallery for all mobile primitives (<code>MobileDemo.axaml</code>)</td>
+</tr>
+<tr>
+<td><code>SkyUI.Demo.Mobile</code></td>
+<td>Shared mobile shell (bottom nav, four demo sections)</td>
+</tr>
+<tr>
+<td><code>SkyUI.Demo.iOS</code></td>
+<td>iOS host (<code>net10.0-ios</code>) referencing <code>SkyUI.Demo.Mobile</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">dotnet run --project src/SkyUI.Demo          # Mobile page in desktop gallery
+dotnet build src/SkyUI.Demo.iOS/SkyUI.Demo.iOS.csproj -f net10.0-ios
+</code></pre>
+<p><code>.NET for iOS</code> requires a compatible Xcode version for your installed workload. See <a href="development-roadmap.html">development-roadmap.md</a> Phase 3 for remaining mobile work (FAB, pull-to-refresh, CI matrix).</p>
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="development-roadmap.html">Development roadmap</a> — Primitives polish sprint</li>
-<li><a href="menu-accelerators.html">Menu accelerators</a> — <code>SkyMenuFlyout</code> for menus vs. <code>SkyPopover</code> for panels</li>
+<li><a href="layout.html">Layout controls</a> — responsive grids and breakpoints</li>
+<li><a href="design-tokens.html">Design tokens</a> — motion tokens used by <code>SkySheetHost</code></li>
+<li><a href="development-roadmap.html">Development roadmap</a> — Phase 3 mobile and adaptive UX</li>
 </ul>
 </div>
           <footer class="doc-footer">
@@ -210,23 +236,27 @@ sky:SkyButtonProperties.IsLoading="{Binding IsSaving}" /&gt;
                   <ul>
                     
                         <li class="toc-h2">
-                          <a href="#components">Components</a>
+                          <a href="#controls-and-apis">Controls and APIs</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#tooltips">Tooltips</a>
+                          <a href="#skysafearea">SkySafeArea</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#popover">Popover</a>
+                          <a href="#skytouchtarget">SkyTouchTarget</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#loading-button">Loading button</a>
+                          <a href="#skyactionsheet">SkyActionSheet</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#disabled-consistency">Disabled consistency</a>
+                          <a href="#skykeyboardinset">SkyKeyboardInset</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#sample-apps">Sample apps</a>
                         </li>
                         
                         <li class="toc-h2">

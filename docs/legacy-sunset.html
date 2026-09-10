@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Primitives polish · SkyUI</title>
+  <title>legacy sunset · SkyUI</title>
   <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@
               <a href="index.html" class="nav-link">Home</a>
             </li>
             
-                        <li class="nav-item depth-0">
+                        <li class="nav-item depth-0 is-active">
                           
                             <a href="legacy-sunset.html" class="nav-link">legacy sunset</a>
                             
@@ -93,7 +93,7 @@
                             
                         </li>
                         
-                        <li class="nav-item depth-0 is-active">
+                        <li class="nav-item depth-0">
                           
                             <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
                             
@@ -118,85 +118,94 @@
       <main class="content">
         <article class="doc">
           <header class="doc-header">
-            <h1>Primitives polish</h1>
+            <h1>legacy sunset</h1>
           </header>
-          <div class="doc-body"><p>Tooltip, popover, loading button state, and consistent disabled styling for Sky primitives.</p>
-<h2 id="components">Components</h2>
+          <div class="doc-body"><h1 id="legacy-spotify-alias-sunset-plan">Legacy Spotify alias sunset plan</h1>
+<p>SkyUI 0.x keeps <strong>Spotify-era</strong> resource keys and style classes working via shims. This document defines the migration path and removal schedule for SkyUI 1.x.</p>
+<h2 id="what-is-deprecated">What is deprecated</h2>
 <table class="table">
 <thead>
 <tr>
-<th>API</th>
-<th>Use for</th>
+<th>Legacy</th>
+<th>Replacement</th>
+<th>Remove in</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>SkyTooltip</code></td>
-<td>Themed tooltip surface</td>
+<td><code>Spotify*Brush</code> resource keys</td>
+<td><code>Sky*Brush</code> / <code>SkyPalette*</code></td>
+<td>1.0</td>
 </tr>
 <tr>
-<td><code>SkyTooltipProperties.Tip</code></td>
-<td>Attach styled tooltips to any control</td>
+<td><code>Classes="spotify"</code></td>
+<td><code>Classes="sky"</code></td>
+<td>1.0</td>
 </tr>
 <tr>
-<td><code>SkyPopover</code></td>
-<td>Lightweight flyout panels (non-menu content)</td>
+<td><code>spotify-primary</code>, <code>spotify-card</code>, etc.</td>
+<td><code>sky-primary</code>, <code>sky-card</code>, etc.</td>
+<td>1.0</td>
 </tr>
 <tr>
-<td><code>SkyButtonProperties.IsLoading</code></td>
-<td>Replace button content with a progress ring while async work runs</td>
+<td><code>avares://…/Themes/Sky/</code> shim URIs</td>
+<td><code>avares://SkyUI.Themes.Sky/Themes/SkyDark/</code></td>
+<td>1.1</td>
 </tr>
 <tr>
-<td><code>SkyDisabledOpacity</code></td>
-<td>Shared token (<code>0.45</code>) for disabled control opacity</td>
+<td><code>SkyResourceKeys.SpotifyAccentGreen</code></td>
+<td><code>SkyTokenKeys.Brush.Accent</code></td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><code>SkyThemeClasses.LegacySpotify</code></td>
+<td><code>SkyThemeClasses</code></td>
+<td>1.0</td>
 </tr>
 </tbody>
 </table>
-<h2 id="tooltips">Tooltips</h2>
-<pre><code class="language-xml">&lt;Button Classes="sky"
-Content="Hover me"
-sky:SkyTooltipProperties.Tip="Quick action description" /&gt;
-</code></pre>
-<p>Rich content:</p>
-<pre><code class="language-xml">&lt;sky:SkyTooltipProperties.Tip&gt;
-  &lt;sky:SkyTooltip&gt;
-    &lt;TextBlock Text="Supports any content." TextWrapping="Wrap" MaxWidth="220" /&gt;
-  &lt;/sky:SkyTooltip&gt;
-&lt;/sky:SkyTooltipProperties.Tip&gt;
-</code></pre>
-<p>You can also set <code>ToolTip.Tip</code> to a <code>SkyTooltip</code> instance directly.</p>
-<h2 id="popover">Popover</h2>
-<pre><code class="language-xml">&lt;Button Content="Open popover"&gt;
-  &lt;Button.Flyout&gt;
-    &lt;sky:SkyPopover Placement="Bottom"&gt;
-      &lt;StackPanel Spacing="8"&gt;
-        &lt;TextBlock Text="Panel title" Classes="sky-section-title" /&gt;
-        &lt;TextBlock Text="Body copy." Classes="sky-body-secondary" /&gt;
-      &lt;/StackPanel&gt;
-    &lt;/sky:SkyPopover&gt;
-  &lt;/Button.Flyout&gt;
-&lt;/Button&gt;
-</code></pre>
-<p>Use <code>SkyMenuFlyout</code> for command menus; <code>SkyPopover</code> is for informational or form-like panels.</p>
-<h2 id="loading-button">Loading button</h2>
-<pre><code class="language-xml">&lt;Button Classes="sky sky-primary"
-Content="Save changes"
-Command="{Binding SaveCommand}"
-sky:SkyButtonProperties.IsLoading="{Binding IsSaving}" /&gt;
-</code></pre>
-<p>While loading:</p>
+<p>Shim files remain in 0.x releases so existing apps continue to build without changes.</p>
+<h2 id="migration-checklist">Migration checklist</h2>
+<ol>
+<li><strong>Style classes</strong> — Replace <code>spotify</code> with <code>sky</code> on buttons, text fields, lists, and cards.</li>
+<li><strong>Dynamic resources</strong> — Replace <code>{DynamicResource SpotifyTextPrimaryBrush}</code> with <code>{DynamicResource SkyTextPrimaryBrush}</code>.</li>
+<li><strong>Theme URIs</strong> — Point <code>StyleInclude</code> at <code>avares://SkyUI.Themes.Sky/Themes/SkyTheme.axaml</code> (not <code>Themes/Sky/SkyTheme.axaml</code>).</li>
+<li><strong>Accent override</strong> — Use <code>sky:SkyThemeProperties.AccentOverride</code> instead of writing <code>SpotifyAccentGreen*</code> brushes manually.</li>
+<li><strong>C# keys</strong> — Use <code>SkyTokenKeys</code> and <code>SkyPaletteKeys</code> instead of <code>SkyResourceKeys.Spotify*</code>.</li>
+</ol>
+<h2 id="timeline">Timeline</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Release</th>
+<th>Policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0.x</strong></td>
+<td>Legacy aliases fully supported; <code>[Obsolete]</code> on selected C# keys</td>
+</tr>
+<tr>
+<td><strong>1.0</strong></td>
+<td>Remove <code>Spotify*</code> brush aliases and <code>spotify*</code> style selectors from default preset</td>
+</tr>
+<tr>
+<td><strong>1.0</strong></td>
+<td>Provide <code>SkyUI.Legacy</code> optional package for one release cycle if needed</td>
+</tr>
+<tr>
+<td><strong>1.1</strong></td>
+<td>Remove <code>Themes/Sky/</code> URI shims</td>
+</tr>
+</tbody>
+</table>
+<h2 id="analyzer-guidance-future">Analyzer guidance (future)</h2>
+<p>A Roslyn analyzer (<code>SKYUI001</code>) will flag <code>Spotify</code> resource references and <code>spotify</code> classes in XAML. Planned for 0.2.</p>
+<h2 id="related-docs">Related docs</h2>
 <ul>
-<li>Content is replaced with an indeterminate <code>SkyProgressRing</code></li>
-<li>The button is disabled to prevent duplicate submits</li>
-<li><code>sky-loading</code> keeps full opacity (not the disabled fade)</li>
-</ul>
-<h2 id="disabled-consistency">Disabled consistency</h2>
-<p>All <code>Classes="sky"</code> primitives use <code>SkyDisabledOpacity</code> (0.40) for chrome controls and dedicated disabled foreground/border brushes for text inputs.</p>
-<p>Sky controls (<code>SkyDatePicker</code>, <code>SkyExpander</code>, <code>SkySlider</code>, etc.) follow the same token in <code>Primitives.Styles.axaml</code>.</p>
-<h2 id="related">Related</h2>
-<ul>
-<li><a href="development-roadmap.html">Development roadmap</a> — Primitives polish sprint</li>
-<li><a href="menu-accelerators.html">Menu accelerators</a> — <code>SkyMenuFlyout</code> for menus vs. <code>SkyPopover</code> for panels</li>
+<li><a href="rename-strategy.html">Rename strategy</a></li>
+<li><a href="design-tokens.html">Design tokens</a></li>
 </ul>
 </div>
           <footer class="doc-footer">
@@ -209,28 +218,28 @@ sky:SkyButtonProperties.IsLoading="{Binding IsSaving}" /&gt;
                   <p class="toc-title">On this page</p>
                   <ul>
                     
-                        <li class="toc-h2">
-                          <a href="#components">Components</a>
+                        <li class="toc-h1">
+                          <a href="#legacy-spotify-alias-sunset-plan">Legacy Spotify alias sunset plan</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#tooltips">Tooltips</a>
+                          <a href="#what-is-deprecated">What is deprecated</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#popover">Popover</a>
+                          <a href="#migration-checklist">Migration checklist</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#loading-button">Loading button</a>
+                          <a href="#timeline">Timeline</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#disabled-consistency">Disabled consistency</a>
+                          <a href="#analyzer-guidance-future">Analyzer guidance (future)</a>
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#related">Related</a>
+                          <a href="#related-docs">Related docs</a>
                         </li>
                         
                   </ul>

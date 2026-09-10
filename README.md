@@ -27,8 +27,9 @@ Controls are consumed as `Sky*` types (for example `SkyCard`, `SkyDatePicker`, `
 - **Lists** — virtual tree view with optional checkboxes
 - **Layout** — cards, dividers, expanders, responsive grids
 - **Feedback** — dialogs, snackbars, banners, progress ring, skeleton
+- **Mobile (early)** — safe area, keyboard inset, touch targets, action sheet, bottom sheet host
 
-See the interactive gallery in `SkyUI.Demo` for every control and variant.
+See the interactive gallery in `SkyUI.Demo` for every control and variant (including a **Mobile** page). Sample iOS host: `SkyUI.Demo.iOS` (`net10.0-ios`).
 
 ## Requirements
 
@@ -126,6 +127,8 @@ src/
   SkyUI.Data/           Virtual grid + filter editor
   SkyUI.Diagram/        Diagram surface
   SkyUI.Demo/           Control gallery
+  SkyUI.Demo.Mobile/    Shared mobile demo shell
+  SkyUI.Demo.iOS/       iOS host (net10.0-ios)
 tests/
   SkyUI.UnitTests/
   SkyUI.HeadlessTests/

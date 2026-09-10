@@ -17,8 +17,8 @@ A credible commercial position: **Avalonia multiplatform + Sky design system + d
 
 | Gap | Detail |
 |-----|--------|
-| No validated mobile/web | Library depends on Avalonia core only; demo uses `Avalonia.Desktop`. Touch, safe areas, keyboard insets, and browser constraints are unproven. |
-| No adaptive primitives | `DESIGN.md` defines breakpoints and collapsing sidebar/nav behavior; the library does not expose `SkyBreakpoint`, compact density, or bottom-nav vs sidebar patterns. |
+| Mobile partially addressed | `SkySafeArea`, `SkyKeyboardInset`, `SkyTouchTarget`, `SkyActionSheet`, and `SkySheetHost` ship in `SkyUI`; desktop **Mobile** gallery page and `SkyUI.Demo.iOS` (`net10.0-ios`) exist. Android, browser WASM, CI matrix, and on-device validation are still missing. |
+| Adaptive primitives partial | `SkyBreakpoint`, `SkyNavigationView` bottom mode, and responsive layout controls exist; compact density auto-switch, sheet-vs-dialog on narrow width, and documented touch policies are incomplete. |
 | No platform services layer | Commercial kits often wrap file pickers, share sheets, biometrics, haptics, and deep links with consistent APIs. |
 
 **Impact:** Cannot credibly market as “multiplatform” until build matrix, sample apps, and input policies exist for at least iOS, Android, and browser (WASM).
@@ -141,8 +141,8 @@ Many primitives are **styled Avalonia controls** in the Spotify theme but lack a
 | P0 | CI, NuGet, GitHub Pages | Enables all other work |
 | P0 | App shell: command bar, split view, drawer, page header | Required for realistic desktop/tablet apps |
 | P0 | Forms wave 2: autocomplete, numeric, date range, masked input, validation summary | LOB blocker beyond current `SkyFormField` |
-| P0 | Mobile: safe area, bottom sheet, keyboard inset, touch targets | Mobile unusable without these |
-| P0 | Mobile demo + CI compile matrix | Validates multiplatform claim |
+| P0 | Mobile: safe area, bottom sheet, keyboard inset, touch targets | **Partial** — primitives in `SkyUI`; see [mobile.md](mobile.md) |
+| P0 | Mobile demo + CI compile matrix | **Partial** — `SkyUI.Demo.Mobile` + `SkyUI.Demo.iOS`; CI gate still todo |
 | P1 | Grid 2.0 + filter integration + data pager | Extends existing strength |
 | P1 | Message box, empty state, file picker, loading overlay | Expected product polish |
 | P2 | Charts / KPI tiles | Dashboard demand; embed or partner initially |

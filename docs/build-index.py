@@ -47,6 +47,7 @@ toc = """
           <li class="toc-h3"><a href="#prog-menus">Menus</a></li>
           <li class="toc-h3"><a href="#prog-layout">Layout</a></li>
           <li class="toc-h3"><a href="#prog-attached">Attached properties</a></li>
+          <li class="toc-h3"><a href="#prog-mobile">Mobile primitives</a></li>
           <li class="toc-h3"><a href="#prog-data">Data grid &amp; filter</a></li>
           <li><a href="#testing">Testing</a></li>
           <li><a href="#demo">Demo gallery</a></li>

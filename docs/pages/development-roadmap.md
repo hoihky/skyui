@@ -40,6 +40,7 @@ SkyUI has moved beyond an early prototype. The roadmap below is **forward-lookin
 | **Data / diagram (v1)** | `SkyVirtualDataGrid`, `FilterEditor`, `DiagramSurface`, `VideoTimeline` |
 | **Tests** | Unit + headless suites (~190+ tests) |
 | **Docs** | Static site, SDK guide, control guides |
+| **Mobile (early)** | `SkySafeArea`, `SkyKeyboardInset`, `SkyTouchTarget`, `SkyActionSheet`, `SkySheetHost`; desktop Mobile gallery page; `SkyUI.Demo.Mobile` + `SkyUI.Demo.iOS` (`net10.0-ios`) |
 
 ### Still blocking realistic apps
 
@@ -49,7 +50,7 @@ SkyUI has moved beyond an early prototype. The roadmap below is **forward-lookin
 | **Thin app chrome** | No command bar, split view, drawer, status bar, or master-detail templates |
 | **Forms gaps** | No autocomplete, numeric up/down, date range, masked input, validation summary |
 | **Grid / filter v1 limits** | No resize, multi-select, in-grid filter, grouping, async paging — LOB apps stall here |
-| **Mobile unproven** | No safe area, sheets, touch policy, keyboard insets, or mobile sample app |
+| **Mobile incomplete** | P0 primitives landed in `SkyUI`; FAB, pull-to-refresh, CI compile matrix, and on-device validation still open |
 | **No reference apps** | Demo gallery ≠ settings app, field-service app, or CRUD shell |
 
 ---
@@ -183,28 +184,28 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 
 **Goal:** SkyUI works on **phone and tablet**, not only desktop with a narrow window.
 
-`SkyNavigationView` bottom mode and breakpoints exist but are **not validated** on iOS/Android. This phase makes mobile a first-class target.
+`SkyNavigationView` bottom mode and breakpoints exist; P0 mobile primitives are **in progress** with an iOS sample host. This phase makes mobile a first-class target.
 
 ### P0 — Platform matrix
 
-| Target | Deliverable |
-|--------|-------------|
-| **TFM matrix** | `net10.0-android`, `net10.0-ios`; browser WASM optional |
-| **SkyUI.Mobile.Demo** | Phone + tablet sample (or adaptive single app) |
-| **CI builds** | Android + iOS (or at least compile gate); manual test matrix doc |
-| **Package splitting** | `SkyUI.Data` / `SkyUI.Diagram` optional for WASM size |
+| Target | Deliverable | Status |
+|--------|-------------|--------|
+| **TFM matrix** | `net10.0-android`, `net10.0-ios`; browser WASM optional | **Partial** — `SkyUI.Demo.iOS` on `net10.0-ios`; Android todo |
+| **SkyUI.Demo.Mobile** | Phone + tablet sample (or adaptive single app) | **Done** (shared shell + four sections) |
+| **CI builds** | Android + iOS (or at least compile gate); manual test matrix doc | **Todo** |
+| **Package splitting** | `SkyUI.Data` / `SkyUI.Diagram` optional for WASM size | **Todo** |
 
 ### P0 — Mobile primitives (high value)
 
-| Control / API | Description |
-|---------------|-------------|
-| **SkySafeArea** | Attached properties: `PaddingTop/Bottom/Left/Right` from device insets |
-| **SkyBottomSheet** | Modal sheet from bottom; snap heights; drag-to-dismiss |
-| **SkyActionSheet** | Destructive/primary action list (iOS-style) |
-| **SkyFab** | Floating action button; position above safe area + bottom nav |
-| **SkyPullToRefresh** | Wrapper control for scrollable content |
-| **SkyKeyboardInset** | Adjusts bottom padding when soft keyboard opens |
-| **SkyTouchTarget** | Enforces minimum 44×44 dp via attached property or style |
+| Control / API | Description | Status |
+|---------------|-------------|--------|
+| **SkySafeArea** | Per-edge safe-area padding from `IInsetsManager` | **Done** |
+| **SkySheetHost** / bottom sheet | Modal sheet from bottom with motion | **Done** (no snap heights / drag-to-dismiss yet) |
+| **SkyActionSheet** | Destructive/primary action list (iOS-style) | **Done** |
+| **SkyKeyboardInset** | Bottom padding when soft keyboard opens | **Done** |
+| **SkyTouchTarget** | Minimum 44×44 dp via attached property | **Done** |
+| **SkyFab** | Floating action button; position above safe area + bottom nav | **Todo** |
+| **SkyPullToRefresh** | Wrapper control for scrollable content | **Todo** |
 
 ### P1 — Touch interaction policy
 
@@ -329,8 +330,8 @@ Use this when sequencing work across phases.
 | **P0** | `SkyCommandBar` + `SkyPageHeader` | ✓ | ✓ | App chrome beyond raw nav |
 | **P0** | Autocomplete, numeric, date range, masked input | ✓ | ✓ | Forms in real apps |
 | **P0** | `SkyMessageBox` + `SkyEmptyState` | ✓ | ✓ | Polish users expect |
-| **P0** | Safe area + bottom sheet + keyboard inset | — | ✓ | Mobile unusable without these |
-| **P0** | Mobile demo app + CI compile | — | ✓ | Proves multiplatform claim |
+| **P0** | Safe area + bottom sheet + keyboard inset | — | ✓ | **Partial** — shipped in `SkyUI`; see [mobile.md](mobile.md) |
+| **P0** | Mobile demo app + CI compile | — | ✓ | **Partial** — `SkyUI.Demo.Mobile` + iOS host; CI todo |
 | **P1** | Grid 2.0 (resize, multi-select, async paging) | ✓ | ✓ | Data apps |
 | **P1** | `SkyDataPager`, `SkyDrawer`, file picker | ✓ | ✓ | Common workflows |
 | **P1** | Touch target policy + pull-to-refresh | — | ✓ | Mobile list apps |
@@ -373,4 +374,5 @@ Phase 3 can start in parallel once Phase 0 CI exists. Phase 4 grid work can over
 - [Current state](current-state.md)
 - [Gap analysis](gap-analysis.md)
 - [Layout controls](layout.md)
+- [Mobile primitives](mobile.md)
 - [Design tokens](design-tokens.md)

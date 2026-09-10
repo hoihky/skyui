@@ -35,6 +35,12 @@
             
                         <li class="nav-item depth-0">
                           
+                            <a href="legacy-sunset.html" class="nav-link">legacy sunset</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
                             <a href="current-state.html" class="nav-link">Current state</a>
                             
                         </li>
@@ -60,6 +66,12 @@
                         <li class="nav-item depth-0">
                           
                             <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="mobile.html" class="nav-link">Mobile primitives</a>
                             
                         </li>
                         
@@ -123,12 +135,12 @@
 </thead>
 <tbody>
 <tr>
-<td>No validated mobile/web</td>
-<td>Library depends on Avalonia core only; demo uses <code>Avalonia.Desktop</code>. Touch, safe areas, keyboard insets, and browser constraints are unproven.</td>
+<td>Mobile partially addressed</td>
+<td><code>SkySafeArea</code>, <code>SkyKeyboardInset</code>, <code>SkyTouchTarget</code>, <code>SkyActionSheet</code>, and <code>SkySheetHost</code> ship in <code>SkyUI</code>; desktop <strong>Mobile</strong> gallery page and <code>SkyUI.Demo.iOS</code> (<code>net10.0-ios</code>) exist. Android, browser WASM, CI matrix, and on-device validation are still missing.</td>
 </tr>
 <tr>
-<td>No adaptive primitives</td>
-<td><code>DESIGN.md</code> defines breakpoints and collapsing sidebar/nav behavior; the library does not expose <code>SkyBreakpoint</code>, compact density, or bottom-nav vs sidebar patterns.</td>
+<td>Adaptive primitives partial</td>
+<td><code>SkyBreakpoint</code>, <code>SkyNavigationView</code> bottom mode, and responsive layout controls exist; compact density auto-switch, sheet-vs-dialog on narrow width, and documented touch policies are incomplete.</td>
 </tr>
 <tr>
 <td>No platform services layer</td>
@@ -444,12 +456,12 @@
 <tr>
 <td>P0</td>
 <td>Mobile: safe area, bottom sheet, keyboard inset, touch targets</td>
-<td>Mobile unusable without these</td>
+<td><strong>Partial</strong> — primitives in <code>SkyUI</code>; see <a href="mobile.html">mobile.md</a></td>
 </tr>
 <tr>
 <td>P0</td>
 <td>Mobile demo + CI compile matrix</td>
-<td>Validates multiplatform claim</td>
+<td><strong>Partial</strong> — <code>SkyUI.Demo.Mobile</code> + <code>SkyUI.Demo.iOS</code>; CI gate still todo</td>
 </tr>
 <tr>
 <td>P1</td>

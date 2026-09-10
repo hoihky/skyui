@@ -33,6 +33,12 @@
               <a href="index.html" class="nav-link">Home</a>
             </li>
             
+                        <li class="nav-item depth-0">
+                          
+                            <a href="legacy-sunset.html" class="nav-link">legacy sunset</a>
+                            
+                        </li>
+                        
                         <li class="nav-item depth-0 is-active">
                           
                             <a href="current-state.html" class="nav-link">Current state</a>
@@ -60,6 +66,12 @@
                         <li class="nav-item depth-0">
                           
                             <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="mobile.html" class="nav-link">Mobile primitives</a>
                             
                         </li>
                         
@@ -139,12 +151,16 @@
 <td><code>src/SkyUI.Demo</code> — desktop gallery referencing all packages</td>
 </tr>
 <tr>
+<td>Mobile samples</td>
+<td><code>src/SkyUI.Demo.Mobile</code> (shared shell), <code>src/SkyUI.Demo.iOS</code> (<code>net10.0-ios</code>)</td>
+</tr>
+<tr>
 <td>Automated tests</td>
 <td><code>tests/SkyUI.UnitTests</code>, <code>tests/SkyUI.HeadlessTests</code></td>
 </tr>
 <tr>
 <td>Public API docs</td>
-<td><code>doc/</code>; visual preset spec in <code>src/SkyUI.Themes.Sky/DESIGN.md</code></td>
+<td><code>docs/</code>; visual preset spec in <code>src/SkyUI.Themes.Sky/DESIGN.md</code></td>
 </tr>
 <tr>
 <td>License</td>
@@ -167,11 +183,13 @@ src/
   SkyUI.Themes.Sky/     Sky preset (Dark / Light / HighContrast) + primitive styles
   SkyUI.Data/           Virtual grid + filter editor + SkyDataTheme.axaml
   SkyUI.Diagram/        Diagram surface and routers
-  SkyUI.Demo/           Control gallery
+  SkyUI.Demo/           Control gallery (includes Mobile primitives page)
+  SkyUI.Demo.Mobile/    Shared mobile demo shell
+  SkyUI.Demo.iOS/       iOS host for mobile demo
 tests/
   SkyUI.UnitTests/
   SkyUI.HeadlessTests/
-doc/
+docs/
 </code></pre>
 <h3 id="package-dependencies">Package dependencies</h3>
 <pre><code class="language-text">SkyUI.Core
@@ -244,6 +262,44 @@ SkyUI.Diagram  → Core, SkyUI
 </tr>
 </tbody>
 </table>
+<h3 id="mobile-primitives-early">Mobile primitives (early)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control / API</th>
+<th>Namespace</th>
+<th>Package</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkySafeArea</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>SkyKeyboardInset</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>SkyTouchTarget</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>SkyActionSheet</code> / <code>SkyActionSheetItem</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>SkySheetHost</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="mobile.html">mobile.md</a> for usage and sample apps.</p>
 <h2 id="data-grid-capabilities-today">Data grid capabilities (today)</h2>
 <ul>
 <li>Data via <code>IVirtualGridDataSource</code> (windowed <code>GetRow</code>, <code>RowCount</code>, <code>StructureChanged</code>, optional <code>ApplySort</code>).</li>
@@ -264,7 +320,7 @@ SkyUI.Diagram  → Core, SkyUI
 <li>Interaction on <code>DiagramSurface</code>: move, resize, connect, reconnect, clipboard.</li>
 </ul>
 <h2 id="demo-gallery-pages">Demo gallery pages</h2>
-<p>Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox &amp; Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline.</p>
+<p>Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox &amp; Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, <strong>Mobile</strong> (safe area, touch targets, action sheet, keyboard inset).</p>
 <h2 id="architectural-strengths">Architectural strengths</h2>
 <ul>
 <li><strong>Pluggable boundaries</strong> in Diagram and Filter (routers, exporters, presenters, hit testing).</li>
@@ -274,7 +330,7 @@ SkyUI.Diagram  → Core, SkyUI
 </ul>
 <h2 id="known-limitations-baseline">Known limitations (baseline)</h2>
 <ul>
-<li>Desktop-only demo; multiplatform not validated.</li>
+<li>Mobile primitives shipped in <code>SkyUI</code>; iOS sample project targets <code>net10.0-ios</code> but device/simulator validation and CI compile matrix are not yet in place.</li>
 <li>No automated quality gates or published NuGet package.</li>
 <li>Thin coverage of app chrome (navigation shell, dialogs, toasts, pickers, charts).</li>
 <li>Grid lacks many enterprise features (resize, multi-select, grouping, in-grid filter, etc.).</li>
@@ -309,6 +365,10 @@ SkyUI.Diagram  → Core, SkyUI
                         
                         <li class="toc-h2">
                           <a href="#custom-controls-library">Custom controls (library)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#mobile-primitives-early">Mobile primitives (early)</a>
                         </li>
                         
                         <li class="toc-h2">

@@ -14,8 +14,9 @@ Snapshot of the SkyUI codebase used as the baseline for [gap analysis](gap-analy
 | Target framework | .NET 10 (`net10.0`) |
 | Packages | See [repository layout](#repository-layout) below |
 | Demo app | `src/SkyUI.Demo` — desktop gallery referencing all packages |
+| Mobile samples | `src/SkyUI.Demo.Mobile` (shared shell), `src/SkyUI.Demo.iOS` (`net10.0-ios`) |
 | Automated tests | `tests/SkyUI.UnitTests`, `tests/SkyUI.HeadlessTests` |
-| Public API docs | `doc/`; visual preset spec in `src/SkyUI.Themes.Sky/DESIGN.md` |
+| Public API docs | `docs/`; visual preset spec in `src/SkyUI.Themes.Sky/DESIGN.md` |
 | License | MIT (`LICENSE`) |
 | XAML xmlns | `https://skyui.dev` (split per assembly via `XmlnsDefinition`) |
 
@@ -32,11 +33,13 @@ skyui/
     SkyUI.Themes.Sky/     Sky preset (Dark / Light / HighContrast) + primitive styles
     SkyUI.Data/           Virtual grid + filter editor + SkyDataTheme.axaml
     SkyUI.Diagram/        Diagram surface and routers
-    SkyUI.Demo/           Control gallery
+    SkyUI.Demo/           Control gallery (includes Mobile primitives page)
+    SkyUI.Demo.Mobile/    Shared mobile demo shell
+    SkyUI.Demo.iOS/       iOS host for mobile demo
   tests/
     SkyUI.UnitTests/
     SkyUI.HeadlessTests/
-  doc/
+  docs/
 ```
 
 ### Package dependencies
@@ -74,6 +77,18 @@ Apps typically reference `SkyUI`, `SkyUI.Themes.Sky`, and optionally `SkyUI.Data
 | `Avatar`, `Badge`, `Chip` | `SkyUI.Controls` | `SkyUI` |
 | `SkyPlaceholderControl` | `SkyUI.Controls` | `SkyUI` |
 
+### Mobile primitives (early)
+
+| Control / API | Namespace | Package |
+|---------------|-----------|---------|
+| `SkySafeArea` | `SkyUI.Controls` | `SkyUI` |
+| `SkyKeyboardInset` | `SkyUI.Controls` | `SkyUI` |
+| `SkyTouchTarget` | `SkyUI.Controls` | `SkyUI` |
+| `SkyActionSheet` / `SkyActionSheetItem` | `SkyUI.Controls` | `SkyUI` |
+| `SkySheetHost` | `SkyUI.Controls` | `SkyUI` |
+
+See [mobile.md](mobile.md) for usage and sample apps.
+
 ## Data grid capabilities (today)
 
 - Data via `IVirtualGridDataSource` (windowed `GetRow`, `RowCount`, `StructureChanged`, optional `ApplySort`).
@@ -95,7 +110,7 @@ Apps typically reference `SkyUI`, `SkyUI.Themes.Sky`, and optionally `SkyUI.Data
 
 ## Demo gallery pages
 
-Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline.
+Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, **Mobile** (safe area, touch targets, action sheet, keyboard inset).
 
 ## Architectural strengths
 
@@ -106,7 +121,7 @@ Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, L
 
 ## Known limitations (baseline)
 
-- Desktop-only demo; multiplatform not validated.
+- Mobile primitives shipped in `SkyUI`; iOS sample project targets `net10.0-ios` but device/simulator validation and CI compile matrix are not yet in place.
 - No automated quality gates or published NuGet package.
 - Thin coverage of app chrome (navigation shell, dialogs, toasts, pickers, charts).
 - Grid lacks many enterprise features (resize, multi-select, grouping, in-grid filter, etc.).
