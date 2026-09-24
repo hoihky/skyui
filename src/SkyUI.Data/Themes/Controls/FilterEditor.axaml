@@ -131,7 +131,7 @@
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
                              MinWidth="72"
-                             Watermark="Value"
+                             PlaceholderText="Value"
                              Text="{Binding ValueText}" />
                     <Button Grid.Column="3"
                             Classes="filter-editor-row-remove"

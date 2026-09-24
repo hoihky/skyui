@@ -204,7 +204,7 @@
 </tr>
 <tr>
 <td><strong>Tests</strong></td>
-<td>Unit + headless suites (~190+ tests)</td>
+<td>Unit + headless suites (<strong>400+</strong> tests)</td>
 </tr>
 <tr>
 <td><strong>Docs</strong></td>
@@ -213,6 +213,14 @@
 <tr>
 <td><strong>Mobile (early)</strong></td>
 <td><code>SkySafeArea</code>, <code>SkyKeyboardInset</code>, <code>SkyTouchTarget</code>, <code>SkyActionSheet</code>, <code>SkySheetHost</code>; desktop Mobile gallery page; <code>SkyUI.Demo.Mobile</code> + <code>SkyUI.Demo.iOS</code> (<code>net10.0-ios</code>)</td>
+</tr>
+<tr>
+<td><strong>Essentials wave 2</strong></td>
+<td>App shell (<code>SkyCommandBar</code>, <code>SkySplitView</code>, <code>SkyDrawer</code>, <code>SkyPageHeader</code>), extended forms, <code>SkyMessageBox</code>, data presentation helpers — see Phase 2 status below</td>
+</tr>
+<tr>
+<td><strong>Stability</strong></td>
+<td><code>SkyActionSheet</code> dismiss/concurrency hardening; <code>CheckedListBox</code> selection persistence + detach cleanup; drag-reorder capture-loss handling</td>
 </tr>
 </tbody>
 </table>
@@ -230,14 +238,6 @@
 <td>Cannot ship or adopt as a dependency in production pipelines</td>
 </tr>
 <tr>
-<td><strong>Thin app chrome</strong></td>
-<td>No command bar, split view, drawer, status bar, or master-detail templates</td>
-</tr>
-<tr>
-<td><strong>Forms gaps</strong></td>
-<td>No autocomplete, numeric up/down, date range, masked input, validation summary</td>
-</tr>
-<tr>
 <td><strong>Grid / filter v1 limits</strong></td>
 <td>No resize, multi-select, in-grid filter, grouping, async paging — LOB apps stall here</td>
 </tr>
@@ -246,8 +246,8 @@
 <td>P0 primitives landed in <code>SkyUI</code>; FAB, pull-to-refresh, CI compile matrix, and on-device validation still open</td>
 </tr>
 <tr>
-<td><strong>No reference apps</strong></td>
-<td>Demo gallery ≠ settings app, field-service app, or CRUD shell</td>
+<td><strong>Production hardening</strong></td>
+<td>No CI gate, no published NuGet, limited on-device mobile QA, accessibility audit incomplete for new shell controls</td>
 </tr>
 </tbody>
 </table>
@@ -354,7 +354,7 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <hr>
 <h2 id="phase-2-essentials-wave-2-realistic-app-ui-1420-weeks">Phase 2 — Essentials wave 2: realistic app UI (14–20 weeks)</h2>
 <p><strong>Goal:</strong> Close the gap between “control gallery” and <strong>apps users actually ship</strong> — settings, CRM, inventory, field service, admin portals.</p>
-<p>Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback controls are <strong>shipped</strong>. This wave adds <strong>missing high-value controls</strong> identified for desktop and shared mobile/desktop patterns.</p>
+<p>Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback controls are <strong>shipped</strong>. The wave-2 controls below are largely <strong>implemented</strong>; remaining work is polish, accessibility audit, and broader sample coverage.</p>
 <h3 id="p0-app-shell-and-navigation-desktop-tablet">P0 — App shell and navigation (desktop + tablet)</h3>
 <table class="table">
 <thead>
@@ -363,6 +363,7 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <th>Description</th>
 <th style="text-align: center;">Desktop</th>
 <th style="text-align: center;">Mobile</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
@@ -371,36 +372,42 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <td>Primary toolbar with icon buttons, labels, overflow menu</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyStatusBar</strong></td>
 <td>Bottom status line (connection, selection count, progress)</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">—</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkySplitView</strong></td>
 <td>Master-detail pane with collapsible list + detail</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyDrawer</strong></td>
 <td>Slide-in panel for filters, settings, nav (overlay on narrow width)</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyPageHeader</strong></td>
 <td>Title, subtitle, back button, action slots</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>App templates</strong></td>
 <td><code>SkySettingsPage</code>, <code>SkyListDetailPage</code>, <code>SkyFormPage</code> XAML/C# scaffolds</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
+<td><strong>Done</strong></td>
 </tr>
 </tbody>
 </table>
@@ -410,36 +417,44 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <th>Control</th>
 <th>Description</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>SkyAutocomplete</strong></td>
 <td>Typeahead with async <code>ItemsSource</code>, free text, FormField integration</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyComboBoxField</strong></td>
 <td><code>SkyFormField</code> wrapper around styled ComboBox with validation</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyNumericUpDown</strong></td>
 <td>Decimal/integer with min/max, step, culture formatting</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyDateRangePicker</strong></td>
 <td>Start/end date with presets (today, this week, custom)</td>
-</tr>
-<tr>
-<td><strong>SkyMaskedTextBox</strong></td>
-<td>Phone, credit card, custom mask; pairs with <code>SkyFormField</code></td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyValidationSummary</strong></td>
 <td>Form-level error list; links to first invalid field</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyEmptyState</strong></td>
 <td>Illustration + title + action for empty lists, grids, search</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyMaskedTextBox</strong></td>
+<td>Phone, credit card, custom mask; pairs with <code>SkyFormField</code></td>
+<td><strong>Done</strong></td>
 </tr>
 </tbody>
 </table>
@@ -449,24 +464,29 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <th>Control</th>
 <th>Description</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>SkyDataPager</strong></td>
 <td>Page size, first/prev/next/last, total count; binds to grid or list</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyPagination</strong></td>
 <td>Generic pagination for any <code>ItemsSource</code></td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyKpiTile</strong></td>
 <td>Metric card (value, delta, sparkline slot) for dashboards</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyLoadingOverlay</strong></td>
 <td>Semi-transparent blocker over panel/window during async work</td>
+<td><strong>Done</strong></td>
 </tr>
 </tbody>
 </table>
@@ -476,20 +496,24 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <th>Feature</th>
 <th>Description</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>SkyMessageBox</strong></td>
 <td>Static <code>ShowAsync</code> API: info/warning/error/confirm; maps to <code>SkyDialogHost</code></td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyFilePicker</strong></td>
 <td>Styled wrapper over Avalonia storage pickers; consistent API across platforms</td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyClipboard</strong></td>
 <td>Helper for copy/paste text and tabular data from grid selection</td>
+<td><strong>Done</strong></td>
 </tr>
 </tbody>
 </table>
@@ -499,24 +523,29 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <th>Feature</th>
 <th>Description</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Drag-drop reorder</strong></td>
-<td><code>CheckedListBox</code> / <code>SkyVirtualTreeView</code> row reorder</td>
+<td><code>CheckedListBox</code> row reorder (<code>AllowReorder</code>)</td>
+<td><strong>Done</strong> (tree view todo)</td>
 </tr>
 <tr>
 <td><strong>Inline edit</strong></td>
 <td>Tree/list cell edit with commit/cancel</td>
+<td><strong>Done</strong> (<code>CheckedListBox</code>)</td>
 </tr>
 <tr>
 <td><strong>Context row actions</strong></td>
-<td>Swipe or overflow menu pattern (shared with mobile)</td>
+<td>Overflow menu via <code>RowActionProvider</code></td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>Async tree loading</strong></td>
-<td><code>IAsyncTreeDataSource</code> with expand-to-load children</td>
+<td><code>AsyncCheckedListItemAdapter</code> expand-to-load</td>
+<td><strong>Done</strong></td>
 </tr>
 </tbody>
 </table>
@@ -529,9 +558,9 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 </ul>
 <h3 id="exit-criteria-2">Exit criteria</h3>
 <ul>
-<li><strong>Settings sample app</strong> built only from SkyUI packages: nav + form fields + save snackbar.</li>
-<li><strong>List-detail sample app</strong>: split view + virtual grid or list + detail form.</li>
-<li>Essentials catalog published on doc site with desktop/mobile applicability notes.</li>
+<li><strong>Settings sample app</strong> built only from SkyUI packages: nav + form fields + save snackbar. <strong>Done</strong> (<code>samples/SettingsApp</code>)</li>
+<li><strong>List-detail sample app</strong>: split view + virtual grid or list + detail form. <strong>Done</strong> (<code>samples/CrudListDetail</code>)</li>
+<li>Essentials catalog published on doc site with desktop/mobile applicability notes. <strong>Partial</strong> (SDK guide + topic pages; mobile guide added)</li>
 </ul>
 <hr>
 <h2 id="phase-3-mobile-and-adaptive-ux-1418-weeks">Phase 3 — Mobile and adaptive UX (14–18 weeks)</h2>
@@ -591,7 +620,7 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 </tr>
 <tr>
 <td><strong>SkyActionSheet</strong></td>
-<td>Destructive/primary action list (iOS-style)</td>
+<td>Destructive/primary action list (iOS-style); dismiss via scrim/close completes with <code>null</code></td>
 <td><strong>Done</strong></td>
 </tr>
 <tr>
@@ -607,12 +636,12 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <tr>
 <td><strong>SkyFab</strong></td>
 <td>Floating action button; position above safe area + bottom nav</td>
-<td><strong>Todo</strong></td>
+<td><strong>Done</strong></td>
 </tr>
 <tr>
 <td><strong>SkyPullToRefresh</strong></td>
-<td>Wrapper control for scrollable content</td>
-<td><strong>Todo</strong></td>
+<td>Wrapper control for scrollable content; <code>IsRefreshing</code> + <code>RefreshCommand</code></td>
+<td><strong>Done</strong></td>
 </tr>
 </tbody>
 </table>

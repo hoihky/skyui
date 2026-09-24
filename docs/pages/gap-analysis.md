@@ -17,7 +17,7 @@ A credible commercial position: **Avalonia multiplatform + Sky design system + d
 
 | Gap | Detail |
 |-----|--------|
-| Mobile partially addressed | `SkySafeArea`, `SkyKeyboardInset`, `SkyTouchTarget`, `SkyActionSheet`, and `SkySheetHost` ship in `SkyUI`; desktop **Mobile** gallery page and `SkyUI.Demo.iOS` (`net10.0-ios`) exist. Android, browser WASM, CI matrix, and on-device validation are still missing. |
+| Mobile partially addressed | `SkySafeArea`, `SkyKeyboardInset`, `SkyTouchTarget`, `SkyActionSheet`, and `SkySheetHost` ship in `SkyUI` with dismiss/concurrency hardening; desktop **Mobile** gallery page and `SkyUI.Demo.iOS` (`net10.0-ios`) exist. Android, browser WASM, CI matrix, and on-device validation are still missing. |
 | Adaptive primitives partial | `SkyBreakpoint`, `SkyNavigationView` bottom mode, and responsive layout controls exist; compact density auto-switch, sheet-vs-dialog on narrow width, and documented touch policies are incomplete. |
 | No platform services layer | Commercial kits often wrap file pickers, share sheets, biometrics, haptics, and deep links with consistent APIs. |
 
@@ -139,8 +139,8 @@ Many primitives are **styled Avalonia controls** in the Spotify theme but lack a
 | Priority | Item | Rationale |
 |----------|------|-----------|
 | P0 | CI, NuGet, GitHub Pages | Enables all other work |
-| P0 | App shell: command bar, split view, drawer, page header | Required for realistic desktop/tablet apps |
-| P0 | Forms wave 2: autocomplete, numeric, date range, masked input, validation summary | LOB blocker beyond current `SkyFormField` |
+| P0 | App shell: command bar, split view, drawer, page header | **Partial** — controls shipped; CI/samples coverage ongoing |
+| P0 | Forms wave 2: autocomplete, numeric, date range, masked input, validation summary | **Done** — see Phase 2 in [development-roadmap.md](development-roadmap.md) |
 | P0 | Mobile: safe area, bottom sheet, keyboard inset, touch targets | **Partial** — primitives in `SkyUI`; see [mobile.md](mobile.md) |
 | P0 | Mobile demo + CI compile matrix | **Partial** — `SkyUI.Demo.Mobile` + `SkyUI.Demo.iOS`; CI gate still todo |
 | P1 | Grid 2.0 + filter integration + data pager | Extends existing strength |

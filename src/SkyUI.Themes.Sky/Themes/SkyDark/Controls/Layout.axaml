@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="using:SkyUI.Controls">
   <ControlTheme x:Key="{x:Type controls:SkyCard}" TargetType="controls:SkyCard">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyCardGradientBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
-    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
     <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
     <Setter Property="Padding" Value="16" />
     <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />

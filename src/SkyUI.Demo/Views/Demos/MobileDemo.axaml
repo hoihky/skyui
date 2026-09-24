@@ -1,7 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sky="https://skyui.dev"
-             x:Class="SkyUI.Demo.Views.Demos.MobileDemo">
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.MobileDemo"
+             x:DataType="vm:MobileDemoViewModel">
   <Grid>
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
       <Border Classes="sky-demo-panel" Margin="0,0,0,80">
@@ -9,22 +11,59 @@
           <TextBlock Classes="sky-feature-heading" Text="Mobile primitives" />
           <TextBlock Classes="sky-body-secondary"
                      TextWrapping="Wrap"
-                     Text="SkySafeArea, SkyTouchTarget, SkyActionSheet, SkySheetHost, and SkyKeyboardInset. Safe-area and keyboard insets are no-ops on desktop but the controls are fully interactive here." />
+                     Text="Safe area, touch targets, sheets, keyboard inset, FAB, and pull-to-refresh. Bindings below use MobileDemoViewModel." />
+
+          <TextBlock Classes="sky-body-secondary" Text="{Binding Status}" TextWrapping="Wrap" />
 
           <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkySafeArea" />
+            <TextBlock Classes="sky-section-title" Text="SkyPullToRefresh" />
             <TextBlock Classes="sky-body-secondary"
                        TextWrapping="Wrap"
-                       Text="Applies device insets from IInsetsManager. Padding is typically zero on desktop." />
+                       Text="Wrap a ScrollViewer; bind IsRefreshing and RefreshCommand from your view model." />
             <Border BorderBrush="{DynamicResource SkyBorderBrush}"
                     BorderThickness="1"
                     CornerRadius="8"
-                    Height="120"
+                    Height="280"
+                    ClipToBounds="True">
+              <sky:SkyPullToRefresh IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                                    RefreshCommand="{Binding RefreshCommand}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                  <ItemsControl ItemsSource="{Binding Items}" Margin="12">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Border Classes="sky-card" Margin="0,0,0,8" Padding="12">
+                          <TextBlock Text="{Binding}" />
+                        </Border>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </ScrollViewer>
+              </sky:SkyPullToRefresh>
+            </Border>
+          </StackPanel>
+
+          <StackPanel Spacing="8">
+            <TextBlock Classes="sky-section-title" Text="SkyFab" />
+            <Button Classes="sky sky-outlined"
+                    Content="Toggle extended FAB"
+                    Command="{Binding ToggleFabCommand}"
+                    HorizontalAlignment="Left" />
+            <TextBlock Classes="sky-body-secondary"
+                       TextWrapping="Wrap"
+                       Text="FAB floats above content (bottom-right) with optional safe-area margin." />
+          </StackPanel>
+
+          <StackPanel Spacing="8">
+            <TextBlock Classes="sky-section-title" Text="SkySafeArea" />
+            <Border BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Height="100"
                     ClipToBounds="True">
               <sky:SkySafeArea Background="{DynamicResource SkySurfaceElevatedBrush}">
                 <TextBlock Margin="8"
                            VerticalAlignment="Center"
-                           Text="Content inside SkySafeArea (insets applied as padding)."
+                           Text="Content inside SkySafeArea."
                            TextWrapping="Wrap" />
               </sky:SkySafeArea>
             </Border>
@@ -51,22 +90,16 @@
 
           <StackPanel Spacing="8">
             <TextBlock Classes="sky-section-title" Text="SkyKeyboardInset" />
-            <TextBlock Classes="sky-body-secondary"
-                       TextWrapping="Wrap"
-                       Text="Wraps scrollable form content; bottom padding grows when the soft keyboard is visible (mobile)." />
             <Border BorderBrush="{DynamicResource SkyBorderBrush}"
                     BorderThickness="1"
                     CornerRadius="8"
-                    Height="220"
+                    Height="180"
                     ClipToBounds="True">
               <sky:SkyKeyboardInset>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                   <StackPanel Spacing="12" Margin="12">
                     <sky:SkyFormField Label="Notes">
-                      <TextBox Classes="sky" PlaceholderText="Focus a field to test keyboard inset on device" />
-                    </sky:SkyFormField>
-                    <sky:SkyFormField Label="Email">
-                      <TextBox Classes="sky" PlaceholderText="you@example.com" />
+                      <TextBox Classes="sky" PlaceholderText="Keyboard inset demo" />
                     </sky:SkyFormField>
                   </StackPanel>
                 </ScrollViewer>
@@ -76,6 +109,11 @@
         </StackPanel>
       </Border>
     </ScrollViewer>
+
+    <sky:SkyFab Icon="Add"
+                Label="{Binding FabLabel}"
+                IsExtended="{Binding IsExtendedFab}"
+                Command="{Binding AddItemCommand}" />
 
     <sky:SkySheetHost x:Name="SheetHost" />
   </Grid>

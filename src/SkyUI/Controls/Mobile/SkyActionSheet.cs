@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Threading;
@@ -9,12 +10,13 @@ namespace SkyUI.Controls;
 public static class SkyActionSheet
 {
     private static SkySheetHost? attachedHost;
+    private static readonly SemaphoreSlim sheetGate = new(1, 1);
 
     public static void Attach(SkySheetHost host) => attachedHost = host;
 
     internal static void ResetForTests() => attachedHost = null;
 
-    public static Task<int?> ShowAsync(
+    public static async Task<int?> ShowAsync(
         IReadOnlyList<SkyActionSheetItem> items,
         string? title = null,
         string cancelText = "Cancel",
@@ -24,7 +26,17 @@ public static class SkyActionSheet
         var host = sheetHost ?? attachedHost
             ?? throw new InvalidOperationException("Call SkyActionSheet.Attach(SkySheetHost) or pass sheetHost.");
 
-        return ShowOnHostAsync(host, items, title, cancelText, cancellationToken);
+        await sheetGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        try
+        {
+            return await ShowOnHostAsync(host, items, title, cancelText, cancellationToken)
+                .ConfigureAwait(false);
+        }
+        finally
+        {
+            sheetGate.Release();
+        }
     }
 
     private static Task<int?> ShowOnHostAsync(
@@ -35,6 +47,8 @@ public static class SkyActionSheet
         CancellationToken cancellationToken)
     {
         var tcs = new TaskCompletionSource<int?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        EventHandler<RoutedEventArgs>? onClosed = null;
+        CancellationTokenRegistration? cancellationRegistration = null;
         var completed = false;
 
         void Complete(int? result)
@@ -43,10 +57,22 @@ public static class SkyActionSheet
                 return;
 
             completed = true;
-            host.Close();
+            DetachHandlers();
+            if (host.IsOpen)
+                host.Close();
             ScheduleCleanup(host);
             tcs.TrySetResult(result);
         }
+
+        void DetachHandlers()
+        {
+            if (onClosed is not null)
+                host.Closed -= onClosed;
+            cancellationRegistration?.Dispose();
+            cancellationRegistration = null;
+        }
+
+        onClosed = (_, _) => Complete(null);
 
         var root = new StackPanel { Spacing = 8 };
         for (var index = 0; index < items.Count; index++)
@@ -70,8 +96,12 @@ public static class SkyActionSheet
         root.Children.Add(cancel);
 
         if (cancellationToken.CanBeCanceled)
-            cancellationToken.Register(() => Complete(null));
+        {
+            cancellationRegistration = cancellationToken.Register(() =>
+                Dispatcher.UIThread.Post(() => Complete(null)));
+        }
 
+        host.Closed += onClosed;
         host.Title = title;
         host.SheetContent = root;
         host.Show();

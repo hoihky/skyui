@@ -3,7 +3,7 @@
              xmlns:sky="https://skyui.dev"
              x:Class="SkyUI.Demo.App"
              RequestedThemeVariant="Light"
-             sky:SkyThemeProperties.AccentOverride="#1ED760">
+             sky:SkyThemeProperties.AccentOverride="#9333EA">
 
     <Application.Styles>
         <FluentTheme />

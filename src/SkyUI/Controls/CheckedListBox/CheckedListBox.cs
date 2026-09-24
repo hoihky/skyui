@@ -197,6 +197,16 @@ public class CheckedListBox : TemplatedControl
 
     public event EventHandler<CheckedListEditCancelledEventArgs>? EditCancelled;
 
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        UnsubscribeItemTree();
+        if (_rootNotify is not null && _rootCollectionHandler is not null)
+            _rootNotify.CollectionChanged -= _rootCollectionHandler;
+        _rootNotify = null;
+        _rootCollectionHandler = null;
+        base.OnDetachedFromVisualTree(e);
+    }
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
@@ -297,6 +307,9 @@ public class CheckedListBox : TemplatedControl
 
     public void RebuildAll()
     {
+        var selectedItems = CaptureSelectedItems();
+        var editingItem = CaptureEditingItem();
+
         UnsubscribeItemTree();
         _rows.Clear();
         var adapter = ItemAdapter ?? new DefaultCheckedListItemAdapter();
@@ -311,7 +324,43 @@ public class CheckedListBox : TemplatedControl
             static (_, _) => { },
             OnRowExpandRequested,
             item => item is not null && loadingItems.Contains(item));
+        RestoreRowState(selectedItems, editingItem);
         SubscribeItemTree(ItemsSource, adapter);
+    }
+
+    private HashSet<object> CaptureSelectedItems()
+    {
+        var selected = new HashSet<object>(ReferenceEqualityComparer.Instance);
+        foreach (var row in _rows)
+        {
+            if (row.IsSelected && row.Item is not null)
+                selected.Add(row.Item);
+        }
+
+        return selected;
+    }
+
+    private object? CaptureEditingItem()
+    {
+        foreach (var row in _rows)
+        {
+            if (row.IsEditing)
+                return row.Item;
+        }
+
+        return null;
+    }
+
+    private void RestoreRowState(HashSet<object> selectedItems, object? editingItem)
+    {
+        foreach (var row in _rows)
+        {
+            if (row.Item is not null && selectedItems.Contains(row.Item))
+                row.IsSelected = true;
+
+            if (editingItem is not null && ReferenceEquals(row.Item, editingItem))
+                row.IsEditing = true;
+        }
     }
 
     private void OnRowExpandRequested(CheckedListRowModel row) =>

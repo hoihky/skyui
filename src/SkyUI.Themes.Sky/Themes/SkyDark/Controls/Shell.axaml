@@ -24,8 +24,8 @@
   <ControlTheme x:Key="{x:Type controls:SkyCommandBar}" TargetType="controls:SkyCommandBar">
     <Setter Property="MinHeight" Value="48" />
     <Setter Property="Padding" Value="12,8" />
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyChromeGradientBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
     <Setter Property="BorderThickness" Value="0,0,0,1" />
     <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
     <Setter Property="Template">

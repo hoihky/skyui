@@ -156,7 +156,7 @@
 </tr>
 <tr>
 <td>Automated tests</td>
-<td><code>tests/SkyUI.UnitTests</code>, <code>tests/SkyUI.HeadlessTests</code></td>
+<td><code>tests/SkyUI.UnitTests</code> (~370+), <code>tests/SkyUI.HeadlessTests</code> (~37)</td>
 </tr>
 <tr>
 <td>Public API docs</td>
@@ -293,6 +293,16 @@ SkyUI.Diagram  → Core, SkyUI
 <td><code>SkyUI</code></td>
 </tr>
 <tr>
+<td><code>SkyFab</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
+<td><code>SkyPullToRefresh</code></td>
+<td><code>SkyUI.Controls</code></td>
+<td><code>SkyUI</code></td>
+</tr>
+<tr>
 <td><code>SkySheetHost</code></td>
 <td><code>SkyUI.Controls</code></td>
 <td><code>SkyUI</code></td>
@@ -331,10 +341,16 @@ SkyUI.Diagram  → Core, SkyUI
 <h2 id="known-limitations-baseline">Known limitations (baseline)</h2>
 <ul>
 <li>Mobile primitives shipped in <code>SkyUI</code>; iOS sample project targets <code>net10.0-ios</code> but device/simulator validation and CI compile matrix are not yet in place.</li>
-<li>No automated quality gates or published NuGet package.</li>
-<li>Thin coverage of app chrome (navigation shell, dialogs, toasts, pickers, charts).</li>
+<li>No CI gate or published NuGet package (local feed only).</li>
 <li>Grid lacks many enterprise features (resize, multi-select, grouping, in-grid filter, etc.).</li>
-<li>Branding tied to “Spotify” naming in resources and design doc — consider product-neutral tokens for commercial positioning.</li>
+<li>Legacy <code>Spotify*</code> resource aliases remain during 1.x — see <a href="legacy-sunset.html">legacy-sunset.md</a>.</li>
+</ul>
+<h2 id="recent-stability-improvements">Recent stability improvements</h2>
+<ul>
+<li><strong><code>SkyActionSheet</code></strong> — completes when dismissed via scrim/close; serializes concurrent shows per host; UI-thread-safe cancellation.</li>
+<li><strong><code>CheckedListBox</code></strong> — preserves row selection across <code>RebuildAll</code>; unsubscribes collection handlers on detach; drag-reorder handles capture loss.</li>
+<li><strong><code>SkyKeyboardInset</code> / <code>SkySafeArea</code></strong> — reset padding on detach; react to runtime property changes.</li>
+<li><strong><code>SkySheetHost</code></strong> — disposes animation cancellation tokens between transitions.</li>
 </ul>
 </div>
           <footer class="doc-footer">
@@ -393,6 +409,10 @@ SkyUI.Diagram  → Core, SkyUI
                         
                         <li class="toc-h2">
                           <a href="#known-limitations-baseline">Known limitations (baseline)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#recent-stability-improvements">Recent stability improvements</a>
                         </li>
                         
                   </ul>

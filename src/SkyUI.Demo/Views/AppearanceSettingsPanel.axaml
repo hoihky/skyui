@@ -47,14 +47,14 @@
                 <TextBox x:Name="AccentHexBox"
                          Classes="sky"
                          PlaceholderText="#RRGGBB"
-                         Text="#1ED760" />
+                         Text="#9333EA" />
                 <WrapPanel Orientation="Horizontal">
                     <Button Classes="sky sky-subtle"
                             Width="28" Height="28" Padding="0" Margin="0,0,6,6"
-                            ToolTip.Tip="Sky green"
-                            Tag="#1ED760"
+                            ToolTip.Tip="Aurora violet"
+                            Tag="#9333EA"
                             Click="OnAccentSwatchClick">
-                        <Border Width="18" Height="18" CornerRadius="9" Background="#1ED760" />
+                        <Border Width="18" Height="18" CornerRadius="9" Background="#9333EA" />
                     </Button>
                     <Button Classes="sky sky-subtle"
                             Width="28" Height="28" Padding="0" Margin="0,0,6,6"

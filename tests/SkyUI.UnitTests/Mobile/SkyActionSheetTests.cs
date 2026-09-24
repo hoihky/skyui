@@ -22,7 +22,21 @@ public class SkyActionSheetTests
 
         var index = await task;
         Assert.Equal(0, index);
-        Assert.False(host.IsOpen);
+    }
+
+    [Fact]
+    public async Task ShowAsync_dismiss_via_host_close_returns_null()
+    {
+        var host = new SkySheetHost();
+        var task = SkyActionSheet.ShowAsync([
+            new SkyActionSheetItem { Title = "Share" },
+        ], sheetHost: host);
+
+        Assert.True(host.IsOpen);
+        host.Close();
+
+        var index = await task;
+        Assert.Null(index);
     }
 
     [Fact]

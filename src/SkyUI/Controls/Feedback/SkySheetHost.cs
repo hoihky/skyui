@@ -121,6 +121,7 @@ public class SkySheetHost : TemplatedControl
         }
 
         animationCancellation?.Cancel();
+        animationCancellation?.Dispose();
         animationCancellation = new CancellationTokenSource();
         var token = animationCancellation.Token;
 

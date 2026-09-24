@@ -14,6 +14,8 @@ Early mobile primitives live in `SkyUI.Controls` (not a separate `SkyUI.Mobile` 
 | `SkyTouchTarget` | Attached property `EnsureTouchTarget` — enforces 44×44 pt minimum hit size |
 | `SkySheetHost` | Bottom sheet host with scrim and slide animation (shared with desktop feedback) |
 | `SkyActionSheet` | Static `ShowAsync` — iOS-style action list over `SkySheetHost` |
+| `SkyFab` | Floating action button with icon, optional extended label, safe-area margins |
+| `SkyPullToRefresh` | Wraps a `ScrollViewer`; bind `IsRefreshing` + `RefreshCommand` |
 
 ## SkySafeArea
 
@@ -53,7 +55,7 @@ if (index is int selected)
     // user picked items[selected]
 ```
 
-`ShowAsync` returns `null` when the user cancels. Pass `sheetHost:` explicitly if you do not call `Attach`.
+`ShowAsync` returns `null` when the user cancels, taps the scrim, or closes the sheet with the header close button. Pass `sheetHost:` explicitly if you do not call `Attach`. Concurrent calls on the same host are serialized (queued) so only one sheet is active at a time.
 
 ## SkyKeyboardInset
 
@@ -70,6 +72,39 @@ Wrap scrollable form content so the bottom clears the soft keyboard on mobile:
   </ScrollViewer>
 </sky:SkyKeyboardInset>
 ```
+
+## SkyFab
+
+Place in a `Grid` above scrollable content (bottom-right by default):
+
+```xml
+<Grid>
+  <sky:SkyPullToRefresh>...</sky:SkyPullToRefresh>
+  <sky:SkyFab Icon="Add"
+              Label="Compose"
+              IsExtended="True"
+              Command="{Binding AddCommand}" />
+</Grid>
+```
+
+- `Command` / `CommandParameter` — MVVM command binding
+- `HonorSafeArea` (default `true`) and `EdgeMargin` — keeps the FAB above home indicator / notch
+- `IsExtended` + `Label` — pill-shaped extended FAB
+
+## SkyPullToRefresh
+
+Content must be a `ScrollViewer`:
+
+```xml
+<sky:SkyPullToRefresh IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                      RefreshCommand="{Binding RefreshCommand}">
+  <ScrollViewer>
+    <ItemsControl ItemsSource="{Binding Items}" />
+  </ScrollViewer>
+</sky:SkyPullToRefresh>
+```
+
+The view model sets `IsRefreshing = true` when refresh starts and `false` when async work completes. `RefreshRequested` is raised for code-behind handlers without a command.
 
 ## Sample apps
 

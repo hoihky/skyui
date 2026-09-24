@@ -38,20 +38,20 @@ SkyUI has moved beyond an early prototype. The roadmap below is **forward-lookin
 | **Lists** | `CheckedListBox`, `SkyVirtualTreeView` |
 | **Primitives** | `SkyTooltip`, `SkyPopover`, loading button state |
 | **Data / diagram (v1)** | `SkyVirtualDataGrid`, `FilterEditor`, `DiagramSurface`, `VideoTimeline` |
-| **Tests** | Unit + headless suites (~190+ tests) |
+| **Tests** | Unit + headless suites (**400+** tests) |
 | **Docs** | Static site, SDK guide, control guides |
 | **Mobile (early)** | `SkySafeArea`, `SkyKeyboardInset`, `SkyTouchTarget`, `SkyActionSheet`, `SkySheetHost`; desktop Mobile gallery page; `SkyUI.Demo.Mobile` + `SkyUI.Demo.iOS` (`net10.0-ios`) |
+| **Essentials wave 2** | App shell (`SkyCommandBar`, `SkySplitView`, `SkyDrawer`, `SkyPageHeader`), extended forms, `SkyMessageBox`, data presentation helpers — see Phase 2 status below |
+| **Stability** | `SkyActionSheet` dismiss/concurrency hardening; `CheckedListBox` selection persistence + detach cleanup; drag-reorder capture-loss handling |
 
 ### Still blocking realistic apps
 
 | Gap | Why it matters |
 |-----|----------------|
 | **No CI / NuGet publish** | Cannot ship or adopt as a dependency in production pipelines |
-| **Thin app chrome** | No command bar, split view, drawer, status bar, or master-detail templates |
-| **Forms gaps** | No autocomplete, numeric up/down, date range, masked input, validation summary |
 | **Grid / filter v1 limits** | No resize, multi-select, in-grid filter, grouping, async paging — LOB apps stall here |
 | **Mobile incomplete** | P0 primitives landed in `SkyUI`; FAB, pull-to-refresh, CI compile matrix, and on-device validation still open |
-| **No reference apps** | Demo gallery ≠ settings app, field-service app, or CRUD shell |
+| **Production hardening** | No CI gate, no published NuGet, limited on-device mobile QA, accessibility audit incomplete for new shell controls |
 
 ---
 
@@ -114,56 +114,56 @@ Dependency direction: `Core` → `SkyUI` → (`Data`, `Diagram`, `Mobile`); `The
 
 **Goal:** Close the gap between “control gallery” and **apps users actually ship** — settings, CRM, inventory, field service, admin portals.
 
-Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback controls are **shipped**. This wave adds **missing high-value controls** identified for desktop and shared mobile/desktop patterns.
+Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback controls are **shipped**. The wave-2 controls below are largely **implemented**; remaining work is polish, accessibility audit, and broader sample coverage.
 
 ### P0 — App shell and navigation (desktop + tablet)
 
-| Control / pattern | Description | Desktop | Mobile |
-|-------------------|-------------|:-------:|:------:|
-| **SkyCommandBar** | Primary toolbar with icon buttons, labels, overflow menu | ✓ | ✓ |
-| **SkyStatusBar** | Bottom status line (connection, selection count, progress) | ✓ | — |
-| **SkySplitView** | Master-detail pane with collapsible list + detail | ✓ | ✓ |
-| **SkyDrawer** | Slide-in panel for filters, settings, nav (overlay on narrow width) | ✓ | ✓ |
-| **SkyPageHeader** | Title, subtitle, back button, action slots | ✓ | ✓ |
-| **App templates** | `SkySettingsPage`, `SkyListDetailPage`, `SkyFormPage` XAML/C# scaffolds | ✅ | ✅ |
+| Control / pattern | Description | Desktop | Mobile | Status |
+|-------------------|-------------|:-------:|:------:|--------|
+| **SkyCommandBar** | Primary toolbar with icon buttons, labels, overflow menu | ✓ | ✓ | **Done** |
+| **SkyStatusBar** | Bottom status line (connection, selection count, progress) | ✓ | — | **Done** |
+| **SkySplitView** | Master-detail pane with collapsible list + detail | ✓ | ✓ | **Done** |
+| **SkyDrawer** | Slide-in panel for filters, settings, nav (overlay on narrow width) | ✓ | ✓ | **Done** |
+| **SkyPageHeader** | Title, subtitle, back button, action slots | ✓ | ✓ | **Done** |
+| **App templates** | `SkySettingsPage`, `SkyListDetailPage`, `SkyFormPage` XAML/C# scaffolds | ✅ | ✅ | **Done** |
 
 ### P0 — Forms and input (LOB blocker)
 
-| Control | Description |
-|---------|-------------|
-| **SkyAutocomplete** | Typeahead with async `ItemsSource`, free text, FormField integration |
-| **SkyComboBoxField** | `SkyFormField` wrapper around styled ComboBox with validation |
-| **SkyNumericUpDown** | Decimal/integer with min/max, step, culture formatting |
-| **SkyDateRangePicker** | Start/end date with presets (today, this week, custom) |
-| **SkyMaskedTextBox** | Phone, credit card, custom mask; pairs with `SkyFormField` |
-| **SkyValidationSummary** | Form-level error list; links to first invalid field |
-| **SkyEmptyState** | Illustration + title + action for empty lists, grids, search |
+| Control | Description | Status |
+|---------|-------------|--------|
+| **SkyAutocomplete** | Typeahead with async `ItemsSource`, free text, FormField integration | **Done** |
+| **SkyComboBoxField** | `SkyFormField` wrapper around styled ComboBox with validation | **Done** |
+| **SkyNumericUpDown** | Decimal/integer with min/max, step, culture formatting | **Done** |
+| **SkyDateRangePicker** | Start/end date with presets (today, this week, custom) | **Done** |
+| **SkyValidationSummary** | Form-level error list; links to first invalid field | **Done** |
+| **SkyEmptyState** | Illustration + title + action for empty lists, grids, search | **Done** |
+| **SkyMaskedTextBox** | Phone, credit card, custom mask; pairs with `SkyFormField` | **Done** |
 
 ### P1 — Data presentation (beyond raw grid)
 
-| Control | Description |
-|---------|-------------|
-| **SkyDataPager** | Page size, first/prev/next/last, total count; binds to grid or list |
-| **SkyPagination** | Generic pagination for any `ItemsSource` |
-| **SkyKpiTile** | Metric card (value, delta, sparkline slot) for dashboards |
-| **SkyLoadingOverlay** | Semi-transparent blocker over panel/window during async work |
+| Control | Description | Status |
+|---------|-------------|--------|
+| **SkyDataPager** | Page size, first/prev/next/last, total count; binds to grid or list | **Done** |
+| **SkyPagination** | Generic pagination for any `ItemsSource` | **Done** |
+| **SkyKpiTile** | Metric card (value, delta, sparkline slot) for dashboards | **Done** |
+| **SkyLoadingOverlay** | Semi-transparent blocker over panel/window during async work | **Done** |
 
 ### P1 — Dialogs and system integration
 
-| Feature | Description |
-|---------|-------------|
-| **SkyMessageBox** | Static `ShowAsync` API: info/warning/error/confirm; maps to `SkyDialogHost` |
-| **SkyFilePicker** | Styled wrapper over Avalonia storage pickers; consistent API across platforms |
-| **SkyClipboard** | Helper for copy/paste text and tabular data from grid selection |
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **SkyMessageBox** | Static `ShowAsync` API: info/warning/error/confirm; maps to `SkyDialogHost` | **Done** |
+| **SkyFilePicker** | Styled wrapper over Avalonia storage pickers; consistent API across platforms | **Done** |
+| **SkyClipboard** | Helper for copy/paste text and tabular data from grid selection | **Done** |
 
 ### P2 — Lists and trees (productivity)
 
-| Feature | Description |
-|---------|-------------|
-| **Drag-drop reorder** | `CheckedListBox` / `SkyVirtualTreeView` row reorder |
-| **Inline edit** | Tree/list cell edit with commit/cancel |
-| **Context row actions** | Swipe or overflow menu pattern (shared with mobile) |
-| **Async tree loading** | `IAsyncTreeDataSource` with expand-to-load children |
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **Drag-drop reorder** | `CheckedListBox` row reorder (`AllowReorder`) | **Done** (tree view todo) |
+| **Inline edit** | Tree/list cell edit with commit/cancel | **Done** (`CheckedListBox`) |
+| **Context row actions** | Overflow menu via `RowActionProvider` | **Done** |
+| **Async tree loading** | `AsyncCheckedListItemAdapter` expand-to-load | **Done** |
 
 ### Per-control definition of done
 
@@ -174,9 +174,9 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 
 ### Exit criteria
 
-- **Settings sample app** built only from SkyUI packages: nav + form fields + save snackbar.
-- **List-detail sample app**: split view + virtual grid or list + detail form.
-- Essentials catalog published on doc site with desktop/mobile applicability notes.
+- **Settings sample app** built only from SkyUI packages: nav + form fields + save snackbar. **Done** (`samples/SettingsApp`)
+- **List-detail sample app**: split view + virtual grid or list + detail form. **Done** (`samples/CrudListDetail`)
+- Essentials catalog published on doc site with desktop/mobile applicability notes. **Partial** (SDK guide + topic pages; mobile guide added)
 
 ---
 
@@ -201,11 +201,11 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 |---------------|-------------|--------|
 | **SkySafeArea** | Per-edge safe-area padding from `IInsetsManager` | **Done** |
 | **SkySheetHost** / bottom sheet | Modal sheet from bottom with motion | **Done** (no snap heights / drag-to-dismiss yet) |
-| **SkyActionSheet** | Destructive/primary action list (iOS-style) | **Done** |
+| **SkyActionSheet** | Destructive/primary action list (iOS-style); dismiss via scrim/close completes with `null` | **Done** |
 | **SkyKeyboardInset** | Bottom padding when soft keyboard opens | **Done** |
 | **SkyTouchTarget** | Minimum 44×44 dp via attached property | **Done** |
-| **SkyFab** | Floating action button; position above safe area + bottom nav | **Todo** |
-| **SkyPullToRefresh** | Wrapper control for scrollable content | **Todo** |
+| **SkyFab** | Floating action button; position above safe area + bottom nav | **Done** |
+| **SkyPullToRefresh** | Wrapper control for scrollable content; `IsRefreshing` + `RefreshCommand` | **Done** |
 
 ### P1 — Touch interaction policy
 

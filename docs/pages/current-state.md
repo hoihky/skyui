@@ -15,7 +15,7 @@ Snapshot of the SkyUI codebase used as the baseline for [gap analysis](gap-analy
 | Packages | See [repository layout](#repository-layout) below |
 | Demo app | `src/SkyUI.Demo` — desktop gallery referencing all packages |
 | Mobile samples | `src/SkyUI.Demo.Mobile` (shared shell), `src/SkyUI.Demo.iOS` (`net10.0-ios`) |
-| Automated tests | `tests/SkyUI.UnitTests`, `tests/SkyUI.HeadlessTests` |
+| Automated tests | `tests/SkyUI.UnitTests` (~370+), `tests/SkyUI.HeadlessTests` (~37) |
 | Public API docs | `docs/`; visual preset spec in `src/SkyUI.Themes.Sky/DESIGN.md` |
 | License | MIT (`LICENSE`) |
 | XAML xmlns | `https://skyui.dev` (split per assembly via `XmlnsDefinition`) |
@@ -85,6 +85,8 @@ Apps typically reference `SkyUI`, `SkyUI.Themes.Sky`, and optionally `SkyUI.Data
 | `SkyKeyboardInset` | `SkyUI.Controls` | `SkyUI` |
 | `SkyTouchTarget` | `SkyUI.Controls` | `SkyUI` |
 | `SkyActionSheet` / `SkyActionSheetItem` | `SkyUI.Controls` | `SkyUI` |
+| `SkyFab` | `SkyUI.Controls` | `SkyUI` |
+| `SkyPullToRefresh` | `SkyUI.Controls` | `SkyUI` |
 | `SkySheetHost` | `SkyUI.Controls` | `SkyUI` |
 
 See [mobile.md](mobile.md) for usage and sample apps.
@@ -122,7 +124,13 @@ Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, L
 ## Known limitations (baseline)
 
 - Mobile primitives shipped in `SkyUI`; iOS sample project targets `net10.0-ios` but device/simulator validation and CI compile matrix are not yet in place.
-- No automated quality gates or published NuGet package.
-- Thin coverage of app chrome (navigation shell, dialogs, toasts, pickers, charts).
+- No CI gate or published NuGet package (local feed only).
 - Grid lacks many enterprise features (resize, multi-select, grouping, in-grid filter, etc.).
-- Branding tied to “Spotify” naming in resources and design doc — consider product-neutral tokens for commercial positioning.
+- Legacy `Spotify*` resource aliases remain during 1.x — see [legacy-sunset.md](legacy-sunset.md).
+
+## Recent stability improvements
+
+- **`SkyActionSheet`** — completes when dismissed via scrim/close; serializes concurrent shows per host; UI-thread-safe cancellation.
+- **`CheckedListBox`** — preserves row selection across `RebuildAll`; unsubscribes collection handlers on detach; drag-reorder handles capture loss.
+- **`SkyKeyboardInset` / `SkySafeArea`** — reset padding on detach; react to runtime property changes.
+- **`SkySheetHost`** — disposes animation cancellation tokens between transitions.

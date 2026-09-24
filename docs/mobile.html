@@ -150,6 +150,14 @@
 <td><code>SkyActionSheet</code></td>
 <td>Static <code>ShowAsync</code> — iOS-style action list over <code>SkySheetHost</code></td>
 </tr>
+<tr>
+<td><code>SkyFab</code></td>
+<td>Floating action button with icon, optional extended label, safe-area margins</td>
+</tr>
+<tr>
+<td><code>SkyPullToRefresh</code></td>
+<td>Wraps a <code>ScrollViewer</code>; bind <code>IsRefreshing</code> + <code>RefreshCommand</code></td>
+</tr>
 </tbody>
 </table>
 <h2 id="skysafearea">SkySafeArea</h2>
@@ -178,7 +186,7 @@ var index = await SkyActionSheet.ShowAsync([
 if (index is int selected)
     // user picked items[selected]
 </code></pre>
-<p><code>ShowAsync</code> returns <code>null</code> when the user cancels. Pass <code>sheetHost:</code> explicitly if you do not call <code>Attach</code>.</p>
+<p><code>ShowAsync</code> returns <code>null</code> when the user cancels, taps the scrim, or closes the sheet with the header close button. Pass <code>sheetHost:</code> explicitly if you do not call <code>Attach</code>. Concurrent calls on the same host are serialized (queued) so only one sheet is active at a time.</p>
 <h2 id="skykeyboardinset">SkyKeyboardInset</h2>
 <p>Wrap scrollable form content so the bottom clears the soft keyboard on mobile:</p>
 <pre><code class="language-xml">&lt;sky:SkyKeyboardInset&gt;
@@ -191,6 +199,31 @@ if (index is int selected)
   &lt;/ScrollViewer&gt;
 &lt;/sky:SkyKeyboardInset&gt;
 </code></pre>
+<h2 id="skyfab">SkyFab</h2>
+<p>Place in a <code>Grid</code> above scrollable content (bottom-right by default):</p>
+<pre><code class="language-xml">&lt;Grid&gt;
+  &lt;sky:SkyPullToRefresh&gt;...&lt;/sky:SkyPullToRefresh&gt;
+  &lt;sky:SkyFab Icon="Add"
+              Label="Compose"
+              IsExtended="True"
+              Command="{Binding AddCommand}" /&gt;
+&lt;/Grid&gt;
+</code></pre>
+<ul>
+<li><code>Command</code> / <code>CommandParameter</code> — MVVM command binding</li>
+<li><code>HonorSafeArea</code> (default <code>true</code>) and <code>EdgeMargin</code> — keeps the FAB above home indicator / notch</li>
+<li><code>IsExtended</code> + <code>Label</code> — pill-shaped extended FAB</li>
+</ul>
+<h2 id="skypulltorefresh">SkyPullToRefresh</h2>
+<p>Content must be a <code>ScrollViewer</code>:</p>
+<pre><code class="language-xml">&lt;sky:SkyPullToRefresh IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                      RefreshCommand="{Binding RefreshCommand}"&gt;
+  &lt;ScrollViewer&gt;
+    &lt;ItemsControl ItemsSource="{Binding Items}" /&gt;
+  &lt;/ScrollViewer&gt;
+&lt;/sky:SkyPullToRefresh&gt;
+</code></pre>
+<p>The view model sets <code>IsRefreshing = true</code> when refresh starts and <code>false</code> when async work completes. <code>RefreshRequested</code> is raised for code-behind handlers without a command.</p>
 <h2 id="sample-apps">Sample apps</h2>
 <table class="table">
 <thead>
@@ -253,6 +286,14 @@ dotnet build src/SkyUI.Demo.iOS/SkyUI.Demo.iOS.csproj -f net10.0-ios
                         
                         <li class="toc-h2">
                           <a href="#skykeyboardinset">SkyKeyboardInset</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#skyfab">SkyFab</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#skypulltorefresh">SkyPullToRefresh</a>
                         </li>
                         
                         <li class="toc-h2">

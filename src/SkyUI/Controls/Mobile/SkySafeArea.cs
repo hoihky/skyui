@@ -22,6 +22,14 @@ public class SkySafeArea : ContentControl
 
     private IInsetsManager? insetsManager;
 
+    static SkySafeArea()
+    {
+        ApplyTopProperty.Changed.AddClassHandler<SkySafeArea>((control, _) => control.RefreshInsets());
+        ApplyBottomProperty.Changed.AddClassHandler<SkySafeArea>((control, _) => control.RefreshInsets());
+        ApplyLeftProperty.Changed.AddClassHandler<SkySafeArea>((control, _) => control.RefreshInsets());
+        ApplyRightProperty.Changed.AddClassHandler<SkySafeArea>((control, _) => control.RefreshInsets());
+    }
+
     public SkySafeArea()
     {
         Classes.Add("sky");
@@ -67,6 +75,7 @@ public class SkySafeArea : ContentControl
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
         DetachInsets();
+        Padding = default;
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -79,10 +88,14 @@ public class SkySafeArea : ContentControl
         insetsManager = null;
     }
 
-    private void OnSafeAreaChanged(object? sender, EventArgs e)
+    private void OnSafeAreaChanged(object? sender, EventArgs e) => RefreshInsets();
+
+    private void RefreshInsets()
     {
-        if (insetsManager is not null)
-            ApplyInsets(insetsManager.SafeAreaPadding);
+        if (insetsManager is null)
+            return;
+
+        ApplyInsets(insetsManager.SafeAreaPadding);
     }
 
     private void ApplyInsets(Thickness safeArea)

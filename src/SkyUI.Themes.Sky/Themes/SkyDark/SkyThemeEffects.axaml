@@ -1,0 +1,27 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <LinearGradientBrush x:Key="SkyAccentGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+    <GradientStop Color="{StaticResource SkyPaletteAccent}" Offset="0" />
+    <GradientStop Color="{StaticResource SkyPaletteInfo}" Offset="1" />
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="SkyAccentGradientPressedBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+    <GradientStop Color="{StaticResource SkyPaletteAccentPressed}" Offset="0" />
+    <GradientStop Color="{StaticResource SkyPaletteAccent}" Offset="1" />
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="SkySurfaceGradientBrush" StartPoint="0%,0%" EndPoint="0%,100%">
+    <GradientStop Color="{StaticResource SkyPaletteSurfaceElevated}" Offset="0" />
+    <GradientStop Color="{StaticResource SkyPaletteSurface}" Offset="1" />
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="SkyCardGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+    <GradientStop Color="{StaticResource SkyPaletteCard}" Offset="0" />
+    <GradientStop Color="{StaticResource SkyPaletteCardMid}" Offset="1" />
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="SkyChromeGradientBrush" StartPoint="0%,0%" EndPoint="0%,100%">
+    <GradientStop Color="{StaticResource SkyPaletteSurface}" Offset="0" />
+    <GradientStop Color="{StaticResource SkyPaletteBackground}" Offset="1" />
+  </LinearGradientBrush>
+</ResourceDictionary>

@@ -14,6 +14,12 @@ public class SkyKeyboardInset : ContentControl
     private IInputPane? inputPane;
     private Thickness basePadding;
 
+    static SkyKeyboardInset()
+    {
+        ExtraBottomPaddingProperty.Changed.AddClassHandler<SkyKeyboardInset>((control, _) =>
+            control.ApplyInputPaneInset(control.inputPane));
+    }
+
     public SkyKeyboardInset()
     {
         Classes.Add("sky");
@@ -42,6 +48,7 @@ public class SkyKeyboardInset : ContentControl
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
         DetachInputPane();
+        Padding = basePadding;
         base.OnDetachedFromVisualTree(e);
     }
 

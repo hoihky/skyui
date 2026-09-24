@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
 using SkyUI.Controls;
+using SkyUI.Demo.ViewModels;
 
 namespace SkyUI.Demo.Views.Demos;
 
@@ -10,6 +11,7 @@ public partial class MobileDemo : UserControl
 {
     public MobileDemo()
     {
+        DataContext = new MobileDemoViewModel();
         InitializeComponent();
 
         SkyActionSheet.Attach(SheetHost);

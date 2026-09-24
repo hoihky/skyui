@@ -17,6 +17,7 @@ internal sealed class CheckedListDragReorderHandler
     private Point pressPoint;
     private bool dragActive;
     private Border? dragIndicator;
+    private bool ownerHandlersAttached;
 
     public CheckedListDragReorderHandler(CheckedListBox owner)
     {
@@ -34,6 +35,9 @@ internal sealed class CheckedListDragReorderHandler
         if (!owner.AllowReorder || sender is not Border border || border.Tag is not CheckedListRowModel row)
             return;
 
+        if (dragSource is not null)
+            return;
+
         if (e.GetCurrentPoint(border).Properties.IsRightButtonPressed)
             return;
 
@@ -45,9 +49,19 @@ internal sealed class CheckedListDragReorderHandler
         pressPoint = e.GetPosition(owner);
         dragActive = false;
 
+        AttachOwnerHandlers();
+        e.Pointer.Capture(border);
+    }
+
+    private void AttachOwnerHandlers()
+    {
+        if (ownerHandlersAttached)
+            return;
+
         owner.AddHandler(InputElement.PointerMovedEvent, OnOwnerPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble, handledEventsToo: true);
         owner.AddHandler(InputElement.PointerReleasedEvent, OnOwnerPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble, handledEventsToo: true);
-        e.Pointer.Capture(border);
+        owner.AddHandler(InputElement.PointerCaptureLostEvent, OnOwnerPointerCaptureLost, RoutingStrategies.Tunnel | RoutingStrategies.Bubble, handledEventsToo: true);
+        ownerHandlersAttached = true;
     }
 
     private void OnOwnerPointerMoved(object? sender, PointerEventArgs e)
@@ -105,19 +119,40 @@ internal sealed class CheckedListDragReorderHandler
         }
         finally
         {
-            DetachOwnerHandlers();
-            dragSource = null;
-            dragSourceBorder = null;
-            dragActive = false;
-            HideIndicator();
-            e.Pointer.Capture(null);
+            ResetDragState(e.Pointer);
         }
+    }
+
+    private void OnOwnerPointerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
+    {
+        if (dragSource is null)
+            return;
+
+        if (dragSourceBorder is not null && !ReferenceEquals(e.Pointer.Captured, dragSourceBorder))
+            return;
+
+        ResetDragState(e.Pointer);
+    }
+
+    private void ResetDragState(IPointer pointer)
+    {
+        DetachOwnerHandlers();
+        dragSource = null;
+        dragSourceBorder = null;
+        dragActive = false;
+        HideIndicator();
+        pointer.Capture(null);
     }
 
     private void DetachOwnerHandlers()
     {
+        if (!ownerHandlersAttached)
+            return;
+
         owner.RemoveHandler(InputElement.PointerMovedEvent, OnOwnerPointerMoved);
         owner.RemoveHandler(InputElement.PointerReleasedEvent, OnOwnerPointerReleased);
+        owner.RemoveHandler(InputElement.PointerCaptureLostEvent, OnOwnerPointerCaptureLost);
+        ownerHandlersAttached = false;
     }
 
     private (CheckedListRowModel? Row, Border? Border) HitTestRow(Point pointOnOwner)

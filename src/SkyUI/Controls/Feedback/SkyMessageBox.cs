@@ -1,4 +1,5 @@
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 
 namespace SkyUI.Controls;
 
@@ -133,7 +134,8 @@ public static class SkyMessageBox
         host.Closed += onClosed;
 
         if (cancellationToken.CanBeCanceled)
-            cancellationToken.Register(() => Complete(SkyMessageBoxResult.None));
+            cancellationToken.Register(() =>
+                Dispatcher.UIThread.Post(() => Complete(SkyMessageBoxResult.None)));
 
         host.Show();
         return tcs.Task;

@@ -1,13 +1,14 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls"
         xmlns:icons="using:SkyUI.Icons">
   <!-- Sky ContentFirstDark preset — primitives on semantic tokens; legacy "spotify" style classes alias "sky". -->
-  <!-- Dark pill (secondary) -->
+  <!-- Elevated pill (secondary) -->
   <Style Selector="Button.sky, Button.spotify">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceGradientBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
-    <Setter Property="BorderBrush" Value="Transparent" />
-    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Padding" Value="{DynamicResource SkyDensityButtonPadding}" />
     <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusFull}" />
     <Setter Property="MinHeight" Value="{DynamicResource SkyDensityButtonMinHeight}" />
@@ -20,21 +21,24 @@
   </Style>
   <Style Selector="Button.sky:pointerover, Button.spotify:pointerover">
     <Setter Property="Background" Value="{DynamicResource SkyCardMidBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
   </Style>
   <Style Selector="Button.sky:pressed, Button.spotify:pressed">
     <Setter Property="Background" Value="{DynamicResource SkyCardBrush}" />
   </Style>
 
-  <!-- Primary CTA (accent) (functional accent) -->
+  <!-- Primary CTA — accent gradient -->
   <Style Selector="Button.sky.sky-primary, Button.spotify.spotify-primary">
-    <Setter Property="Background" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyOnAccentBrush}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
   </Style>
   <Style Selector="Button.sky.sky-primary:pointerover, Button.spotify.spotify-primary:pointerover">
-    <Setter Property="Background" Value="{DynamicResource SkyAccentPressedBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientPressedBrush}" />
   </Style>
   <Style Selector="Button.sky.sky-primary:pressed, Button.spotify.spotify-primary:pressed">
-    <Setter Property="Background" Value="{DynamicResource SkyAccentPressedBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientPressedBrush}" />
   </Style>
 
   <!-- Large nav pill -->
@@ -49,15 +53,16 @@
     <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
   </Style>
 
-  <!-- Outlined pill -->
+  <!-- Outlined pill — accent-tinted border -->
   <Style Selector="Button.sky.sky-outlined, Button.spotify.spotify-outlined">
     <Setter Property="Background" Value="Transparent" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1.5" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
   </Style>
   <Style Selector="Button.sky.sky-outlined:pointerover, Button.spotify.spotify-outlined:pointerover">
-    <Setter Property="Background" Value="{DynamicResource SkyListHoverBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyHoverTintBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
   </Style>
 
   <!-- Light pill (marketing / rare) -->
@@ -79,7 +84,7 @@
 
   <!-- Circular play-style control -->
   <Style Selector="Button.sky.sky-play, Button.spotify.spotify-play">
-    <Setter Property="Background" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyOnAccentBrush}" />
     <Setter Property="Padding" Value="{DynamicResource SkyDensityPlayPadding}" />
     <Setter Property="MinWidth" Value="{DynamicResource SkyDensityPlaySize}" />
@@ -91,7 +96,7 @@
     <Setter Property="FontWeight" Value="Bold" />
   </Style>
   <Style Selector="Button.sky.sky-play:pointerover, Button.spotify.spotify-play:pointerover">
-    <Setter Property="Background" Value="{DynamicResource SkyAccentPressedBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientPressedBrush}" />
   </Style>
 
   <Style Selector="Button.sky.sky-primary icons|SkyIcon, Button.spotify.spotify-primary icons|SkyIcon">
@@ -99,6 +104,25 @@
   </Style>
   <Style Selector="Button.sky.sky-play icons|SkyIcon, Button.spotify.spotify-play icons|SkyIcon">
     <Setter Property="Foreground" Value="{DynamicResource SkyOnAccentBrush}" />
+  </Style>
+
+  <Style Selector="Button.sky.sky-fab-button">
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyOnAccentBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusFull}" />
+    <Setter Property="Padding" Value="16,0" />
+    <Setter Property="MinHeight" Value="56" />
+  </Style>
+  <Style Selector="Button.sky.sky-fab-button:pointerover">
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientPressedBrush}" />
+  </Style>
+  <Style Selector="Button.sky.sky-fab-button icons|SkyIcon">
+    <Setter Property="Foreground" Value="{DynamicResource SkyOnAccentBrush}" />
+  </Style>
+  <Style Selector="controls|SkyFab[IsExtended=True] Button.sky.sky-fab-button">
+    <Setter Property="Padding" Value="20,0" />
+    <Setter Property="CornerRadius" Value="28" />
   </Style>
 
   <Style Selector="Button.sky:disabled, Button.spotify:disabled">
@@ -109,12 +133,12 @@
     <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
   </Style>
 
-  <!-- Search / text field — pill surface -->
+  <!-- Search / text field — glass pill -->
   <Style Selector="TextBox.sky, TextBox.spotify">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceGradientBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="1.5" />
     <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusPill}" />
     <Setter Property="Padding" Value="{DynamicResource SkyDensityFieldPadding}" />
     <Setter Property="MinHeight" Value="{DynamicResource SkyDensityFieldMinHeight}" />
@@ -155,7 +179,7 @@
   </Style>
 
   <Style Selector="Slider.sky, Slider.spotify">
-    <Setter Property="Foreground" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyAccentGradientBrush}" />
     <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
     <Setter Property="MinHeight" Value="28" />
   </Style>
@@ -197,7 +221,7 @@
     <Setter Property="BorderThickness" Value="1" />
   </Style>
   <Style Selector="ToggleSwitch.sky:checked /template/ Border#SwitchTrack">
-    <Setter Property="Background" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
   </Style>
   <Style Selector="ToggleSwitch.sky /template/ Border#SwitchKnob">
@@ -334,22 +358,24 @@
 
   <!-- Card container -->
   <Style Selector="Border.sky-card, Border.spotify-card">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyCardGradientBrush}" />
     <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
-    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
     <Setter Property="BoxShadow" Value="{DynamicResource SkyElevation1}" />
   </Style>
   <Style Selector="Border.sky-card:pointerover, Border.spotify-card:pointerover">
     <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BoxShadow" Value="{DynamicResource SkyElevation2}" />
   </Style>
 
   <!-- Typography helpers moved to SkyUI.Fonts/Themes/SkyTypographyStyles.axaml -->
 
   <Style Selector="ProgressBar.sky, ProgressBar.spotify">
     <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyAccentGradientBrush}" />
     <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusFull}" />
-    <Setter Property="MinHeight" Value="8" />
+    <Setter Property="MinHeight" Value="10" />
   </Style>
   <Style Selector="ProgressBar.sky:disabled, ProgressBar.spotify:disabled">
     <Setter Property="Opacity" Value="{DynamicResource SkyDisabledOpacity}" />
@@ -357,11 +383,11 @@
 
   <!-- Demo / docs sample panels -->
   <Style Selector="Border.sky-demo-panel">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceGradientBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="CornerRadius" Value="{DynamicResource SkyRadiusComfortable}" />
     <Setter Property="Padding" Value="20" />
-    <Setter Property="BoxShadow" Value="{DynamicResource SkyElevation0}" />
+    <Setter Property="BoxShadow" Value="{DynamicResource SkyElevation1}" />
   </Style>
 </Styles>

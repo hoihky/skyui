@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:SkyUI.Controls">
   <Style Selector="controls|SkyCard.sky-card-hoverable:pointerover /template/ Border#PART_Root">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyCardMidBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
   </Style>
 
   <Style Selector="controls|SkyDivider:horizontal /template/ Grid#PART_HorizontalRoot">
@@ -20,7 +21,7 @@
   </Style>
 
   <Style Selector="controls|SkyExpander">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyCardGradientBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />

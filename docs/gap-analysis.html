@@ -136,7 +136,7 @@
 <tbody>
 <tr>
 <td>Mobile partially addressed</td>
-<td><code>SkySafeArea</code>, <code>SkyKeyboardInset</code>, <code>SkyTouchTarget</code>, <code>SkyActionSheet</code>, and <code>SkySheetHost</code> ship in <code>SkyUI</code>; desktop <strong>Mobile</strong> gallery page and <code>SkyUI.Demo.iOS</code> (<code>net10.0-ios</code>) exist. Android, browser WASM, CI matrix, and on-device validation are still missing.</td>
+<td><code>SkySafeArea</code>, <code>SkyKeyboardInset</code>, <code>SkyTouchTarget</code>, <code>SkyActionSheet</code>, and <code>SkySheetHost</code> ship in <code>SkyUI</code> with dismiss/concurrency hardening; desktop <strong>Mobile</strong> gallery page and <code>SkyUI.Demo.iOS</code> (<code>net10.0-ios</code>) exist. Android, browser WASM, CI matrix, and on-device validation are still missing.</td>
 </tr>
 <tr>
 <td>Adaptive primitives partial</td>
@@ -446,12 +446,12 @@
 <tr>
 <td>P0</td>
 <td>App shell: command bar, split view, drawer, page header</td>
-<td>Required for realistic desktop/tablet apps</td>
+<td><strong>Partial</strong> — controls shipped; CI/samples coverage ongoing</td>
 </tr>
 <tr>
 <td>P0</td>
 <td>Forms wave 2: autocomplete, numeric, date range, masked input, validation summary</td>
-<td>LOB blocker beyond current <code>SkyFormField</code></td>
+<td><strong>Done</strong> — see Phase 2 in <a href="development-roadmap.html">development-roadmap.md</a></td>
 </tr>
 <tr>
 <td>P0</td>

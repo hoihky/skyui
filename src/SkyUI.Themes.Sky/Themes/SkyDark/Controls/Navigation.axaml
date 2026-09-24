@@ -29,7 +29,7 @@
   </DataTemplate>
 
   <ControlTheme x:Key="{x:Type controls:SkyNavigationView}" TargetType="controls:SkyNavigationView">
-    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkyChromeGradientBrush}" />
     <Setter Property="FontFamily" Value="{DynamicResource SkyFontFamilyUi}" />
     <Setter Property="Template">
       <ControlTemplate>
@@ -39,8 +39,8 @@
           <Border Name="PART_SideNavHost"
                   Grid.Column="0"
                   Grid.Row="0"
-                  Background="{DynamicResource SkySurfaceBrush}"
-                  BorderBrush="{DynamicResource SkyBorderBrush}"
+                  Background="{DynamicResource SkyChromeGradientBrush}"
+                  BorderBrush="{DynamicResource SkySelectedBorderBrush}"
                   BorderThickness="0,0,1,0">
             <DockPanel LastChildFill="True">
               <ContentPresenter Name="PART_Header"
