@@ -23,6 +23,11 @@ public partial class VideoTimelineDemo : UserControl
         Timeline.ClipSelectionChanged += (_, e) => LogLine($"Clip selected: {e.Clip.Label}");
         Timeline.ClipsPasted += (_, e) => LogLine($"Pasted {e.Clips.Count} clip(s)");
         Timeline.ClipsRemoved += (_, e) => LogLine($"Removed {e.Clips.Count} clip(s)");
+        Timeline.ClipChanged += (_, e) => LogLine($"Clip {e.EditKind}: {e.Clip.Label}");
+        Timeline.SelectionChanged += (_, e) =>
+            LogLine($"Selection: {e.SelectedClips.Count} clip(s), track={e.SelectedTrack?.Name ?? "(none)"}");
+        Timeline.UndoRedoStateChanged += (_, _) =>
+            LogLine($"Undo={Timeline.CanUndo}, Redo={Timeline.CanRedo}");
     }
 
     private void BuildSample()
@@ -116,6 +121,30 @@ public partial class VideoTimelineDemo : UserControl
 
         Timeline.RemoveClip(sel);
         LogLine("Removed selected clip.");
+    }
+
+    private void OnSplitClick(object? sender, RoutedEventArgs e)
+    {
+        var created = Timeline.SplitClipAtPlayhead();
+        LogLine(created is null ? "Select a clip spanning the playhead to split." : $"Split created: {created.Label}");
+    }
+
+    private void OnUndoClick(object? sender, RoutedEventArgs e)
+    {
+        Timeline.Undo();
+        LogLine(Timeline.CanUndo ? "Undone." : "Nothing to undo.");
+    }
+
+    private void OnRedoClick(object? sender, RoutedEventArgs e)
+    {
+        Timeline.Redo();
+        LogLine(Timeline.CanRedo ? "Redone." : "Nothing to redo.");
+    }
+
+    private void OnSnapToggleChanged(object? sender, RoutedEventArgs e)
+    {
+        Timeline.SnapSettings.IsEnabled = SnapToggle.IsChecked == true;
+        LogLine($"Snap {(Timeline.SnapSettings.IsEnabled ? "on" : "off")}.");
     }
 
     private void OnRemoveTrackClick(object? sender, RoutedEventArgs e)

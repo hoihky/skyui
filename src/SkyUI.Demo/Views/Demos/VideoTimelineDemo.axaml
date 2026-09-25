@@ -9,16 +9,25 @@
     <TextBlock Classes="sky-section-title" Text="Video timeline" />
     <TextBlock Classes="sky-body-secondary"
                TextWrapping="Wrap"
-               Text="Scroll the ruler and track area; Ctrl+wheel zooms. Click a track lane or label to highlight it. Drag the left/right edges of a clip (narrow strips) to trim length; drag the clip body to move in time or change track. Double-tap a lane for a marker (scroll position is preserved). Shift+click clips for multi-select. Delete removes selected clips or the selected track. Ctrl+C / Ctrl+X / Ctrl+V." />
+               Text="Scroll the ruler and track area; Ctrl+wheel zooms. Click a track lane or label to highlight it. Drag clip edges to trim; drag the body to move (multi-selected clips move together). Ctrl+drag on a lane for marquee clip select. Double-tap a lane for a marker. Shift+click for multi-select. Split at playhead, Undo/Redo (Ctrl+Z / Ctrl+Y). Toggle snap below." />
 
     <WrapPanel Orientation="Horizontal">
       <Button Classes="sky sky-primary" Content="Play" Click="OnPlayClick" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Stop" Click="OnStopClick" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Add track" Click="OnAddTrackClick" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Add clip at playhead" Click="OnAddClipClick" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Split at playhead" Click="OnSplitClick" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Undo" Click="OnUndoClick" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Redo" Click="OnRedoClick" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Remove selected clip" Click="OnRemoveClipClick" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Remove selected track" Click="OnRemoveTrackClick" Margin="0,0,8,8" />
     </WrapPanel>
+
+    <CheckBox x:Name="SnapToggle"
+              Classes="sky"
+              Content="Magnetic snap"
+              IsChecked="True"
+              IsCheckedChanged="OnSnapToggleChanged" />
 
     <Border Classes="sky-card" Padding="12">
       <sky:VideoTimeline x:Name="Timeline"

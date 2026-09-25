@@ -49,3 +49,32 @@ public sealed class TimelineTrackEventArgs : EventArgs
     public TimelineTrackEventArgs(TimelineTrackItem track) => Track = track;
     public TimelineTrackItem Track { get; }
 }
+
+public sealed class TimelineClipEditEventArgs : EventArgs
+{
+    public TimelineClipEditEventArgs(TimelineClipItem clip, string editKind)
+    {
+        Clip = clip;
+        EditKind = editKind;
+    }
+
+    public TimelineClipItem Clip { get; }
+
+    /// <summary>Semantic edit name (move, trim, split, etc.).</summary>
+    public string EditKind { get; }
+}
+
+public sealed class TimelineSelectionChangedEventArgs : EventArgs
+{
+    public TimelineSelectionChangedEventArgs(
+        IReadOnlyList<TimelineClipItem> selectedClips,
+        TimelineTrackItem? selectedTrack)
+    {
+        SelectedClips = selectedClips;
+        SelectedTrack = selectedTrack;
+    }
+
+    public IReadOnlyList<TimelineClipItem> SelectedClips { get; }
+
+    public TimelineTrackItem? SelectedTrack { get; }
+}

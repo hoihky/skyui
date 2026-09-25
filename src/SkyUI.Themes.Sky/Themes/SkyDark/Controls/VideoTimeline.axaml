@@ -9,6 +9,7 @@
     <Setter Property="PlayheadBrush" Value="{DynamicResource SkyAccentBrush}" />
     <Setter Property="SelectionBrush" Value="#6600FF88" />
     <Setter Property="RulerTickBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
+    <Setter Property="LaneSeparatorBrush" Value="{DynamicResource SkyBorderBrush}" />
     <Setter Property="TrackSelectionBrush" Value="{DynamicResource SkyAccentBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="Padding" Value="0" />
