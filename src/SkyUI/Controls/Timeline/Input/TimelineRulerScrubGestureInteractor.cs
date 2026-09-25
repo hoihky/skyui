@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using Avalonia.Input;
 
 namespace SkyUI.Controls.Timeline.Input;
@@ -9,18 +8,7 @@ internal sealed class TimelineRulerScrubGestureInteractor : ITimelineGestureInte
 
     public int Priority => 60;
 
-    public void Attach(TimelineInteractionContext ctx)
-    {
-        context = ctx;
-        if (ctx.RulerCanvas != null)
-        {
-            foreach (var child in ctx.RulerCanvas.Children.OfType<Control>())
-            {
-                if (child is Avalonia.Controls.Shapes.Rectangle)
-                    child.PointerPressed += OnRulerPressed;
-            }
-        }
-    }
+    public void Attach(TimelineInteractionContext ctx) => context = ctx;
 
     public void Detach() => context = null;
 

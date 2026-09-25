@@ -48,6 +48,7 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
         var t = ctx.TimeFromMainPointer(e.GetPosition(ctx.MainCanvas!));
         dragClipPointerTimeOffset = t - clip.StartTime;
         dragClipStartRow = ctx.TrackRowIndex(clip.TrackId);
+        ctx.Renderer.SetPinnedClips(dragMovingClips.Select(c => c.Id));
         ctx.PlayheadTime = clip.StartTime;
         e.Pointer.Capture((IInputElement)sender!);
         e.Handled = true;
@@ -90,7 +91,7 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
                     moving.TrackId = ctx.Tracks[newRow].Id;
             }
 
-            ctx.Renderer.LayoutClip(ctx, moving);
+            ctx.Renderer.SyncClipVisual(ctx, moving);
         }
 
         e.Handled = true;
@@ -102,6 +103,7 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
         if (dragClip == null || ctx == null)
             return;
 
+        var movedClips = dragMovingClips?.ToList();
         if (dragMovingClips is not null && dragMoveBefore is not null)
         {
             var after = TimelineMoveClipsCommand.Capture(dragMovingClips);
@@ -111,6 +113,16 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
                 ctx.UndoStack.Execute(new TimelineMoveClipsCommand(dragMovingClips, dragMoveBefore, after));
                 ctx.RaiseClipEdit(dragClip, "move", false);
             }
+        }
+
+        ctx.Renderer.ClearPinnedClips();
+        if (movedClips is not null)
+        {
+            var anchorRow = ctx.TrackRowIndex(dragClip.TrackId);
+            if (anchorRow >= 0)
+                ctx.Host.ScrollTrackRowIntoView(anchorRow);
+            foreach (var moving in movedClips)
+                ctx.Renderer.SyncClipVisual(ctx, moving);
         }
 
         e.Pointer.Capture(null);

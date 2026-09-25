@@ -355,6 +355,26 @@ public sealed class TimelineHost : IDisposable
 
     public void DeleteSelectedClips() => DeleteSelectedClipsCore();
 
+    public void ScrollTrackRowIntoView(int row)
+    {
+        if (interaction?.VerticalTrackScroll is null || row < 0)
+            return;
+
+        var sv = interaction.VerticalTrackScroll;
+        var trackHeight = TimelineRenderMetrics.TrackHeight;
+        var top = row * trackHeight;
+        var bottom = top + trackHeight;
+        var offsetY = sv.Offset.Y;
+        var viewportH = sv.Viewport.Height;
+        if (viewportH <= 0)
+            return;
+
+        if (top < offsetY)
+            sv.Offset = new Vector(sv.Offset.X, top);
+        else if (bottom > offsetY + viewportH)
+            sv.Offset = new Vector(sv.Offset.X, bottom - viewportH);
+    }
+
     private void RebuildAll()
     {
         if (interaction is null)
@@ -373,9 +393,36 @@ public sealed class TimelineHost : IDisposable
             clipGesture.OnClipPressed,
             clipGesture.OnClipMoved,
             clipGesture.OnClipReleased);
-        renderer.RebuildRuler(interaction, rulerGesture.OnRulerPressed);
+        RebuildRuler();
         WireHeaderGestures();
         renderer.UpdateOverlays(interaction);
+    }
+
+    private void RebuildRuler()
+    {
+        if (interaction is null)
+            return;
+        renderer.RebuildRuler(
+            interaction,
+            rulerGesture.OnRulerPressed,
+            rulerGesture.OnRulerMoved,
+            rulerGesture.OnRulerReleased);
+    }
+
+    private void RefreshVirtualizedLanes()
+    {
+        if (interaction is null)
+            return;
+        renderer.RefreshVirtualizedLanes(
+            interaction,
+            laneGesture.OnLanePressed,
+            laneGesture.OnDoubleTapped,
+            clipGesture.OnTrimPressed,
+            clipGesture.OnTrimMoved,
+            clipGesture.OnTrimReleased,
+            clipGesture.OnClipPressed,
+            clipGesture.OnClipMoved,
+            clipGesture.OnClipReleased);
     }
 
     private void WireHeaderGestures()
@@ -410,7 +457,7 @@ public sealed class TimelineHost : IDisposable
         if (interaction is null)
             return;
         foreach (var clip in project.Clips)
-            renderer.LayoutClip(interaction, clip);
+            renderer.SyncClipVisual(interaction, clip);
         renderer.RefreshClipChrome(interaction);
     }
 
@@ -576,7 +623,7 @@ public sealed class TimelineHost : IDisposable
         }
 
         if (interaction != null)
-            renderer.RebuildRuler(interaction, rulerGesture.OnRulerPressed);
+            RebuildRuler();
     }
 
     private void HookTrackItem(TimelineTrackItem t)
@@ -617,8 +664,10 @@ public sealed class TimelineHost : IDisposable
     {
         if (interaction is null || sender is not TimelineClipItem clip)
             return;
-        if (e.PropertyName is nameof(TimelineClipItem.StartTime) or nameof(TimelineClipItem.Duration)
-            or nameof(TimelineClipItem.TrackId) or nameof(TimelineClipItem.Label))
+        if (e.PropertyName is nameof(TimelineClipItem.TrackId))
+            renderer.SyncClipVisual(interaction, clip);
+        else if (e.PropertyName is nameof(TimelineClipItem.StartTime) or nameof(TimelineClipItem.Duration)
+                 or nameof(TimelineClipItem.Label))
             renderer.LayoutClip(interaction, clip);
     }
 
@@ -642,7 +691,7 @@ public sealed class TimelineHost : IDisposable
             return;
         if (string.IsNullOrEmpty(e.PropertyName)
             || e.PropertyName is nameof(TimelineMarkerItem.Time) or nameof(TimelineMarkerItem.Label))
-            renderer.RebuildRuler(interaction, rulerGesture.OnRulerPressed);
+            RebuildRuler();
     }
 
     private void OnVerticalTrackScrollSizeChanged(object? sender, SizeChangedEventArgs e)
@@ -658,6 +707,8 @@ public sealed class TimelineHost : IDisposable
             interaction.RulerScroll.ScrollChanged += OnRulerScrollChanged;
         if (interaction?.MainScroll != null)
             interaction.MainScroll.ScrollChanged += OnMainScrollChanged;
+        if (interaction?.VerticalTrackScroll != null)
+            interaction.VerticalTrackScroll.ScrollChanged += OnVerticalTrackScrollChanged;
     }
 
     private void DetachScrollSync()
@@ -668,7 +719,17 @@ public sealed class TimelineHost : IDisposable
         if (interaction?.MainScroll != null)
             interaction.MainScroll.ScrollChanged -= OnMainScrollChanged;
         if (interaction?.VerticalTrackScroll != null)
+        {
+            interaction.VerticalTrackScroll.ScrollChanged -= OnVerticalTrackScrollChanged;
             interaction.VerticalTrackScroll.SizeChanged -= OnVerticalTrackScrollSizeChanged;
+        }
+    }
+
+    private void OnVerticalTrackScrollChanged(object? sender, ScrollChangedEventArgs e)
+    {
+        if (interaction is null || Math.Abs(e.OffsetDelta.Y) < 1e-6)
+            return;
+        RefreshVirtualizedLanes();
     }
 
     private void OnRulerScrollChanged(object? sender, ScrollChangedEventArgs e)

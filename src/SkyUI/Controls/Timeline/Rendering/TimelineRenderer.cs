@@ -21,6 +21,16 @@ public sealed class TimelineRenderer
     private int visibleFirstRow;
     private int visibleLastRow = -1;
     private readonly TimelineTrackReorderDragVisual trackReorderDragVisual = new();
+    private readonly HashSet<string> pinnedClipIds = new(StringComparer.Ordinal);
+
+    private EventHandler<PointerPressedEventArgs>? onLanePressed;
+    private EventHandler<TappedEventArgs>? onDoubleTapped;
+    private Action<TimelineClipItem, bool, IInputElement, PointerPressedEventArgs>? onTrimPressed;
+    private EventHandler<PointerEventArgs>? onTrimMoved;
+    private EventHandler<PointerReleasedEventArgs>? onTrimReleased;
+    private EventHandler<PointerPressedEventArgs>? onClipPressed;
+    private EventHandler<PointerEventArgs>? onClipMoved;
+    private EventHandler<PointerReleasedEventArgs>? onClipReleased;
 
     public IReadOnlyDictionary<string, Border> ClipBodies => clipBodyById;
 
@@ -64,7 +74,11 @@ public sealed class TimelineRenderer
         ApplyTrackSelectionChrome(ctx);
     }
 
-    public void RebuildRuler(TimelineInteractionContext ctx, EventHandler<PointerPressedEventArgs>? onRulerPressed)
+    public void RebuildRuler(
+        TimelineInteractionContext ctx,
+        EventHandler<PointerPressedEventArgs>? onRulerPressed,
+        EventHandler<PointerEventArgs>? onRulerMoved,
+        EventHandler<PointerReleasedEventArgs>? onRulerReleased)
     {
         var canvas = ctx.RulerCanvas;
         var scroll = ctx.RulerScroll;
@@ -121,6 +135,10 @@ public sealed class TimelineRenderer
         var hit = new Rectangle { Width = width, Height = TimelineRenderMetrics.RulerHeight, Fill = Brushes.Transparent };
         if (onRulerPressed != null)
             hit.PointerPressed += onRulerPressed;
+        if (onRulerMoved != null)
+            hit.PointerMoved += onRulerMoved;
+        if (onRulerReleased != null)
+            hit.PointerReleased += onRulerReleased;
         canvas.Children.Insert(0, hit);
     }
 
@@ -147,6 +165,15 @@ public sealed class TimelineRenderer
         clipBorders.Clear();
         clipBodyById.Clear();
         laneChromeByTrackId.Clear();
+        StoreClipGestureHandlers(
+            onLanePressed,
+            onDoubleTapped,
+            onTrimPressed,
+            onTrimMoved,
+            onTrimReleased,
+            onClipPressed,
+            onClipMoved,
+            onClipReleased);
 
         var contentW = Math.Max(ctx.Layout.ContentWidth(), scroll.Viewport.Width);
         var contentH = MeasureTrackContentHeight(ctx);
@@ -201,13 +228,22 @@ public sealed class TimelineRenderer
         UpdateOverlays(ctx);
     }
 
-    public void OnVerticalScrollChanged(TimelineInteractionContext ctx)
+    public void RefreshVirtualizedLanes(
+        TimelineInteractionContext ctx,
+        EventHandler<PointerPressedEventArgs>? onLanePressed,
+        EventHandler<TappedEventArgs>? onDoubleTapped,
+        Action<TimelineClipItem, bool, IInputElement, PointerPressedEventArgs>? onTrimPressed,
+        EventHandler<PointerEventArgs>? onTrimMoved,
+        EventHandler<PointerReleasedEventArgs>? onTrimReleased,
+        EventHandler<PointerPressedEventArgs>? onClipPressed,
+        EventHandler<PointerEventArgs>? onClipMoved,
+        EventHandler<PointerReleasedEventArgs>? onClipReleased)
     {
         if (ctx.MainCanvas == null || ctx.MainScroll == null)
             return;
 
         var scrollY = ctx.VerticalTrackScroll?.Offset.Y ?? 0;
-        var viewportH = ctx.VerticalTrackScroll?.Viewport.Height ?? 0;
+        var viewportH = ctx.VerticalTrackScroll?.Viewport.Height ?? ctx.MainCanvas.Height;
         var (first, last) = TimelineLaneVirtualizer.GetVisibleRowRange(
             scrollY,
             viewportH,
@@ -216,9 +252,80 @@ public sealed class TimelineRenderer
         if (first == visibleFirstRow && last == visibleLastRow)
             return;
 
+        StoreClipGestureHandlers(
+            onLanePressed,
+            onDoubleTapped,
+            onTrimPressed,
+            onTrimMoved,
+            onTrimReleased,
+            onClipPressed,
+            onClipMoved,
+            onClipReleased);
+
+        RemoveVirtualizedContentOutsideRowRange(ctx, first, last);
         visibleFirstRow = first;
         visibleLastRow = last;
-        // Full lane rebuild on scroll window change is handled by host FullRebuild for correctness.
+
+        var contentW = Math.Max(ctx.Layout.ContentWidth(), ctx.MainScroll.Viewport.Width);
+        EnsureVisibleLanes(
+            ctx,
+            contentW,
+            first,
+            last,
+            onLanePressed,
+            onDoubleTapped,
+            onTrimPressed,
+            onTrimMoved,
+            onTrimReleased,
+            onClipPressed,
+            onClipMoved,
+            onClipReleased);
+        ApplyTrackSelectionChrome(ctx);
+    }
+
+    public void SetPinnedClips(IEnumerable<string> clipIds)
+    {
+        pinnedClipIds.Clear();
+        foreach (var id in clipIds)
+            pinnedClipIds.Add(id);
+    }
+
+    public void ClearPinnedClips() => pinnedClipIds.Clear();
+
+    /// <summary>
+    /// Ensures lane + clip visuals exist for the clip's current track row and keeps the clip above lane chrome.
+    /// </summary>
+    public void SyncClipVisual(TimelineInteractionContext ctx, TimelineClipItem clip)
+    {
+        if (ctx.MainCanvas == null || ctx.MainScroll == null)
+            return;
+
+        var row = ctx.TrackRowIndex(clip.TrackId);
+        if (row < 0)
+            return;
+
+        var inRange = row >= visibleFirstRow && row <= visibleLastRow;
+        if (!inRange)
+        {
+            if (pinnedClipIds.Contains(clip.Id))
+                LayoutClip(ctx, clip);
+            else
+                RemoveClipVisual(ctx, clip.Id);
+            return;
+        }
+
+        var contentW = Math.Max(ctx.Layout.ContentWidth(), ctx.MainScroll.Viewport.Width);
+        EnsureLaneForRow(ctx, contentW, row);
+        AddOrRefreshClipVisual(
+            ctx,
+            clip,
+            onTrimPressed,
+            onTrimMoved,
+            onTrimReleased,
+            onClipPressed,
+            onClipMoved,
+            onClipReleased);
+        BringClipAboveLanes(ctx, clip.Id);
     }
 
     public void AddOrRefreshClipVisual(
@@ -452,34 +559,41 @@ public sealed class TimelineRenderer
             ctx.Tracks.Count,
             TimelineRenderMetrics.TrackHeight);
 
-        for (var i = visibleFirstRow; i <= visibleLastRow && i < ctx.Tracks.Count; i++)
+        EnsureVisibleLanes(
+            ctx,
+            contentW,
+            visibleFirstRow,
+            visibleLastRow,
+            onLanePressed,
+            onDoubleTapped,
+            onTrimPressed,
+            onTrimMoved,
+            onTrimReleased,
+            onClipPressed,
+            onClipMoved,
+            onClipReleased);
+    }
+
+    private void EnsureVisibleLanes(
+        TimelineInteractionContext ctx,
+        double contentW,
+        int firstRow,
+        int lastRow,
+        EventHandler<PointerPressedEventArgs>? onLanePressed,
+        EventHandler<TappedEventArgs>? onDoubleTapped,
+        Action<TimelineClipItem, bool, IInputElement, PointerPressedEventArgs>? onTrimPressed,
+        EventHandler<PointerEventArgs>? onTrimMoved,
+        EventHandler<PointerReleasedEventArgs>? onTrimReleased,
+        EventHandler<PointerPressedEventArgs>? onClipPressed,
+        EventHandler<PointerEventArgs>? onClipMoved,
+        EventHandler<PointerReleasedEventArgs>? onClipReleased)
+    {
+        for (var i = firstRow; i <= lastRow && i < ctx.Tracks.Count; i++)
         {
             var track = ctx.Tracks[i];
-            var y = i * TimelineRenderMetrics.TrackHeight;
-            var lane = new Border
-            {
-                Height = TimelineRenderMetrics.TrackHeight,
-                Width = contentW,
-                Background = ctx.Control.ClipLaneBrush,
-                BorderBrush = LaneSeparator(ctx),
-                BorderThickness = new Thickness(0, 0, 0, 1),
-                Tag = track.Id,
-                Cursor = new Cursor(StandardCursorType.Arrow),
-            };
-            if (onLanePressed != null)
-                lane.PointerPressed += onLanePressed;
-            if (onDoubleTapped != null)
-                lane.DoubleTapped += onDoubleTapped;
-            Canvas.SetLeft(lane, 0);
-            Canvas.SetTop(lane, y);
-            ctx.MainCanvas!.Children.Add(lane);
-            laneChromeByTrackId[track.Id] = lane;
-        }
+            EnsureLaneForRow(ctx, contentW, i, onLanePressed, onDoubleTapped);
 
-        for (var i = visibleFirstRow; i <= visibleLastRow && i < ctx.Tracks.Count; i++)
-        {
-            var trackId = ctx.Tracks[i].Id;
-            foreach (var clip in ctx.Clips.Where(c => c.TrackId == trackId))
+            foreach (var clip in ctx.Clips.Where(c => c.TrackId == track.Id))
             {
                 AddOrRefreshClipVisual(
                     ctx,
@@ -491,6 +605,129 @@ public sealed class TimelineRenderer
                     onClipMoved,
                     onClipReleased);
             }
+        }
+    }
+
+    private void StoreClipGestureHandlers(
+        EventHandler<PointerPressedEventArgs>? lanePressed,
+        EventHandler<TappedEventArgs>? doubleTapped,
+        Action<TimelineClipItem, bool, IInputElement, PointerPressedEventArgs>? trimPressed,
+        EventHandler<PointerEventArgs>? trimMoved,
+        EventHandler<PointerReleasedEventArgs>? trimReleased,
+        EventHandler<PointerPressedEventArgs>? clipPressed,
+        EventHandler<PointerEventArgs>? clipMoved,
+        EventHandler<PointerReleasedEventArgs>? clipReleased)
+    {
+        onLanePressed = lanePressed;
+        onDoubleTapped = doubleTapped;
+        onTrimPressed = trimPressed;
+        onTrimMoved = trimMoved;
+        onTrimReleased = trimReleased;
+        onClipPressed = clipPressed;
+        onClipMoved = clipMoved;
+        onClipReleased = clipReleased;
+    }
+
+    private void EnsureLaneForRow(
+        TimelineInteractionContext ctx,
+        double contentW,
+        int row,
+        EventHandler<PointerPressedEventArgs>? lanePressed = null,
+        EventHandler<TappedEventArgs>? doubleTapped = null)
+    {
+        if (ctx.MainCanvas == null || row < 0 || row >= ctx.Tracks.Count)
+            return;
+
+        lanePressed ??= onLanePressed;
+        doubleTapped ??= onDoubleTapped;
+        var track = ctx.Tracks[row];
+        if (laneChromeByTrackId.ContainsKey(track.Id))
+            return;
+
+        var y = row * TimelineRenderMetrics.TrackHeight;
+        var lane = new Border
+        {
+            Height = TimelineRenderMetrics.TrackHeight,
+            Width = contentW,
+            Background = ctx.Control.ClipLaneBrush,
+            BorderBrush = LaneSeparator(ctx),
+            BorderThickness = new Thickness(0, 0, 0, 1),
+            Tag = track.Id,
+            Cursor = new Cursor(StandardCursorType.Arrow),
+        };
+        if (lanePressed != null)
+            lane.PointerPressed += lanePressed;
+        if (doubleTapped != null)
+            lane.DoubleTapped += doubleTapped;
+        Canvas.SetLeft(lane, 0);
+        Canvas.SetTop(lane, y);
+        ctx.MainCanvas.Children.Add(lane);
+        laneChromeByTrackId[track.Id] = lane;
+    }
+
+    private void BringClipAboveLanes(TimelineInteractionContext ctx, string clipId)
+    {
+        if (ctx.MainCanvas is null || !clipBorders.TryGetValue(clipId, out var root))
+            return;
+
+        var insertIndex = ctx.MainCanvas.Children.Count;
+        if (selectionRect != null)
+        {
+            var idx = ctx.MainCanvas.Children.IndexOf(selectionRect);
+            if (idx >= 0)
+                insertIndex = idx;
+        }
+
+        if (ReferenceEquals(ctx.MainCanvas.Children[insertIndex - 1], root))
+            return;
+
+        ctx.MainCanvas.Children.Remove(root);
+        ctx.MainCanvas.Children.Insert(insertIndex, root);
+    }
+
+    private void RemoveClipVisual(TimelineInteractionContext ctx, string clipId)
+    {
+        if (ctx.MainCanvas is null)
+            return;
+        if (clipBorders.TryGetValue(clipId, out var root))
+            ctx.MainCanvas.Children.Remove(root);
+        clipBorders.Remove(clipId);
+        clipBodyById.Remove(clipId);
+    }
+
+    private void RemoveVirtualizedContentOutsideRowRange(TimelineInteractionContext ctx, int firstRow, int lastRow)
+    {
+        if (ctx.MainCanvas == null)
+            return;
+
+        foreach (var trackId in laneChromeByTrackId.Keys.ToList())
+        {
+            var row = ctx.TrackRowIndex(trackId);
+            if (row >= firstRow && row <= lastRow)
+                continue;
+            if (laneChromeByTrackId.TryGetValue(trackId, out var lane))
+            {
+                ctx.MainCanvas.Children.Remove(lane);
+                laneChromeByTrackId.Remove(trackId);
+            }
+        }
+
+        foreach (var clipId in clipBorders.Keys.ToList())
+        {
+            if (pinnedClipIds.Contains(clipId))
+                continue;
+
+            var clip = ctx.Clips.FirstOrDefault(c => c.Id == clipId);
+            if (clip is null)
+            {
+                RemoveClipVisual(ctx, clipId);
+                continue;
+            }
+
+            var row = ctx.TrackRowIndex(clip.TrackId);
+            if (row >= firstRow && row <= lastRow)
+                continue;
+            RemoveClipVisual(ctx, clipId);
         }
     }
 

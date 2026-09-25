@@ -15,8 +15,9 @@ order: 56
 | Track add/remove/reorder, track selection | Done |
 | Time-range selection (lane drag) | Done |
 | MVVM collections (`Tracks`, `Clips`, `Markers`) | Done |
-| Automated tests | Minimal (Phase 1 adds coverage) |
-| Snap, split, undo, frame ruler | Phase 1+ |
+| Automated tests | 76+ unit tests, 13 headless tests (themed + API) |
+| Snap, split, undo | Done (Phase 1) |
+| Frame ruler | Phase 2 |
 | Thumbnails, waveforms, keyframes | Phase 4+ |
 
 Architecture: `VideoTimeline` is a thin Avalonia host (~350 lines). Editing, rendering, and input are delegated to `TimelineHost` and layered services below.
@@ -85,9 +86,11 @@ SkyUI.Controls.Timeline
 | Selection model | Centralized clip/track selection + events |
 | Edit events | `ClipChanging` / `ClipChanged` |
 | Theme tokens | Replace hardcoded lane separator colors |
-| Scroll stability | Preserve offsets across rebuild (ongoing hardening) |
+| Scroll stability | Preserve offsets across rebuild; incremental lane virtualization on vertical scroll |
+| Ruler drag scrub | Press + drag on ruler updates playhead |
+| Themed headless tests | Clipboard paste and template wiring verified with Sky theme |
 
-**Exit criteria:** Demo shows snap toggle, split, undo/redo; 20+ unit tests; no regressions in other SkyUI controls.
+**Exit criteria:** Demo shows snap toggle, split, undo/redo; 70+ unit tests and themed headless coverage; no regressions in other SkyUI controls. **Met.**
 
 ### Phase 2 — Time modes and transport
 
