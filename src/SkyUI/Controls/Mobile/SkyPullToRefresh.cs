@@ -42,7 +42,9 @@ public class SkyPullToRefresh : ContentControl
     private ScrollViewer? scrollViewer;
     private Control? indicator;
     private SkyProgressRing? progressRing;
+    private CancellationTokenSource? motionCts;
     private double pullOffset;
+
     static SkyPullToRefresh()
     {
         IsRefreshingProperty.Changed.AddClassHandler<SkyPullToRefresh>((control, e) =>
@@ -114,8 +116,15 @@ public class SkyPullToRefresh : ContentControl
             AttachScrollHost();
     }
 
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+        AttachScrollHost();
+    }
+
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
+        CancelMotion();
         gestureInteractor?.Dispose();
         gestureInteractor = null;
         scrollViewer = null;
@@ -143,6 +152,9 @@ public class SkyPullToRefresh : ContentControl
 
     private void OnPullOffsetChanged(double offset)
     {
+        if (IsRefreshing)
+            return;
+
         var clamped = Math.Min(Math.Max(0, offset), MaxPullDistance);
         PullOffset = clamped;
         UpdateVisualState(animate: false);
@@ -153,55 +165,92 @@ public class SkyPullToRefresh : ContentControl
         if (IsRefreshing || PullOffset < PullThreshold)
             return false;
 
-        IsRefreshing = true;
-
+        var commandStarted = false;
         if (RefreshCommand?.CanExecute(null) == true)
+        {
             RefreshCommand.Execute(null);
+            commandStarted = true;
+        }
 
         RaiseEvent(new RoutedEventArgs(RefreshRequestedEvent));
+
+        // The command/view model owns IsRefreshing when a command is bound.
+        // Setting it here first would make CanExecute return false and strand the spinner.
+        if (!commandStarted)
+            IsRefreshing = true;
+
         return true;
     }
 
     private void OnIsRefreshingChanged(bool isRefreshing)
     {
-        if (isRefreshing)
+        if (!isRefreshing)
         {
-            UpdateVisualState(animate: true);
-            return;
+            gestureInteractor?.ResetPull(animate: false);
+            PullOffset = 0;
         }
 
-        gestureInteractor?.ResetPull(animate: true);
-        UpdateVisualState(animate: true);
+        _ = UpdateVisualStateAsync(isRefreshing ? SkyMotionDurations.Enter : SkyMotionDurations.Exit);
     }
 
-    private void UpdateVisualState(bool animate)
+    private void UpdateVisualState(bool animate) =>
+        _ = UpdateVisualStateAsync(animate ? SkyMotionDurations.Exit : TimeSpan.Zero);
+
+    private async Task UpdateVisualStateAsync(TimeSpan duration)
     {
         if (scrollViewer is null)
             return;
 
+        CancelMotion();
+
         var targetOffset = IsRefreshing ? IndicatorHeight : PullOffset;
-        var indicatorOpacity = IsRefreshing
+        ApplyIndicatorState();
+
+        if (duration <= TimeSpan.Zero)
+        {
+            EnsureTranslate(scrollViewer).Y = targetOffset;
+            return;
+        }
+
+        motionCts = new CancellationTokenSource();
+        var token = motionCts.Token;
+        var from = GetTranslateY(scrollViewer);
+
+        try
+        {
+            await SkyMotionAnimator.Default.TranslateYAsync(scrollViewer, from, targetOffset, duration, token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+
+        if (!token.IsCancellationRequested)
+            EnsureTranslate(scrollViewer).Y = targetOffset;
+    }
+
+    private void ApplyIndicatorState()
+    {
+        var showIndicator = IsRefreshing;
+        var indicatorOpacity = showIndicator
             ? 1
             : Math.Clamp(PullOffset / Math.Max(1, PullThreshold), 0, 1);
 
         if (indicator is not null)
+        {
             indicator.Opacity = indicatorOpacity;
+            indicator.IsVisible = showIndicator || indicatorOpacity > 0;
+        }
 
         if (progressRing is not null)
             progressRing.IsIndeterminate = IsRefreshing;
+    }
 
-        if (animate)
-        {
-            _ = SkyMotionAnimator.Default.TranslateYAsync(
-                scrollViewer,
-                GetTranslateY(scrollViewer),
-                targetOffset,
-                SkyMotionDurations.Exit);
-        }
-        else
-        {
-            EnsureTranslate(scrollViewer).Y = targetOffset;
-        }
+    private void CancelMotion()
+    {
+        motionCts?.Cancel();
+        motionCts?.Dispose();
+        motionCts = null;
     }
 
     private static double GetTranslateY(Visual target) =>

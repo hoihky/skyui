@@ -21,5 +21,6 @@
     <ProjectReference Include="..\SkyUI.Themes.Sky\SkyUI.Themes.Sky.csproj" />
     <ProjectReference Include="..\SkyUI.Data\SkyUI.Data.csproj" />
     <ProjectReference Include="..\SkyUI.Diagram\SkyUI.Diagram.csproj" />
+    <ProjectReference Include="..\SkyUI.Demo.Mobile\SkyUI.Demo.Mobile.csproj" />
   </ItemGroup>
 </Project>

@@ -2,119 +2,138 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sky="https://skyui.dev"
              xmlns:vm="using:SkyUI.Demo.ViewModels"
+             xmlns:mobile="using:SkyUI.Demo.Mobile.Views"
              x:Class="SkyUI.Demo.Views.Demos.MobileDemo"
-             x:DataType="vm:MobileDemoViewModel">
-  <Grid>
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-      <Border Classes="sky-demo-panel" Margin="0,0,0,80">
-        <StackPanel Spacing="20">
-          <TextBlock Classes="sky-feature-heading" Text="Mobile primitives" />
-          <TextBlock Classes="sky-body-secondary"
-                     TextWrapping="Wrap"
-                     Text="Safe area, touch targets, sheets, keyboard inset, FAB, and pull-to-refresh. Bindings below use MobileDemoViewModel." />
+             x:DataType="vm:MobileDemoViewModel"
+             MinHeight="560">
+  <Grid RowDefinitions="Auto,*">
+    <StackPanel Grid.Row="0" Spacing="12" Margin="0,0,0,12">
+      <StackPanel Spacing="4">
+        <TextBlock Classes="sky-feature-heading" Text="Mobile (desktop testing)" />
+        <TextBlock Classes="sky-body-secondary"
+                   TextWrapping="Wrap"
+                   Text="Pull-to-refresh uses mouse drag at list top. FAB sits in the preview panel below — not hidden behind scroll content." />
+      </StackPanel>
+      <TextBlock Classes="sky-body-secondary" Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
 
-          <TextBlock Classes="sky-body-secondary" Text="{Binding Status}" TextWrapping="Wrap" />
+    <sky:SkyTabView Grid.Row="1">
+      <TabItem Header="Interactive">
+        <Grid RowDefinitions="*,Auto">
+          <ScrollViewer Grid.Row="0"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="20" Classes="sky-demo-panel">
+              <StackPanel Spacing="8">
+                <TextBlock Classes="sky-section-title" Text="SkyPullToRefresh" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="Scroll the inbox to the top, press the mouse button, then drag downward inside the frame." />
+                <Border BorderBrush="{DynamicResource SkyBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource SkyRadiusComfortable}"
+                        Height="280"
+                        ClipToBounds="True">
+                  <sky:SkyPullToRefresh IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                                        RefreshCommand="{Binding RefreshCommand}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                      <ItemsControl ItemsSource="{Binding Items}" Margin="12">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate>
+                            <Border Classes="sky-card" Margin="0,0,0,8" Padding="12">
+                              <TextBlock Text="{Binding}" />
+                            </Border>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </ScrollViewer>
+                  </sky:SkyPullToRefresh>
+                </Border>
+              </StackPanel>
 
-          <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkyPullToRefresh" />
-            <TextBlock Classes="sky-body-secondary"
-                       TextWrapping="Wrap"
-                       Text="Wrap a ScrollViewer; bind IsRefreshing and RefreshCommand from your view model." />
-            <Border BorderBrush="{DynamicResource SkyBorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="8"
-                    Height="280"
-                    ClipToBounds="True">
-              <sky:SkyPullToRefresh IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
-                                    RefreshCommand="{Binding RefreshCommand}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                  <ItemsControl ItemsSource="{Binding Items}" Margin="12">
-                    <ItemsControl.ItemTemplate>
-                      <DataTemplate>
-                        <Border Classes="sky-card" Margin="0,0,0,8" Padding="12">
-                          <TextBlock Text="{Binding}" />
-                        </Border>
-                      </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                  </ItemsControl>
-                </ScrollViewer>
-              </sky:SkyPullToRefresh>
-            </Border>
-          </StackPanel>
+              <StackPanel Spacing="8">
+                <TextBlock Classes="sky-section-title" Text="SkyFab" />
+                <Button Classes="sky sky-outlined"
+                        Content="Toggle extended FAB"
+                        Command="{Binding ToggleFabCommand}"
+                        HorizontalAlignment="Left" />
+                <TextBlock Classes="sky-body-secondary"
+                           TextWrapping="Wrap"
+                           Text="Use the floating button in the preview panel under this section." />
+              </StackPanel>
 
-          <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkyFab" />
-            <Button Classes="sky sky-outlined"
-                    Content="Toggle extended FAB"
-                    Command="{Binding ToggleFabCommand}"
-                    HorizontalAlignment="Left" />
-            <TextBlock Classes="sky-body-secondary"
-                       TextWrapping="Wrap"
-                       Text="FAB floats above content (bottom-right) with optional safe-area margin." />
-          </StackPanel>
+              <StackPanel Spacing="8">
+                <TextBlock Classes="sky-section-title" Text="SkyTouchTarget" />
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                  <Button x:Name="SmallButton" Classes="sky sky-subtle" Content="Small (32px)" Padding="8,4" />
+                  <Button x:Name="TouchButton" Classes="sky sky-primary" Content="Ensured 44pt target" />
+                </StackPanel>
+              </StackPanel>
 
-          <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkySafeArea" />
-            <Border BorderBrush="{DynamicResource SkyBorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="8"
-                    Height="100"
-                    ClipToBounds="True">
-              <sky:SkySafeArea Background="{DynamicResource SkySurfaceElevatedBrush}">
-                <TextBlock Margin="8"
-                           VerticalAlignment="Center"
-                           Text="Content inside SkySafeArea."
-                           TextWrapping="Wrap" />
-              </sky:SkySafeArea>
-            </Border>
-          </StackPanel>
+              <StackPanel Spacing="8">
+                <TextBlock Classes="sky-section-title" Text="SkyActionSheet" />
+                <Button x:Name="ActionSheetButton"
+                        Classes="sky sky-outlined"
+                        Content="Show action sheet"
+                        HorizontalAlignment="Left" />
+                <TextBlock x:Name="ActionSheetResult" Classes="sky-body-secondary" TextWrapping="Wrap" />
+              </StackPanel>
 
-          <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkyTouchTarget" />
-            <StackPanel Orientation="Horizontal" Spacing="16">
-              <Button x:Name="SmallButton" Classes="sky sky-subtle" Content="Small (32px)" Padding="8,4" />
-              <Button x:Name="TouchButton" Classes="sky sky-primary" Content="Ensured 44pt target" />
+              <StackPanel Spacing="8">
+                <TextBlock Classes="sky-section-title" Text="SkySheetHost" />
+                <Button x:Name="SheetButton"
+                        Classes="sky sky-outlined"
+                        Content="Open filter sheet"
+                        HorizontalAlignment="Left" />
+              </StackPanel>
             </StackPanel>
-          </StackPanel>
+          </ScrollViewer>
 
-          <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkyActionSheet" />
-            <Button x:Name="ActionSheetButton" Classes="sky sky-outlined" Content="Show action sheet" HorizontalAlignment="Left" />
-            <TextBlock x:Name="ActionSheetResult" Classes="sky-body-secondary" TextWrapping="Wrap" />
-          </StackPanel>
+          <Border Grid.Row="1"
+                  Margin="0,12,0,0"
+                  Height="132"
+                  BorderBrush="{DynamicResource SkyBorderBrush}"
+                  BorderThickness="1"
+                  CornerRadius="{DynamicResource SkyRadiusComfortable}"
+                  ClipToBounds="True"
+                  Background="{DynamicResource SkySurfaceBrush}">
+            <Grid>
+              <TextBlock Margin="14,10"
+                         VerticalAlignment="Top"
+                         Classes="sky-body-secondary"
+                         Text="FAB preview — click to add a draft item" />
+              <sky:SkyFab Icon="Add"
+                          ZIndex="1"
+                          Label="{Binding FabLabel}"
+                          IsExtended="{Binding IsExtendedFab}"
+                          Command="{Binding AddItemCommand}" />
+            </Grid>
+          </Border>
 
-          <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkySheetHost" />
-            <Button x:Name="SheetButton" Classes="sky sky-outlined" Content="Open filter sheet" HorizontalAlignment="Left" />
-          </StackPanel>
+          <sky:SkySheetHost x:Name="SheetHost" Grid.RowSpan="2" ZIndex="2" />
+        </Grid>
+      </TabItem>
 
-          <StackPanel Spacing="8">
-            <TextBlock Classes="sky-section-title" Text="SkyKeyboardInset" />
-            <Border BorderBrush="{DynamicResource SkyBorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="8"
-                    Height="180"
-                    ClipToBounds="True">
-              <sky:SkyKeyboardInset>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                  <StackPanel Spacing="12" Margin="12">
-                    <sky:SkyFormField Label="Notes">
-                      <TextBox Classes="sky" PlaceholderText="Keyboard inset demo" />
-                    </sky:SkyFormField>
-                  </StackPanel>
-                </ScrollViewer>
-              </sky:SkyKeyboardInset>
+      <TabItem Header="Phone preview">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="16" Margin="0,0,0,16">
+            <TextBlock Classes="sky-body-secondary"
+                       TextWrapping="Wrap"
+                       MaxWidth="520"
+                       Text="Narrow shell from SkyUI.Demo.Mobile — bottom navigation, forms layout, and feedback patterns." />
+            <Border Width="390"
+                    Height="780"
+                    CornerRadius="28"
+                    BorderBrush="{DynamicResource SkyBorderBrush}"
+                    BorderThickness="2"
+                    ClipToBounds="True"
+                    Background="{DynamicResource SkyBackgroundBrush}"
+                    BoxShadow="{DynamicResource SkyElevation2}">
+              <mobile:MobileAppView />
             </Border>
           </StackPanel>
-        </StackPanel>
-      </Border>
-    </ScrollViewer>
-
-    <sky:SkyFab Icon="Add"
-                Label="{Binding FabLabel}"
-                IsExtended="{Binding IsExtendedFab}"
-                Command="{Binding AddItemCommand}" />
-
-    <sky:SkySheetHost x:Name="SheetHost" />
+        </ScrollViewer>
+      </TabItem>
+    </sky:SkyTabView>
   </Grid>
 </UserControl>

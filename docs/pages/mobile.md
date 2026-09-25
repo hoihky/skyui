@@ -106,20 +106,45 @@ Content must be a `ScrollViewer`:
 
 The view model sets `IsRefreshing = true` when refresh starts and `false` when async work completes. `RefreshRequested` is raised for code-behind handlers without a command.
 
+## Desktop testing (without iOS/Android)
+
+When device hosts are unavailable, use **`SkyUI.Demo` → Mobile** page:
+
+```bash
+dotnet run --project src/SkyUI.Demo
+```
+
+| Feature | Desktop | Notes |
+|---------|---------|-------|
+| `SkyPullToRefresh` | Yes | Mouse drag at scroll top (same pointer pipeline as touch) |
+| `SkyFab` | Yes | Click, extended label, `Command` binding |
+| `SkyTouchTarget` | Yes | Min 44×44 pt hit area is visible in layout |
+| `SkyActionSheet` | Yes | Full sheet flow via `SkySheetHost` |
+| `SkySheetHost` | Yes | Bottom sheet + scrim |
+| `SkyNavigationView` (bottom) | Yes | **Phone preview** tab embeds `SkyUI.Demo.Mobile` shell |
+| Tabs, breadcrumbs, alerts, snackbars | Yes | Inside phone preview sections |
+| `SkyFormPage` / mobile forms layout | Yes | Layout only in phone preview |
+| `SkySafeArea` | No* | `IInsetsManager` padding is usually zero on desktop |
+| `SkyKeyboardInset` | No* | Soft keyboard / `IInputPane` not active on desktop |
+
+\*Safe-area and keyboard inset still run without errors; they simply have no visible effect until you run on iOS or Android.
+
+The **Interactive** tab exercises PTR, FAB, touch targets, action sheets, and filter sheets directly. The **Phone preview** tab hosts the shared `MobileAppView` in a 390×780 frame (same content as `SkyUI.Demo.Mobile`).
+
 ## Sample apps
 
 | Project | Purpose |
 |---------|---------|
-| `SkyUI.Demo` → **Mobile** page | Desktop gallery for all mobile primitives (`MobileDemo.axaml`) |
+| `SkyUI.Demo` → **Mobile** page | Desktop testing: interactive tab + phone preview |
 | `SkyUI.Demo.Mobile` | Shared mobile shell (bottom nav, four demo sections) |
 | `SkyUI.Demo.iOS` | iOS host (`net10.0-ios`) referencing `SkyUI.Demo.Mobile` |
 
 ```bash
-dotnet run --project src/SkyUI.Demo          # Mobile page in desktop gallery
+dotnet run --project src/SkyUI.Demo          # Mobile page — desktop testing
 dotnet build src/SkyUI.Demo.iOS/SkyUI.Demo.iOS.csproj -f net10.0-ios
 ```
 
-`.NET for iOS` requires a compatible Xcode version for your installed workload. See [development-roadmap.md](development-roadmap.md) Phase 3 for remaining mobile work (FAB, pull-to-refresh, CI matrix).
+`.NET for iOS` requires a compatible Xcode version for your installed workload. See [development-roadmap.md](development-roadmap.md) Phase 3 for remaining mobile work.
 
 ## Related
 

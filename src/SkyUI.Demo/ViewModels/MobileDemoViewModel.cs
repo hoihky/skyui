@@ -4,17 +4,19 @@ using System.Windows.Input;
 
 namespace SkyUI.Demo.ViewModels;
 
-/// <summary>MVVM sample for mobile FAB and pull-to-refresh.</summary>
+/// <summary>MVVM sample for desktop-testable mobile FAB and pull-to-refresh.</summary>
 public sealed class MobileDemoViewModel : INotifyPropertyChanged
 {
+    private readonly RelayCommand refreshCommand;
     private bool isRefreshing;
     private bool isExtendedFab;
-    private string status = "Pull down to refresh or tap the FAB.";
+    private string status = "Pull down to refresh (mouse drag at list top) or click the FAB.";
 
     public MobileDemoViewModel()
     {
         Items = new ObservableCollection<string>(Enumerable.Range(1, 12).Select(i => $"Inbox item {i}"));
-        RefreshCommand = new RelayCommand(ExecuteRefresh, () => !IsRefreshing);
+        refreshCommand = new RelayCommand(ExecuteRefresh, () => !IsRefreshing);
+        RefreshCommand = refreshCommand;
         AddItemCommand = new RelayCommand(AddItem);
         ToggleFabCommand = new RelayCommand(() => IsExtendedFab = !IsExtendedFab);
     }
@@ -32,6 +34,7 @@ public sealed class MobileDemoViewModel : INotifyPropertyChanged
                 return;
             isRefreshing = value;
             Notify(nameof(IsRefreshing));
+            refreshCommand.RaiseCanExecuteChanged();
         }
     }
 
@@ -107,5 +110,7 @@ public sealed class MobileDemoViewModel : INotifyPropertyChanged
         public bool CanExecute(object? parameter) => canExecute?.Invoke() ?? true;
 
         public void Execute(object? parameter) => execute();
+
+        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

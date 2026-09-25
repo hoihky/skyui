@@ -34,20 +34,22 @@ internal sealed class SkyPullToRefreshGestureInteractor : IDisposable
 
     public double PullOffset => pullOffset;
 
+    private const RoutingStrategies PointerRoutes = RoutingStrategies.Tunnel | RoutingStrategies.Bubble;
+
     public void Attach()
     {
-        scrollViewer.PointerPressed += OnPointerPressed;
-        scrollViewer.PointerMoved += OnPointerMoved;
-        scrollViewer.PointerReleased += OnPointerReleased;
-        scrollViewer.PointerCaptureLost += OnPointerCaptureLost;
+        scrollViewer.AddHandler(InputElement.PointerPressedEvent, OnPointerPressed, PointerRoutes, handledEventsToo: true);
+        scrollViewer.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved, PointerRoutes, handledEventsToo: true);
+        scrollViewer.AddHandler(InputElement.PointerReleasedEvent, OnPointerReleased, PointerRoutes, handledEventsToo: true);
+        scrollViewer.AddHandler(InputElement.PointerCaptureLostEvent, OnPointerCaptureLost, PointerRoutes, handledEventsToo: true);
     }
 
     public void Detach()
     {
-        scrollViewer.PointerPressed -= OnPointerPressed;
-        scrollViewer.PointerMoved -= OnPointerMoved;
-        scrollViewer.PointerReleased -= OnPointerReleased;
-        scrollViewer.PointerCaptureLost -= OnPointerCaptureLost;
+        scrollViewer.RemoveHandler(InputElement.PointerPressedEvent, OnPointerPressed);
+        scrollViewer.RemoveHandler(InputElement.PointerMovedEvent, OnPointerMoved);
+        scrollViewer.RemoveHandler(InputElement.PointerReleasedEvent, OnPointerReleased);
+        scrollViewer.RemoveHandler(InputElement.PointerCaptureLostEvent, OnPointerCaptureLost);
         ResetPull(animate: false);
     }
 
