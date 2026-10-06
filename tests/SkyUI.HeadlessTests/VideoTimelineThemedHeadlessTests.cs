@@ -11,6 +11,19 @@ public class VideoTimelineThemedHeadlessTests
         HeadlessUnitTestSession.GetOrStartForAssembly(typeof(VideoTimelineThemedHeadlessTests).Assembly);
 
     [Fact]
+    public void Null_clip_thumbnail_provider_does_not_break_template()
+    {
+        Session.Dispatch(() =>
+        {
+            var window = CreateWindowWithTimeline(out var timeline);
+            timeline.ClipThumbnailProvider = SkyUI.Controls.Timeline.Integration.NullTimelineClipThumbnailProvider.Instance;
+            LayoutTimeline(timeline);
+            Assert.NotNull(timeline.Host.Interaction);
+            window.Close();
+        }, CancellationToken.None);
+    }
+
+    [Fact]
     public void Template_applies_and_creates_interaction_context()
     {
         Session.Dispatch(() =>

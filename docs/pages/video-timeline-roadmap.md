@@ -17,7 +17,10 @@ order: 56
 | MVVM collections (`Tracks`, `Clips`, `Markers`) | Done |
 | Automated tests | 76+ unit tests, 13 headless tests (themed + API) |
 | Snap, split, undo | Done (Phase 1) |
-| Frame ruler | Phase 2 |
+| Frame ruler, transport, snap-to-frame | Done (Tier 0 / Phase 2 foundation) |
+| Sprite clip metadata, track kind, frame API, JSON DTO | Done (Tier 1) |
+| Hold frames, draggable markers, onion skin, property keyframes | Done (Tier 3) |
+| Media clock, preview sync, compositor demo, thumbnail contract | Done (Tier 4) |
 | Thumbnails, waveforms, keyframes | Phase 4+ |
 
 Architecture: `VideoTimeline` is a thin Avalonia host (~350 lines). Editing, rendering, and input are delegated to `TimelineHost` and layered services below.
@@ -92,16 +95,26 @@ SkyUI.Controls.Timeline
 
 **Exit criteria:** Demo shows snap toggle, split, undo/redo; 70+ unit tests and themed headless coverage; no regressions in other SkyUI controls. **Met.**
 
-### Phase 2 — Time modes and transport
+### Phase 2 — Time modes and transport (foundation done)
 
-- FPS and frame-based ruler; timecode display
-- Frame step (←/→), loop region, J/K/L transport
-- Snap-to-frame when `Fps` is set
+- FPS and frame-based ruler; frame labels (`fN`) on ruler when `TimeUnit` is `Frames`
+- `VideoTimeline.Fps`, `TimeUnit`, `PlayheadFrame`, `LoopTimeRange`
+- Frame step (←/→, Shift = 10), Space play/pause; loop in/out from time-range selection
+- Snap-to-frame grid when `TimeUnit` is `Frames` (`TimelineTimePresentation` + `TimelineFrameQuantizer`)
+- Remaining: timecode ruler option in UI, J/K/L shuttle
+
+### Tier 1 — Sprite clip model (done)
+
+- `TimelineSpriteClipMetadata` on clips (`AtlasId`, `SpriteName`, `FrameIndex`, `HoldFrames`, optional `SourceRect`)
+- `TimelineTrackKind` + `IsVisible` / `IsLocked` / `AccentColor` on tracks; locked lanes block move/trim
+- `ITimelineClipFrameMapper`, `GetClipFrameSpan`, `SampleSpriteLayersAtPlayhead`
+- `CurrentFrameChanged` for preview sync
+- `TimelineProjectDocument` + `ITimelineProjectSerializer` (`JsonTimelineProjectSerializer`)
 
 ### Phase 3 — Rich clip and track model
 
 - `SourceIn` / `SourceOut`, speed, linked clips
-- Track kind (video/audio/sprite), mute/solo/lock, variable height
+- Mute/solo, variable height (visibility/lock cover sprite workflows)
 - Draggable markers
 
 ### Phase 4 — Visual richness
@@ -120,9 +133,16 @@ SkyUI.Controls.Timeline
 - Cel duration in frames, onion skin, per-layer visibility keys
 - Transform keyframe lanes
 
+### Tier 4 — App integration (done)
+
+- `ITimelineMediaClock` / `TimelineMediaClock` on `VideoTimeline.MediaClock`
+- `TimelinePreviewSynchronizer`, `TimelinePreviewFrameSnapshot`, `PreviewFrameChanged`
+- `ITimelineClipThumbnailProvider` + `NullTimelineClipThumbnailProvider`
+- Demo: compositor preview panel bound to preview snapshots (atlas color stub)
+
 ### Phase 7 — Platform integration
 
-- `IMediaClock` for preview sync, touch gestures, project serialization
+- Touch gestures, full project persistence in host apps
 
 ## Video editor vs sprite editor
 

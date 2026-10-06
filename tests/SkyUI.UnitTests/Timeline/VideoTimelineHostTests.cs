@@ -1,5 +1,6 @@
 using SkyUI.Controls;
 using SkyUI.Controls.Timeline.Commands;
+using SkyUI.Controls.Timeline.Model;
 
 namespace SkyUI.UnitTests.Timeline;
 
@@ -8,9 +9,18 @@ public class VideoTimelineHostTests
     [Fact]
     public void PlayheadTime_is_clamped_to_duration()
     {
-        var timeline = new VideoTimeline { Duration = 20 };
+        var timeline = new VideoTimeline { Duration = 20, TimeUnit = TimelineTimeUnit.Seconds };
         timeline.PlayheadTime = 100;
         Assert.Equal(20, timeline.PlayheadTime);
+    }
+
+    [Fact]
+    public void StepPlayheadFrames_advances_in_frame_mode()
+    {
+        var timeline = new VideoTimeline { Duration = 10, Fps = 24, TimeUnit = TimelineTimeUnit.Frames };
+        timeline.PlayheadTime = 0;
+        timeline.StepPlayheadFrames(3);
+        Assert.Equal(3, timeline.PlayheadFrame);
     }
 
     [Fact]

@@ -3,15 +3,10 @@ namespace SkyUI.Controls.Timeline.Editing;
 /// <summary>Pure clip mutations used by the control and undo commands.</summary>
 public static class TimelineClipOperations
 {
+    private static readonly TimelineClipPrototypeFactory PrototypeFactory = new();
+
     public static TimelineClipItem ClonePrototype(TimelineClipItem source) =>
-        new()
-        {
-            TrackId = source.TrackId,
-            StartTime = source.StartTime,
-            Duration = source.Duration,
-            Label = source.Label,
-            Tag = source.Tag,
-        };
+        PrototypeFactory.CreateFrom(source);
 
     /// <summary>
     /// Splits a clip at <paramref name="splitTimeSeconds"/> (timeline time).
@@ -20,9 +15,12 @@ public static class TimelineClipOperations
     public static TimelineClipItem? SplitAt(
         TimelineClipItem clip,
         double splitTimeSeconds,
-        ICollection<TimelineClipItem> clips)
+        ICollection<TimelineClipItem> clips,
+        double minClipDurationSeconds = TimelineCoordinateSystem.MinClipDurationSeconds)
     {
-        var min = TimelineCoordinateSystem.MinClipDurationSeconds;
+        var min = minClipDurationSeconds > 0
+            ? minClipDurationSeconds
+            : TimelineCoordinateSystem.MinClipDurationSeconds;
         var start = clip.StartTime;
         var end = start + clip.Duration;
         if (splitTimeSeconds <= start + min || splitTimeSeconds >= end - min)
@@ -38,6 +36,7 @@ public static class TimelineClipOperations
             Duration = rightDuration,
             Label = string.IsNullOrEmpty(clip.Label) ? "Clip" : $"{clip.Label} (2)",
             Tag = clip.Tag,
+            Sprite = clip.Sprite?.Clone(),
         };
         clips.Add(right);
         return right;

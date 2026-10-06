@@ -1,10 +1,13 @@
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
+using SkyUI.Controls;
 using SkyUI.Controls.Timeline.Input;
+using SkyUI.Controls.Timeline.Model;
 
 namespace SkyUI.Controls.Timeline.Rendering;
 
@@ -15,12 +18,16 @@ public sealed class TimelineRenderer
     private readonly Dictionary<string, Border> clipBodyById = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Border> headerChromeByTrackId = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Border> laneChromeByTrackId = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, Polygon> keyframeShapesById = new(StringComparer.Ordinal);
 
     private Rectangle? selectionRect;
     private Line? playheadLine;
     private int visibleFirstRow;
     private int visibleLastRow = -1;
     private readonly TimelineTrackReorderDragVisual trackReorderDragVisual = new();
+    private readonly TimelineTrackHeaderFormatter trackHeaderFormatter = new();
+    private readonly TimelineClipLabelFormatter clipLabelFormatter = new();
+    private readonly TimelineAccentColorParser accentColorParser = new();
     private readonly HashSet<string> pinnedClipIds = new(StringComparer.Ordinal);
 
     private EventHandler<PointerPressedEventArgs>? onLanePressed;
@@ -29,6 +36,9 @@ public sealed class TimelineRenderer
     private EventHandler<PointerEventArgs>? onTrimMoved;
     private EventHandler<PointerReleasedEventArgs>? onTrimReleased;
     private EventHandler<PointerPressedEventArgs>? onClipPressed;
+    private EventHandler<PointerPressedEventArgs>? onKeyframePressed;
+    private EventHandler<PointerEventArgs>? onKeyframeMoved;
+    private EventHandler<PointerReleasedEventArgs>? onKeyframeReleased;
     private EventHandler<PointerEventArgs>? onClipMoved;
     private EventHandler<PointerReleasedEventArgs>? onClipReleased;
 
@@ -60,13 +70,14 @@ public sealed class TimelineRenderer
                 BorderThickness = new Thickness(0, 0, 0, 1),
                 Child = new TextBlock
                 {
-                    Text = track.Name,
+                    Text = trackHeaderFormatter.Format(track),
                     VerticalAlignment = VerticalAlignment.Center,
                     Foreground = ctx.Control.Foreground,
                     TextTrimming = TextTrimming.CharacterEllipsis,
                 },
                 Tag = track.Id,
             };
+            ApplyTrackAccentChrome(track, border);
             stack.Children.Add(border);
             headerChromeByTrackId[track.Id] = border;
         }
@@ -78,7 +89,10 @@ public sealed class TimelineRenderer
         TimelineInteractionContext ctx,
         EventHandler<PointerPressedEventArgs>? onRulerPressed,
         EventHandler<PointerEventArgs>? onRulerMoved,
-        EventHandler<PointerReleasedEventArgs>? onRulerReleased)
+        EventHandler<PointerReleasedEventArgs>? onRulerReleased,
+        EventHandler<PointerPressedEventArgs>? onMarkerPressed,
+        EventHandler<PointerEventArgs>? onMarkerMoved,
+        EventHandler<PointerReleasedEventArgs>? onMarkerReleased)
     {
         var canvas = ctx.RulerCanvas;
         var scroll = ctx.RulerScroll;
@@ -117,7 +131,7 @@ public sealed class TimelineRenderer
         foreach (var marker in ctx.Markers)
         {
             var x = ctx.Layout.TimeToPixel(marker.Time);
-            canvas.Children.Add(new Polygon
+            var shape = new Polygon
             {
                 Points = new Points
                 {
@@ -128,8 +142,16 @@ public sealed class TimelineRenderer
                 Fill = ctx.Control.PlayheadBrush ?? Brushes.LimeGreen,
                 Stroke = Brushes.Black,
                 StrokeThickness = 0.5,
-                IsHitTestVisible = false,
-            });
+                IsHitTestVisible = true,
+                Tag = marker.Id,
+            };
+            if (onMarkerPressed != null)
+                shape.PointerPressed += onMarkerPressed;
+            if (onMarkerMoved != null)
+                shape.PointerMoved += onMarkerMoved;
+            if (onMarkerReleased != null)
+                shape.PointerReleased += onMarkerReleased;
+            canvas.Children.Add(shape);
         }
 
         var hit = new Rectangle { Width = width, Height = TimelineRenderMetrics.RulerHeight, Fill = Brushes.Transparent };
@@ -165,6 +187,7 @@ public sealed class TimelineRenderer
         clipBorders.Clear();
         clipBodyById.Clear();
         laneChromeByTrackId.Clear();
+        keyframeShapesById.Clear();
         StoreClipGestureHandlers(
             onLanePressed,
             onDoubleTapped,
@@ -225,7 +248,60 @@ public sealed class TimelineRenderer
         };
         canvas.Children.Add(playheadLine);
         ApplyTrackSelectionChrome(ctx);
+        SyncPropertyTrackKeyframes(ctx);
         UpdateOverlays(ctx);
+    }
+
+    public void ConfigureKeyframeGestures(
+        EventHandler<PointerPressedEventArgs>? pressed,
+        EventHandler<PointerEventArgs>? moved,
+        EventHandler<PointerReleasedEventArgs>? released)
+    {
+        onKeyframePressed = pressed;
+        onKeyframeMoved = moved;
+        onKeyframeReleased = released;
+    }
+
+    public void SyncPropertyTrackKeyframes(TimelineInteractionContext ctx)
+    {
+        if (ctx.MainCanvas is null)
+            return;
+
+        var liveIds = new HashSet<string>(ctx.Project.Keyframes.Select(k => k.Id), StringComparer.Ordinal);
+        foreach (var id in keyframeShapesById.Keys.Where(id => !liveIds.Contains(id)).ToList())
+            RemoveKeyframeVisual(ctx, id);
+
+        foreach (var keyframe in ctx.Project.Keyframes)
+        {
+            var row = ctx.TrackRowIndex(keyframe.TrackId);
+            if (row < 0)
+                continue;
+            var track = ctx.Tracks[row];
+            if (track.Kind != TimelineTrackKind.Property)
+                continue;
+            if (row < visibleFirstRow || row > visibleLastRow)
+                continue;
+            EnsureKeyframeVisual(ctx, keyframe);
+            LayoutKeyframe(ctx, keyframe);
+        }
+    }
+
+    public void LayoutKeyframe(TimelineInteractionContext ctx, TimelineKeyframeItem keyframe)
+    {
+        if (!keyframeShapesById.TryGetValue(keyframe.Id, out var shape))
+            return;
+        var row = ctx.TrackRowIndex(keyframe.TrackId);
+        if (row < 0)
+            return;
+        var x = ctx.Layout.TimeToPixel(keyframe.Time);
+        var y = row * TimelineRenderMetrics.TrackHeight + TimelineRenderMetrics.TrackHeight / 2;
+        shape.Points = new Points
+        {
+            new Point(x, y - 5),
+            new Point(x + 5, y),
+            new Point(x, y + 5),
+            new Point(x - 5, y),
+        };
     }
 
     public void RefreshVirtualizedLanes(
@@ -281,6 +357,7 @@ public sealed class TimelineRenderer
             onClipMoved,
             onClipReleased);
         ApplyTrackSelectionChrome(ctx);
+        SyncPropertyTrackKeyframes(ctx);
     }
 
     public void SetPinnedClips(IEnumerable<string> clipIds)
@@ -348,6 +425,8 @@ public sealed class TimelineRenderer
         {
             LayoutClip(ctx, clip);
             RefreshClipChrome(ctx, clip.Id);
+            if (clipBorders.TryGetValue(clip.Id, out var existingRoot))
+                ApplyClipTrackVisibility(ctx, clip, existingRoot);
             return;
         }
 
@@ -371,7 +450,7 @@ public sealed class TimelineRenderer
             Padding = new Thickness(4, 2, 4, 2),
             Child = new TextBlock
             {
-                Text = string.IsNullOrEmpty(clip.Label) ? "Clip" : clip.Label,
+                Text = clipLabelFormatter.Format(clip),
                 Foreground = ctx.Control.Foreground,
                 FontSize = 11,
                 TextTrimming = TextTrimming.CharacterEllipsis,
@@ -405,10 +484,18 @@ public sealed class TimelineRenderer
         root.Children.Add(body);
         root.Children.Add(right);
 
+        ApplyClipTrackVisibility(ctx, clip, root);
         ctx.MainCanvas.Children.Add(root);
         clipBorders[clip.Id] = root;
         clipBodyById[clip.Id] = body;
         LayoutClip(ctx, clip);
+    }
+
+    public void UpdateClipLabel(TimelineInteractionContext ctx, TimelineClipItem clip)
+    {
+        if (!clipBodyById.TryGetValue(clip.Id, out var body) || body.Child is not TextBlock label)
+            return;
+        label.Text = clipLabelFormatter.Format(clip);
     }
 
     public void LayoutClip(TimelineInteractionContext ctx, TimelineClipItem clip)
@@ -608,6 +695,45 @@ public sealed class TimelineRenderer
         }
     }
 
+    private void EnsureKeyframeVisual(TimelineInteractionContext ctx, TimelineKeyframeItem keyframe)
+    {
+        if (ctx.MainCanvas is null || keyframeShapesById.ContainsKey(keyframe.Id))
+            return;
+        var shape = new Polygon
+        {
+            Fill = ctx.Control.ClipSelectedBrush ?? Brushes.Gold,
+            Stroke = Brushes.Black,
+            StrokeThickness = 0.5,
+            IsHitTestVisible = true,
+            Tag = keyframe.Id,
+        };
+        if (onKeyframePressed != null)
+            shape.PointerPressed += onKeyframePressed;
+        if (onKeyframeMoved != null)
+            shape.PointerMoved += onKeyframeMoved;
+        if (onKeyframeReleased != null)
+            shape.PointerReleased += onKeyframeReleased;
+        ctx.MainCanvas.Children.Add(shape);
+        keyframeShapesById[keyframe.Id] = shape;
+        BringKeyframeAboveLanes(ctx, shape);
+    }
+
+    private void RemoveKeyframeVisual(TimelineInteractionContext ctx, string keyframeId)
+    {
+        if (!keyframeShapesById.TryGetValue(keyframeId, out var shape))
+            return;
+        ctx.MainCanvas?.Children.Remove(shape);
+        keyframeShapesById.Remove(keyframeId);
+    }
+
+    private static void BringKeyframeAboveLanes(TimelineInteractionContext ctx, Polygon shape)
+    {
+        if (ctx.MainCanvas is null)
+            return;
+        ctx.MainCanvas.Children.Remove(shape);
+        ctx.MainCanvas.Children.Add(shape);
+    }
+
     private void StoreClipGestureHandlers(
         EventHandler<PointerPressedEventArgs>? lanePressed,
         EventHandler<TappedEventArgs>? doubleTapped,
@@ -660,9 +786,24 @@ public sealed class TimelineRenderer
         if (doubleTapped != null)
             lane.DoubleTapped += doubleTapped;
         Canvas.SetLeft(lane, 0);
+        lane.Opacity = track.IsVisible ? 1 : 0.35;
         Canvas.SetTop(lane, y);
         ctx.MainCanvas.Children.Add(lane);
         laneChromeByTrackId[track.Id] = lane;
+    }
+
+    private void ApplyTrackAccentChrome(TimelineTrack track, Border header)
+    {
+        if (!accentColorParser.TryParseBrush(track.AccentColor, out var brush) || brush is null)
+            return;
+        header.BorderBrush = brush;
+        header.BorderThickness = new Thickness(3, 0, 0, 1);
+    }
+
+    private void ApplyClipTrackVisibility(TimelineInteractionContext ctx, TimelineClipItem clip, Control root)
+    {
+        var track = ctx.Tracks.FirstOrDefault(t => t.Id == clip.TrackId);
+        root.Opacity = track is { IsVisible: false } ? 0.35 : 1;
     }
 
     private void BringClipAboveLanes(TimelineInteractionContext ctx, string clipId)

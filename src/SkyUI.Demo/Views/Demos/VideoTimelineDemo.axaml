@@ -3,43 +3,86 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sky="using:SkyUI.Controls"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
              mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="700"
-             x:Class="SkyUI.Demo.Views.Demos.VideoTimelineDemo">
+             x:Class="SkyUI.Demo.Views.Demos.VideoTimelineDemo"
+             x:DataType="vm:VideoTimelineDemoViewModel">
   <StackPanel Spacing="16">
     <TextBlock Classes="sky-section-title" Text="Video timeline" />
     <TextBlock Classes="sky-body-secondary"
                TextWrapping="Wrap"
-               Text="Scroll the ruler and track area; Ctrl+wheel zooms. Click a track lane or label to highlight it. Drag clip edges to trim; drag the body to move (multi-selected clips move together). Ctrl+drag on a lane for marquee clip select. Double-tap a lane for a marker. Shift+click for multi-select. Split at playhead, Undo/Redo (Ctrl+Z / Ctrl+Y). Toggle snap below." />
+               Text="Sprite timeline + compositor preview (Tier 4). PreviewFrameChanged drives the panel beside the timeline." />
 
     <WrapPanel Orientation="Horizontal">
-      <Button Classes="sky sky-primary" Content="Play" Click="OnPlayClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Stop" Click="OnStopClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Add track" Click="OnAddTrackClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Add clip at playhead" Click="OnAddClipClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Split at playhead" Click="OnSplitClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Undo" Click="OnUndoClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Redo" Click="OnRedoClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Remove selected clip" Click="OnRemoveClipClick" Margin="0,0,8,8" />
-      <Button Classes="sky" Content="Remove selected track" Click="OnRemoveTrackClick" Margin="0,0,8,8" />
+      <Button Classes="sky sky-primary" Content="Play" Command="{Binding PlayCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Stop" Command="{Binding StopCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Add sprite layer" Command="{Binding AddSpriteTrackCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Add cel at playhead" Command="{Binding AddClipCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Reload sample" Command="{Binding LoadSampleCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Export JSON" Command="{Binding ExportJsonCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Hold +1 frame" Command="{Binding ExtendHoldCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Hold −1 frame" Command="{Binding ShrinkHoldCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Opacity keyframe" Command="{Binding AddOpacityKeyframeCommand}" Margin="0,0,8,8" />
     </WrapPanel>
 
-    <CheckBox x:Name="SnapToggle"
-              Classes="sky"
-              Content="Magnetic snap"
-              IsChecked="True"
-              IsCheckedChanged="OnSnapToggleChanged" />
+    <WrapPanel Orientation="Horizontal">
+      <CheckBox Classes="sky"
+                Content="Magnetic snap"
+                IsChecked="{Binding MagneticSnap}"
+                Margin="0,0,16,8" />
+      <CheckBox Classes="sky"
+                Content="Loop time range"
+                IsChecked="{Binding LoopTimeRange}"
+                Margin="0,0,16,8" />
+      <CheckBox Classes="sky"
+                Content="Onion skin"
+                IsChecked="{Binding OnionSkinEnabled}"
+                Margin="0,0,16,8" />
+      <TextBlock Classes="sky-body-secondary"
+                 VerticalAlignment="Center"
+                 Text="{Binding PlayheadReadout}" />
+    </WrapPanel>
 
-    <Border Classes="sky-card" Padding="12">
-      <sky:VideoTimeline x:Name="Timeline"
-                         Height="320"
-                         Duration="90"
-                         PixelsPerSecond="48" />
-    </Border>
+    <TextBlock Classes="sky-feature-heading"
+               Text="{Binding PreviewSummary}"
+               TextWrapping="Wrap" />
+
+    <Grid ColumnDefinitions="220,*" ColumnSpacing="12">
+      <Border Grid.Column="0" Classes="sky-card" Padding="12" MinHeight="320">
+        <StackPanel Spacing="8">
+          <TextBlock Classes="sky-feature-heading" Text="Compositor preview" />
+          <ItemsControl ItemsSource="{Binding PreviewLayers}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:SpritePreviewLayerViewModel">
+                <Grid ColumnDefinitions="16,*" Margin="0,4">
+                  <Border Grid.Column="0"
+                          Width="14"
+                          Height="14"
+                          CornerRadius="2"
+                          Background="{Binding Swatch}" />
+                  <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                    <TextBlock Classes="sky-body-secondary" Text="{Binding LayerName}" FontSize="11" />
+                    <TextBlock Text="{Binding CelName}" FontSize="12" />
+                  </StackPanel>
+                </Grid>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+      <Border Grid.Column="1" Classes="sky-card" Padding="12">
+        <sky:VideoTimeline x:Name="Timeline"
+                           Height="320"
+                           Duration="5"
+                           Fps="24"
+                           PixelsPerSecond="48" />
+      </Border>
+    </Grid>
 
     <TextBlock Classes="sky-feature-heading" Text="Event log" />
-    <ListBox x:Name="Log"
-             Classes="sky"
+    <ListBox Classes="sky"
              MinHeight="120"
-             MaxHeight="200" />
+             MaxHeight="200"
+             ItemsSource="{Binding LogItems}" />
   </StackPanel>
 </UserControl>

@@ -6,18 +6,21 @@ internal sealed class TimelineSplitClipCommand : ITimelineEditCommand
     private readonly ICollection<TimelineClipItem> clips;
     private readonly double splitTime;
     private readonly double beforeDuration;
+    private readonly double minClipDurationSeconds;
     private TimelineClipItem? rightClip;
 
     public TimelineSplitClipCommand(
         TimelineClipItem leftClip,
         ICollection<TimelineClipItem> clips,
         double splitTime,
-        double beforeDuration)
+        double beforeDuration,
+        double minClipDurationSeconds)
     {
         this.leftClip = leftClip;
         this.clips = clips;
         this.splitTime = splitTime;
         this.beforeDuration = beforeDuration;
+        this.minClipDurationSeconds = minClipDurationSeconds;
     }
 
     public string Description => "Split clip";
@@ -32,7 +35,11 @@ internal sealed class TimelineSplitClipCommand : ITimelineEditCommand
             return;
         }
 
-        rightClip = Timeline.Editing.TimelineClipOperations.SplitAt(leftClip, splitTime, clips);
+        rightClip = Timeline.Editing.TimelineClipOperations.SplitAt(
+            leftClip,
+            splitTime,
+            clips,
+            minClipDurationSeconds);
     }
 
     public void Undo()

@@ -6,6 +6,10 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.VisualTree;
+using SkyUI.Controls.Timeline.Composition;
+using SkyUI.Controls.Timeline.Frame;
+using SkyUI.Controls.Timeline.Integration;
+using SkyUI.Controls.Timeline.OnionSkin;
 using SkyUI.Controls.Timeline.Input;
 using SkyUI.Controls.Timeline.Layout;
 using SkyUI.Controls.Timeline.Model;
@@ -36,6 +40,15 @@ public sealed class VideoTimeline : TemplatedControl
 
     public static readonly StyledProperty<bool> IsPlayingProperty =
         AvaloniaProperty.Register<VideoTimeline, bool>(nameof(IsPlaying));
+
+    public static readonly StyledProperty<double> FpsProperty =
+        AvaloniaProperty.Register<VideoTimeline, double>(nameof(Fps), 24, coerce: CoerceFps);
+
+    public static readonly StyledProperty<TimelineTimeUnit> TimeUnitProperty =
+        AvaloniaProperty.Register<VideoTimeline, TimelineTimeUnit>(nameof(TimeUnit), TimelineTimeUnit.Frames);
+
+    public static readonly StyledProperty<bool> LoopTimeRangeProperty =
+        AvaloniaProperty.Register<VideoTimeline, bool>(nameof(LoopTimeRange), true);
 
     public static readonly StyledProperty<IBrush?> ClipLaneBrushProperty =
         AvaloniaProperty.Register<VideoTimeline, IBrush?>(nameof(ClipLaneBrush));
@@ -86,17 +99,22 @@ public sealed class VideoTimeline : TemplatedControl
             (o, v) => o.SetMarkers(v));
 
     private readonly Timeline.TimelineHost _host;
+    private readonly TimelineMediaClock mediaClock = new();
+    private readonly TimelinePreviewSynchronizer previewSynchronizer = new();
     private string? _selectedTrackIdBacking;
+    private int _lastNotifiedPlayheadFrame = int.MinValue;
+
+    public TimelineOnionSkinSettings OnionSkinSettings { get; } = new();
+
+    public ITimelineClipThumbnailProvider? ClipThumbnailProvider { get; set; }
 
     static VideoTimeline()
     {
         DurationProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.OnDurationChanged());
         PixelsPerSecondProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.OnPixelsPerSecondChanged());
-        PlayheadTimeProperty.Changed.AddClassHandler<VideoTimeline>((s, _) =>
-        {
-            s._host.OnPlayheadChanged();
-            s.PlayheadChanged?.Invoke(s, new TimelineTimeEventArgs(s.PlayheadTime));
-        });
+        PlayheadTimeProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.NotifyPlayheadChanged());
+        FpsProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.OnTimeModeChanged());
+        TimeUnitProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.OnTimeModeChanged());
         IsPlayingProperty.Changed.AddClassHandler<VideoTimeline>((s, e) =>
             s._host.OnIsPlayingChanged(e.NewValue is true));
         TrackSelectionBrushProperty.Changed.AddClassHandler<VideoTimeline>((s, _) =>
@@ -106,11 +124,22 @@ public sealed class VideoTimeline : TemplatedControl
     public VideoTimeline()
     {
         _host = new Timeline.TimelineHost(this);
+        mediaClock.Bind(this);
+        previewSynchronizer.Bind(this);
+        previewSynchronizer.PreviewFrameChanged += (_, e) => PreviewFrameChanged?.Invoke(this, e);
         Focusable = true;
         AddHandler(Control.RequestBringIntoViewEvent, OnRequestBringIntoView, RoutingStrategies.Tunnel);
     }
 
+    public ITimelineMediaClock MediaClock => mediaClock;
+
+    public TimelinePreviewSynchronizer PreviewSync => previewSynchronizer;
+
     public event EventHandler<TimelineTimeEventArgs>? PlayheadChanged;
+
+    public event EventHandler<TimelineCurrentFrameEventArgs>? CurrentFrameChanged;
+
+    public event EventHandler<TimelinePreviewFrameEventArgs>? PreviewFrameChanged;
     public event EventHandler<TimelineRangeEventArgs>? TimeRangeSelectionChanged;
     public event EventHandler<TimelineClipEventArgs>? ClipSelectionChanged;
     public event EventHandler<TimelineMarkerEventArgs>? MarkerAdded;
@@ -163,6 +192,75 @@ public sealed class VideoTimeline : TemplatedControl
         get => GetValue(IsPlayingProperty);
         set => SetValue(IsPlayingProperty, value);
     }
+
+    public double Fps
+    {
+        get => GetValue(FpsProperty);
+        set => SetValue(FpsProperty, value);
+    }
+
+    public TimelineTimeUnit TimeUnit
+    {
+        get => GetValue(TimeUnitProperty);
+        set => SetValue(TimeUnitProperty, value);
+    }
+
+    /// <summary>When true and a time range is selected, playback loops within that range.</summary>
+    public bool LoopTimeRange
+    {
+        get => GetValue(LoopTimeRangeProperty);
+        set => SetValue(LoopTimeRangeProperty, value);
+    }
+
+    public int PlayheadFrame => _host.PlayheadFrame;
+
+    public ITimelineClipFrameMapper ClipFrameMapper => _host.ClipFrameMapper;
+
+    public TimelineSpriteFrameSampler SpriteFrameSampler => _host.SpriteFrameSampler;
+
+    public TimelineClipFrameSpan GetClipFrameSpan(TimelineClipItem clip) =>
+        _host.ClipFrameMapper.DescribeClip(clip);
+
+    public int GetClipStartFrame(TimelineClipItem clip) => _host.ClipFrameMapper.ClipStartFrame(clip);
+
+    public int GetClipDurationFrames(TimelineClipItem clip) => _host.ClipFrameMapper.ClipDurationFrames(clip);
+
+    public IReadOnlyList<TimelineSpriteLayerFrameSample> SampleSpriteLayersAtPlayhead() =>
+        SampleSpriteLayersAtFrame(PlayheadFrame);
+
+    public IReadOnlyList<TimelineSpriteLayerFrameSample> SampleSpriteLayersAtFrame(int frame) =>
+        _host.SpriteFrameSampler.SampleAtFrame(frame, Clips);
+
+    public IReadOnlyList<TimelineOnionSkinFrameSample> SampleOnionSkinAtPlayhead() =>
+        SampleOnionSkinAtFrame(PlayheadFrame);
+
+    public IReadOnlyList<TimelineOnionSkinFrameSample> SampleOnionSkinAtFrame(int frame) =>
+        _host.OnionSkinSampler.Sample(
+            OnionSkinSettings,
+            frame,
+            _host.MaxPlayheadFrame,
+            Clips);
+
+    public TimelinePreviewFrameSnapshot CreatePreviewSnapshot() =>
+        previewSynchronizer.CreateSnapshot(PlayheadFrame, PlayheadTime);
+
+    public ObservableCollection<TimelineKeyframeItem> Keyframes => _host.Keyframes;
+
+    public bool ExtendSelectedClipHoldFrames(int deltaFrames) =>
+        _host.AdjustSelectedClipHoldFrames(deltaFrames);
+
+    public bool SetOpacityKeyframeAtPlayhead() => _host.SetOpacityKeyframeAtPlayheadForSelectedTrack();
+
+    public TimelineKeyframeItem SetKeyframeAtPlayhead(string propertyName, object? value)
+    {
+        var trackId = _host.SelectedTrackId ?? _host.Tracks.FirstOrDefault()?.Id ?? "";
+        var time = _host.QuantizePlayhead(PlayheadTime);
+        return _host.KeyframeEditor.SetKeyframe(trackId, propertyName, time, value);
+    }
+
+    public void StepPlayheadFrames(int frameDelta) => _host.StepPlayheadFrames(frameDelta);
+
+    public void TogglePlayPause() => _host.TogglePlayPause();
 
     public IBrush? ClipLaneBrush
     {
@@ -250,6 +348,10 @@ public sealed class VideoTimeline : TemplatedControl
 
     public void AddTrack(string? name = null) => _host.AddTrack(name);
 
+    public void AddSpriteTrack(string? name = null) => _host.AddTrack(name, TimelineTrackKind.Sprite);
+
+    public void AddPropertyTrack(string? name = null) => _host.AddTrack(name, TimelineTrackKind.Property);
+
     public void RemoveTrack(TimelineTrackItem track) => _host.RemoveTrack(track);
 
     public void RemoveSelectedTrack() => _host.RemoveSelectedTrack();
@@ -268,10 +370,19 @@ public sealed class VideoTimeline : TemplatedControl
         _host.ApplyTemplate(e);
     }
 
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+        mediaClock.Bind(this);
+        previewSynchronizer.Bind(this);
+    }
+
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
         _host.StopPlayback();
+        previewSynchronizer.Unbind();
+        mediaClock.Unbind();
         _host.DetachTemplate();
     }
 
@@ -343,17 +454,44 @@ public sealed class VideoTimeline : TemplatedControl
         PlayheadTime = PlayheadTime;
     }
 
+    private void OnTimeModeChanged()
+    {
+        _host.SyncLayoutFromControl();
+        _host.FullRebuild();
+        _lastNotifiedPlayheadFrame = int.MinValue;
+        SetCurrentValue(PlayheadTimeProperty, PlayheadTime);
+    }
+
     private static double CoerceDuration(AvaloniaObject o, double v) =>
         TimelineCoordinateSystem.ClampDuration(v);
 
     private static double CoercePps(AvaloniaObject o, double v) =>
         TimelineCoordinateSystem.ClampPixelsPerSecond(v);
 
+    private static double CoerceFps(AvaloniaObject o, double v) =>
+        v < Timeline.Time.TimelineFrameQuantizer.MinFps
+            ? Timeline.Time.TimelineFrameQuantizer.MinFps
+            : v > Timeline.Time.TimelineFrameQuantizer.MaxFps
+                ? Timeline.Time.TimelineFrameQuantizer.MaxFps
+                : v;
+
     private static double CoercePlayhead(AvaloniaObject o, double v)
     {
         if (o is not VideoTimeline timeline)
             return v < 0 ? 0 : v;
-        return TimelineCoordinateSystem.ClampPlayhead(v, timeline.Duration);
+        var clamped = TimelineCoordinateSystem.ClampPlayhead(v, timeline.Duration);
+        return timeline._host.QuantizePlayhead(clamped);
+    }
+
+    private void NotifyPlayheadChanged()
+    {
+        _host.OnPlayheadChanged();
+        var frame = _host.PlayheadFrame;
+        PlayheadChanged?.Invoke(this, new TimelineTimeEventArgs(PlayheadTime, frame));
+        if (frame == _lastNotifiedPlayheadFrame)
+            return;
+        _lastNotifiedPlayheadFrame = frame;
+        CurrentFrameChanged?.Invoke(this, new TimelineCurrentFrameEventArgs(frame, PlayheadTime));
     }
 
     private void OnRequestBringIntoView(object? sender, RequestBringIntoViewEventArgs e)

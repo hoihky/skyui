@@ -11,7 +11,7 @@ public sealed class TimelineProject
 
     public ObservableCollection<TimelineMarkerItem> Markers { get; set; } = new();
 
-    public ObservableCollection<TimelineKeyframe> Keyframes { get; set; } = new();
+    public ObservableCollection<TimelineKeyframeItem> Keyframes { get; set; } = new();
 
     public double Duration { get; set; } = 120;
 

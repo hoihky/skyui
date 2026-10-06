@@ -1,5 +1,6 @@
 using SkyUI.Controls;
 using SkyUI.Controls.Timeline.Layout;
+using SkyUI.Controls.Timeline.Model;
 
 namespace SkyUI.UnitTests.Timeline;
 
@@ -81,6 +82,15 @@ public class TimelineLayoutEngineTests
         layout.UnregisterSnapTargetProvider(provider);
 
         Assert.Equal(8.6, layout.SnapTime(8.6, 0, [], []));
+    }
+
+    [Fact]
+    public void FormatTimeLabel_uses_frames_when_time_unit_is_frames()
+    {
+        var layout = new TimelineLayoutEngine();
+        layout.TimePresentation.TimeUnit = TimelineTimeUnit.Frames;
+        layout.TimePresentation.FramesPerSecond = 24;
+        Assert.StartsWith("f", layout.FormatTimeLabel(1));
     }
 
     [Fact]

@@ -10,6 +10,7 @@ public class TimelineClip : INotifyPropertyChanged
     private double startTime;
     private double duration = 1;
     private string label = "";
+    private TimelineSpriteClipMetadata? sprite;
 
     public string Id { get; init; } = Guid.NewGuid().ToString("N");
 
@@ -67,8 +68,39 @@ public class TimelineClip : INotifyPropertyChanged
 
     public object? Tag { get; set; }
 
+    public TimelineSpriteClipMetadata? Sprite
+    {
+        get => sprite;
+        set
+        {
+            if (ReferenceEquals(sprite, value))
+                return;
+            DetachSpriteListener(sprite);
+            sprite = value;
+            AttachSpriteListener(sprite);
+            OnPropertyChanged();
+        }
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+    private void AttachSpriteListener(TimelineSpriteClipMetadata? metadata)
+    {
+        if (metadata is null)
+            return;
+        metadata.PropertyChanged += OnSpriteMetadataPropertyChanged;
+    }
+
+    private void DetachSpriteListener(TimelineSpriteClipMetadata? metadata)
+    {
+        if (metadata is null)
+            return;
+        metadata.PropertyChanged -= OnSpriteMetadataPropertyChanged;
+    }
+
+    private void OnSpriteMetadataPropertyChanged(object? sender, PropertyChangedEventArgs e) =>
+        OnPropertyChanged(nameof(Sprite));
 }

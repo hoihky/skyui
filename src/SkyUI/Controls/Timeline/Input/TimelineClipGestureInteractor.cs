@@ -41,6 +41,12 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
         else if (!ctx.Selection.IsClipSelected(clip.Id))
             SelectSingle(ctx, clip);
 
+        if (ctx.Host.TrackCatalog.IsTrackLocked(clip.TrackId))
+        {
+            e.Handled = true;
+            return;
+        }
+
         dragClip = clip;
         dragMovingClips = ResolveDragClipSet(ctx, clip);
         dragMoveBefore = TimelineMoveClipsCommand.Capture(dragMovingClips);
@@ -88,7 +94,11 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
             {
                 var newRow = Math.Clamp(originRow + rowDelta, 0, Math.Max(0, ctx.Tracks.Count - 1));
                 if (newRow < ctx.Tracks.Count)
-                    moving.TrackId = ctx.Tracks[newRow].Id;
+                {
+                    var targetTrack = ctx.Tracks[newRow];
+                    if (!ctx.Host.TrackCatalog.IsTrackLocked(targetTrack.Id))
+                        moving.TrackId = targetTrack.Id;
+                }
             }
 
             ctx.Renderer.SyncClipVisual(ctx, moving);
@@ -136,6 +146,12 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
         var ctx = context;
         if (ctx == null)
             return;
+        if (ctx.Host.TrackCatalog.IsTrackLocked(clip.TrackId))
+        {
+            e.Handled = true;
+            return;
+        }
+
         SelectSingle(ctx, clip);
         trimClip = clip;
         trimLeftEdge = leftEdge;
@@ -162,7 +178,7 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
             var newStart = Math.Clamp(
                 trimOrigStart + delta,
                 0,
-                end - TimelineCoordinateSystem.MinClipDurationSeconds);
+                end - ctx.Layout.TimePresentation.MinClipDurationSeconds);
             trimClip.StartTime = newStart;
             trimClip.Duration = end - newStart;
         }
@@ -170,7 +186,7 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
         {
             var newEnd = Math.Clamp(
                 trimOrigStart + trimOrigDuration + delta,
-                trimOrigStart + TimelineCoordinateSystem.MinClipDurationSeconds,
+                trimOrigStart + ctx.Layout.TimePresentation.MinClipDurationSeconds,
                 ctx.Duration);
             trimClip.Duration = newEnd - trimOrigStart;
         }
@@ -197,7 +213,7 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
             finalStart = Math.Clamp(
                 finalStart,
                 0,
-                trimOrigStart + trimOrigDuration - TimelineCoordinateSystem.MinClipDurationSeconds);
+                trimOrigStart + trimOrigDuration - ctx.Layout.TimePresentation.MinClipDurationSeconds);
             finalDuration = trimOrigStart + trimOrigDuration - finalStart;
         }
         else
@@ -211,7 +227,7 @@ internal sealed class TimelineClipGestureInteractor : ITimelineGestureInteractor
                 clip.Id);
             finalEnd = Math.Clamp(
                 finalEnd,
-                trimOrigStart + TimelineCoordinateSystem.MinClipDurationSeconds,
+                trimOrigStart + ctx.Layout.TimePresentation.MinClipDurationSeconds,
                 ctx.Duration);
             finalDuration = finalEnd - trimOrigStart;
         }

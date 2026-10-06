@@ -9,11 +9,17 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using SkyUI.Controls.Timeline.Commands;
+using SkyUI.Controls.Timeline.Composition;
 using SkyUI.Controls.Timeline.Editing;
+using SkyUI.Controls.Timeline.Frame;
 using SkyUI.Controls.Timeline.Input;
 using SkyUI.Controls.Timeline.Layout;
 using SkyUI.Controls.Timeline.Model;
+using SkyUI.Controls.Timeline.Keyframes;
+using SkyUI.Controls.Timeline.OnionSkin;
 using SkyUI.Controls.Timeline.Rendering;
+using SkyUI.Controls.Timeline.Snap;
+using SkyUI.Controls.Timeline.Transport;
 
 namespace SkyUI.Controls.Timeline;
 
@@ -23,6 +29,17 @@ public sealed class TimelineHost : IDisposable
     private readonly VideoTimeline control;
     private readonly TimelineProject project = new();
     private readonly TimelineLayoutEngine layout = new();
+    private readonly TimelineTransportController transport;
+    private readonly TimelineTrackCatalog trackCatalog;
+    private readonly TimelineClipFrameMapper clipFrameMapper;
+    private readonly TimelineSpriteFrameSampler spriteFrameSampler;
+    private readonly TimelineMarkerSnapTargetProvider markerSnapProvider;
+    private readonly TimelineClipHoldEditor clipHoldEditor;
+    private readonly TimelineKeyframeCatalog keyframeCatalog;
+    private readonly TimelineKeyframeEditor keyframeEditor;
+    private readonly TimelineOnionSkinSampler onionSkinSampler;
+    private readonly TimelineMarkerDragGestureInteractor markerDragGesture = new();
+    private readonly TimelineKeyframeDragGestureInteractor keyframeDragGesture = new();
     private readonly TimelineSelectionModel selection = new();
     private readonly TimelineUndoStack undoStack = new();
     private readonly TimelineRenderer renderer = new();
@@ -35,6 +52,8 @@ public sealed class TimelineHost : IDisposable
     private readonly HashSet<TimelineClipItem> hookedClips = new();
     private readonly HashSet<TimelineTrackItem> hookedTracks = new();
     private readonly HashSet<TimelineMarkerItem> hookedMarkers = new();
+    private readonly HashSet<TimelineKeyframeItem> hookedKeyframes = new();
+    private readonly List<TimelineClipItem> offlineClipboard = new();
 
     public TimelineInteractionContext? Interaction => interaction;
 
@@ -49,6 +68,16 @@ public sealed class TimelineHost : IDisposable
     public TimelineHost(VideoTimeline control)
     {
         this.control = control;
+        transport = new TimelineTransportController(layout.TimePresentation);
+        trackCatalog = new TimelineTrackCatalog(project);
+        clipFrameMapper = new TimelineClipFrameMapper(layout.TimePresentation);
+        spriteFrameSampler = new TimelineSpriteFrameSampler(trackCatalog, clipFrameMapper);
+        markerSnapProvider = new TimelineMarkerSnapTargetProvider(project);
+        clipHoldEditor = new TimelineClipHoldEditor(clipFrameMapper);
+        keyframeCatalog = new TimelineKeyframeCatalog(project);
+        keyframeEditor = new TimelineKeyframeEditor(project, keyframeCatalog, undoStack);
+        onionSkinSampler = new TimelineOnionSkinSampler(spriteFrameSampler);
+        layout.RegisterSnapTargetProvider(markerSnapProvider);
         playTimer.Tick += OnPlayTick;
         selection.SelectionChanged += OnSelectionChanged;
         undoStack.StateChanged += OnUndoStackStateChanged;
@@ -59,10 +88,14 @@ public sealed class TimelineHost : IDisposable
         gestures.Register(rulerGesture);
         gestures.Register(clipGesture);
         gestures.Register(headerGesture);
+        gestures.Register(markerDragGesture);
+        gestures.Register(keyframeDragGesture);
 
         HookTracks(project.Tracks);
         HookClips(project.Clips);
         HookMarkers(project.Markers);
+        HookKeyframes(project.Keyframes);
+        SyncLayoutFromControl();
     }
 
     public TimelineProject Project => project;
@@ -75,6 +108,18 @@ public sealed class TimelineHost : IDisposable
 
     public TimelineSnapSettings SnapSettings => layout.SnapSettings;
 
+    public TimelineTrackCatalog TrackCatalog => trackCatalog;
+
+    public ITimelineClipFrameMapper ClipFrameMapper => clipFrameMapper;
+
+    public TimelineSpriteFrameSampler SpriteFrameSampler => spriteFrameSampler;
+
+    public TimelineOnionSkinSampler OnionSkinSampler => onionSkinSampler;
+
+    public TimelineKeyframeEditor KeyframeEditor => keyframeEditor;
+
+    public ObservableCollection<TimelineKeyframeItem> Keyframes => project.Keyframes;
+
     public bool CanUndo => undoStack.CanUndo;
 
     public bool CanRedo => undoStack.CanRedo;
@@ -85,7 +130,42 @@ public sealed class TimelineHost : IDisposable
 
     public ObservableCollection<TimelineMarkerItem> Markers => project.Markers;
 
+    public int MaxPlayheadFrame => clipFrameMapper.SecondsToFrame(control.Duration);
+
     public string? SelectedTrackId => selection.SelectedTrackId;
+
+    public bool AdjustSelectedClipHoldFrames(int deltaFrames)
+    {
+        var clip = GetSelectedClips().FirstOrDefault();
+        if (clip is null || deltaFrames == 0)
+            return false;
+        if (trackCatalog.IsTrackLocked(clip.TrackId))
+            return false;
+        control.RaiseClipEdit(clip, "hold", changing: true);
+        undoStack.Execute(new TimelineExtendClipHoldCommand(
+            clip,
+            deltaFrames,
+            control.Duration,
+            clipHoldEditor));
+        if (interaction is not null)
+            renderer.LayoutClip(interaction, clip);
+        control.RaiseClipEdit(clip, "hold", changing: false);
+        return true;
+    }
+
+    public bool SetOpacityKeyframeAtPlayheadForSelectedTrack()
+    {
+        var track = trackCatalog.FindById(selection.SelectedTrackId);
+        if (track?.Kind != TimelineTrackKind.Property)
+            track = project.Tracks.FirstOrDefault(t => t.Kind == TimelineTrackKind.Property);
+        if (track is null || trackCatalog.IsTrackLocked(track.Id))
+            return false;
+        var time = transport.QuantizePlayhead(control.PlayheadTime, control.Duration);
+        keyframeEditor.SetKeyframe(track.Id, "Opacity", time, 1.0);
+        if (interaction is not null)
+            renderer.SyncPropertyTrackKeyframes(interaction);
+        return true;
+    }
 
     public void ApplyTemplate(TemplateAppliedEventArgs e)
     {
@@ -129,6 +209,10 @@ public sealed class TimelineHost : IDisposable
         };
 
         AttachScrollSync();
+        renderer.ConfigureKeyframeGestures(
+            keyframeDragGesture.OnKeyframePressed,
+            keyframeDragGesture.OnKeyframeMoved,
+            keyframeDragGesture.OnKeyframeReleased);
         gestures.Attach(interaction);
         FullRebuild();
     }
@@ -147,6 +231,7 @@ public sealed class TimelineHost : IDisposable
         UnhookTracks(project.Tracks);
         UnhookClips(project.Clips);
         UnhookMarkers(project.Markers);
+        UnhookKeyframes(project.Keyframes);
         playTimer.Tick -= OnPlayTick;
         selection.SelectionChanged -= OnSelectionChanged;
         undoStack.StateChanged -= OnUndoStackStateChanged;
@@ -158,7 +243,32 @@ public sealed class TimelineHost : IDisposable
         layout.Duration = control.Duration;
         layout.PixelsPerSecond = control.PixelsPerSecond;
         project.Duration = control.Duration;
+        project.Fps = control.Fps;
+        project.TimeUnit = control.TimeUnit;
+        layout.TimePresentation.TimeUnit = control.TimeUnit;
+        layout.TimePresentation.FramesPerSecond = control.Fps;
+        layout.TimePresentation.ApplyFrameSnapTo(layout.SnapSettings);
+        playTimer.Interval = transport.PlaybackTickInterval;
     }
+
+    public double QuantizePlayhead(double timeSeconds) =>
+        transport.QuantizePlayhead(timeSeconds, control.Duration);
+
+    public void StepPlayheadFrames(int frameDelta)
+    {
+        var next = transport.StepPlayheadByFrames(control.PlayheadTime, frameDelta, control.Duration);
+        control.PlayheadTime = next;
+    }
+
+    public void TogglePlayPause()
+    {
+        if (control.IsPlaying)
+            StopPlayback();
+        else
+            Play();
+    }
+
+    public int PlayheadFrame => layout.TimePresentation.PlayheadFrame(control.PlayheadTime);
 
     public void SetSelectedTrackId(string? value)
     {
@@ -212,9 +322,15 @@ public sealed class TimelineHost : IDisposable
         if (clip is null)
             return null;
 
+        playheadTime = transport.QuantizePlayhead(playheadTime, control.Duration);
         var beforeDuration = clip.Duration;
         control.RaiseClipEdit(clip, "split", changing: true);
-        undoStack.Execute(new TimelineSplitClipCommand(clip, project.Clips, playheadTime, beforeDuration));
+        undoStack.Execute(new TimelineSplitClipCommand(
+            clip,
+            project.Clips,
+            playheadTime,
+            beforeDuration,
+            layout.TimePresentation.MinClipDurationSeconds));
         var created = project.Clips.FirstOrDefault(c =>
             c.Id != clip.Id
             && c.TrackId == clip.TrackId
@@ -227,7 +343,12 @@ public sealed class TimelineHost : IDisposable
         return created;
     }
 
-    public void Play() => control.IsPlaying = true;
+    public void Play()
+    {
+        SyncPlaybackLoop();
+        playTimer.Interval = transport.PlaybackTickInterval;
+        control.IsPlaying = true;
+    }
 
     public void StopPlayback()
     {
@@ -252,9 +373,13 @@ public sealed class TimelineHost : IDisposable
         return marker;
     }
 
-    public void AddTrack(string? name = null)
+    public void AddTrack(string? name = null, TimelineTrackKind kind = TimelineTrackKind.Standard)
     {
-        project.Tracks.Add(new TimelineTrackItem { Name = name ?? $"Track {project.Tracks.Count + 1}" });
+        project.Tracks.Add(new TimelineTrackItem
+        {
+            Name = name ?? $"Track {project.Tracks.Count + 1}",
+            Kind = kind,
+        });
         FullRebuild();
     }
 
@@ -301,13 +426,17 @@ public sealed class TimelineHost : IDisposable
 
     public void PasteClipboardAtPlayhead(double playheadTime)
     {
-        if (interaction is null || interaction.Clipboard.Count == 0 || project.Tracks.Count == 0)
+        var clipboard = GetActiveClipboard();
+        if (clipboard.Count == 0 || project.Tracks.Count == 0)
             return;
 
         var trackId = ResolvePasteTargetTrackId();
+        if (trackCatalog.IsTrackLocked(trackId))
+            return;
+
         var pasted = new List<TimelineClipItem>();
         var cursor = playheadTime;
-        foreach (var proto in interaction.Clipboard)
+        foreach (var proto in clipboard)
         {
             var nc = TimelineClipOperations.ClonePrototype(proto);
             nc.TrackId = trackId;
@@ -330,8 +459,12 @@ public sealed class TimelineHost : IDisposable
 
     public void OnIsPlayingChanged(bool playing)
     {
+        playTimer.Interval = transport.PlaybackTickInterval;
         if (playing)
+        {
+            SyncPlaybackLoop();
             playTimer.Start();
+        }
         else
             playTimer.Stop();
     }
@@ -406,7 +539,10 @@ public sealed class TimelineHost : IDisposable
             interaction,
             rulerGesture.OnRulerPressed,
             rulerGesture.OnRulerMoved,
-            rulerGesture.OnRulerReleased);
+            rulerGesture.OnRulerReleased,
+            markerDragGesture.OnMarkerPressed,
+            markerDragGesture.OnMarkerMoved,
+            markerDragGesture.OnMarkerReleased);
     }
 
     private void RefreshVirtualizedLanes()
@@ -465,8 +601,10 @@ public sealed class TimelineHost : IDisposable
     {
         if (!control.IsPlaying)
             return;
-        var next = control.PlayheadTime + playTimer.Interval.TotalSeconds;
-        if (next >= control.Duration)
+
+        var step = transport.PlaybackStepSeconds;
+        var next = transport.AdvancePlayback(control.PlayheadTime, step, control.Duration);
+        if (transport.PlaybackLoop.ShouldStopAtTimelineEnd(control.PlayheadTime + step, control.Duration))
         {
             control.PlayheadTime = control.Duration;
             StopPlayback();
@@ -476,13 +614,23 @@ public sealed class TimelineHost : IDisposable
         control.PlayheadTime = next;
     }
 
+    private void SyncPlaybackLoop()
+    {
+        var useLoop = control.LoopTimeRange
+            && interaction?.HasTimeRangeSelection == true;
+        var range = interaction?.TimeRangeSelection ?? default;
+        transport.ConfigureLoopRegion(useLoop, range);
+    }
+
+    private IList<TimelineClipItem> GetActiveClipboard() =>
+        interaction?.Clipboard ?? offlineClipboard;
+
     private void CopyInternal()
     {
-        if (interaction is null)
-            return;
-        interaction.Clipboard.Clear();
+        var clipboard = GetActiveClipboard();
+        clipboard.Clear();
         foreach (var clip in GetSelectedClips())
-            interaction.Clipboard.Add(TimelineClipOperations.ClonePrototype(clip));
+            clipboard.Add(TimelineClipOperations.ClonePrototype(clip));
     }
 
     private void DeleteSelectedClipsCore()
@@ -626,6 +774,41 @@ public sealed class TimelineHost : IDisposable
             RebuildRuler();
     }
 
+    private void HookKeyframes(ObservableCollection<TimelineKeyframeItem> list)
+    {
+        foreach (var k in list)
+            HookKeyframeItem(k);
+        list.CollectionChanged += OnKeyframesCollectionChanged;
+    }
+
+    private void UnhookKeyframes(ObservableCollection<TimelineKeyframeItem> list)
+    {
+        list.CollectionChanged -= OnKeyframesCollectionChanged;
+        foreach (var k in list.ToList())
+            UnhookKeyframeItem(k);
+    }
+
+    private void OnKeyframesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (sender is ObservableCollection<TimelineKeyframeItem> list)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (TimelineKeyframeItem k in e.OldItems)
+                    UnhookKeyframeItem(k);
+            }
+
+            if (e.NewItems != null)
+            {
+                foreach (TimelineKeyframeItem k in e.NewItems)
+                    HookKeyframeItem(k);
+            }
+        }
+
+        if (interaction is not null)
+            renderer.SyncPropertyTrackKeyframes(interaction);
+    }
+
     private void HookTrackItem(TimelineTrackItem t)
     {
         if (!hookedTracks.Add(t))
@@ -642,7 +825,11 @@ public sealed class TimelineHost : IDisposable
 
     private void OnTrackItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName is nameof(TimelineTrackItem.Name))
+        if (e.PropertyName is nameof(TimelineTrackItem.Name)
+            or nameof(TimelineTrackItem.Kind)
+            or nameof(TimelineTrackItem.IsVisible)
+            or nameof(TimelineTrackItem.IsLocked)
+            or nameof(TimelineTrackItem.AccentColor))
             FullRebuild();
     }
 
@@ -666,9 +853,10 @@ public sealed class TimelineHost : IDisposable
             return;
         if (e.PropertyName is nameof(TimelineClipItem.TrackId))
             renderer.SyncClipVisual(interaction, clip);
-        else if (e.PropertyName is nameof(TimelineClipItem.StartTime) or nameof(TimelineClipItem.Duration)
-                 or nameof(TimelineClipItem.Label))
+        else if (e.PropertyName is nameof(TimelineClipItem.StartTime) or nameof(TimelineClipItem.Duration))
             renderer.LayoutClip(interaction, clip);
+        else if (e.PropertyName is nameof(TimelineClipItem.Label) or nameof(TimelineClipItem.Sprite))
+            renderer.UpdateClipLabel(interaction, clip);
     }
 
     private void HookMarkerItem(TimelineMarkerItem m)
@@ -692,6 +880,30 @@ public sealed class TimelineHost : IDisposable
         if (string.IsNullOrEmpty(e.PropertyName)
             || e.PropertyName is nameof(TimelineMarkerItem.Time) or nameof(TimelineMarkerItem.Label))
             RebuildRuler();
+    }
+
+    private void HookKeyframeItem(TimelineKeyframeItem keyframe)
+    {
+        if (!hookedKeyframes.Add(keyframe))
+            return;
+        keyframe.PropertyChanged += OnKeyframeItemPropertyChanged;
+    }
+
+    private void UnhookKeyframeItem(TimelineKeyframeItem keyframe)
+    {
+        if (!hookedKeyframes.Remove(keyframe))
+            return;
+        keyframe.PropertyChanged -= OnKeyframeItemPropertyChanged;
+    }
+
+    private void OnKeyframeItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (interaction is null || sender is not TimelineKeyframeItem keyframe)
+            return;
+        if (e.PropertyName is nameof(TimelineKeyframeItem.Time))
+            renderer.LayoutKeyframe(interaction, keyframe);
+        else if (e.PropertyName is nameof(TimelineKeyframeItem.TrackId))
+            renderer.SyncPropertyTrackKeyframes(interaction);
     }
 
     private void OnVerticalTrackScrollSizeChanged(object? sender, SizeChangedEventArgs e)

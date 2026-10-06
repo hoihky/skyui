@@ -13,7 +13,7 @@ public class TimelineSplitClipCommandTests
         var left = new TimelineClipItem { StartTime = 0, Duration = 10 };
         clips.Add(left);
 
-        var command = new TimelineSplitClipCommand(left, clips, 4, 10);
+        var command = new TimelineSplitClipCommand(left, clips, 4, 10, 0.08);
         command.Execute();
 
         var right = clips.First(c => c.Id != left.Id);
@@ -32,7 +32,7 @@ public class TimelineSplitClipCommandTests
         var left = new TimelineClipItem { StartTime = 0, Duration = 10 };
         clips.Add(left);
 
-        var command = new TimelineSplitClipCommand(left, clips, 4, 10);
+        var command = new TimelineSplitClipCommand(left, clips, 4, 10, 0.08);
         command.Execute();
         command.Execute();
 

@@ -1,8 +1,31 @@
+using SkyUI.Controls.Timeline.Integration;
+
 namespace SkyUI.Controls;
 
 public sealed class TimelineTimeEventArgs : EventArgs
 {
-    public TimelineTimeEventArgs(double timeSeconds) => TimeSeconds = timeSeconds;
+    public TimelineTimeEventArgs(double timeSeconds, int playheadFrame)
+    {
+        TimeSeconds = timeSeconds;
+        PlayheadFrame = playheadFrame;
+    }
+
+    public double TimeSeconds { get; }
+
+    public int PlayheadFrame { get; }
+}
+
+/// <summary>Raised when the integer playhead frame index changes (preview sync).</summary>
+public sealed class TimelineCurrentFrameEventArgs : EventArgs
+{
+    public TimelineCurrentFrameEventArgs(int frame, double timeSeconds)
+    {
+        Frame = frame;
+        TimeSeconds = timeSeconds;
+    }
+
+    public int Frame { get; }
+
     public double TimeSeconds { get; }
 }
 
@@ -62,6 +85,14 @@ public sealed class TimelineClipEditEventArgs : EventArgs
 
     /// <summary>Semantic edit name (move, trim, split, etc.).</summary>
     public string EditKind { get; }
+}
+
+public sealed class TimelinePreviewFrameEventArgs : EventArgs
+{
+    public TimelinePreviewFrameEventArgs(TimelinePreviewFrameSnapshot snapshot) =>
+        Snapshot = snapshot;
+
+    public TimelinePreviewFrameSnapshot Snapshot { get; }
 }
 
 public sealed class TimelineSelectionChangedEventArgs : EventArgs

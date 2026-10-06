@@ -9,6 +9,9 @@ public sealed class TimelineClipItem : Timeline.Model.TimelineClip;
 /// <inheritdoc cref="Timeline.Model.TimelineMarker"/>
 public sealed class TimelineMarkerItem : Timeline.Model.TimelineMarker;
 
+/// <inheritdoc cref="Timeline.Model.TimelineKeyframe"/>
+public sealed class TimelineKeyframeItem : Timeline.Model.TimelineKeyframe;
+
 /// <summary>Inclusive-exclusive style range in seconds (either edge may be greater).</summary>
 public readonly struct TimelineTimeRange
 {

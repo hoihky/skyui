@@ -5,6 +5,8 @@ namespace SkyUI.Controls.Timeline.Input;
 
 internal sealed class TimelineKeyboardGestureInteractor : ITimelineGestureInteractor
 {
+    private readonly TimelineKeyboardTransport transportKeys = new();
+    private readonly TimelineKeyboardClipEditing clipEditingKeys = new();
     private TimelineInteractionContext? context;
 
     public int Priority => 100;
@@ -28,6 +30,12 @@ internal sealed class TimelineKeyboardGestureInteractor : ITimelineGestureIntera
     {
         var ctx = context;
         if (ctx == null || (!ctx.Control.IsFocused && !ctx.Control.Focus()))
+            return;
+
+        if (transportKeys.TryHandleKeyDown(ctx, e))
+            return;
+
+        if (clipEditingKeys.TryHandleKeyDown(ctx, e))
             return;
 
         if (e.Key == Key.Delete || e.Key == Key.Back)

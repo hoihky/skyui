@@ -1,4 +1,5 @@
 using SkyUI.Controls.Timeline.Model;
+using SkyUI.Controls.Timeline.Time;
 
 namespace SkyUI.Controls.Timeline.Layout;
 
@@ -8,6 +9,8 @@ public interface ITimelineLayoutEngine
     double Duration { get; set; }
 
     double PixelsPerSecond { get; set; }
+
+    TimelineTimePresentation TimePresentation { get; }
 
     TimelineSnapSettings SnapSettings { get; }
 
