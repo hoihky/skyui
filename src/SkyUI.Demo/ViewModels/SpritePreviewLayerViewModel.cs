@@ -4,16 +4,19 @@ namespace SkyUI.Demo.ViewModels;
 
 public sealed class SpritePreviewLayerViewModel
 {
-    public SpritePreviewLayerViewModel(string layerName, string celName, IBrush swatch)
+    public SpritePreviewLayerViewModel(string layerName, string celName, IImage? celImage, IBrush swatchFallback)
     {
         LayerName = layerName;
         CelName = celName;
-        Swatch = swatch;
+        CelImage = celImage;
+        SwatchFallback = swatchFallback;
     }
 
     public string LayerName { get; }
 
     public string CelName { get; }
 
-    public IBrush Swatch { get; }
+    public IImage? CelImage { get; }
+
+    public IBrush SwatchFallback { get; }
 }

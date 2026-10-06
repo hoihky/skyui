@@ -8,6 +8,7 @@ using Avalonia.Media;
 using SkyUI.Controls;
 using SkyUI.Controls.Timeline.Input;
 using SkyUI.Controls.Timeline.Model;
+using SkyUI.Controls.Timeline.Thumbnails;
 
 namespace SkyUI.Controls.Timeline.Rendering;
 
@@ -16,6 +17,7 @@ public sealed class TimelineRenderer
 {
     private readonly Dictionary<string, Control> clipBorders = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Border> clipBodyById = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, TimelineClipChromeLayout> clipChromeLayouts = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Border> headerChromeByTrackId = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Border> laneChromeByTrackId = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Polygon> keyframeShapesById = new(StringComparer.Ordinal);
@@ -25,7 +27,7 @@ public sealed class TimelineRenderer
     private int visibleFirstRow;
     private int visibleLastRow = -1;
     private readonly TimelineTrackReorderDragVisual trackReorderDragVisual = new();
-    private readonly TimelineTrackHeaderFormatter trackHeaderFormatter = new();
+    private readonly TimelineTrackHeaderChromeBuilder trackHeaderChromeBuilder = new();
     private readonly TimelineClipLabelFormatter clipLabelFormatter = new();
     private readonly TimelineAccentColorParser accentColorParser = new();
     private readonly HashSet<string> pinnedClipIds = new(StringComparer.Ordinal);
@@ -61,22 +63,7 @@ public sealed class TimelineRenderer
 
         foreach (var track in ctx.Tracks)
         {
-            var border = new Border
-            {
-                Height = TimelineRenderMetrics.TrackHeight,
-                Padding = new Thickness(10, 0, 8, 0),
-                Background = ctx.Control.ClipLaneBrush,
-                BorderBrush = Brushes.Transparent,
-                BorderThickness = new Thickness(0, 0, 0, 1),
-                Child = new TextBlock
-                {
-                    Text = trackHeaderFormatter.Format(track),
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Foreground = ctx.Control.Foreground,
-                    TextTrimming = TextTrimming.CharacterEllipsis,
-                },
-                Tag = track.Id,
-            };
+            var border = trackHeaderChromeBuilder.Build(ctx, track);
             ApplyTrackAccentChrome(track, border);
             stack.Children.Add(border);
             headerChromeByTrackId[track.Id] = border;
@@ -186,6 +173,7 @@ public sealed class TimelineRenderer
         canvas.Children.Clear();
         clipBorders.Clear();
         clipBodyById.Clear();
+        clipChromeLayouts.Clear();
         laneChromeByTrackId.Clear();
         keyframeShapesById.Clear();
         StoreClipGestureHandlers(
@@ -439,6 +427,14 @@ public sealed class TimelineRenderer
         if (onTrimReleased != null)
             left.PointerReleased += onTrimReleased;
 
+        var chrome = new TimelineClipChromeLayout(
+            new Image(),
+            new TextBlock
+            {
+                Text = clipLabelFormatter.Format(clip),
+                Foreground = ctx.Control.Foreground,
+                FontSize = 11,
+            });
         var body = new Border
         {
             CornerRadius = new CornerRadius(4),
@@ -448,16 +444,11 @@ public sealed class TimelineRenderer
             BorderBrush = LaneSeparator(ctx),
             BorderThickness = new Thickness(1),
             Padding = new Thickness(4, 2, 4, 2),
-            Child = new TextBlock
-            {
-                Text = clipLabelFormatter.Format(clip),
-                Foreground = ctx.Control.Foreground,
-                FontSize = 11,
-                TextTrimming = TextTrimming.CharacterEllipsis,
-            },
+            Child = chrome.Root,
             Cursor = new Cursor(StandardCursorType.SizeWestEast),
             Tag = clip.Id,
         };
+        clipChromeLayouts[clip.Id] = chrome;
         if (onClipPressed != null)
             body.PointerPressed += onClipPressed;
         if (onClipMoved != null)
@@ -493,9 +484,45 @@ public sealed class TimelineRenderer
 
     public void UpdateClipLabel(TimelineInteractionContext ctx, TimelineClipItem clip)
     {
+        if (clipChromeLayouts.TryGetValue(clip.Id, out var chrome))
+        {
+            chrome.Label.Text = clipLabelFormatter.Format(clip);
+            return;
+        }
+
         if (!clipBodyById.TryGetValue(clip.Id, out var body) || body.Child is not TextBlock label)
             return;
         label.Text = clipLabelFormatter.Format(clip);
+    }
+
+    public void ApplyClipThumbnail(TimelineInteractionContext ctx, string clipId, IImage? image)
+    {
+        if (!clipChromeLayouts.TryGetValue(clipId, out var chrome))
+            return;
+        chrome.Thumbnail.Source = image;
+        chrome.Thumbnail.IsVisible = image is not null;
+    }
+
+    public void EnumerateHeaderAffordances(Action<Border> visit)
+    {
+        foreach (var header in headerChromeByTrackId.Values)
+            VisitAffordanceBorders(header, visit);
+    }
+
+    private static void VisitAffordanceBorders(Control root, Action<Border> visit)
+    {
+        if (root is Border { Tag: string tag } border
+            && TimelineTrackHeaderTags.TryParse(tag, out var kind, out _)
+            && kind is "vis" or "lock")
+            visit(border);
+        if (root is Panel panel)
+        {
+            foreach (var child in panel.Children)
+            {
+                if (child is Control control)
+                    VisitAffordanceBorders(control, visit);
+            }
+        }
     }
 
     public void LayoutClip(TimelineInteractionContext ctx, TimelineClipItem clip)
@@ -834,6 +861,7 @@ public sealed class TimelineRenderer
             ctx.MainCanvas.Children.Remove(root);
         clipBorders.Remove(clipId);
         clipBodyById.Remove(clipId);
+        clipChromeLayouts.Remove(clipId);
     }
 
     private void RemoveVirtualizedContentOutsideRowRange(TimelineInteractionContext ctx, int firstRow, int lastRow)

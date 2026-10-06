@@ -19,6 +19,9 @@ using SkyUI.Controls.Timeline.Keyframes;
 using SkyUI.Controls.Timeline.OnionSkin;
 using SkyUI.Controls.Timeline.Rendering;
 using SkyUI.Controls.Timeline.Snap;
+using SkyUI.Controls.Timeline.Navigation;
+using SkyUI.Controls.Timeline.Serialization;
+using SkyUI.Controls.Timeline.Thumbnails;
 using SkyUI.Controls.Timeline.Transport;
 
 namespace SkyUI.Controls.Timeline;
@@ -48,6 +51,11 @@ public sealed class TimelineHost : IDisposable
     private readonly TimelineClipGestureInteractor clipGesture = new();
     private readonly TimelineRulerScrubGestureInteractor rulerGesture = new();
     private readonly TimelineTrackHeaderGestureInteractor headerGesture = new();
+    private readonly TimelineTrackAffordanceGestureInteractor trackAffordanceGesture = new();
+    private readonly TimelineViewportNavigator viewportNavigator = new();
+    private readonly TimelineClipThumbnailCoordinator thumbnailCoordinator = new();
+    private readonly TimelineSpriteMetadataFingerprint spriteMetadataFingerprint = new();
+    private readonly TimelineProjectDocumentMapper projectDocumentMapper = new();
     private readonly DispatcherTimer playTimer = new() { Interval = TimeSpan.FromMilliseconds(33) };
     private readonly HashSet<TimelineClipItem> hookedClips = new();
     private readonly HashSet<TimelineTrackItem> hookedTracks = new();
@@ -169,7 +177,9 @@ public sealed class TimelineHost : IDisposable
 
     public void ApplyTemplate(TemplateAppliedEventArgs e)
     {
-        DetachScrollSync();
+        if (interaction?.VerticalTrackScroll is ScrollViewer previousVertical)
+            previousVertical.SizeChanged -= OnVerticalTrackScrollSizeChanged;
+        DetachTemplate();
         var rulerScroll = e.NameScope.Find<ScrollViewer>(VideoTimeline.PartRulerScroll);
         var rulerCanvas = e.NameScope.Find<Canvas>(VideoTimeline.PartRulerCanvas);
         var verticalTrackScroll = e.NameScope.Find<ScrollViewer>(VideoTimeline.PartVerticalTrackScroll);
@@ -213,12 +223,14 @@ public sealed class TimelineHost : IDisposable
             keyframeDragGesture.OnKeyframePressed,
             keyframeDragGesture.OnKeyframeMoved,
             keyframeDragGesture.OnKeyframeReleased);
+        thumbnailCoordinator.ThumbnailReady += OnClipThumbnailReady;
         gestures.Attach(interaction);
         FullRebuild();
     }
 
     public void DetachTemplate()
     {
+        thumbnailCoordinator.ThumbnailReady -= OnClipThumbnailReady;
         gestures.Detach();
         DetachScrollSync();
         interaction = null;
@@ -236,6 +248,7 @@ public sealed class TimelineHost : IDisposable
         selection.SelectionChanged -= OnSelectionChanged;
         undoStack.StateChanged -= OnUndoStackStateChanged;
         gestures.Dispose();
+        thumbnailCoordinator.Dispose();
     }
 
     public void SyncLayoutFromControl()
@@ -247,9 +260,38 @@ public sealed class TimelineHost : IDisposable
         project.TimeUnit = control.TimeUnit;
         layout.TimePresentation.TimeUnit = control.TimeUnit;
         layout.TimePresentation.FramesPerSecond = control.Fps;
+        layout.TimePresentation.PreferTimecodeLabels = control.PreferTimecodeLabels;
         layout.TimePresentation.ApplyFrameSnapTo(layout.SnapSettings);
         playTimer.Interval = transport.PlaybackTickInterval;
     }
+
+    public void ZoomToFit()
+    {
+        if (interaction is null)
+            return;
+        viewportNavigator.ZoomToFit(interaction);
+    }
+
+    public void ZoomToSelection()
+    {
+        if (interaction is null)
+            return;
+        viewportNavigator.ZoomToSelection(interaction);
+    }
+
+    public void ApplyProjectDocument(TimelineProjectDocument document)
+    {
+        projectDocumentMapper.ApplyToProject(document, project);
+        control.Duration = project.Duration;
+        control.Fps = project.Fps;
+        control.TimeUnit = project.TimeUnit;
+        thumbnailCoordinator.Clear();
+        FullRebuild();
+    }
+
+    public void ToggleTrackVisibility(TimelineTrackItem track) => track.IsVisible = !track.IsVisible;
+
+    public void ToggleTrackLocked(TimelineTrackItem track) => track.IsLocked = !track.IsLocked;
 
     public double QuantizePlayhead(double timeSeconds) =>
         transport.QuantizePlayhead(timeSeconds, control.Duration);
@@ -258,6 +300,8 @@ public sealed class TimelineHost : IDisposable
     {
         var next = transport.StepPlayheadByFrames(control.PlayheadTime, frameDelta, control.Duration);
         control.PlayheadTime = next;
+        if (interaction is not null)
+            viewportNavigator.FollowPlayhead(interaction);
     }
 
     public void TogglePlayPause()
@@ -529,6 +573,7 @@ public sealed class TimelineHost : IDisposable
         RebuildRuler();
         WireHeaderGestures();
         renderer.UpdateOverlays(interaction);
+        RequestAllClipThumbnails();
     }
 
     private void RebuildRuler()
@@ -559,6 +604,7 @@ public sealed class TimelineHost : IDisposable
             clipGesture.OnClipPressed,
             clipGesture.OnClipMoved,
             clipGesture.OnClipReleased);
+        RequestThumbnailsForMaterializedClips();
     }
 
     private void WireHeaderGestures()
@@ -566,12 +612,16 @@ public sealed class TimelineHost : IDisposable
         if (interaction is null)
             return;
         headerGesture.Attach(interaction);
+        trackAffordanceGesture.Attach(interaction);
         foreach (var kv in renderer.HeaderChrome)
         {
             kv.Value.PointerPressed += headerGesture.OnHeaderPressed;
             kv.Value.PointerMoved += headerGesture.OnHeaderMoved;
             kv.Value.PointerReleased += headerGesture.OnHeaderReleased;
         }
+
+        renderer.EnumerateHeaderAffordances(affordance =>
+            affordance.PointerPressed += trackAffordanceGesture.OnAffordancePressed);
     }
 
     private void OnSelectionChanged(object? sender, EventArgs e)
@@ -612,6 +662,8 @@ public sealed class TimelineHost : IDisposable
         }
 
         control.PlayheadTime = next;
+        if (interaction is not null)
+            viewportNavigator.FollowPlayhead(interaction);
     }
 
     private void SyncPlaybackLoop()
@@ -740,7 +792,10 @@ public sealed class TimelineHost : IDisposable
             if (e.OldItems != null)
             {
                 foreach (TimelineClipItem c in e.OldItems)
+                {
+                    thumbnailCoordinator.InvalidateClip(c.Id);
                     UnhookClip(c);
+                }
             }
 
             if (e.NewItems != null)
@@ -856,7 +911,45 @@ public sealed class TimelineHost : IDisposable
         else if (e.PropertyName is nameof(TimelineClipItem.StartTime) or nameof(TimelineClipItem.Duration))
             renderer.LayoutClip(interaction, clip);
         else if (e.PropertyName is nameof(TimelineClipItem.Label) or nameof(TimelineClipItem.Sprite))
+        {
             renderer.UpdateClipLabel(interaction, clip);
+            thumbnailCoordinator.InvalidateClip(clip.Id);
+            RequestClipThumbnail(clip);
+        }
+    }
+
+    private void OnClipThumbnailReady(object? sender, TimelineClipThumbnailReadyEventArgs e)
+    {
+        if (interaction is null)
+            return;
+        var clip = project.Clips.FirstOrDefault(c => c.Id == e.ClipId);
+        if (clip is null)
+            return;
+        if (spriteMetadataFingerprint.Compute(clip) != e.MetadataFingerprint)
+            return;
+        if (!renderer.ClipBodies.ContainsKey(e.ClipId))
+            return;
+        renderer.ApplyClipThumbnail(interaction, e.ClipId, e.Image);
+    }
+
+    private void RequestClipThumbnail(TimelineClipItem clip) =>
+        thumbnailCoordinator.Request(clip, control.ClipThumbnailProvider);
+
+    private void RequestAllClipThumbnails()
+    {
+        foreach (var clip in project.Clips)
+            RequestClipThumbnail(clip);
+    }
+
+    private void RequestThumbnailsForMaterializedClips()
+    {
+        if (interaction is null)
+            return;
+        foreach (var clip in project.Clips)
+        {
+            if (renderer.ClipBodies.ContainsKey(clip.Id))
+                RequestClipThumbnail(clip);
+        }
     }
 
     private void HookMarkerItem(TimelineMarkerItem m)

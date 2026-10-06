@@ -27,6 +27,12 @@ internal sealed class TimelineTrackHeaderGestureInteractor : ITimelineGestureInt
         var ctx = context;
         if (ctx == null || sender is not Control { Tag: string tid })
             return;
+        if (e.Source is Control { Tag: string affordanceTag }
+            && TimelineTrackHeaderTags.TryParse(affordanceTag, out var affordanceKind, out _))
+        {
+            if (affordanceKind is "vis" or "lock")
+                return;
+        }
         reorderFrom = ctx.Tracks.ToList().FindIndex(t => t.Id == tid);
         pressPoint = ctx.HeaderStack != null ? e.GetPosition(ctx.HeaderStack) : default;
         pressYInHeaderStack = pressPoint.Y;
@@ -70,11 +76,9 @@ internal sealed class TimelineTrackHeaderGestureInteractor : ITimelineGestureInt
                 if (to != from)
                 {
                     var item = ctx.Tracks[from];
-                    ctx.Tracks.RemoveAt(from);
-                    ctx.Tracks.Insert(to, item);
+                    ctx.Tracks.Move(from, to);
                     ctx.RaiseTrackReordered(item, from, to);
                     ctx.SetSelectedTrackId(item.Id);
-                    ctx.FullRebuild();
                 }
                 else
                     ctx.SetSelectedTrackId(tid);

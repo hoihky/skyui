@@ -13,6 +13,7 @@ using SkyUI.Controls.Timeline.OnionSkin;
 using SkyUI.Controls.Timeline.Input;
 using SkyUI.Controls.Timeline.Layout;
 using SkyUI.Controls.Timeline.Model;
+using SkyUI.Controls.Timeline.Serialization;
 
 namespace SkyUI.Controls;
 
@@ -49,6 +50,9 @@ public sealed class VideoTimeline : TemplatedControl
 
     public static readonly StyledProperty<bool> LoopTimeRangeProperty =
         AvaloniaProperty.Register<VideoTimeline, bool>(nameof(LoopTimeRange), true);
+
+    public static readonly StyledProperty<bool> PreferTimecodeLabelsProperty =
+        AvaloniaProperty.Register<VideoTimeline, bool>(nameof(PreferTimecodeLabels));
 
     public static readonly StyledProperty<IBrush?> ClipLaneBrushProperty =
         AvaloniaProperty.Register<VideoTimeline, IBrush?>(nameof(ClipLaneBrush));
@@ -115,6 +119,7 @@ public sealed class VideoTimeline : TemplatedControl
         PlayheadTimeProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.NotifyPlayheadChanged());
         FpsProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.OnTimeModeChanged());
         TimeUnitProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.OnTimeModeChanged());
+        PreferTimecodeLabelsProperty.Changed.AddClassHandler<VideoTimeline>((s, _) => s.OnTimeModeChanged());
         IsPlayingProperty.Changed.AddClassHandler<VideoTimeline>((s, e) =>
             s._host.OnIsPlayingChanged(e.NewValue is true));
         TrackSelectionBrushProperty.Changed.AddClassHandler<VideoTimeline>((s, _) =>
@@ -212,6 +217,13 @@ public sealed class VideoTimeline : TemplatedControl
         set => SetValue(LoopTimeRangeProperty, value);
     }
 
+    /// <summary>When <see cref="TimeUnit"/> is <see cref="TimelineTimeUnit.Frames"/>, show SMPTE-style timecode on the ruler instead of frame numbers.</summary>
+    public bool PreferTimecodeLabels
+    {
+        get => GetValue(PreferTimecodeLabelsProperty);
+        set => SetValue(PreferTimecodeLabelsProperty, value);
+    }
+
     public int PlayheadFrame => _host.PlayheadFrame;
 
     public ITimelineClipFrameMapper ClipFrameMapper => _host.ClipFrameMapper;
@@ -261,6 +273,13 @@ public sealed class VideoTimeline : TemplatedControl
     public void StepPlayheadFrames(int frameDelta) => _host.StepPlayheadFrames(frameDelta);
 
     public void TogglePlayPause() => _host.TogglePlayPause();
+
+    public void ZoomToFit() => _host.ZoomToFit();
+
+    public void ZoomToSelection() => _host.ZoomToSelection();
+
+    public void ApplyProjectDocument(TimelineProjectDocument document) =>
+        _host.ApplyProjectDocument(document);
 
     public IBrush? ClipLaneBrush
     {

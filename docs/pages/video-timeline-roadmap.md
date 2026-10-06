@@ -15,12 +15,14 @@ order: 56
 | Track add/remove/reorder, track selection | Done |
 | Time-range selection (lane drag) | Done |
 | MVVM collections (`Tracks`, `Clips`, `Markers`) | Done |
-| Automated tests | 76+ unit tests, 13 headless tests (themed + API) |
+| Automated tests | 112+ timeline unit tests, 15 headless tests (themed + API) |
 | Snap, split, undo | Done (Phase 1) |
 | Frame ruler, transport, snap-to-frame | Done (Tier 0 / Phase 2 foundation) |
 | Sprite clip metadata, track kind, frame API, JSON DTO | Done (Tier 1) |
 | Hold frames, draggable markers, onion skin, property keyframes | Done (Tier 3) |
 | Media clock, preview sync, compositor demo, thumbnail contract | Done (Tier 4) |
+| Clip thumbnails, track header chrome, zoom to fit/selection | Done (Tier 2) |
+| PreferTimecodeLabels, J/K/L shuttle, playhead scroll-follow | Done (Phase 2 polish) |
 | Thumbnails, waveforms, keyframes | Phase 4+ |
 
 Architecture: `VideoTimeline` is a thin Avalonia host (~350 lines). Editing, rendering, and input are delegated to `TimelineHost` and layered services below.

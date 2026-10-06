@@ -20,6 +20,9 @@
       <Button Classes="sky" Content="Add cel at playhead" Command="{Binding AddClipCommand}" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Reload sample" Command="{Binding LoadSampleCommand}" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Export JSON" Command="{Binding ExportJsonCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Import JSON" Command="{Binding ImportJsonCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Zoom to fit" Command="{Binding ZoomToFitCommand}" Margin="0,0,8,8" />
+      <Button Classes="sky" Content="Zoom to selection" Command="{Binding ZoomToSelectionCommand}" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Hold +1 frame" Command="{Binding ExtendHoldCommand}" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Hold −1 frame" Command="{Binding ShrinkHoldCommand}" Margin="0,0,8,8" />
       <Button Classes="sky" Content="Opacity keyframe" Command="{Binding AddOpacityKeyframeCommand}" Margin="0,0,8,8" />
@@ -38,6 +41,10 @@
                 Content="Onion skin"
                 IsChecked="{Binding OnionSkinEnabled}"
                 Margin="0,0,16,8" />
+      <CheckBox Classes="sky"
+                Content="Timecode ruler"
+                IsChecked="{Binding PreferTimecodeLabels}"
+                Margin="0,0,16,8" />
       <TextBlock Classes="sky-body-secondary"
                  VerticalAlignment="Center"
                  Text="{Binding PlayheadReadout}" />
@@ -54,12 +61,11 @@
           <ItemsControl ItemsSource="{Binding PreviewLayers}">
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="vm:SpritePreviewLayerViewModel">
-                <Grid ColumnDefinitions="16,*" Margin="0,4">
-                  <Border Grid.Column="0"
-                          Width="14"
-                          Height="14"
-                          CornerRadius="2"
-                          Background="{Binding Swatch}" />
+                <Grid ColumnDefinitions="32,*" Margin="0,4">
+                  <Image Grid.Column="0"
+                         Width="28"
+                         Height="28"
+                         Source="{Binding CelImage}" />
                   <StackPanel Grid.Column="1" Margin="8,0,0,0">
                     <TextBlock Classes="sky-body-secondary" Text="{Binding LayerName}" FontSize="11" />
                     <TextBlock Text="{Binding CelName}" FontSize="12" />

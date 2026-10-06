@@ -7,6 +7,7 @@ internal sealed class TimelineKeyboardGestureInteractor : ITimelineGestureIntera
 {
     private readonly TimelineKeyboardTransport transportKeys = new();
     private readonly TimelineKeyboardClipEditing clipEditingKeys = new();
+    private readonly TimelineKeyboardShuttle shuttleKeys = new();
     private TimelineInteractionContext? context;
 
     public int Priority => 100;
@@ -33,6 +34,9 @@ internal sealed class TimelineKeyboardGestureInteractor : ITimelineGestureIntera
             return;
 
         if (transportKeys.TryHandleKeyDown(ctx, e))
+            return;
+
+        if (shuttleKeys.TryHandleKeyDown(ctx, e))
             return;
 
         if (clipEditingKeys.TryHandleKeyDown(ctx, e))

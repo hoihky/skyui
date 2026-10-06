@@ -1,4 +1,5 @@
 using Avalonia.Media;
+using SkyUI.Controls;
 
 namespace SkyUI.Controls.Timeline.Integration;
 

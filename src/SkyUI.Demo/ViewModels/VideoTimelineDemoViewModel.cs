@@ -8,6 +8,7 @@ using SkyUI.Controls.Timeline.Composition;
 using SkyUI.Controls.Timeline.Integration;
 using SkyUI.Controls.Timeline.Model;
 using SkyUI.Controls.Timeline.Serialization;
+using SkyUI.Demo.Integration;
 using SkyUI.Demo.Models;
 
 namespace SkyUI.Demo.ViewModels;
@@ -16,16 +17,20 @@ public sealed class VideoTimelineDemoViewModel : INotifyPropertyChanged
 {
     private readonly TimelineProjectDocumentMapper documentMapper = new();
     private readonly JsonTimelineProjectSerializer projectSerializer = new();
-    private readonly SpriteAtlasStub atlasStub = new();
+    private readonly DemoSpriteAtlasCatalog atlasCatalog = new();
+    private readonly DemoTimelineClipThumbnailProvider thumbnailProvider;
+    private string? lastExportedProjectJson;
     private VideoTimeline? timeline;
     private string playheadReadout = "Playhead: f0";
     private string previewSummary = "Preview: (no timeline)";
     private bool magneticSnap = true;
     private bool loopTimeRange = true;
     private bool onionSkinEnabled = true;
+    private bool preferTimecodeLabels;
 
     public VideoTimelineDemoViewModel()
     {
+        thumbnailProvider = new DemoTimelineClipThumbnailProvider(atlasCatalog);
         LogItems = new ObservableCollection<string>();
         PreviewLayers = new ObservableCollection<SpritePreviewLayerViewModel>();
         PlayCommand = new RelayCommand(() => timeline?.Play());
@@ -34,6 +39,9 @@ public sealed class VideoTimelineDemoViewModel : INotifyPropertyChanged
         AddClipCommand = new RelayCommand(AddClipAtPlayhead);
         LoadSampleCommand = new RelayCommand(LoadSampleProject);
         ExportJsonCommand = new RelayCommand(ExportProjectJson);
+        ImportJsonCommand = new RelayCommand(ImportProjectJson);
+        ZoomToFitCommand = new RelayCommand(() => timeline?.ZoomToFit());
+        ZoomToSelectionCommand = new RelayCommand(() => timeline?.ZoomToSelection());
         ExtendHoldCommand = new RelayCommand(() => timeline?.ExtendSelectedClipHoldFrames(1));
         ShrinkHoldCommand = new RelayCommand(() => timeline?.ExtendSelectedClipHoldFrames(-1));
         AddOpacityKeyframeCommand = new RelayCommand(AddOpacityKeyframe);
@@ -91,11 +99,28 @@ public sealed class VideoTimelineDemoViewModel : INotifyPropertyChanged
 
     public ICommand ExportJsonCommand { get; }
 
+    public ICommand ImportJsonCommand { get; }
+
+    public ICommand ZoomToFitCommand { get; }
+
+    public ICommand ZoomToSelectionCommand { get; }
+
     public ICommand ExtendHoldCommand { get; }
 
     public ICommand ShrinkHoldCommand { get; }
 
     public ICommand AddOpacityKeyframeCommand { get; }
+
+    public bool PreferTimecodeLabels
+    {
+        get => preferTimecodeLabels;
+        set
+        {
+            if (!SetField(ref preferTimecodeLabels, value) || timeline is null)
+                return;
+            timeline.PreferTimecodeLabels = value;
+        }
+    }
 
     public bool OnionSkinEnabled
     {
@@ -115,7 +140,13 @@ public sealed class VideoTimelineDemoViewModel : INotifyPropertyChanged
         foreach (var layer in snapshot.SpriteLayers)
         {
             var cel = layer.Sprite?.SpriteName ?? "(empty)";
-            PreviewLayers.Add(new SpritePreviewLayerViewModel(layer.Track.Name, cel, atlasStub.ResolveBrush(cel)));
+            var frameIndex = layer.Sprite?.FrameIndex ?? 0;
+            var atlasId = layer.Sprite?.AtlasId;
+            PreviewLayers.Add(new SpritePreviewLayerViewModel(
+                layer.Track.Name,
+                cel,
+                atlasCatalog.ResolveCel(atlasId, cel, frameIndex),
+                atlasCatalog.ResolveBrush(cel)));
         }
 
         if (timeline?.OnionSkinSettings.IsEnabled == true && snapshot.OnionSkinFrames is { Count: > 0 })
@@ -132,7 +163,8 @@ public sealed class VideoTimelineDemoViewModel : INotifyPropertyChanged
         timeline.OnionSkinSettings.IsEnabled = OnionSkinEnabled;
         timeline.OnionSkinSettings.PreviousFrameCount = 2;
         timeline.OnionSkinSettings.NextFrameCount = 1;
-        timeline.ClipThumbnailProvider = NullTimelineClipThumbnailProvider.Instance;
+        timeline.ClipThumbnailProvider = thumbnailProvider;
+        timeline.PreferTimecodeLabels = PreferTimecodeLabels;
         WireTimelineEvents(control);
         LoadSampleProject();
     }
@@ -227,7 +259,24 @@ public sealed class VideoTimelineDemoViewModel : INotifyPropertyChanged
             return;
         var doc = documentMapper.ToDocument(timeline.Project);
         var json = projectSerializer.Serialize(doc);
+        lastExportedProjectJson = json;
         Log($"Exported JSON ({json.Length} chars). First line: {json.Split('\n')[0]}");
+    }
+
+    private void ImportProjectJson()
+    {
+        if (timeline is null)
+            return;
+        if (string.IsNullOrEmpty(lastExportedProjectJson))
+        {
+            Log("Import JSON: export a project first (or reload sample, export, then import).");
+            return;
+        }
+
+        var doc = projectSerializer.Deserialize(lastExportedProjectJson);
+        timeline.ApplyProjectDocument(doc);
+        ApplyPreviewSnapshot(timeline.CreatePreviewSnapshot());
+        Log($"Imported JSON ({lastExportedProjectJson.Length} chars).");
     }
 
     private void AddOpacityKeyframe()
