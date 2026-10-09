@@ -15,7 +15,7 @@ Snapshot of the SkyUI codebase used as the baseline for [gap analysis](gap-analy
 | Packages | See [repository layout](#repository-layout) below |
 | Demo app | `src/SkyUI.Demo` — desktop gallery referencing all packages |
 | Mobile samples | `src/SkyUI.Demo.Mobile` (shared shell), `src/SkyUI.Demo.iOS` (`net10.0-ios`) |
-| Automated tests | `tests/SkyUI.UnitTests` (~370+), `tests/SkyUI.HeadlessTests` (~37) |
+| Automated tests | `tests/SkyUI.UnitTests` (~500+), `tests/SkyUI.HeadlessTests` (~56; includes themed Professional + VideoTimeline) |
 | Public API docs | `docs/`; visual preset spec in `src/SkyUI.Themes.Sky/DESIGN.md` |
 | License | MIT (`LICENSE`) |
 | XAML xmlns | `https://skyui.dev` (split per assembly via `XmlnsDefinition`) |
@@ -77,6 +77,24 @@ Apps typically reference `SkyUI`, `SkyUI.Themes.Sky`, and optionally `SkyUI.Data
 | `Avatar`, `Badge`, `Chip` | `SkyUI.Controls` | `SkyUI` |
 | `SkyPlaceholderControl` | `SkyUI.Controls` | `SkyUI` |
 
+### Professional controls (Tier A — Phase 2.5)
+
+Namespace `SkyUI.Controls.Professional` in `SkyUI`. Theme: `Themes/SkyDark/Controls/Professional.axaml`.
+
+| Control | Notes |
+|---------|--------|
+| `SkyPropertyGrid` | Categories, `ShowGridLines`, collapsible sections, default property editors |
+| `SkyColorPicker` / `SkyColorSelectionDialog` | Spectrum + hex; optional drop-down style |
+| `SkyImageViewer` | Pan/zoom, fit modes |
+| `SkyTreeView` | Explorer-style nodes (`SkyTreeNodeItem`) |
+| `SkyTagEditor` | String tag chips |
+| `SkyDualRangeSlider` | Single-track range |
+| `SkyRichTextBox` | Markdown markers in `Text`; toolbar; `ShowLivePreview` WYSIWYG panel (`SkyRichTextMarkdown`) |
+| `SkyStepper` / `SkyStepperChrome` | Horizontal steps; chrome API for nodes and connectors |
+| `SkyWizard` / `SkyWizardPage` | Paged flow with proceed rules |
+
+Docking (`SkyDockManager`, `SkyDockPanel`, `SkyDocumentWell`) is **not** implemented — planned in Phase 2.6.
+
 ### Mobile primitives (early)
 
 | Control / API | Namespace | Package |
@@ -112,7 +130,7 @@ See [mobile.md](mobile.md) for usage and sample apps.
 
 ## Demo gallery pages
 
-Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, **Mobile** (safe area, touch targets, action sheet, keyboard inset).
+Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, **Professional** (Tier A property grid, pickers, tree, tags, rich text, stepper, wizard), **Mobile** (safe area, touch targets, action sheet, keyboard inset).
 
 ## Architectural strengths
 

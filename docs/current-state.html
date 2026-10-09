@@ -162,7 +162,7 @@
 </tr>
 <tr>
 <td>Automated tests</td>
-<td><code>tests/SkyUI.UnitTests</code> (~370+), <code>tests/SkyUI.HeadlessTests</code> (~37)</td>
+<td><code>tests/SkyUI.UnitTests</code> (~500+), <code>tests/SkyUI.HeadlessTests</code> (~56; includes themed Professional + VideoTimeline)</td>
 </tr>
 <tr>
 <td>Public API docs</td>
@@ -268,6 +268,55 @@ SkyUI.Diagram  → Core, SkyUI
 </tr>
 </tbody>
 </table>
+<h3 id="professional-controls-tier-a-phase-2.5">Professional controls (Tier A — Phase 2.5)</h3>
+<p>Namespace <code>SkyUI.Controls.Professional</code> in <code>SkyUI</code>. Theme: <code>Themes/SkyDark/Controls/Professional.axaml</code>.</p>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkyPropertyGrid</code></td>
+<td>Categories, <code>ShowGridLines</code>, collapsible sections, default property editors</td>
+</tr>
+<tr>
+<td><code>SkyColorPicker</code> / <code>SkyColorSelectionDialog</code></td>
+<td>Spectrum + hex; optional drop-down style</td>
+</tr>
+<tr>
+<td><code>SkyImageViewer</code></td>
+<td>Pan/zoom, fit modes</td>
+</tr>
+<tr>
+<td><code>SkyTreeView</code></td>
+<td>Explorer-style nodes (<code>SkyTreeNodeItem</code>)</td>
+</tr>
+<tr>
+<td><code>SkyTagEditor</code></td>
+<td>String tag chips</td>
+</tr>
+<tr>
+<td><code>SkyDualRangeSlider</code></td>
+<td>Single-track range</td>
+</tr>
+<tr>
+<td><code>SkyRichTextBox</code></td>
+<td>Markdown markers in <code>Text</code>; toolbar; <code>ShowLivePreview</code> WYSIWYG panel (<code>SkyRichTextMarkdown</code>)</td>
+</tr>
+<tr>
+<td><code>SkyStepper</code> / <code>SkyStepperChrome</code></td>
+<td>Horizontal steps; chrome API for nodes and connectors</td>
+</tr>
+<tr>
+<td><code>SkyWizard</code> / <code>SkyWizardPage</code></td>
+<td>Paged flow with proceed rules</td>
+</tr>
+</tbody>
+</table>
+<p>Docking (<code>SkyDockManager</code>, <code>SkyDockPanel</code>, <code>SkyDocumentWell</code>) is <strong>not</strong> implemented — planned in Phase 2.6.</p>
 <h3 id="mobile-primitives-early">Mobile primitives (early)</h3>
 <table class="table">
 <thead>
@@ -336,7 +385,7 @@ SkyUI.Diagram  → Core, SkyUI
 <li>Interaction on <code>DiagramSurface</code>: move, resize, connect, reconnect, clipboard.</li>
 </ul>
 <h2 id="demo-gallery-pages">Demo gallery pages</h2>
-<p>Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox &amp; Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, <strong>Mobile</strong> (safe area, touch targets, action sheet, keyboard inset).</p>
+<p>Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox &amp; Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, <strong>Professional</strong> (Tier A property grid, pickers, tree, tags, rich text, stepper, wizard), <strong>Mobile</strong> (safe area, touch targets, action sheet, keyboard inset).</p>
 <h2 id="architectural-strengths">Architectural strengths</h2>
 <ul>
 <li><strong>Pluggable boundaries</strong> in Diagram and Filter (routers, exporters, presenters, hit testing).</li>
@@ -387,6 +436,10 @@ SkyUI.Diagram  → Core, SkyUI
                         
                         <li class="toc-h2">
                           <a href="#custom-controls-library">Custom controls (library)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#professional-controls-tier-a-phase-25">Professional controls (Tier A — Phase 2.5)</a>
                         </li>
                         
                         <li class="toc-h3">

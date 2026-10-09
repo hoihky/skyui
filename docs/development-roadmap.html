@@ -210,7 +210,11 @@
 </tr>
 <tr>
 <td><strong>Tests</strong></td>
-<td>Unit + headless suites (<strong>400+</strong> tests)</td>
+<td>Unit + headless suites (<strong>550+</strong> tests; Professional themed headless coverage)</td>
+</tr>
+<tr>
+<td><strong>Professional (Tier A)</strong></td>
+<td>Property grid, color picker, image viewer, tree, tags, dual range, rich text (live preview), stepper, wizard — <strong>Phase 2.5 closed</strong>; docking → <a href="#phase-26--docking--document-host-after-3a">Phase 2.6</a></td>
 </tr>
 <tr>
 <td><strong>Docs</strong></td>
@@ -569,8 +573,9 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <li>Essentials catalog published on doc site with desktop/mobile applicability notes. <strong>Partial</strong> (SDK guide + topic pages; mobile guide added)</li>
 </ul>
 <hr>
-<h2 id="phase-2.5-professional-controls-catalog-tiers-ae">Phase 2.5 — Professional controls catalog (Tiers A–E)</h2>
-<p><strong>Goal:</strong> Expand Essentials toward IDE, creative, and admin tooling. Track progress in the tables below. <strong>Tier A (except docking)</strong> is the active implementation wave; docking/document hosts ship in <strong>Phase 2.6</strong>.</p>
+<h2 id="phase-2.5-professional-controls-catalog-tiers-ae-closed">Phase 2.5 — Professional controls catalog (Tiers A–E) — <strong>Closed</strong></h2>
+<p><strong>Status:</strong> <strong>Closed</strong> (Tier A complete except docking, deferred to Phase 2.6). Tier B–E remain planned; use the tables below as the backlog.</p>
+<p><strong>Goal:</strong> Expand Essentials toward IDE, creative, and admin tooling. <strong>Tier A (except docking)</strong> shipped in <code>SkyUI.Controls.Professional</code> with Sky theme, demo page, unit tests, and themed headless tests.</p>
 <p><strong>Legend:</strong> <code>Done</code> · <code>In progress</code> · <code>Planned</code> · <code>Deferred</code></p>
 <h3 id="tier-a-high-impact-wave-3a">Tier A — High impact (wave 3A)</h3>
 <table class="table">
@@ -603,7 +608,7 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">—</td>
 <td style="text-align: center;">P0</td>
-<td><strong>Done</strong> (markdown-style helpers)</td>
+<td><strong>Done</strong> (markdown storage + toolbar + <strong>live WYSIWYG preview</strong>)</td>
 </tr>
 <tr>
 <td><strong>SkyImageViewer</strong></td>
@@ -868,12 +873,35 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 </tr>
 </tbody>
 </table>
-<h3 id="exit-criteria-phase-2.5">Exit criteria (Phase 2.5)</h3>
-<ul>
-<li>Demo page <strong>Professional</strong> showcases Tier A controls with MVVM bindings.</li>
-<li>Unit tests per control (property grid, color, range, tree, tags, wizard).</li>
-<li>Theme AXAML for <code>SkyUI.Controls.Professional</code> in <code>SkyUI.Themes.Sky</code>.</li>
-</ul>
+<h3 id="exit-criteria-phase-2.5-met">Exit criteria (Phase 2.5) — met</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Demo page <strong>Professional</strong> with MVVM</td>
+<td><code>SkyUI.Demo</code> → <strong>Professional</strong> (<code>ProfessionalDemo.axaml</code>, <code>ProfessionalDemoViewModel</code>)</td>
+</tr>
+<tr>
+<td>Automated tests</td>
+<td><code>tests/SkyUI.UnitTests/Professional/ProfessionalControlsTests.cs</code>; <code>tests/SkyUI.HeadlessTests/ProfessionalThemedHeadlessTests.cs</code> (Sky theme + template apply)</td>
+</tr>
+<tr>
+<td>Theme AXAML</td>
+<td><code>SkyUI.Themes.Sky/Themes/SkyDark/Controls/Professional.axaml</code> (merged in ContentFirstDark preset)</td>
+</tr>
+<tr>
+<td>Control catalog</td>
+<td>Namespace <code>SkyUI.Controls.Professional</code> — property grid (grid lines, collapsible categories), color picker + selection dialog, image viewer, tree view, tag editor, dual range slider, rich text box, stepper (<code>SkyStepperChrome</code>), wizard</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Out of scope (Phase 2.6):</strong> <code>SkyDockManager</code>, <code>SkyDockPanel</code>, <code>SkyDocumentWell</code>.</p>
+<p><strong>Next recommended phase:</strong> <a href="#phase-26--docking--document-host-after-3a">Phase 2.6 — Docking</a> or <a href="#tier-b--shell--command-surfaces-wave-3b">Tier B</a> command surfaces.</p>
 <hr>
 <h2 id="phase-3-mobile-and-adaptive-ux-1418-weeks">Phase 3 — Mobile and adaptive UX (14–18 weeks)</h2>
 <p><strong>Goal:</strong> SkyUI works on <strong>phone and tablet</strong>, not only desktop with a narrow window.</p>
@@ -1360,7 +1388,7 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <td>Tier A professional controls (property grid, color, tree, tags, wizard)</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
-<td><strong>Done</strong> (docking deferred)</td>
+<td><strong>Done</strong> — Phase <strong>2.5 closed</strong> (docking → 2.6)</td>
 </tr>
 <tr>
 <td><strong>P1</strong></td>
@@ -1388,7 +1416,8 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <hr>
 <h2 id="milestone-timeline-indicative">Milestone timeline (indicative)</h2>
 <pre><code class="language-text">Now–Q2    Phase 0 (CI/NuGet/samples) + Phase 2 shell/forms wave
-Q2–Q3     Phase 3 mobile primitives + adaptive samples
+          Phase 2.5 Professional Tier A — closed (docking → 2.6)
+Q2–Q3     Phase 2.6 docking OR Tier B command surfaces; Phase 3 mobile
 Q3–Q4     Phase 4 grid 2.0 + filter integration
 Year 2    Phase 5 diagram; Phase 4b charts; Phase 6 continuous
 </code></pre>
@@ -1526,7 +1555,7 @@ Year 2    Phase 5 diagram; Phase 4b charts; Phase 6 continuous
                         </li>
                         
                         <li class="toc-h2">
-                          <a href="#phase-25-professional-controls-catalog-tiers-ae">Phase 2.5 — Professional controls catalog (Tiers A–E)</a>
+                          <a href="#phase-25-professional-controls-catalog-tiers-ae-closed">Phase 2.5 — Professional controls catalog (Tiers A–E) — Closed</a>
                         </li>
                         
                         <li class="toc-h3">
@@ -1554,7 +1583,7 @@ Year 2    Phase 5 diagram; Phase 4b charts; Phase 6 continuous
                         </li>
                         
                         <li class="toc-h3">
-                          <a href="#exit-criteria-phase-25">Exit criteria (Phase 2.5)</a>
+                          <a href="#exit-criteria-phase-25-met">Exit criteria (Phase 2.5) — met</a>
                         </li>
                         
                         <li class="toc-h2">

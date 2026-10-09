@@ -38,7 +38,8 @@ SkyUI has moved beyond an early prototype. The roadmap below is **forward-lookin
 | **Lists** | `CheckedListBox`, `SkyVirtualTreeView` |
 | **Primitives** | `SkyTooltip`, `SkyPopover`, loading button state |
 | **Data / diagram (v1)** | `SkyVirtualDataGrid`, `FilterEditor`, `DiagramSurface`, `VideoTimeline` |
-| **Tests** | Unit + headless suites (**400+** tests) |
+| **Tests** | Unit + headless suites (**550+** tests; Professional themed headless coverage) |
+| **Professional (Tier A)** | Property grid, color picker, image viewer, tree, tags, dual range, rich text (live preview), stepper, wizard — **Phase 2.5 closed**; docking → [Phase 2.6](#phase-26--docking--document-host-after-3a) |
 | **Docs** | Static site, SDK guide, control guides |
 | **Mobile (early)** | `SkySafeArea`, `SkyKeyboardInset`, `SkyTouchTarget`, `SkyActionSheet`, `SkySheetHost`; desktop Mobile gallery page; `SkyUI.Demo.Mobile` + `SkyUI.Demo.iOS` (`net10.0-ios`) |
 | **Essentials wave 2** | App shell (`SkyCommandBar`, `SkySplitView`, `SkyDrawer`, `SkyPageHeader`), extended forms, `SkyMessageBox`, data presentation helpers — see Phase 2 status below |
@@ -180,9 +181,11 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 
 ---
 
-## Phase 2.5 — Professional controls catalog (Tiers A–E)
+## Phase 2.5 — Professional controls catalog (Tiers A–E) — **Closed**
 
-**Goal:** Expand Essentials toward IDE, creative, and admin tooling. Track progress in the tables below. **Tier A (except docking)** is the active implementation wave; docking/document hosts ship in **Phase 2.6**.
+**Status:** **Closed** (Tier A complete except docking, deferred to Phase 2.6). Tier B–E remain planned; use the tables below as the backlog.
+
+**Goal:** Expand Essentials toward IDE, creative, and admin tooling. **Tier A (except docking)** shipped in `SkyUI.Controls.Professional` with Sky theme, demo page, unit tests, and themed headless tests.
 
 **Legend:** `Done` · `In progress` · `Planned` · `Deferred`
 
@@ -192,7 +195,7 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 |---------|:-------:|:------:|:--------:|--------|
 | **SkyPropertyGrid** | ✓ | ✓ | P0 | **Done** |
 | **SkyColorPicker** | ✓ | ✓ | P0 | **Done** |
-| **SkyRichTextBox** | ✓ | — | P0 | **Done** (markdown-style helpers) |
+| **SkyRichTextBox** | ✓ | — | P0 | **Done** (markdown storage + toolbar + **live WYSIWYG preview**) |
 | **SkyImageViewer** | ✓ | ✓ | P0 | **Done** |
 | **SkyTreeView** | ✓ | ✓ | P0 | **Done** (explorer-style) |
 | **SkyTagEditor** | ✓ | ✓ | P0 | **Done** |
@@ -256,11 +259,18 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 | **SkyDockPanel** | Drop zones and splitter chrome | Planned |
 | **SkyDocumentWell** | Tabbed documents, dirty state, reorder | Planned |
 
-### Exit criteria (Phase 2.5)
+### Exit criteria (Phase 2.5) — met
 
-- Demo page **Professional** showcases Tier A controls with MVVM bindings.
-- Unit tests per control (property grid, color, range, tree, tags, wizard).
-- Theme AXAML for `SkyUI.Controls.Professional` in `SkyUI.Themes.Sky`.
+| Criterion | Evidence |
+|-----------|----------|
+| Demo page **Professional** with MVVM | `SkyUI.Demo` → **Professional** (`ProfessionalDemo.axaml`, `ProfessionalDemoViewModel`) |
+| Automated tests | `tests/SkyUI.UnitTests/Professional/ProfessionalControlsTests.cs`; `tests/SkyUI.HeadlessTests/ProfessionalThemedHeadlessTests.cs` (Sky theme + template apply) |
+| Theme AXAML | `SkyUI.Themes.Sky/Themes/SkyDark/Controls/Professional.axaml` (merged in ContentFirstDark preset) |
+| Control catalog | Namespace `SkyUI.Controls.Professional` — property grid (grid lines, collapsible categories), color picker + selection dialog, image viewer, tree view, tag editor, dual range slider, rich text box, stepper (`SkyStepperChrome`), wizard |
+
+**Out of scope (Phase 2.6):** `SkyDockManager`, `SkyDockPanel`, `SkyDocumentWell`.
+
+**Next recommended phase:** [Phase 2.6 — Docking](#phase-26--docking--document-host-after-3a) or [Tier B](#tier-b--shell--command-surfaces-wave-3b) command surfaces.
 
 ---
 
@@ -421,7 +431,7 @@ Use this when sequencing work across phases.
 | **P1** | Touch target policy + pull-to-refresh | — | ✓ | Mobile list apps |
 | **P2** | Charts / KPI tiles | ✓ | ✓ | Dashboards |
 | **P2** | Diagram zoom/undo/routers | ✓ | ✓ | Differentiator |
-| **P0** | Tier A professional controls (property grid, color, tree, tags, wizard) | ✓ | ✓ | **Done** (docking deferred) |
+| **P0** | Tier A professional controls (property grid, color, tree, tags, wizard) | ✓ | ✓ | **Done** — Phase **2.5 closed** (docking → 2.6) |
 | **P1** | Tier B command palette, split buttons, notification center | ✓ | ✓ | Planned |
 | **P2** | Tier C/D charts, file browser, PDF, gauges | ✓ | partial | Planned |
 | **P3** | Docking suite, ribbon, code editor, map | ✓ | — | Phase 2.6+ |
@@ -432,7 +442,8 @@ Use this when sequencing work across phases.
 
 ```text
 Now–Q2    Phase 0 (CI/NuGet/samples) + Phase 2 shell/forms wave
-Q2–Q3     Phase 3 mobile primitives + adaptive samples
+          Phase 2.5 Professional Tier A — closed (docking → 2.6)
+Q2–Q3     Phase 2.6 docking OR Tier B command surfaces; Phase 3 mobile
 Q3–Q4     Phase 4 grid 2.0 + filter integration
 Year 2    Phase 5 diagram; Phase 4b charts; Phase 6 continuous
 ```
