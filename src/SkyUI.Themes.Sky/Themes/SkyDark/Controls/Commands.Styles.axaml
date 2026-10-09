@@ -1,0 +1,19 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls">
+  <!-- Split button: outer corners only (inner edges square where segments meet). -->
+  <Style Selector="controls|SkySplitButton /template/ Button.sky-split-segment-primary">
+    <Setter Property="CornerRadius" Value="12,0,0,12" />
+  </Style>
+  <Style Selector="controls|SkySplitButton /template/ Button.sky-split-segment-dropdown">
+    <Setter Property="CornerRadius" Value="0,12,12,0" />
+  </Style>
+  <Style Selector="controls|SkySplitButton.split-hover /template/ Button.sky-split-segment-primary,
+                     controls|SkySplitButton.split-hover /template/ Button.sky-split-segment-dropdown">
+    <Setter Property="Background" Value="{DynamicResource SkyAccentGradientPressedBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyNotificationCenter /template/ Border#PART_Panel > ScrollViewer /template/ ScrollBar#PART_VerticalScrollBar">
+    <Setter Property="Margin" Value="4,0,0,0" />
+  </Style>
+</Styles>

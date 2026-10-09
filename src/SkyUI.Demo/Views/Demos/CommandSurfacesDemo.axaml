@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="https://skyui.dev"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.CommandSurfacesDemo"
+             x:DataType="vm:CommandSurfacesDemoViewModel">
+  <ScrollViewer>
+    <StackPanel Spacing="20" Margin="0,0,0,24">
+      <TextBlock Classes="sky-section-title" Text="Command surfaces (Tier B)" />
+      <TextBlock Classes="sky-body-secondary" TextWrapping="Wrap"
+                 Text="Command palette, split/drop-down buttons, and notification center." />
+      <TextBlock Classes="sky-body-secondary" Text="{Binding Status}" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Command palette" />
+      <Button Classes="sky sky-primary" Content="Open palette" Command="{Binding OpenPaletteCommand}" />
+      <sky:SkyCommandPalette x:Name="Palette" ItemsSource="{Binding PaletteItems}" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Split &amp; drop-down buttons" />
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <sky:SkySplitButton PrimaryContent="Save" PrimaryCommand="{Binding SavePrimaryCommand}"
+                            ItemsSource="{Binding ExportMenuItems}" />
+        <sky:SkyDropDownButton Content="Export" ItemsSource="{Binding ExportMenuItems}" />
+      </StackPanel>
+
+      <TextBlock Classes="sky-feature-heading" Text="Notification center" />
+      <Button Classes="sky" Content="Push notification" Command="{Binding PushNotificationCommand}" />
+      <sky:SkyNotificationCenter x:Name="NotificationHost" HorizontalAlignment="Left" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

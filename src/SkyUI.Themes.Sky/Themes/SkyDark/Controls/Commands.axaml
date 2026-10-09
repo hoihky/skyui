@@ -1,0 +1,111 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls"
+                    xmlns:icons="using:SkyUI.Icons">
+  <DataTemplate x:Key="SkyCommandPaletteItemTemplate" x:DataType="controls:SkyCommandPaletteItem">
+    <Border Padding="10,8" CornerRadius="6">
+      <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+        <icons:SkyIcon Kind="{Binding IconKind}" Width="16" Height="16" VerticalAlignment="Center"
+                       IsVisible="{Binding IconKind, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        <StackPanel Grid.Column="1" Spacing="2">
+          <TextBlock Text="{Binding Title}" Classes="sky-section-title" />
+          <TextBlock Text="{Binding Subtitle}" Classes="sky-body-secondary"
+                     IsVisible="{Binding Subtitle, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+  </DataTemplate>
+
+  <DataTemplate x:Key="SkyNotificationEntryTemplate" x:DataType="controls:SkyNotificationEntry">
+    <Border Padding="10" CornerRadius="6" Classes="sky-card" Margin="0,0,0,6">
+      <StackPanel Spacing="4">
+        <TextBlock Text="{Binding Title}" Classes="sky-section-title" />
+        <TextBlock Text="{Binding Body}" Classes="sky-body-secondary" TextWrapping="Wrap"
+                   IsVisible="{Binding Body, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        <TextBlock Text="{Binding Timestamp}" Classes="sky-body-secondary" FontSize="11" Opacity="0.8" />
+      </StackPanel>
+    </Border>
+  </DataTemplate>
+
+  <ControlTheme x:Key="{x:Type controls:SkyCommandPalette}" TargetType="controls:SkyCommandPalette">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Panel Name="PART_Overlay" IsVisible="False" Background="#80000000">
+            <Border Classes="sky-card" MaxWidth="560" MinWidth="420" Margin="24"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Padding="12">
+              <StackPanel Spacing="10">
+                <TextBox Name="PART_Search" Classes="sky" PlaceholderText="Search commands…" />
+                <ListBox Name="PART_Results" Classes="sky" MaxHeight="320"
+                         ItemTemplate="{StaticResource SkyCommandPaletteItemTemplate}" />
+              </StackPanel>
+            </Border>
+          </Panel>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDropDownButton}" TargetType="controls:SkyDropDownButton">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Button Name="PART_Anchor" Classes="sky" Content="{TemplateBinding Content}"
+                HorizontalContentAlignment="Center" Padding="12,8" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkySplitButton}" TargetType="controls:SkySplitButton">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid Name="PART_Root" ColumnDefinitions="*,Auto,Auto">
+          <Button Name="PART_Primary" Grid.Column="0"
+                  Classes="sky sky-primary sky-split-segment-primary"
+                  Content="{TemplateBinding PrimaryContent}" Padding="12,8"
+                  HorizontalContentAlignment="Center" />
+          <Border Grid.Column="1" Width="1" Background="{DynamicResource SkyBorderBrush}" />
+          <Button Name="PART_DropDown" Grid.Column="2"
+                  Classes="sky sky-primary sky-split-segment-dropdown" Padding="10,8"
+                  Content="▾" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyNotificationCenter}" TargetType="controls:SkyNotificationCenter">
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+          <Button Name="PART_Toggle" Classes="sky sky-subtle" Padding="10"
+                  VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Grid Width="22" Height="22">
+              <icons:SkyIcon Kind="Layers" Width="18" Height="18"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+              <Border Name="PART_UnreadBadge" MinWidth="18" Height="18" Padding="5,0"
+                      CornerRadius="9" Background="{DynamicResource SkyAccentPressedBrush}"
+                      BorderBrush="{DynamicResource SkyOnAccentBrush}" BorderThickness="1"
+                      HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-5,-5,0"
+                      IsVisible="False">
+                <TextBlock Name="PART_UnreadBadgeText" FontSize="11" FontWeight="SemiBold"
+                           Foreground="{DynamicResource SkyOnAccentBrush}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Text="0" />
+              </Border>
+            </Grid>
+          </Button>
+          <Popup Name="PART_Popup" IsLightDismissEnabled="True"
+                 Placement="BottomEdgeAlignedLeft" VerticalOffset="6">
+            <Border Name="PART_Panel" Classes="sky-card" Width="320" MaxHeight="360" Padding="10,10,4,10">
+              <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                <ItemsControl Name="PART_ItemsHost" Margin="0,0,6,0"
+                              ItemTemplate="{StaticResource SkyNotificationEntryTemplate}" />
+              </ScrollViewer>
+            </Border>
+          </Popup>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

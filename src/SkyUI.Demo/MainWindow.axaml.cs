@@ -47,6 +47,7 @@ public partial class MainWindow : Window
             new("Virtual DataGrid", () => new VirtualDataGridDemo(), SkyIconKind.Table),
             new("Video timeline", () => new VideoTimelineDemo(), SkyIconKind.Video),
             new("Professional", () => new ProfessionalDemo(), SkyIconKind.Sliders),
+            new("Command surfaces", () => new CommandSurfacesDemo(), SkyIconKind.List),
         };
 
         NavList.SelectionChanged += (_, _) => ApplySelection();

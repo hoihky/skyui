@@ -23,6 +23,7 @@
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Primitives.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Mobile.axaml" />
         <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Professional.axaml" />
+        <ResourceInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Commands.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Styles.Resources>
@@ -40,6 +41,7 @@
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Shell.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Primitives.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Primitives.axaml" />
+  <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Controls/Commands.Styles.axaml" />
   <StyleInclude Source="avares://SkyUI.Themes.Sky/Themes/SkyDark/Presets/ContentFirstDark/SkyPreset.Focus.axaml" />
   <StyleInclude Source="avares://SkyUI.Icons/Themes/SkyIconStyles.axaml" />
   <StyleInclude Source="avares://SkyUI.Fonts/Themes/SkyTypographyStyles.axaml" />

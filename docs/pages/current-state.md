@@ -95,6 +95,17 @@ Namespace `SkyUI.Controls.Professional` in `SkyUI`. Theme: `Themes/SkyDark/Contr
 
 Docking (`SkyDockManager`, `SkyDockPanel`, `SkyDocumentWell`) is **not** implemented — planned in Phase 2.6.
 
+### Command surfaces (Tier B — wave 3B)
+
+Namespace `SkyUI.Controls` in `src/SkyUI/Controls/Commands/`. Theme: `Themes/SkyDark/Controls/Commands.axaml`.
+
+| Control | Notes |
+|---------|--------|
+| `SkyCommandPalette` | Searchable overlay; `ICommandPaletteFilter` strategy; `ItemsSource` / `Execute` |
+| `SkySplitButton` | Primary command + drop-down menu (`SkyDropDownButtonBase`) |
+| `SkyDropDownButton` | Single anchor opens `SkyMenuFlyout` |
+| `SkyNotificationCenter` | Persistent notifications, unread badge, panel toggle |
+
 ### Mobile primitives (early)
 
 | Control / API | Namespace | Package |
@@ -130,7 +141,7 @@ See [mobile.md](mobile.md) for usage and sample apps.
 
 ## Demo gallery pages
 
-Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, **Professional** (Tier A property grid, pickers, tree, tags, rich text, stepper, wizard), **Mobile** (safe area, touch targets, action sheet, keyboard inset).
+Overview, Buttons, Avatar, Chip, Badge, Text field, Checkbox & Switch, Select, List, Accordion, Placeholder, Diagram, CheckedListBox, Filter editor, Virtual DataGrid, Video timeline, **Professional** (Tier A), **Command surfaces** (palette, split/drop-down, notifications), **Mobile** (safe area, touch targets, action sheet, keyboard inset).
 
 ## Architectural strengths
 

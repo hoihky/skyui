@@ -209,9 +209,9 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 
 | Control | Priority | Status |
 |---------|:--------:|--------|
-| **SkyCommandPalette** | P1 | Planned |
-| **SkySplitButton** / **SkyDropDownButton** | P1 | Planned |
-| **SkyNotificationCenter** | P1 | Planned |
+| **SkyCommandPalette** | P1 | **Done** |
+| **SkySplitButton** / **SkyDropDownButton** | P1 | **Done** |
+| **SkyNotificationCenter** | P1 | **Done** |
 | **SkyToolWindow** chrome | P2 | Planned |
 | **SkyRibbon** | P3 | Planned |
 
