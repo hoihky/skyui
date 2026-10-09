@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sky="using:SkyUI.Controls.Professional"
+             xmlns:vm="using:SkyUI.Demo.ViewModels"
+             x:Class="SkyUI.Demo.Views.Demos.ProfessionalDemo"
+             x:DataType="vm:ProfessionalDemoViewModel">
+  <ScrollViewer>
+    <StackPanel Spacing="24" Margin="0,0,0,24">
+      <TextBlock Classes="sky-section-title" Text="Professional controls (Tier A)" />
+      <TextBlock Classes="sky-body-secondary" TextWrapping="Wrap"
+                 Text="MVVM-friendly inspectors, pickers, trees, tags, ranges, rich text, stepper, and wizard. Docking controls are planned for a later wave." />
+
+      <TextBlock Classes="sky-feature-heading" Text="Property grid" />
+      <sky:SkyPropertyGrid Items="{Binding PropertyRows}" ShowGridLines="True" MinHeight="180" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Color picker" />
+      <sky:SkyColorPicker SelectedColor="{Binding PickerColor, Mode=TwoWay}" Width="320" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Image viewer" />
+      <sky:SkyImageViewer Source="{Binding PreviewImage}" Height="160" FitMode="Fit" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Tree view" />
+      <sky:SkyTreeView Items="{Binding TreeRoots}" MinHeight="140" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Tag editor" />
+      <sky:SkyTagEditor Tags="{Binding Tags}" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Dual range slider" />
+      <sky:SkyDualRangeSlider RangeStart="{Binding RangeStart, Mode=TwoWay}"
+                              RangeEnd="{Binding RangeEnd, Mode=TwoWay}" />
+      <TextBlock Classes="sky-body-secondary" Text="{Binding RangeSummary}" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Rich text" />
+      <sky:SkyRichTextBox x:Name="RichEditor" Text="{Binding RichText, Mode=TwoWay}" ShowToolbar="True" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Stepper" />
+      <sky:SkyStepper Steps="{Binding Steps}" SelectedIndex="{Binding StepperIndex, Mode=TwoWay}" />
+
+      <TextBlock Classes="sky-feature-heading" Text="Wizard" />
+      <sky:SkyWizard Pages="{Binding WizardPages}" CurrentIndex="{Binding WizardIndex, Mode=TwoWay}" MinHeight="120" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

@@ -46,6 +46,7 @@ public partial class MainWindow : Window
             new("Filter editor", () => new FilterEditorDemo(), SkyIconKind.Filter),
             new("Virtual DataGrid", () => new VirtualDataGridDemo(), SkyIconKind.Table),
             new("Video timeline", () => new VideoTimelineDemo(), SkyIconKind.Video),
+            new("Professional", () => new ProfessionalDemo(), SkyIconKind.Sliders),
         };
 
         NavList.SelectionChanged += (_, _) => ApplySelection();

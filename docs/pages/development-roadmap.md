@@ -180,6 +180,90 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 
 ---
 
+## Phase 2.5 — Professional controls catalog (Tiers A–E)
+
+**Goal:** Expand Essentials toward IDE, creative, and admin tooling. Track progress in the tables below. **Tier A (except docking)** is the active implementation wave; docking/document hosts ship in **Phase 2.6**.
+
+**Legend:** `Done` · `In progress` · `Planned` · `Deferred`
+
+### Tier A — High impact (wave 3A)
+
+| Control | Desktop | Mobile | Priority | Status |
+|---------|:-------:|:------:|:--------:|--------|
+| **SkyPropertyGrid** | ✓ | ✓ | P0 | **Done** |
+| **SkyColorPicker** | ✓ | ✓ | P0 | **Done** |
+| **SkyRichTextBox** | ✓ | — | P0 | **Done** (markdown-style helpers) |
+| **SkyImageViewer** | ✓ | ✓ | P0 | **Done** |
+| **SkyTreeView** | ✓ | ✓ | P0 | **Done** (explorer-style) |
+| **SkyTagEditor** | ✓ | ✓ | P0 | **Done** |
+| **SkyDualRangeSlider** | ✓ | ✓ | P0 | **Done** |
+| **SkyStepper** | ✓ | ✓ | P0 | **Done** |
+| **SkyWizard** | ✓ | ✓ | P0 | **Done** |
+| **SkyDockManager** / **SkyDockPanel** | ✓ | — | P1 | **Deferred** → Phase 2.6 |
+| **SkyDocumentWell** | ✓ | — | P1 | **Deferred** → Phase 2.6 |
+
+### Tier B — Shell & command surfaces (wave 3B)
+
+| Control | Priority | Status |
+|---------|:--------:|--------|
+| **SkyCommandPalette** | P1 | Planned |
+| **SkySplitButton** / **SkyDropDownButton** | P1 | Planned |
+| **SkyNotificationCenter** | P1 | Planned |
+| **SkyToolWindow** chrome | P2 | Planned |
+| **SkyRibbon** | P3 | Planned |
+
+### Tier C — Data & visualization (extends Phase 4)
+
+| Control | Priority | Status |
+|---------|:--------:|--------|
+| **SkyChart** | P1 | Planned (Phase 4) |
+| **SkyGauge** | P2 | Planned |
+| **SkyScheduler** / **SkyCalendar** views | P2 | Planned (Phase 4c) |
+| **SkyGantt** | P2 | Planned |
+| **SkyKanban** | P2 | Planned |
+| **SkyTreeGrid** | P2 | Planned |
+| **SkyPivotTable** (lite) | P3 | Planned |
+
+### Tier D — Media & specialized (Pro / vertical)
+
+| Control | Priority | Status |
+|---------|:--------:|--------|
+| **SkyPdfViewer** | P2 | Planned |
+| **SkyFileBrowser** | P2 | Planned |
+| **SkyIconPicker** | P2 | Planned |
+| **SkyFontPicker** | P3 | Planned |
+| **SkyHotkeyEditor** | P2 | Planned |
+| **SkyLogViewer** | P2 | Planned |
+| **SkyDiffViewer** | P3 | Planned |
+| **SkyMap** (platform wrapper) | P3 | Planned |
+| **SkyCodeEditor** | P3 | Planned |
+
+### Tier E — Mobile complements
+
+| Control | Priority | Status |
+|---------|:--------:|--------|
+| **SkyColorPicker** (compact sheet) | P1 | Planned (adaptive template) |
+| **SkyDateTimePicker** (combined) | P2 | Planned |
+| **SkyPhotoPicker** / **SkyCameraCapture** | P2 | Planned (platform services) |
+| **SkySignaturePad** | P3 | Planned |
+| **SkyBarcodeScanner** (wrapper) | P3 | Planned |
+
+### Phase 2.6 — Docking & document host (after 3A)
+
+| Control | Description | Status |
+|---------|-------------|--------|
+| **SkyDockManager** | Tool/document/float panes, layout persistence | Planned |
+| **SkyDockPanel** | Drop zones and splitter chrome | Planned |
+| **SkyDocumentWell** | Tabbed documents, dirty state, reorder | Planned |
+
+### Exit criteria (Phase 2.5)
+
+- Demo page **Professional** showcases Tier A controls with MVVM bindings.
+- Unit tests per control (property grid, color, range, tree, tags, wizard).
+- Theme AXAML for `SkyUI.Controls.Professional` in `SkyUI.Themes.Sky`.
+
+---
+
 ## Phase 3 — Mobile and adaptive UX (14–18 weeks)
 
 **Goal:** SkyUI works on **phone and tablet**, not only desktop with a narrow window.
@@ -337,7 +421,10 @@ Use this when sequencing work across phases.
 | **P1** | Touch target policy + pull-to-refresh | — | ✓ | Mobile list apps |
 | **P2** | Charts / KPI tiles | ✓ | ✓ | Dashboards |
 | **P2** | Diagram zoom/undo/routers | ✓ | ✓ | Differentiator |
-| **P3** | Scheduler, rich text, PDF viewer | ✓ | — | Vertical-specific |
+| **P0** | Tier A professional controls (property grid, color, tree, tags, wizard) | ✓ | ✓ | **Done** (docking deferred) |
+| **P1** | Tier B command palette, split buttons, notification center | ✓ | ✓ | Planned |
+| **P2** | Tier C/D charts, file browser, PDF, gauges | ✓ | partial | Planned |
+| **P3** | Docking suite, ribbon, code editor, map | ✓ | — | Phase 2.6+ |
 
 ---
 

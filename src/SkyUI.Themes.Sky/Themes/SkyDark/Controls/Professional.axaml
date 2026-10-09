@@ -1,0 +1,142 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:SkyUI.Controls.Professional">
+  <LinearGradientBrush x:Key="SkyColorPickerSpectrumBrush" StartPoint="0%,50%" EndPoint="100%,50%">
+    <GradientStop Color="#FFFF0000" Offset="0" />
+    <GradientStop Color="#FFFFFF00" Offset="0.17" />
+    <GradientStop Color="#FF00FF00" Offset="0.33" />
+    <GradientStop Color="#FF00FFFF" Offset="0.5" />
+    <GradientStop Color="#FF0000FF" Offset="0.67" />
+    <GradientStop Color="#FFFF00FF" Offset="0.83" />
+    <GradientStop Color="#FFFF0000" Offset="1" />
+  </LinearGradientBrush>
+
+  <ControlTheme x:Key="{x:Type controls:SkyPropertyGrid}" TargetType="controls:SkyPropertyGrid">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card" Padding="12" ClipToBounds="True" CornerRadius="8">
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Name="PART_CategoriesHost" Spacing="0" />
+          </ScrollViewer>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyColorPicker}" TargetType="controls:SkyColorPicker">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Spacing="8">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+            <Border Name="PART_Preview" Width="40" Height="40" CornerRadius="6"
+                    BorderBrush="{DynamicResource SkyBorderBrush}" BorderThickness="1" Cursor="Hand" />
+            <Border Name="PART_Spectrum" Grid.Column="1" Height="96" CornerRadius="6"
+                    Background="{StaticResource SkyColorPickerSpectrumBrush}" Cursor="Hand" />
+          </Grid>
+          <TextBox Name="PART_HexBox" Classes="sky"
+                   IsVisible="{TemplateBinding ShowHexInput}"
+                   PlaceholderText="#RRGGBB" />
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyImageViewer}" TargetType="controls:SkyImageViewer">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card" Padding="4">
+          <ScrollViewer Name="PART_Scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Image Name="PART_Image" Source="{TemplateBinding Source}" />
+          </ScrollViewer>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyTreeView}" TargetType="controls:SkyTreeView">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card" Padding="6">
+          <StackPanel Name="PART_ItemsHost" Spacing="0" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyTagEditor}" TargetType="controls:SkyTagEditor">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card" Padding="10">
+          <StackPanel Spacing="8">
+            <WrapPanel Name="PART_TagsHost" />
+            <TextBox Name="PART_Input" Classes="sky" PlaceholderText="{TemplateBinding PlaceholderText}" />
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDualRangeSlider}" TargetType="controls:SkyDualRangeSlider">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid Name="PART_Track" Height="32" Margin="8,0">
+          <Border Height="4" VerticalAlignment="Center" CornerRadius="2"
+                  Background="{DynamicResource SkyBorderBrush}" />
+          <Border Name="PART_Fill" Height="4" VerticalAlignment="Center" CornerRadius="2"
+                  Background="{DynamicResource SkyAccentBrush}" HorizontalAlignment="Stretch" />
+          <Border Name="PART_StartThumb" Width="16" Height="16" CornerRadius="8"
+                  VerticalAlignment="Center" HorizontalAlignment="Left"
+                  Background="{DynamicResource SkyTextPrimaryBrush}"
+                  BorderBrush="{DynamicResource SkyAccentBrush}" BorderThickness="2" />
+          <Border Name="PART_EndThumb" Width="16" Height="16" CornerRadius="8"
+                  VerticalAlignment="Center" HorizontalAlignment="Left"
+                  Background="{DynamicResource SkyTextPrimaryBrush}"
+                  BorderBrush="{DynamicResource SkyAccentBrush}" BorderThickness="2" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyRichTextBox}" TargetType="controls:SkyRichTextBox">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card" Padding="10">
+          <StackPanel Spacing="8">
+            <StackPanel Name="PART_Toolbar" Orientation="Horizontal" Spacing="6"
+                        IsVisible="{TemplateBinding ShowToolbar}" />
+            <TextBox Name="PART_Editor" Classes="sky" AcceptsReturn="True"
+                     MinHeight="120" TextWrapping="Wrap" />
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyStepper}" TargetType="controls:SkyStepper">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card" Padding="12">
+          <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <StackPanel Name="PART_StepsHost" Orientation="Horizontal" Spacing="0" />
+          </ScrollViewer>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyWizard}" TargetType="controls:SkyWizard">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card" Padding="16">
+          <Grid RowDefinitions="*,Auto" RowSpacing="12">
+            <ContentPresenter Name="PART_PageHost" Grid.Row="0" />
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+              <Button Name="PART_Back" Classes="sky" Content="Back" />
+              <Button Name="PART_Next" Classes="sky sky-primary" Content="Next" />
+            </StackPanel>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>
