@@ -10,6 +10,7 @@ public class SkyRichTextBox : TemplatedControl
 {
     public const string EditorPartName = "PART_Editor";
     public const string ToolbarPartName = "PART_Toolbar";
+    public const string PreviewPartName = "PART_Preview";
 
     public static readonly StyledProperty<string?> TextProperty =
         AvaloniaProperty.Register<SkyRichTextBox, string?>(nameof(Text), defaultBindingMode: BindingMode.TwoWay);
@@ -17,8 +18,12 @@ public class SkyRichTextBox : TemplatedControl
     public static readonly StyledProperty<bool> ShowToolbarProperty =
         AvaloniaProperty.Register<SkyRichTextBox, bool>(nameof(ShowToolbar), true);
 
+    public static readonly StyledProperty<bool> ShowLivePreviewProperty =
+        AvaloniaProperty.Register<SkyRichTextBox, bool>(nameof(ShowLivePreview), true);
+
     private TextBox? editor;
     private Panel? toolbar;
+    private TextBlock? preview;
     private bool syncingText;
 
     public string? Text
@@ -33,6 +38,12 @@ public class SkyRichTextBox : TemplatedControl
         set => SetValue(ShowToolbarProperty, value);
     }
 
+    public bool ShowLivePreview
+    {
+        get => GetValue(ShowLivePreviewProperty);
+        set => SetValue(ShowLivePreviewProperty, value);
+    }
+
     static SkyRichTextBox()
     {
         TextProperty.Changed.AddClassHandler<SkyRichTextBox>((b, e) => b.OnTextPropertyChanged(e.NewValue as string));
@@ -44,7 +55,9 @@ public class SkyRichTextBox : TemplatedControl
         base.OnApplyTemplate(e);
         editor = e.NameScope.Find<TextBox>(EditorPartName);
         toolbar = e.NameScope.Find<Panel>(ToolbarPartName);
+        preview = e.NameScope.Find<TextBlock>(PreviewPartName);
         RefreshToolbar();
+        RefreshPreview();
 
         if (editor is null)
             return;
@@ -72,6 +85,7 @@ public class SkyRichTextBox : TemplatedControl
 
     private void OnTextPropertyChanged(string? value)
     {
+        RefreshPreview();
         if (syncingText || editor is null)
             return;
         var next = value ?? "";
@@ -79,7 +93,11 @@ public class SkyRichTextBox : TemplatedControl
             editor.Text = next;
     }
 
-    private void OnEditorTextChanged(object? sender, TextChangedEventArgs e) => SyncTextFromEditor();
+    private void OnEditorTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        SyncTextFromEditor();
+        RefreshPreview();
+    }
 
     private void SyncTextFromEditor()
     {
@@ -122,5 +140,13 @@ public class SkyRichTextBox : TemplatedControl
         editor.SelectionStart = start;
         editor.SelectionEnd = start + wrapped.Length;
         SyncTextFromEditor();
+        RefreshPreview();
+    }
+
+    private void RefreshPreview()
+    {
+        if (preview is null || !ShowLivePreview)
+            return;
+        SkyRichTextMarkdown.ApplyPreview(preview, Text);
     }
 }

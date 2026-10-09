@@ -77,6 +77,12 @@
                         
                         <li class="nav-item depth-0">
                           
+                            <a href="video-timeline-roadmap.html" class="nav-link">Video timeline roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
                             <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
                             
                         </li>
@@ -563,6 +569,312 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <li>Essentials catalog published on doc site with desktop/mobile applicability notes. <strong>Partial</strong> (SDK guide + topic pages; mobile guide added)</li>
 </ul>
 <hr>
+<h2 id="phase-2.5-professional-controls-catalog-tiers-ae">Phase 2.5 — Professional controls catalog (Tiers A–E)</h2>
+<p><strong>Goal:</strong> Expand Essentials toward IDE, creative, and admin tooling. Track progress in the tables below. <strong>Tier A (except docking)</strong> is the active implementation wave; docking/document hosts ship in <strong>Phase 2.6</strong>.</p>
+<p><strong>Legend:</strong> <code>Done</code> · <code>In progress</code> · <code>Planned</code> · <code>Deferred</code></p>
+<h3 id="tier-a-high-impact-wave-3a">Tier A — High impact (wave 3A)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th style="text-align: center;">Desktop</th>
+<th style="text-align: center;">Mobile</th>
+<th style="text-align: center;">Priority</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyPropertyGrid</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyColorPicker</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyRichTextBox</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong> (markdown-style helpers)</td>
+</tr>
+<tr>
+<td><strong>SkyImageViewer</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyTreeView</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong> (explorer-style)</td>
+</tr>
+<tr>
+<td><strong>SkyTagEditor</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyDualRangeSlider</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyStepper</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyWizard</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">P0</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
+<td><strong>SkyDockManager</strong> / <strong>SkyDockPanel</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">P1</td>
+<td><strong>Deferred</strong> → Phase 2.6</td>
+</tr>
+<tr>
+<td><strong>SkyDocumentWell</strong></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">P1</td>
+<td><strong>Deferred</strong> → Phase 2.6</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tier-b-shell-command-surfaces-wave-3b">Tier B — Shell &amp; command surfaces (wave 3B)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th style="text-align: center;">Priority</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyCommandPalette</strong></td>
+<td style="text-align: center;">P1</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkySplitButton</strong> / <strong>SkyDropDownButton</strong></td>
+<td style="text-align: center;">P1</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyNotificationCenter</strong></td>
+<td style="text-align: center;">P1</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyToolWindow</strong> chrome</td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyRibbon</strong></td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tier-c-data-visualization-extends-phase-4">Tier C — Data &amp; visualization (extends Phase 4)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th style="text-align: center;">Priority</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyChart</strong></td>
+<td style="text-align: center;">P1</td>
+<td>Planned (Phase 4)</td>
+</tr>
+<tr>
+<td><strong>SkyGauge</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyScheduler</strong> / <strong>SkyCalendar</strong> views</td>
+<td style="text-align: center;">P2</td>
+<td>Planned (Phase 4c)</td>
+</tr>
+<tr>
+<td><strong>SkyGantt</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyKanban</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyTreeGrid</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyPivotTable</strong> (lite)</td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tier-d-media-specialized-pro-vertical">Tier D — Media &amp; specialized (Pro / vertical)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th style="text-align: center;">Priority</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyPdfViewer</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyFileBrowser</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyIconPicker</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyFontPicker</strong></td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyHotkeyEditor</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyLogViewer</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyDiffViewer</strong></td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyMap</strong> (platform wrapper)</td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyCodeEditor</strong></td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tier-e-mobile-complements">Tier E — Mobile complements</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th style="text-align: center;">Priority</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyColorPicker</strong> (compact sheet)</td>
+<td style="text-align: center;">P1</td>
+<td>Planned (adaptive template)</td>
+</tr>
+<tr>
+<td><strong>SkyDateTimePicker</strong> (combined)</td>
+<td style="text-align: center;">P2</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyPhotoPicker</strong> / <strong>SkyCameraCapture</strong></td>
+<td style="text-align: center;">P2</td>
+<td>Planned (platform services)</td>
+</tr>
+<tr>
+<td><strong>SkySignaturePad</strong></td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyBarcodeScanner</strong> (wrapper)</td>
+<td style="text-align: center;">P3</td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-2.6-docking-document-host-after-3a">Phase 2.6 — Docking &amp; document host (after 3A)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Control</th>
+<th>Description</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SkyDockManager</strong></td>
+<td>Tool/document/float panes, layout persistence</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyDockPanel</strong></td>
+<td>Drop zones and splitter chrome</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>SkyDocumentWell</strong></td>
+<td>Tabbed documents, dirty state, reorder</td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exit-criteria-phase-2.5">Exit criteria (Phase 2.5)</h3>
+<ul>
+<li>Demo page <strong>Professional</strong> showcases Tier A controls with MVVM bindings.</li>
+<li>Unit tests per control (property grid, color, range, tree, tags, wizard).</li>
+<li>Theme AXAML for <code>SkyUI.Controls.Professional</code> in <code>SkyUI.Themes.Sky</code>.</li>
+</ul>
+<hr>
 <h2 id="phase-3-mobile-and-adaptive-ux-1418-weeks">Phase 3 — Mobile and adaptive UX (14–18 weeks)</h2>
 <p><strong>Goal:</strong> SkyUI works on <strong>phone and tablet</strong>, not only desktop with a narrow window.</p>
 <p><code>SkyNavigationView</code> bottom mode and breakpoints exist; P0 mobile primitives are <strong>in progress</strong> with an iOS sample host. This phase makes mobile a first-class target.</p>
@@ -1044,11 +1356,32 @@ SkyUI.Mobile        Touch, safe area, sheets (optional; may merge into SkyUI ini
 <td>Differentiator</td>
 </tr>
 <tr>
+<td><strong>P0</strong></td>
+<td>Tier A professional controls (property grid, color, tree, tags, wizard)</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td><strong>Done</strong> (docking deferred)</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>Tier B command palette, split buttons, notification center</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>Tier C/D charts, file browser, PDF, gauges</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">partial</td>
+<td>Planned</td>
+</tr>
+<tr>
 <td><strong>P3</strong></td>
-<td>Scheduler, rich text, PDF viewer</td>
+<td>Docking suite, ribbon, code editor, map</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">—</td>
-<td>Vertical-specific</td>
+<td>Phase 2.6+</td>
 </tr>
 </tbody>
 </table>
@@ -1190,6 +1523,38 @@ Year 2    Phase 5 diagram; Phase 4b charts; Phase 6 continuous
                         
                         <li class="toc-h3">
                           <a href="#exit-criteria">Exit criteria</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#phase-25-professional-controls-catalog-tiers-ae">Phase 2.5 — Professional controls catalog (Tiers A–E)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#tier-a-high-impact-wave-3a">Tier A — High impact (wave 3A)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#tier-b-shell-command-surfaces-wave-3b">Tier B — Shell & command surfaces (wave 3B)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#tier-c-data-visualization-extends-phase-4">Tier C — Data & visualization (extends Phase 4)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#tier-d-media-specialized-pro-vertical">Tier D — Media & specialized (Pro / vertical)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#tier-e-mobile-complements">Tier E — Mobile complements</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-26-docking-document-host-after-3a">Phase 2.6 — Docking & document host (after 3A)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#exit-criteria-phase-25">Exit criteria (Phase 2.5)</a>
                         </li>
                         
                         <li class="toc-h2">

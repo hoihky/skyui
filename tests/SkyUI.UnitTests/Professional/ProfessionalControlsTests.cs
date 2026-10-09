@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
+using Avalonia.Controls;
+using Avalonia.Controls.Documents;
 using Avalonia.Media;
 using SkyUI.Controls.Professional;
 
@@ -134,5 +136,27 @@ public sealed class ProfessionalControlsTests
         var chrome = new SkyStepperChrome();
         Assert.Equal(72, chrome.ConnectorLength);
         Assert.Equal(28, chrome.NodeDiameter);
+    }
+
+    [Fact]
+    public void SkyRichTextMarkdown_renders_bold_and_italic_runs()
+    {
+        var preview = new TextBlock();
+        SkyRichTextMarkdown.ApplyPreview(preview, "Say *hi* to **you**");
+
+        Assert.Equal(4, preview.Inlines.Count);
+        var italic = Assert.IsType<Run>(preview.Inlines[1]);
+        Assert.Equal("hi", italic.Text);
+        Assert.Equal(FontStyle.Italic, italic.FontStyle);
+        var bold = Assert.IsType<Run>(preview.Inlines[3]);
+        Assert.Equal("you", bold.Text);
+        Assert.Equal(FontWeight.SemiBold, bold.FontWeight);
+    }
+
+    [Fact]
+    public void SkyRichTextBox_show_live_preview_defaults_true()
+    {
+        var box = new SkyRichTextBox();
+        Assert.True(box.ShowLivePreview);
     }
 }

@@ -106,6 +106,15 @@
                         IsVisible="{TemplateBinding ShowToolbar}" />
             <TextBox Name="PART_Editor" Classes="sky" AcceptsReturn="True"
                      MinHeight="120" TextWrapping="Wrap" />
+            <StackPanel Spacing="4" IsVisible="{TemplateBinding ShowLivePreview}">
+              <TextBlock Classes="sky-body-secondary" Text="Preview" />
+              <Border Padding="10" CornerRadius="6"
+                      BorderBrush="{DynamicResource SkyBorderBrush}" BorderThickness="1"
+                      Background="{DynamicResource SkySurfaceElevatedBrush}">
+                <TextBlock Name="PART_Preview" TextWrapping="Wrap" MinHeight="72"
+                           Classes="sky-body-secondary" />
+              </Border>
+            </StackPanel>
           </StackPanel>
         </Border>
       </ControlTemplate>

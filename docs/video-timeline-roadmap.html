@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video timeline roadmap · SkyUI</title>
+  <meta name="description" content="Cross-platform UI library for .NET on Avalonia">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css">
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="brand">SkyUI</a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search docs…" autocomplete="off">
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" aria-label="Documentation">
+          <ul class="nav-list">
+            <li class="nav-item depth-0">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            
+                        <li class="nav-item depth-0">
+                          
+                            <a href="legacy-sunset.html" class="nav-link">legacy sunset</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="current-state.html" class="nav-link">Current state</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="gap-analysis.html" class="nav-link">Gap analysis</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="development-roadmap.html" class="nav-link">Development roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="design-tokens.html" class="nav-link">Sky design tokens</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="layout.html" class="nav-link">Layout controls</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="mobile.html" class="nav-link">Mobile primitives</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0 is-active">
+                          
+                            <a href="video-timeline-roadmap.html" class="nav-link">Video timeline roadmap</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="menu-accelerators.html" class="nav-link">Menu keyboard accelerators</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="picker-formatting.html" class="nav-link">Picker culture formatting</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="virtual-tree.html" class="nav-link">Virtual tree view</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="primitives-polish.html" class="nav-link">Primitives polish</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="rename-strategy.html" class="nav-link">Rename strategy (Sky brand)</a>
+                            
+                        </li>
+                        
+                        <li class="nav-item depth-0">
+                          
+                            <a href="avalonia-12-upgrade.html" class="nav-link">Avalonia 12 upgrade</a>
+                            
+                        </li>
+                        
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <article class="doc">
+          <header class="doc-header">
+            <h1>Video timeline roadmap</h1>
+          </header>
+          <div class="doc-body"><p><code>VideoTimeline</code> is a multi-track sequencing control in <code>SkyUI.Controls</code>. It supports scrubbing, zoom, clip move/trim, markers, clipboard editing, and basic playback. This document defines the path from the current prototype to a control suitable for <strong>video editors</strong> and <strong>sprite animation editors</strong>.</p>
+<h2 id="current-state-v1">Current state (v1)</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Area</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi-track lanes, clips, markers</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Playhead, ruler scrub, Ctrl+wheel zoom</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Clip move, trim, delete, copy/cut/paste</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Track add/remove/reorder, track selection</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Time-range selection (lane drag)</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>MVVM collections (<code>Tracks</code>, <code>Clips</code>, <code>Markers</code>)</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Automated tests</td>
+<td>112+ timeline unit tests, 15 headless tests (themed + API)</td>
+</tr>
+<tr>
+<td>Snap, split, undo</td>
+<td>Done (Phase 1)</td>
+</tr>
+<tr>
+<td>Frame ruler, transport, snap-to-frame</td>
+<td>Done (Tier 0 / Phase 2 foundation)</td>
+</tr>
+<tr>
+<td>Sprite clip metadata, track kind, frame API, JSON DTO</td>
+<td>Done (Tier 1)</td>
+</tr>
+<tr>
+<td>Hold frames, draggable markers, onion skin, property keyframes</td>
+<td>Done (Tier 3)</td>
+</tr>
+<tr>
+<td>Media clock, preview sync, compositor demo, thumbnail contract</td>
+<td>Done (Tier 4)</td>
+</tr>
+<tr>
+<td>Clip thumbnails, track header chrome, zoom to fit/selection</td>
+<td>Done (Tier 2)</td>
+</tr>
+<tr>
+<td>PreferTimecodeLabels, J/K/L shuttle, playhead scroll-follow</td>
+<td>Done (Phase 2 polish)</td>
+</tr>
+<tr>
+<td>Thumbnails, waveforms, keyframes</td>
+<td>Phase 4+</td>
+</tr>
+</tbody>
+</table>
+<p>Architecture: <code>VideoTimeline</code> is a thin Avalonia host (~350 lines). Editing, rendering, and input are delegated to <code>TimelineHost</code> and layered services below.</p>
+<h2 id="design-goals">Design goals</h2>
+<ol>
+<li><strong>SOLID</strong> — model, layout math, snap, commands, and gestures are separate types with narrow interfaces.</li>
+<li><strong>Extensible</strong> — new snap providers, edit commands, and interactors register without modifying core model types.</li>
+<li><strong>Non-breaking</strong> — existing bindable properties and events remain; new APIs are additive.</li>
+<li><strong>Testable</strong> — pure logic (snap, split, undo) covered by unit tests; headless tests for public API where practical.</li>
+</ol>
+<h2 id="target-architecture">Target architecture</h2>
+<pre><code class="language-text">SkyUI.Controls.Timeline
+├── Model/
+│   ├── TimelineProject.cs      Tracks, clips, markers, keyframes, duration
+│   ├── TimelineTrack.cs        (+ TimelineTrackItem compat alias)
+│   ├── TimelineClip.cs         (+ TimelineClipItem compat alias)
+│   ├── TimelineMarker.cs       (+ TimelineMarkerItem compat alias)
+│   ├── TimelineKeyframe.cs     (Phase 6 sprite lanes)
+│   └── TimelineTimeUnit.cs     Seconds / Frames
+├── Commands/
+│   ├── ITimelineEditCommand.cs (+ ITimelineCommand alias)
+│   ├── TimelineUndoStack.cs
+│   └── *Command.cs             Move, trim, split
+├── Layout/
+│   ├── ITimelineLayoutEngine.cs
+│   ├── TimelineLayoutEngine.cs Time ↔ pixels + snap grid
+│   └── TimelineCoordinateSystem.cs
+├── Rendering/
+│   ├── TimelineRenderer.cs     Ruler, headers, lanes, clips, overlays
+│   └── TimelineLaneVirtualizer.cs  Viewport track windowing
+├── Input/
+│   ├── ITimelineGestureInteractor.cs
+│   ├── TimelineGestureCoordinator.cs
+│   ├── TimelineInteractionContext.cs
+│   └── *GestureInteractor.cs   Zoom, keyboard, scrub, lane, clip, header
+├── Editing/
+│   └── TimelineClipOperations.cs
+├── Selection/
+│   └── TimelineSelectionModel.cs
+├── TimelineHost.cs             Wires model ↔ layout ↔ render ↔ input
+└── VideoTimeline.cs            Thin templated control + public API
+</code></pre>
+<p><strong>Extension points (Phase 1+):</strong></p>
+<ul>
+<li><code>ITimelineSnapTargetProvider</code> — add custom snap lines (markers, beats, keyframes).</li>
+<li><code>ITimelineEditCommand</code> / <code>ITimelineCommand</code> — plug new undoable edits (ripple delete, slip edit).</li>
+<li><code>ITimelineGestureInteractor</code> — register custom tools via <code>VideoTimeline.RegisterGestureInteractor</code>.</li>
+<li><code>TimelineClipItem.Tag</code> / <code>TimelineTrackItem.Tag</code> — host app media metadata until typed clip models land in Phase 3.</li>
+</ul>
+<h2 id="phased-delivery">Phased delivery</h2>
+<h3 id="phase-1-stability-and-editor-fundamentals-done">Phase 1 — Stability and editor fundamentals (done)</h3>
+<table class="table">
+<thead>
+<tr>
+<th>Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit tests</td>
+<td>Snap, split, undo stack, coordinate math</td>
+</tr>
+<tr>
+<td><code>TimelineSnapEngine</code></td>
+<td>Snap to playhead, markers, clip edges, grid</td>
+</tr>
+<tr>
+<td><code>TimelineUndoStack</code></td>
+<td>Command pattern undo/redo</td>
+</tr>
+<tr>
+<td>Split at playhead</td>
+<td><code>SplitClipAtPlayhead()</code></td>
+</tr>
+<tr>
+<td>Multi-clip move</td>
+<td>Drag moves all selected clips</td>
+</tr>
+<tr>
+<td>Marquee select</td>
+<td>Ctrl+drag on lane background selects clips</td>
+</tr>
+<tr>
+<td>Selection model</td>
+<td>Centralized clip/track selection + events</td>
+</tr>
+<tr>
+<td>Edit events</td>
+<td><code>ClipChanging</code> / <code>ClipChanged</code></td>
+</tr>
+<tr>
+<td>Theme tokens</td>
+<td>Replace hardcoded lane separator colors</td>
+</tr>
+<tr>
+<td>Scroll stability</td>
+<td>Preserve offsets across rebuild; incremental lane virtualization on vertical scroll</td>
+</tr>
+<tr>
+<td>Ruler drag scrub</td>
+<td>Press + drag on ruler updates playhead</td>
+</tr>
+<tr>
+<td>Themed headless tests</td>
+<td>Clipboard paste and template wiring verified with Sky theme</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exit criteria:</strong> Demo shows snap toggle, split, undo/redo; 70+ unit tests and themed headless coverage; no regressions in other SkyUI controls. <strong>Met.</strong></p>
+<h3 id="phase-2-time-modes-and-transport-foundation-done">Phase 2 — Time modes and transport (foundation done)</h3>
+<ul>
+<li>FPS and frame-based ruler; frame labels (<code>fN</code>) on ruler when <code>TimeUnit</code> is <code>Frames</code></li>
+<li><code>VideoTimeline.Fps</code>, <code>TimeUnit</code>, <code>PlayheadFrame</code>, <code>LoopTimeRange</code></li>
+<li>Frame step (←/→, Shift = 10), Space play/pause; loop in/out from time-range selection</li>
+<li>Snap-to-frame grid when <code>TimeUnit</code> is <code>Frames</code> (<code>TimelineTimePresentation</code> + <code>TimelineFrameQuantizer</code>)</li>
+<li>Remaining: timecode ruler option in UI, J/K/L shuttle</li>
+</ul>
+<h3 id="tier-1-sprite-clip-model-done">Tier 1 — Sprite clip model (done)</h3>
+<ul>
+<li><code>TimelineSpriteClipMetadata</code> on clips (<code>AtlasId</code>, <code>SpriteName</code>, <code>FrameIndex</code>, <code>HoldFrames</code>, optional <code>SourceRect</code>)</li>
+<li><code>TimelineTrackKind</code> + <code>IsVisible</code> / <code>IsLocked</code> / <code>AccentColor</code> on tracks; locked lanes block move/trim</li>
+<li><code>ITimelineClipFrameMapper</code>, <code>GetClipFrameSpan</code>, <code>SampleSpriteLayersAtPlayhead</code></li>
+<li><code>CurrentFrameChanged</code> for preview sync</li>
+<li><code>TimelineProjectDocument</code> + <code>ITimelineProjectSerializer</code> (<code>JsonTimelineProjectSerializer</code>)</li>
+</ul>
+<h3 id="phase-3-rich-clip-and-track-model">Phase 3 — Rich clip and track model</h3>
+<ul>
+<li><code>SourceIn</code> / <code>SourceOut</code>, speed, linked clips</li>
+<li>Mute/solo, variable height (visibility/lock cover sprite workflows)</li>
+<li>Draggable markers</li>
+</ul>
+<h3 id="phase-4-visual-richness">Phase 4 — Visual richness</h3>
+<ul>
+<li>Clip thumbnails and audio waveforms (async, cached)</li>
+<li>Sprite sheet region preview on clips</li>
+<li>Minimap and zoom-to-selection</li>
+</ul>
+<h3 id="phase-5-pro-editing-tools">Phase 5 — Pro editing tools</h3>
+<ul>
+<li>Ripple delete, roll/slip edits, transitions overlap</li>
+<li>Linked A/V selection</li>
+</ul>
+<h3 id="phase-6-sprite-animation">Phase 6 — Sprite animation</h3>
+<ul>
+<li>Cel duration in frames, onion skin, per-layer visibility keys</li>
+<li>Transform keyframe lanes</li>
+</ul>
+<h3 id="tier-4-app-integration-done">Tier 4 — App integration (done)</h3>
+<ul>
+<li><code>ITimelineMediaClock</code> / <code>TimelineMediaClock</code> on <code>VideoTimeline.MediaClock</code></li>
+<li><code>TimelinePreviewSynchronizer</code>, <code>TimelinePreviewFrameSnapshot</code>, <code>PreviewFrameChanged</code></li>
+<li><code>ITimelineClipThumbnailProvider</code> + <code>NullTimelineClipThumbnailProvider</code></li>
+<li>Demo: compositor preview panel bound to preview snapshots (atlas color stub)</li>
+</ul>
+<h3 id="phase-7-platform-integration">Phase 7 — Platform integration</h3>
+<ul>
+<li>Touch gestures, full project persistence in host apps</li>
+</ul>
+<h2 id="video-editor-vs-sprite-editor">Video editor vs sprite editor</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Need</th>
+<th>Video path</th>
+<th>Sprite path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time base</td>
+<td>Timecode, source trim</td>
+<td>Frames + FPS</td>
+</tr>
+<tr>
+<td>Clip data</td>
+<td><code>SourceIn</code>/<code>SourceOut</code>, linked audio</td>
+<td>Frame index, atlas region</td>
+</tr>
+<tr>
+<td>Lane visuals</td>
+<td>Thumbnails, waveforms</td>
+<td>Cel preview, onion skin</td>
+</tr>
+<tr>
+<td>Editing</td>
+<td>Ripple, split, slip</td>
+<td>Keyframes, hold frames</td>
+</tr>
+</tbody>
+</table>
+<p>Both share Phase 1 (snap, undo, split, stable selection) and the command/undo pipeline.</p>
+<h2 id="demo-and-docs">Demo and docs</h2>
+<ul>
+<li><code>SkyUI.Demo</code> → <strong>Video timeline</strong> page exercises the control.</li>
+<li>After each phase, update this roadmap and <code>current-state.md</code>.</li>
+<li>Regenerate HTML: <code>./docs/build-docs.sh</code> (requires sibling MDWeb repo).</li>
+</ul>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="development-roadmap.html">Development roadmap</a> — product phases</li>
+<li><a href="current-state.html">Current state</a> — shipped controls inventory</li>
+</ul>
+</div>
+          <footer class="doc-footer">
+            <p>SkyUI documentation · <a href="https://github.com/hoihky/skyui">GitHub</a> · Generated with <a href="https://github.com/hoihky/MDWeb">MDWeb</a></p>
+          </footer>
+        </article>
+
+        
+                <aside class="toc" aria-label="On this page">
+                  <p class="toc-title">On this page</p>
+                  <ul>
+                    
+                        <li class="toc-h2">
+                          <a href="#current-state-v1">Current state (v1)</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#design-goals">Design goals</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#target-architecture">Target architecture</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#phased-delivery">Phased delivery</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-1-stability-and-editor-fundamentals-done">Phase 1 — Stability and editor fundamentals (done)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-2-time-modes-and-transport-foundation-done">Phase 2 — Time modes and transport (foundation done)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#tier-1-sprite-clip-model-done">Tier 1 — Sprite clip model (done)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-3-rich-clip-and-track-model">Phase 3 — Rich clip and track model</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-4-visual-richness">Phase 4 — Visual richness</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-5-pro-editing-tools">Phase 5 — Pro editing tools</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-6-sprite-animation">Phase 6 — Sprite animation</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#tier-4-app-integration-done">Tier 4 — App integration (done)</a>
+                        </li>
+                        
+                        <li class="toc-h3">
+                          <a href="#phase-7-platform-integration">Phase 7 — Platform integration</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#video-editor-vs-sprite-editor">Video editor vs sprite editor</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#demo-and-docs">Demo and docs</a>
+                        </li>
+                        
+                        <li class="toc-h2">
+                          <a href="#related">Related</a>
+                        </li>
+                        
+                  </ul>
+                </aside>
+                
+      </main>
+    </div>
+  </div>
+  <script src="assets/vendor/mermaid.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -31,7 +31,8 @@
       <TextBlock Classes="sky-body-secondary" Text="{Binding RangeSummary}" />
 
       <TextBlock Classes="sky-feature-heading" Text="Rich text" />
-      <sky:SkyRichTextBox x:Name="RichEditor" Text="{Binding RichText, Mode=TwoWay}" ShowToolbar="True" />
+      <sky:SkyRichTextBox x:Name="RichEditor" Text="{Binding RichText, Mode=TwoWay}"
+                          ShowToolbar="True" ShowLivePreview="True" />
 
       <TextBlock Classes="sky-feature-heading" Text="Stepper" />
       <sky:SkyStepper Steps="{Binding Steps}" SelectedIndex="{Binding StepperIndex, Mode=TwoWay}" />
