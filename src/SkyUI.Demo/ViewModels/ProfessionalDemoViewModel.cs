@@ -1,10 +1,10 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Media;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using SkyUI.Controls.Professional;
 
@@ -60,7 +60,38 @@ public sealed class ProfessionalDemoViewModel : INotifyPropertyChanged
         PreviewImage = CreatePreviewImage();
         BoldCommand = new RelayCommand(() => RichTextTarget?.ApplyFormat(SkyRichTextFormat.Bold));
         ItalicCommand = new RelayCommand(() => RichTextTarget?.ApplyFormat(SkyRichTextFormat.Italic));
+
+        Documents = new ObservableCollection<ISkyDocument>
+        {
+            new SkyDocument("App.axaml", new TextBlock { Text = "Application definition" }),
+            new SkyDocument("MainWindow.axaml", new TextBlock { Text = "Main window layout" }) { IsDirty = true },
+        };
+        selectedDocument = Documents[0];
+        ToolPanes = new ObservableCollection<SkyDockPane>
+        {
+            new("Explorer", new TextBlock { Text = "Solution tree placeholder" }, SkyDockZone.Left) { Order = 0 },
+            new("Properties", new TextBlock { Text = "Selection properties" }, SkyDockZone.Right) { Order = 0 },
+            new("Output", new TextBlock { Text = "Build output" }, SkyDockZone.Bottom) { Order = 0, PreferredLength = 160 },
+        };
+        OpenDocumentCommand = new RelayCommand(() =>
+        {
+            var index = Documents.Count + 1;
+            var document = new SkyDocument($"Untitled-{index}", new TextBlock { Text = $"Document {index} content" });
+            Documents.Add(document);
+            DockManager?.DocumentWell?.OpenDocument(document);
+        });
+        SaveDockLayoutCommand = new RelayCommand(() =>
+        {
+            savedDockLayoutJson = DockManager?.CaptureLayoutJson();
+        });
+        RestoreDockLayoutCommand = new RelayCommand(() =>
+        {
+            if (!string.IsNullOrWhiteSpace(savedDockLayoutJson))
+                DockManager?.TryRestoreLayoutJson(savedDockLayoutJson);
+        });
     }
+
+    private string? savedDockLayoutJson;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -73,6 +104,26 @@ public sealed class ProfessionalDemoViewModel : INotifyPropertyChanged
     public ObservableCollection<SkyStepperItem> Steps { get; }
 
     public ObservableCollection<SkyWizardPage> WizardPages { get; }
+
+    public ObservableCollection<ISkyDocument> Documents { get; }
+
+    private ISkyDocument? selectedDocument;
+
+    public ISkyDocument? SelectedDocument
+    {
+        get => selectedDocument;
+        set => SetField(ref selectedDocument, value);
+    }
+
+    public ObservableCollection<SkyDockPane> ToolPanes { get; }
+
+    public SkyDockManager? DockManager { get; set; }
+
+    public ICommand OpenDocumentCommand { get; }
+
+    public ICommand SaveDockLayoutCommand { get; }
+
+    public ICommand RestoreDockLayoutCommand { get; }
 
     public IImage PreviewImage { get; }
 

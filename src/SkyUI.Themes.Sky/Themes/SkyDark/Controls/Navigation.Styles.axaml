@@ -63,7 +63,9 @@
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
   </Style>
   <Style Selector="controls|SkyTabView TabItem:selected">
-    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="FontWeight" Value="SemiBold" />
   </Style>

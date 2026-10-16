@@ -93,7 +93,17 @@ Namespace `SkyUI.Controls.Professional` in `SkyUI`. Theme: `Themes/SkyDark/Contr
 | `SkyStepper` / `SkyStepperChrome` | Horizontal steps; chrome API for nodes and connectors |
 | `SkyWizard` / `SkyWizardPage` | Paged flow with proceed rules |
 
-Docking (`SkyDockManager`, `SkyDockPanel`, `SkyDocumentWell`) is **not** implemented — planned in Phase 2.6.
+### Docking (Phase 2.6 — in progress)
+
+Namespace `SkyUI.Controls.Professional` under `src/SkyUI/Controls/Professional/Docking/`. Theme: `Professional.axaml` + `Professional.Styles.axaml`.
+
+| Control | Notes |
+|---------|--------|
+| `SkyDocumentWell` | Tab strip, dirty suffix, close (cancelable), tab reorder; `ISkyDocument` + `SkyDocument` model; `SkyDocumentWellController` for testable domain logic |
+| `SkyDockManager` | Centers `SkyDocumentWell`; side/bottom document zones; drag document tabs to dock/float; `ToolPanes` in left/right/bottom/float; `CaptureLayoutJson` / `TryRestoreLayoutJson` |
+| `SkyDockPanel` | Per-zone tab strip, content host, resize grip; driven by `SkyDockManagerController` |
+
+Dock drag-drop: drag tool/document tabs to labeled edge/center drop targets (left/right/bottom/float). Float panes use `SkyDockFloatWindow` (title drag to re-dock, dock-back, close). Layout JSON stores tool zones, float geometry, and document `ShellPlacement`. Side/bottom columns collapse when empty. Future: cross-window float, split editors.
 
 ### Command surfaces (Tier B — wave 3B)
 

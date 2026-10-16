@@ -1,0 +1,141 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:SkyUI.Controls.Professional">
+  <Style Selector="controls|SkyDockManager">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="controls|SkyDockManager Border.sky-dock-shell">
+    <Setter Property="CornerRadius" Value="8" />
+  </Style>
+  <Style Selector="controls|SkyDockManager:dock-dragging Border.sky-dock-shell">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyDocumentWell Border.sky-document-tab">
+    <Setter Property="CornerRadius" Value="6,6,0,0" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1,1,1,0" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="controls|SkyDocumentWell Border.sky-document-tab:pointerover:not(.selected)">
+    <Setter Property="Background" Value="{DynamicResource SkyHoverTintBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDocumentWell Border.sky-document-tab">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="controls|SkyDocumentWell Border.sky-document-tab.selected">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDocumentWell Border.sky-document-tab TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="FontSize" Value="13" />
+  </Style>
+  <Style Selector="controls|SkyDocumentWell Border.sky-document-tab.selected TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <Style Selector="controls|SkyDockPanel Border.sky-dock-tab">
+    <Setter Property="CornerRadius" Value="6,6,0,0" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1,1,1,0" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel Border.sky-dock-tab:pointerover:not(.selected)">
+    <Setter Property="Background" Value="{DynamicResource SkyHoverTintBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel Border.sky-dock-tab.selected">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel Border.sky-dock-tab TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="Regular" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel Border.sky-dock-tab.selected TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel Button.sky-dock-tab.selected">
+    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+  </Style>
+
+  <Style Selector="Border.sky-dock-tab-strip">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel Border.sky-dock-zone">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+    <Setter Property="CornerRadius" Value="0" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel Grid.sky-dock-content-host">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyDockManager Border.sky-dock-drop-target">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Opacity" Value="0.55" />
+  </Style>
+  <Style Selector="controls|SkyDockManager Border.sky-dock-drop-target.active">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDockManager TextBlock.sky-dock-drop-glyph">
+    <Setter Property="FontSize" Value="28" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Opacity" Value="0.9" />
+  </Style>
+  <Style Selector="controls|SkyDockManager Border.sky-dock-drop-target.active TextBlock.sky-dock-drop-glyph">
+    <Setter Property="Foreground" Value="{DynamicResource SkySelectedBorderBrush}" />
+  </Style>
+
+  <Style Selector="controls|SkyDockFloatWindow.sky-dock-float-window">
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+  <Style Selector="controls|SkyDockFloatWindow Grid.sky-dock-float-titlebar">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="controls|SkyDockFloatWindow Border.sky-dock-float-body">
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDockManager:dock-dragging">
+    <Setter Property="Cursor" Value="SizeAll" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel controls|SkyDockResizeGrip.sky-dock-resize-grip">
+    <Setter Property="Opacity" Value="0.35" />
+    <Setter Property="Cursor" Value="SizeWestEast" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel[Zone=Bottom] controls|SkyDockResizeGrip.sky-dock-resize-grip">
+    <Setter Property="Cursor" Value="SizeNorthSouth" />
+  </Style>
+  <Style Selector="controls|SkyDockPanel controls|SkyDockResizeGrip.sky-dock-resize-grip:pointerover">
+    <Setter Property="Background" Value="{DynamicResource SkySelectedBorderBrush}" />
+    <Setter Property="Opacity" Value="0.85" />
+  </Style>
+  <Style Selector="controls|SkyDockManager controls|SkyDockPanel">
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="controls|SkyDockManager controls|SkyDocumentWell">
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Margin" Value="0" />
+  </Style>
+  <Style Selector="controls|SkyDockManager controls|SkyDocumentWell /template/ Border.sky-document-well-chrome">
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceBrush}" />
+  </Style>
+  <Style Selector="controls|SkyDockManager controls|SkyDocumentWell /template/ Border.sky-card">
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+</Styles>

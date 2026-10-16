@@ -14,8 +14,13 @@
     <Setter Property="BorderThickness" Value="1,0,0,0" />
   </Style>
 
+  <Style Selector="controls|SkySplitView /template/ Border#PART_ResizeGrip">
+    <Setter Property="Cursor" Value="SizeWestEast" />
+  </Style>
+
   <Style Selector="controls|SkySplitView /template/ Border#PART_ResizeGrip:pointerover">
     <Setter Property="Background" Value="{DynamicResource SkyBorderBrush}" />
+    <Setter Property="Opacity" Value="1" />
   </Style>
 
   <Style Selector="controls|SkySplitView:resizing /template/ Border#PART_ResizeGrip">

@@ -133,6 +133,179 @@
     </Setter>
   </ControlTheme>
 
+  <ControlTheme x:Key="{x:Type controls:SkyDockPanel}" TargetType="controls:SkyDockPanel">
+    <Setter Property="MinWidth" Value="120" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-dock-zone" Padding="0" ClipToBounds="True"
+                BorderBrush="{DynamicResource SkyBorderBrush}" BorderThickness="0,0,1,0">
+          <Grid RowDefinitions="Auto,*">
+            <Border Grid.Row="0" Classes="sky-dock-tab-strip" Padding="8,6,8,0"
+                    BorderBrush="{DynamicResource SkyBorderBrush}" BorderThickness="0,0,0,1">
+              <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <StackPanel Name="PART_TabStrip" Orientation="Horizontal" Spacing="2" />
+              </ScrollViewer>
+            </Border>
+            <Grid Grid.Row="1" Classes="sky-dock-content-host">
+              <ContentPresenter Name="PART_ContentHost" Margin="10" />
+              <controls:SkyDockResizeGrip Name="PART_ResizeGrip" />
+            </Grid>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDockFloatWindow}" TargetType="controls:SkyDockFloatWindow">
+    <Setter Property="MinWidth" Value="240" />
+    <Setter Property="MinHeight" Value="160" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card sky-dock-float-window" Padding="0" ClipToBounds="True"
+                BoxShadow="{DynamicResource SkyElevation2}"
+                BorderBrush="{DynamicResource SkyBorderStrongBrush}" BorderThickness="1">
+          <Grid RowDefinitions="Auto,*">
+            <Grid Name="PART_TitleBar" Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto"
+                  Classes="sky-dock-float-titlebar"
+                  ColumnSpacing="4" Margin="0,0,0,1">
+              <Border Grid.Column="0" Width="4" Height="16" Margin="10,0,0,0"
+                      VerticalAlignment="Center" CornerRadius="2"
+                      Background="{DynamicResource SkySelectedBorderBrush}" Opacity="0.85" />
+              <TextBlock Name="PART_TitleText" Grid.Column="1" Margin="8,8,4,8"
+                         Classes="sky-section-title" VerticalAlignment="Center" />
+              <Button Name="PART_Dock" Grid.Column="2" Classes="sky sky-subtle sky-dock-chrome-button"
+                      Content="⧉" ToolTip.Tip="Dock to previous zone" MinWidth="28" MinHeight="28" Padding="4" />
+              <Button Name="PART_Close" Grid.Column="3" Classes="sky sky-subtle sky-dock-chrome-button"
+                      Content="×" ToolTip.Tip="Close" MinWidth="28" MinHeight="28" Padding="4" />
+            </Grid>
+            <Border Grid.Row="1" Classes="sky-dock-float-body" Padding="0">
+              <ContentPresenter Name="PART_ContentHost" Margin="10" />
+            </Border>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDockManager}" TargetType="controls:SkyDockManager">
+    <Setter Property="MinHeight" Value="280" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-dock-shell" Padding="0" ClipToBounds="True"
+                Background="{DynamicResource SkySurfaceBrush}"
+                BorderBrush="{DynamicResource SkyBorderBrush}" BorderThickness="1">
+          <Grid Name="PART_Root" RowDefinitions="*,Auto" ColumnDefinitions="Auto,*,Auto">
+            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+                  RowDefinitions="Auto,*" RowSpacing="2"
+                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+              <controls:SkyDocumentWell Name="PART_LeftDocumentZone" Grid.Row="0"
+                                        ShellPlacementFilter="Left" IsVisible="False"
+                                        MinHeight="120" MaxHeight="280"
+                                        VerticalAlignment="Top"
+                                        ItemsSource="{TemplateBinding Documents}"
+                                        SelectedDocument="{TemplateBinding SelectedDocument, Mode=TwoWay}" />
+              <controls:SkyDockPanel Name="PART_LeftPanel" Grid.Row="1"
+                                   Zone="Left"
+                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1" RowDefinitions="*">
+              <controls:SkyDocumentWell Name="PART_DocumentWell" Grid.Row="0"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                        ItemsSource="{TemplateBinding Documents}"
+                                        SelectedDocument="{TemplateBinding SelectedDocument, Mode=TwoWay}" />
+            </Grid>
+            <Canvas Name="PART_FloatCanvas"
+                    Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
+                    Panel.ZIndex="150"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    IsHitTestVisible="True" />
+            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
+                  RowDefinitions="Auto,*" RowSpacing="2"
+                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+              <controls:SkyDocumentWell Name="PART_RightDocumentZone" Grid.Row="0"
+                                        ShellPlacementFilter="Right" IsVisible="False"
+                                        MinHeight="120" MaxHeight="280"
+                                        VerticalAlignment="Top"
+                                        ItemsSource="{TemplateBinding Documents}"
+                                        SelectedDocument="{TemplateBinding SelectedDocument, Mode=TwoWay}" />
+              <controls:SkyDockPanel Name="PART_RightPanel" Grid.Row="1"
+                                   Zone="Right"
+                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="Auto,*" RowSpacing="2"
+                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+              <controls:SkyDocumentWell Name="PART_BottomDocumentZone" Grid.Row="0"
+                                        ShellPlacementFilter="Bottom" IsVisible="False"
+                                        MinHeight="100" MaxHeight="240"
+                                        VerticalAlignment="Top"
+                                        ItemsSource="{TemplateBinding Documents}"
+                                        SelectedDocument="{TemplateBinding SelectedDocument, Mode=TwoWay}" />
+              <controls:SkyDockPanel Name="PART_BottomPanel" Grid.Row="1" Zone="Bottom"
+                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </Grid>
+            <Panel Name="PART_DropOverlay" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
+                   IsVisible="False" IsHitTestVisible="False" ZIndex="200"
+                   Background="#66000000">
+            <Border Name="PART_DropLeft" Classes="sky-dock-drop-target" HorizontalAlignment="Left"
+                    Width="112" Margin="8" VerticalAlignment="Stretch">
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
+                <TextBlock Classes="sky-dock-drop-glyph" Text="◧" />
+                <TextBlock Classes="sky-caption" Text="Dock left" />
+              </StackPanel>
+            </Border>
+            <Border Name="PART_DropRight" Classes="sky-dock-drop-target" HorizontalAlignment="Right"
+                    Width="112" Margin="8" VerticalAlignment="Stretch">
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
+                <TextBlock Classes="sky-dock-drop-glyph" Text="◨" />
+                <TextBlock Classes="sky-caption" Text="Dock right" />
+              </StackPanel>
+            </Border>
+            <Border Name="PART_DropBottom" Classes="sky-dock-drop-target" VerticalAlignment="Bottom"
+                    Height="88" Margin="8" HorizontalAlignment="Stretch">
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
+                <TextBlock Classes="sky-dock-drop-glyph" Text="▬" />
+                <TextBlock Classes="sky-caption" Text="Dock bottom" />
+              </StackPanel>
+            </Border>
+            <Border Name="PART_DropFloat" Classes="sky-dock-drop-target" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" MinWidth="220" MinHeight="120" Margin="8" Padding="16">
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
+                <TextBlock Classes="sky-dock-drop-glyph" Text="⬚" />
+                <TextBlock Classes="sky-caption" Text="Float" />
+                <TextBlock Classes="sky-body-secondary" Text="Center of document area"
+                           TextAlignment="Center" TextWrapping="Wrap" MaxWidth="180" />
+              </StackPanel>
+            </Border>
+          </Panel>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type controls:SkyDocumentWell}" TargetType="controls:SkyDocumentWell">
+    <Setter Property="MinHeight" Value="200" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Classes="sky-card sky-document-well-chrome" Padding="0">
+          <Grid RowDefinitions="Auto,*">
+            <Border Grid.Row="0" Classes="sky-dock-tab-strip" Padding="8,6,8,0"
+                    BorderBrush="{DynamicResource SkyBorderBrush}" BorderThickness="0,0,0,1">
+              <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <StackPanel Name="PART_TabStrip" Orientation="Horizontal" Spacing="4" />
+              </ScrollViewer>
+            </Border>
+            <ContentPresenter Name="PART_ContentHost" Grid.Row="1" Margin="12" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
   <ControlTheme x:Key="{x:Type controls:SkyWizard}" TargetType="controls:SkyWizard">
     <Setter Property="Template">
       <ControlTemplate>

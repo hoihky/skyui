@@ -10,6 +10,10 @@ public partial class ProfessionalDemo : UserControl
         InitializeComponent();
         var vm = new ProfessionalDemoViewModel();
         DataContext = vm;
-        Loaded += (_, _) => vm.RichTextTarget = RichEditor;
+        Loaded += (_, _) =>
+        {
+            vm.RichTextTarget = RichEditor;
+            vm.DockManager = DockManagerHost;
+        };
     }
 }

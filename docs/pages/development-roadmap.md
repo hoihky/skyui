@@ -255,9 +255,9 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 
 | Control | Description | Status |
 |---------|-------------|--------|
-| **SkyDockManager** | Tool/document/float panes, layout persistence | Planned |
-| **SkyDockPanel** | Drop zones and splitter chrome | Planned |
-| **SkyDocumentWell** | Tabbed documents, dirty state, reorder | Planned |
+| **SkyDockManager** | Tool/document/float panes, layout persistence | **Done** (JSON incl. document shell; professional chrome) |
+| **SkyDockPanel** | Drop zones and splitter chrome | **Done** (zone tabs + resize grips) |
+| **SkyDocumentWell** | Tabbed documents, dirty state, reorder | **Done** (shell drag to left/right/bottom/float via `SkyDockManager`) |
 
 ### Exit criteria (Phase 2.5) — met
 
@@ -268,7 +268,7 @@ Phase 2 (original) navigation, forms, menus, pickers, layout, and feedback contr
 | Theme AXAML | `SkyUI.Themes.Sky/Themes/SkyDark/Controls/Professional.axaml` (merged in ContentFirstDark preset) |
 | Control catalog | Namespace `SkyUI.Controls.Professional` — property grid (grid lines, collapsible categories), color picker + selection dialog, image viewer, tree view, tag editor, dual range slider, rich text box, stepper (`SkyStepperChrome`), wizard |
 
-**Out of scope (Phase 2.6):** `SkyDockManager`, `SkyDockPanel`, `SkyDocumentWell`.
+**Phase 2.6 progress:** Docking v2 — document shell drag, layout JSON for tool + document placement, auto-collapse empty zones, IDE-style tabs and drop overlay. Remaining: split editors, cross-window float.
 
 **Next recommended phase:** [Phase 2.6 — Docking](#phase-26--docking--document-host-after-3a) or [Tier B](#tier-b--shell--command-surfaces-wave-3b) command surfaces.
 

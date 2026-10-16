@@ -8,7 +8,20 @@
     <StackPanel Spacing="24" Margin="0,0,0,24">
       <TextBlock Classes="sky-section-title" Text="Professional controls (Tier A)" />
       <TextBlock Classes="sky-body-secondary" TextWrapping="Wrap"
-                 Text="MVVM-friendly inspectors, pickers, trees, tags, ranges, rich text, stepper, and wizard. Docking controls are planned for a later wave." />
+                 Text="MVVM-friendly inspectors, pickers, trees, tags, ranges, rich text, stepper, wizard, and docking (drag tabs to edges to dock; center releases a float — drag the float title bar to re-dock)." />
+
+      <TextBlock Classes="sky-feature-heading" Text="Dock manager" />
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Classes="sky" Content="Open document" Command="{Binding OpenDocumentCommand}" />
+        <Button Classes="sky sky-subtle" Content="Save layout" Command="{Binding SaveDockLayoutCommand}" />
+        <Button Classes="sky sky-subtle" Content="Restore layout" Command="{Binding RestoreDockLayoutCommand}" />
+      </StackPanel>
+      <sky:SkyDockManager x:Name="DockManagerHost"
+                          Documents="{Binding Documents}"
+                          SelectedDocument="{Binding SelectedDocument, Mode=TwoWay}"
+                          ToolPanes="{Binding ToolPanes}"
+                          MinHeight="360" Height="360"
+                          HorizontalAlignment="Stretch" />
 
       <TextBlock Classes="sky-feature-heading" Text="Property grid" />
       <sky:SkyPropertyGrid Items="{Binding PropertyRows}" ShowGridLines="True" MinHeight="180" />

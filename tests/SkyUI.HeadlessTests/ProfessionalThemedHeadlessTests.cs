@@ -123,6 +123,83 @@ public class ProfessionalThemedHeadlessTests
         }, CancellationToken.None);
     }
 
+    [Fact]
+    public void SkyDockManager_renders_float_window_chrome()
+    {
+        Session.Dispatch(() =>
+        {
+            var manager = new SkyDockManager
+            {
+                Width = 720,
+                Height = 420,
+                ToolPanes = new ObservableCollection<SkyDockPane>
+                {
+                    new("Palette", new TextBlock { Text = "Colors" }, SkyDockZone.Float)
+                    {
+                        FloatLeft = 80,
+                        FloatTop = 60,
+                    },
+                },
+            };
+
+            var window = Show(manager);
+            var labels = manager.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text).ToList();
+            Assert.Contains("Palette", labels);
+            Assert.Contains("Colors", labels);
+            window.Close();
+        }, CancellationToken.None);
+    }
+
+    [Fact]
+    public void SkyDockManager_applies_theme_with_document_and_tool_panes()
+    {
+        Session.Dispatch(() =>
+        {
+            var manager = new SkyDockManager
+            {
+                Width = 720,
+                Height = 420,
+                Documents = new ObservableCollection<ISkyDocument>
+                {
+                    new SkyDocument("Program.cs", new TextBlock { Text = "class Program { }" }),
+                },
+                ToolPanes = new ObservableCollection<SkyDockPane>
+                {
+                    new("Explorer", new TextBlock { Text = "Files" }, SkyDockZone.Left),
+                },
+            };
+
+            var window = Show(manager);
+            var labels = manager.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text).ToList();
+            Assert.Contains("Program.cs", labels);
+            Assert.Contains("Explorer", labels);
+            Assert.Contains("class Program { }", labels);
+            window.Close();
+        }, CancellationToken.None);
+    }
+
+    [Fact]
+    public void SkyDocumentWell_applies_theme_and_renders_tabs()
+    {
+        Session.Dispatch(() =>
+        {
+            var doc = new SkyDocument("Design.axaml", new TextBlock { Text = "Editor surface" }) { IsDirty = true };
+            var well = new SkyDocumentWell
+            {
+                Width = 520,
+                Height = 280,
+                ItemsSource = new ObservableCollection<ISkyDocument> { doc },
+                SelectedDocument = doc,
+            };
+
+            var window = Show(well);
+            var labels = well.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text).ToList();
+            Assert.Contains("Design.axaml •", labels);
+            Assert.Contains("Editor surface", labels);
+            window.Close();
+        }, CancellationToken.None);
+    }
+
     private static Window Show(Control content)
     {
         var window = new Window

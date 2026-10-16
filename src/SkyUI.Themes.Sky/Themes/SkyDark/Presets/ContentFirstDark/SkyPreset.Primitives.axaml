@@ -307,8 +307,8 @@
   </Style>
   <Style Selector="ListBox.sky ListBoxItem:selected, ListBox.spotify ListBoxItem:selected">
     <Setter Property="BorderBrush" Value="{DynamicResource SkySelectedBorderBrush}" />
-    <Setter Property="BorderThickness" Value="2" />
-    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="FontWeight" Value="SemiBold" />
   </Style>
@@ -339,8 +339,10 @@
   <Style Selector="ListBox.sky-nav ListBoxItem:selected, ListBox.spotify-nav ListBoxItem:selected">
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
     <Setter Property="FontWeight" Value="SemiBold" />
-    <Setter Property="Background" Value="{DynamicResource SkySelectedTintBrush}" />
-    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="Background" Value="{DynamicResource SkySurfaceElevatedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SkyAccentBrush}" />
+    <Setter Property="BorderThickness" Value="3,0,0,0" />
+    <Setter Property="CornerRadius" Value="6" />
   </Style>
   <Style Selector="ListBox.sky-nav ListBoxItem:selected TextBlock.sky-nav-link, ListBox.spotify-nav ListBoxItem:selected TextBlock.sky-nav-link">
     <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
@@ -353,7 +355,7 @@
     <Setter Property="Foreground" Value="{DynamicResource SkyTextSecondaryBrush}" />
   </Style>
   <Style Selector="ListBox.sky-nav ListBoxItem:selected icons|SkyIcon, ListBox.spotify-nav ListBoxItem:selected icons|SkyIcon">
-    <Setter Property="Foreground" Value="{DynamicResource SkyTextPrimaryBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SkyAccentBrush}" />
   </Style>
 
   <!-- Card container -->
