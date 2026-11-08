@@ -51,6 +51,7 @@ toc = """
           <li class="toc-h3"><a href="#prog-data">Data grid &amp; filter</a></li>
           <li><a href="#testing">Testing</a></li>
           <li><a href="#demo">Demo gallery</a></li>
+          <li class="toc-h3"><a href="#showcase">Screenshots</a></li>
           <li><a href="#docs">Further reading</a></li>
         </ul>
       </aside>
@@ -77,6 +78,7 @@ html = f"""<!DOCTYPE html>
         <a href="#quick-start">Quick start</a>
         <a href="#packages">Architecture</a>
         <a href="#catalog-essentials">Controls</a>
+        <a href="#showcase">Screenshots</a>
         <a href="#prog-theme">Programming</a>
         <a href="#docs">Docs</a>
         <a href="https://github.com/hoihky/skyui" target="_blank" rel="noopener">GitHub</a>
